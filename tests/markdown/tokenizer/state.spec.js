@@ -2041,7 +2041,6 @@ describe('MarkdownTokenizer', () => {
         'person',
         'comment',
         'topic',
-        'review',
         'entry',
         'message',
         'user'
