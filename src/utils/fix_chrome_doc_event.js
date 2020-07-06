@@ -6,4 +6,3 @@ export default function fixChromeDocEvent(e) {
   try { efct = e.dataTransfer.effectAllowed; } catch (_error) {} // eslint-disable-line
   e.dataTransfer.dropEffect = efct === 'move' || efct === 'linkMove' ? 'move' : 'copy';
 }
-

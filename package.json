@@ -2,7 +2,7 @@
   "name": "shiki-file-uploader",
   "title": "Shikimori file uploader component",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "src/file_uploader.js",
   "author": "morr",
   "license": "OSL-3.0",
   "homepage": "https://github.com/shikimori/shiki-file-uploader",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/shikimori/shiki-file-uploader.git"
   },
   "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**/*.js test/**/*.js"
+    "lint": "./node_modules/.bin/eslint src/**/*.js"
   },
   "dependencies": {
     "@uppy/core": "^1.11.0",
