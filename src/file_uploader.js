@@ -52,21 +52,24 @@ export default class FileUploader {
   }
 
   get filesUploadedCount() {
-    return this.uploadIDs.sum(id => (
-      this.uppy.store.state.files[id].progress.percentage === 100 ? 1 : 0
-    ));
+    return this.uploadIDs.reduce((memo, id) => (
+      memo +
+        (this.uppy.store.state.files[id].progress.percentage === 100 ? 1 : 0)
+    ), 0);
   }
 
   get bytesTotal() {
-    return this.uploadIDs.sum(id => (
-      this.uppy.store.state.files[id].progress.bytesTotal
-    ));
+    return this.uploadIDs.reduce((memo, id) => (
+      memo +
+        this.uppy.store.state.files[id].progress.bytesTotal
+    ), 0);
   }
 
   get bytesUploaded() {
-    return this.uploadIDs.sum(id => (
-      this.uppy.store.state.files[id].progress.bytesUploaded
-    ));
+    return this.uploadIDs.reduce((memo, id) => (
+      memo +
+        this.uppy.store.state.files[id].progress.bytesUploaded
+    ), 0);
   }
 
   addFiles(files) {
@@ -214,7 +217,7 @@ export default class FileUploader {
     }
     this.progressNodeBar.innerText = text;
 
-    const percent = (this.bytesUploaded * 100.0 / this.bytesTotal).round(2);
+    const percent = this.bytesUploaded * 100.0 / this.bytesTotal;
     this.progressNodeBar.style.width = `${percent}%`;
   }
 
