@@ -8,27 +8,37 @@ import XHRUpload from '@uppy/xhr-upload';
 import fixChromeDocEvent from './utils/fix_chrome_doc_event';
 import notFiles from './utils/not_files';
 
+import ruLocale from './locale/ru.js';
+
 const I18N_KEY = 'frontend.lib.file_uploader';
 
 export default class FileUploader {
   uploadIDs = []
   docLeaveTimer = null
+  dropNode = null
+  progressNode = null
+  progressNodeBar = null
 
-  constructor({ node, flash, input, progressNode, uppyLocale, xhrHeaders }) {
+  constructor({
+    node,
+    flash,
+    input,
+    locale,
+    endpoint,
+    xhrHeaders
+  }) {
     uEvent.mixin(this);
 
     this.node = node;
     this.flash = flash;
-    this.uppyLocale = uppyLocale;
+    this.locale = locale;
     this.xhrHeaders = xhrHeaders;
-
-    this.input = input || this.node.querySelector('input[type=file]');
-    this.progressNode = progressNode || this.node.querySelector('.b-upload_progress');
-    [this.progressBar] = this.progressNode.children;
+    this.endpoint = endpoint;
 
     this.uppy = this._initUppy();
     this._bindDragEvents();
 
+    this.input = input || this.node.querySelector('input[type=file]');
     if (this.input) {
       this._bindInput();
     }
@@ -42,13 +52,9 @@ export default class FileUploader {
     document.removeEventListener('dragleave', this._docLeave);
   }
 
-  get endpoint() {
-    return this.node.getAttribute('data-upload_url');
-  }
-
   get filesUploadedCount() {
     return this.uploadIDs.sum(id => (
-      this.uppy.store.state.files[id].progress.uploadComplete ? 1 : 0
+      this.uppy.store.state.files[id].progress.percentage === 100 ? 1 : 0
     ));
   }
 
@@ -99,12 +105,15 @@ export default class FileUploader {
         minNumberOfFiles: null,
         allowedFileTypes: ['image/jpg', 'image/jpeg', 'image/png']
       },
-      locale: this.uppyLocale
+      locale: this.locale === 'ru' ? ruLocale : undefined
     })
       .use(XHRUpload, {
         endpoint: this.endpoint,
         fieldName: 'image',
-        headers: this.xhrHeaders()
+        headers: {
+          'x-requested-with': 'XMLHttpRequest',
+          ...this.xhrHeaders()
+        }
       })
       // https://uppy.io/docs/uppy/#file-added
       .on('upload', this._uploadStart)
@@ -117,7 +126,7 @@ export default class FileUploader {
       });
   }
 
-  _addDropArea() {
+  _addDropNode() {
     if (this.dropNode || !isVisible(this.node)) { return; }
 
     const height = this.node.offsetHeight;
@@ -148,8 +157,21 @@ export default class FileUploader {
     );
   }
 
+  _addProgressNode() {
+    if (this.progressNode || !isVisible(this.node)) { return; }
+
+    this.progressNode = document.createElement('div');
+    this.progressNodeBar = document.createElement('div');
+
+    this.progressNode.classList.add('b-upload_progress');
+    this.progressNodeBar.classList.add('bar');
+
+    this.progressNode.appendChild(this.progressNodeBar);
+    this.node.parentNode.insertBefore(this.progressNode, this.node);
+  }
+
   @bind
-  _removeDropArea() {
+  _removeDropNode() {
     if (!this.dropNode) { return; }
     const { dropNode } = this;
 
@@ -159,12 +181,21 @@ export default class FileUploader {
     setTimeout(() => dropNode.remove(), 350);
   }
 
+  _removeProgressNode() {
+    if (!this.progressNode) { return; }
+
+    this.progressNode.remove();
+
+    this.progressNode = null;
+    this.progressNodeBar = null;
+  }
+
   @bind
   _uploadStart(data) {
     this.uploadIDs = this.uploadIDs.concat(data.fileIDs);
 
     this.progressNode.classList.add('active');
-    this.progressBar.style.width = '0%';
+    this.progressNodeBar.style.width = '0%';
   }
 
   @bind
@@ -184,10 +215,10 @@ export default class FileUploader {
         kbTotal: Math.ceil(this.bytesTotal / 1024)
       });
     }
-    this.progressBar.innerText = text;
+    this.progressNodeBar.innerText = text;
 
     const percent = (this.bytesUploaded * 100.0 / this.bytesTotal).round(2);
-    this.progressBar.style.width = `${percent}%`;
+    this.progressNodeBar.style.width = `${percent}%`;
   }
 
   @bind
@@ -207,8 +238,7 @@ export default class FileUploader {
       this.trigger('upload:failure');
     }
 
-    this.progressNode.classList.remove('active');
-    setTimeout(() => this.progressBar.style.width = '0%', 250);
+    this._removeProgressNode();
   }
 
   @bind
@@ -250,7 +280,8 @@ export default class FileUploader {
     e.stopPropagation();
     e.preventDefault();
 
-    this._addDropArea();
+    this._addDropNode();
+    this._addProgressNode();
 
     clearTimeout(this.docLeaveTimer);
   }
@@ -275,9 +306,9 @@ export default class FileUploader {
       e.stopPropagation();
       e.preventDefault();
 
-      this.docLeaveTimer = setTimeout(this._removeDropArea, 200);
+      this.docLeaveTimer = setTimeout(this._removeDropNode, 200);
     } else {
-      this._removeDropArea();
+      this._removeDropNode();
     }
   }
 }
