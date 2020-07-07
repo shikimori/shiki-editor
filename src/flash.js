@@ -1,7 +1,7 @@
 import Toastify from 'toastify-js';
 
 const defaults = {
-  duration: 3000000,
+  duration: 3000,
   newWindow: true,
   close: true,
   gravity: 'top',
