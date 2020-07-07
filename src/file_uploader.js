@@ -8,7 +8,8 @@ import XHRUpload from '@uppy/xhr-upload';
 import fixChromeDocEvent from './utils/fix_chrome_doc_event';
 import notFiles from './utils/not_files';
 
-import ruLocale from './locale/ru.js';
+import flash from './flash';
+import ruLocale from './locale/ru';
 
 const I18N_KEY = 'frontend.lib.file_uploader';
 
@@ -21,7 +22,6 @@ export default class FileUploader {
 
   constructor({
     node,
-    flash,
     input,
     locale,
     endpoint,
@@ -30,7 +30,6 @@ export default class FileUploader {
     uEvent.mixin(this);
 
     this.node = node;
-    this.flash = flash;
     this.locale = locale;
     this.xhrHeaders = xhrHeaders;
     this.endpoint = endpoint;
@@ -121,9 +120,7 @@ export default class FileUploader {
       .on('upload-progress', this._uploadProgress)
       .on('complete', this._uploadComplete)
       .on('upload-error', this._uploadError)
-      .on('restriction-failed', (_file, error) => {
-        this.flash.error(error.message);
-      });
+      .on('restriction-failed', (_file, error) => flash.error(error.message));
   }
 
   _addDropNode() {
@@ -251,7 +248,7 @@ export default class FileUploader {
       message = error.message; // eslint-disable-line
     }
 
-    this.flash.error(message);
+    flash.error(message);
   }
 
   @bind
