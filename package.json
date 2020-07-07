@@ -5,10 +5,10 @@
   "main": "src/index.js",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-file-uploader",
+  "homepage": "https://github.com/shikimori/shiki-utils",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shikimori/shiki-file-uploader.git"
+    "url": "git+https://github.com/shikimori/shiki-utils.git"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/**/*.js"
