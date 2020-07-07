@@ -9,17 +9,7 @@ const defaults = {
   stopOnFocus: true
 };
 
-export function flash(options) {
-  if ('alert' in options || 'error' in options) {
-    error(options.alert || options.error);
-  } else if ('info' in options) {
-    info(options.info);
-  } else {
-    notice(options.notice);
-  }
-}
-
-export function error(text, options = {}) {
+function error(text, options = {}) {
   if (text) {
     Toastify({
       ...defaults,
@@ -30,7 +20,7 @@ export function error(text, options = {}) {
   }
 }
 
-export function info(text, options = {}) {
+function info(text, options = {}) {
   if (text) {
     Toastify({
       ...defaults,
@@ -41,7 +31,7 @@ export function info(text, options = {}) {
   }
 }
 
-export function notice(text, options = {}) {
+function notice(text, options = {}) {
   if (text) {
     Toastify({
       ...defaults,
@@ -51,3 +41,18 @@ export function notice(text, options = {}) {
     }).showToast();
   }
 }
+
+export default {
+  flash(options) {
+    if ('alert' in options || 'error' in options) {
+      error(options.alert || options.error);
+    } else if ('info' in options) {
+      info(options.info);
+    } else {
+      notice(options.notice);
+    }
+  },
+  notice,
+  info,
+  error
+};
