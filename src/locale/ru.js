@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   strings: {
     // addMoreFiles: "Добавить еще файлы",
