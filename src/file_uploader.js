@@ -167,7 +167,7 @@ export default class FileUploader {
     this.progressNodeBar.classList.add('bar');
 
     this.progressNode.appendChild(this.progressNodeBar);
-    this.node.parentNode.insertBefore(this.progressNode, this.node);
+    this.node.parentNode.insertBefore(this.progressNode, this.dropNode);
   }
 
   @bind
