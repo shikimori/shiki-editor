@@ -134,8 +134,8 @@ export default class FileUploader {
     const text = I18n.t(`${I18N_KEY}.drop_pictures_here`);
 
     this.dropNode = document.createElement('div');
+    this.dropNode.classList.add('shiki-file_drop-placeholder');
     this.dropNode.setAttribute('data-text', text);
-    this.dropNode.setAttribute('class', 'b-dropzone-drag_placeholder allowed');
     this.dropNode.style = [
       `width: ${width}px !important`,
       `height: ${height}px`,
@@ -163,7 +163,7 @@ export default class FileUploader {
     this.progressNode = document.createElement('div');
     this.progressNodeBar = document.createElement('div');
 
-    this.progressNode.classList.add('b-upload_progress');
+    this.progressNode.classList.add('shiki-file_drop-upload_progress');
     this.progressNodeBar.classList.add('bar');
 
     this.progressNode.appendChild(this.progressNodeBar);

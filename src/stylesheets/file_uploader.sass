@@ -1,0 +1,43 @@
+.shiki-file_drop-placeholder
+  background: white
+  border-radius: 1px
+  border: 2px dashed #006eff
+  box-sizing: border-box
+  font-family: var(--font-alt)
+  font-size: 25px
+  min-height: 89px
+  position: absolute
+  text-align: center
+  transition: opacity 0.5s ease, border-color 0.5s ease, color 0.5s ease
+  z-index: 10
+
+  &.disallowed
+    border-color: rgba(#ff4136, 0.6)
+    color: #ff4136
+
+  &.hovered:not(.disallowed)
+    border-color: #2ecc40
+    color: #2ecc40
+
+  &:before
+    content: attr(data-text)
+
+.shiki-file_drop-upload_progress
+  height: 12px
+  margin-bottom: 8px
+  margin-top: 3px
+  overflow: hidden
+
+  .bar
+    +ellipsis2
+    background-color: #2586d0
+    color: white
+    display: block
+    font-size: 11px
+    height: 12px
+    line-height: 12px
+    min-width: 35px
+    padding-left: 7px
+    text-align: left
+    width: 0
+    transition: width 0.35s
