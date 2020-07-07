@@ -1,35 +1,53 @@
-import toastr from 'toastr';
+import Toastify from 'toastify-js';
 
-toastr.options.progressBar = true;
-toastr.options.closeDuration = 250;
-toastr.options.timeOut = 3000;
-
-export default {
-  flash(options) {
-    if ('alert' in options || 'error' in options) {
-      toastr.error(options.alert || options.error);
-    } else if ('info' in options) {
-      toastr.info(options.info);
-    } else {
-      toastr.success(options.notice);
-    }
-  },
-
-  error(text) {
-    if (text) {
-      toastr.error(text);
-    }
-  },
-
-  info(text) {
-    if (text) {
-      toastr.info(text);
-    }
-  },
-
-  notice(text) {
-    if (text) {
-      toastr.success(text);
-    }
-  }
+const defaults = {
+  duration: 3000000,
+  newWindow: true,
+  close: true,
+  gravity: 'top',
+  position: 'right',
+  stopOnFocus: true
 };
+
+export function flash(options) {
+  if ('alert' in options || 'error' in options) {
+    error(options.alert || options.error);
+  } else if ('info' in options) {
+    info(options.info);
+  } else {
+    notice(options.notice);
+  }
+}
+
+export function error(text, options = {}) {
+  if (text) {
+    Toastify({
+      ...defaults,
+      ...options,
+      className: 'error',
+      text
+    }).showToast();
+  }
+}
+
+export function info(text, options = {}) {
+  if (text) {
+    Toastify({
+      ...defaults,
+      ...options,
+      className: 'info',
+      text
+    }).showToast();
+  }
+}
+
+export function notice(text, options = {}) {
+  if (text) {
+    Toastify({
+      ...defaults,
+      ...options,
+      className: 'notice',
+      text
+    }).showToast();
+  }
+}
