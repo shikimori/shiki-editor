@@ -36,6 +36,7 @@ export default class FileUploader {
 
     this.uppy = this._initUppy();
     this._bindDragEvents();
+    this._addProgressNode();
 
     this.input = input || this.node.querySelector('input[type=file]');
     if (this.input) {
@@ -45,6 +46,8 @@ export default class FileUploader {
 
   @bind
   destroy() {
+    this._removeProgressNode();
+
     document.removeEventListener('drop', this._docDrop);
     document.removeEventListener('dragenter', this._docEnter);
     document.removeEventListener('dragover', this._docOver);
@@ -167,7 +170,7 @@ export default class FileUploader {
     this.progressNodeBar.classList.add('bar');
 
     this.progressNode.appendChild(this.progressNodeBar);
-    this.node.parentNode.insertBefore(this.progressNode, this.dropNode);
+    this.node.parentNode.insertBefore(this.progressNode, this.node);
   }
 
   @bind
@@ -238,7 +241,7 @@ export default class FileUploader {
       this.trigger('upload:failure');
     }
 
-    this._removeProgressNode();
+    this.progressNode.classList.remove('active');
   }
 
   @bind
@@ -281,7 +284,6 @@ export default class FileUploader {
     e.preventDefault();
 
     this._addDropNode();
-    this._addProgressNode();
 
     clearTimeout(this.docLeaveTimer);
   }
