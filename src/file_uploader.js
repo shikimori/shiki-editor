@@ -118,7 +118,8 @@ export default class FileUploader {
         headers: {
           'x-requested-with': 'XMLHttpRequest',
           ...this.xhrHeaders()
-        }
+        },
+        limit: 1 // prevent concurrent upload - this breaks screenshots upload order
       })
       // https://uppy.io/docs/uppy/#file-added
       .on('upload', this._uploadStart)
