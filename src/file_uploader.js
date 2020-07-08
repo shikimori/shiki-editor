@@ -138,7 +138,7 @@ export default class FileUploader {
     const text = I18n.t(`${I18N_KEY}.drop_pictures_here`);
 
     this.dropNode = document.createElement('div');
-    this.dropNode.classList.add('shiki-file_drop-placeholder');
+    this.dropNode.classList.add('shiki-file_uploader-drop_placeholder');
     this.dropNode.setAttribute('data-text', text);
     this.dropNode.style = [
       `width: ${width}px !important`,
@@ -167,7 +167,7 @@ export default class FileUploader {
     this.progressNode = document.createElement('div');
     this.progressNodeBar = document.createElement('div');
 
-    this.progressNode.classList.add('shiki-file_drop-upload_progress');
+    this.progressNode.classList.add('shiki-file_uploader-upload_progress');
     this.progressNodeBar.classList.add('bar');
 
     this.progressNode.appendChild(this.progressNodeBar);
@@ -213,12 +213,13 @@ export default class FileUploader {
       });
     } else {
       text = I18n.t(`${I18N_KEY}.uploading_files`, {
-        uploadedCount: this.filesUploadedCount,
+        uploadedCount: Math.min(this.filesUploadedCount + 1, this.uploadIDs.length),
         totalCount: this.uploadIDs.length,
         kbUploaded: Math.ceil(this.bytesUploaded / 1024),
         kbTotal: Math.ceil(this.bytesTotal / 1024)
       });
     }
+    this.progressNode.setAttribute('data-progress', text);
     this.progressNodeBar.innerText = text;
 
     const percent = this.bytesUploaded * 100.0 / this.bytesTotal;
