@@ -16,32 +16,32 @@ const I18N_KEY = 'frontend.lib.file_uploader';
 export default class FileUploader {
   uploadIDs = []
   docLeaveTimer = null
-  dropNode = null
   progressNode = null
   progressNodeBar = null
+  dropNode = null
 
-  constructor({
-    node,
-    input,
-    locale,
-    endpoint,
-    xhrHeaders
-  }) {
+  defaultOptions = {
+    node: null,
+    locale: null,
+    xhrEndpoint: null,
+    xhrHeaders: null,
+    xhrFieldName: 'image',
+    maxNumberOfFiles: 150
+  }
+
+  constructor(options) {
+    Object.assign(
+      this,
+      this.defaultOptions,
+      options
+    );
     uEvent.mixin(this);
-
-    this.node = node;
-    this.locale = locale;
-    this.xhrHeaders = xhrHeaders;
-    this.endpoint = endpoint;
 
     this.uppy = this._initUppy();
     this._bindDragEvents();
     this._addProgressNode();
 
-    this.input = input || this.node.querySelector('input[type=file]');
-    if (this.input) {
-      this._bindInput();
-    }
+    this._bindInput();
   }
 
   @bind
@@ -86,7 +86,10 @@ export default class FileUploader {
   }
 
   _bindInput() {
-    this.input.addEventListener('change', ({ currentTarget }) => {
+    const inputNode = this.node.querySelector('input[type=file]');
+    if (!inputNode) { return; }
+
+    inputNode.addEventListener('change', ({ currentTarget }) => {
       this.addFiles(currentTarget.files);
     });
   }
@@ -106,15 +109,15 @@ export default class FileUploader {
       // debug: true,
       restrictions: {
         maxFileSize: 1024 * 1024 * 4,
-        maxNumberOfFiles: 150,
+        maxNumberOfFiles: this.maxNumberOfFiles,
         minNumberOfFiles: null,
         allowedFileTypes: ['image/jpg', 'image/jpeg', 'image/png']
       },
       locale: this.locale === 'ru' ? ruLocale : undefined
     })
       .use(XHRUpload, {
-        endpoint: this.endpoint,
-        fieldName: 'image',
+        endpoint: this.xhrEndpoint,
+        fieldName: this.xhrFieldName,
         headers: {
           'x-requested-with': 'XMLHttpRequest',
           ...this.xhrHeaders()
