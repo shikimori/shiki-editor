@@ -22,6 +22,7 @@ export default class FileUploader {
 
   defaultOptions = {
     node: null,
+    progressContainerNode: null,
     locale: null,
     xhrEndpoint: null,
     xhrHeaders: null,
@@ -179,7 +180,12 @@ export default class FileUploader {
     this.progressNodeBar.classList.add('bar');
 
     this.progressNode.appendChild(this.progressNodeBar);
-    this.node.parentNode.insertBefore(this.progressNode, this.node);
+
+    if (this.progressContainerNode) {
+      this.progressContainerNode.appendChild(this.progressNode);
+    } else {
+      this.node.parentNode.insertBefore(this.progressNode, this.node);
+    }
   }
 
   @bind
