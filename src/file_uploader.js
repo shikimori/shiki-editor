@@ -55,10 +55,12 @@ export default class FileUploader {
   }
 
   get filesUploadedCount() {
-    return this.uploadIDs.reduce((memo, id) => (
-      memo +
-        (this.uppy.store.state.files[id].progress.percentage === 100 ? 1 : 0)
-    ), 0);
+    return this.uploadIDs.reduce((memo, id) => {
+      const file = this.uppy.store.state.files[id];
+      const isComplete = !!(file.error || file.progress.percentage === 100);
+
+      return memo + (isComplete ? 1 : 0);
+    }, 0);
   }
 
   get bytesTotal() {
