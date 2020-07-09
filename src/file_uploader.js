@@ -125,7 +125,7 @@ export default class FileUploader {
         endpoint: this.xhrEndpoint,
         fieldName: this.xhrFieldName,
         headers: {
-          'x-requested-with': 'XMLHttpRequest',
+          'X-Requested-With': 'XMLHttpRequest',
           ...this.xhrHeaders()
         },
         limit: 1 // prevent concurrent upload - this breaks screenshots upload order
