@@ -76,13 +76,16 @@ export default class FileUploader {
   }
 
   addFiles(files) {
-    Array.from(files).forEach(file => {
-      try {
-        this.uppy.addFile({ name: file.name, type: file.type, data: file });
-      } catch (error) {
-        this.uppy.log(error);
-      }
-    });
+    Array
+      .from(files)
+      .slice(0, this.maxNumberOfFiles + 1)
+      .forEach(file => {
+        try {
+          this.uppy.addFile({ name: file.name, type: file.type, data: file });
+        } catch (error) {
+          this.uppy.log(error);
+        }
+      });
   }
 
   _bindInput() {
