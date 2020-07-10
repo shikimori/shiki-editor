@@ -47,6 +47,10 @@ export default class FileUploader {
     this._bindInput();
   }
 
+  get isUploading() {
+    return !!this.uploadIDs.length;
+  }
+
   @bind
   destroy() {
     this._removeProgressNode();
@@ -266,6 +270,7 @@ export default class FileUploader {
 
   @bind
   _uploadComplete({ successful }) {
+    console.log('uploadComplete');
     if (this.filesUploadedCount !== this.uploadIDs.length) { return; }
 
     this.uploadIDs = [];
