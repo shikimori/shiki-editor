@@ -48,11 +48,7 @@ export default class FileUploader {
   @bind
   destroy() {
     this._removeProgressNode();
-
-    document.removeEventListener('drop', this._docDrop);
-    document.removeEventListener('dragenter', this._docEnter);
-    document.removeEventListener('dragover', this._docOver);
-    document.removeEventListener('dragleave', this._docLeave);
+    this._unbindDragEvents();
   }
 
   get filesUploadedCount() {
@@ -105,6 +101,13 @@ export default class FileUploader {
     document.addEventListener('dragleave', this._docLeave);
     document.addEventListener('dragover', this._docOver);
     document.addEventListener('drop', this._docDrop);
+  }
+
+  _unbindDragEvents() {
+    document.removeEventListener('drop', this._docDrop);
+    document.removeEventListener('dragenter', this._docEnter);
+    document.removeEventListener('dragover', this._docOver);
+    document.removeEventListener('dragleave', this._docLeave);
   }
 
   _initUppy() {
