@@ -20,6 +20,8 @@ export default class FileUploader {
   progressNodeBar = null
   dropNode = null
 
+  isEnabled = true
+
   defaultOptions = {
     node: null,
     progressContainerNode: null,
@@ -49,6 +51,20 @@ export default class FileUploader {
   destroy() {
     this._removeProgressNode();
     this._unbindDragEvents();
+  }
+
+  disable() {
+    if (!this.isEnabled) { return; }
+
+    this.isEnabled = false;
+    this._unbindDragEvents();
+  }
+
+  enable() {
+    if (this.isEnabled) { return; }
+
+    this.isEnabled = true;
+    this._bindDragEvents();
   }
 
   get filesUploadedCount() {
