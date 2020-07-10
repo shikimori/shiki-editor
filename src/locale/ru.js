@@ -124,17 +124,17 @@ export default {
     //   2: "%{smart_count} дополнительных файлов добавлено",
     // },
     // xTimeLeft: "осталось %{time}",
-    youCanOnlyUploadFileTypes: "Вы можете загрузить только: %{types}",
+    youCanOnlyUploadFileTypes: "Ты можешь загрузить только: %{types}",
     youCanOnlyUploadX: {
-      0: "Вы можете загрузить только %{smart_count} файл",
-      1: "Вы можете загрузить только %{smart_count} файла",
-      2: "Вы можете загрузить только %{smart_count} файлов",
+      0: "Ты можешь загрузить только %{smart_count} файл за раз",
+      1: "Ты можешь загрузить только %{smart_count} файла за раз",
+      2: "Ты можешь загрузить только %{smart_count} файлов за раз",
     },
-    youHaveToAtLeastSelectX: {
-      0: "Вы должны выбрать хотя бы %{smart_count} файл",
-      1: "Вы должны выбрать хотя бы %{smart_count} файла",
-      2: "Вы должны выбрать хотя бы %{smart_count} файлов",
-    },
+    // youHaveToAtLeastSelectX: {
+    //   0: "Ты должен выбрать хотя бы %{smart_count} файл",
+    //   1: "Ты должен выбрать хотя бы %{smart_count} файла",
+    //   2: "Ты должен выбрать хотя бы %{smart_count} файлов",
+    // },
     // selectAllFilesFromFolderNamed: "Выбрать все файлы из папки %{name}",
     // unselectAllFilesFromFolderNamed:
     //   "Отменить выбор всех файлов из папки %{name}",
