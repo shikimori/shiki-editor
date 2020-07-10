@@ -180,12 +180,14 @@ export default class FileUploader {
       'opacity: 0'
     ].join(';');
     this.dropNode.addEventListener('drop', this._dragDrop);
-    this.dropNode.addEventListener('dragenter', () =>
-      this.dropNode.classList.add('hovered')
-    );
-    this.dropNode.addEventListener('dragleave', () =>
-      this.dropNode.classList.remove('hovered')
-    );
+    this.dropNode.addEventListener('dragenter', () => {
+      if (!this.dropNode) { return; } // it can already be removed
+      this.dropNode.classList.add('hovered');
+    });
+    this.dropNode.addEventListener('dragleave', () => {
+      if (!this.dropNode) { return; } // it can already be removed
+      this.dropNode.classList.remove('hovered');
+    });
 
     this.node.parentNode.insertBefore(this.dropNode, this.node);
 
