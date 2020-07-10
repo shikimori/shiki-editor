@@ -29,7 +29,8 @@ export default class FileUploader {
     xhrEndpoint: null,
     xhrHeaders: null,
     xhrFieldName: 'image',
-    maxNumberOfFiles: 150
+    maxNumberOfFiles: 150,
+    isResetAfterUpload: true
   }
 
   constructor(options) {
@@ -236,14 +237,14 @@ export default class FileUploader {
     this.uploadIDs = this.uploadIDs.concat(data.fileIDs);
 
     this.progressNode.classList.add('active');
-    this.progressNodeBar.style.width = '0%';
+    this._uploadProgress();
   }
 
   @bind
   _uploadProgress(file, _progress) {
     let text;
 
-    if (this.uploadIDs.length === 1) {
+    if (file && this.uploadIDs.length === 1) {
       text = I18n.t(`${I18N_KEY}.uploading_file`, {
         filename: file.name,
         filesize: Math.ceil(file.size / 1024)
@@ -270,9 +271,11 @@ export default class FileUploader {
 
   @bind
   _uploadComplete({ successful }) {
-    console.log('uploadComplete');
     if (this.filesUploadedCount !== this.uploadIDs.length) { return; }
 
+    if (this.isResetAfterUpload) {
+      this.uppy.reset();
+    }
     this.uploadIDs = [];
 
     if (successful.length) {
