@@ -273,8 +273,8 @@ export default class FileUploader {
   }
 
   @bind
-  _uploadSuccess(_file, response) {
-    this.trigger('upload:file:success', response.body);
+  _uploadSuccess(uppyFile, response) {
+    this.trigger('upload:file:success', { uppyFile, response: response.body });
   }
 
   @bind
