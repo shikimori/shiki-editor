@@ -156,6 +156,7 @@ export default class FileUploader {
       })
       // https://uppy.io/docs/uppy/#file-added
       .on('upload', this._uploadStart)
+      .on('file-added', this._fileAdded)
       .on('upload-success', this._uploadSuccess)
       .on('upload-progress', this._uploadProgress)
       .on('complete', this._uploadComplete)
@@ -240,6 +241,11 @@ export default class FileUploader {
 
     this.progressNode.classList.add('active');
     this._uploadProgress();
+  }
+
+  @bind
+  _fileAdded(file) {
+    this.trigger('upload:file:added', file);
   }
 
   @bind
