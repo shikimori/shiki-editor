@@ -159,8 +159,8 @@ export default class FileUploader {
       .on('file-added', this._fileAdded)
       .on('upload-success', this._uploadSuccess)
       .on('upload-progress', this._uploadProgress)
-      .on('complete', this._uploadComplete)
       .on('upload-error', this._uploadError)
+      .on('complete', this._uploadComplete)
       .on('restriction-failed', (_file, error) => flash.error(error.message));
   }
 
@@ -305,6 +305,7 @@ export default class FileUploader {
       message = error.message; // eslint-disable-line
     }
 
+    this.trigger('upload:file:error', { uppyFile: file });
     flash.error(message);
   }
 
