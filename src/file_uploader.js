@@ -42,7 +42,7 @@ export default class FileUploader {
     uEvent.mixin(this);
 
     this.uppy = this._initUppy();
-    this._bindDragEvents();
+    this._bindEvents();
     this._addProgressNode();
 
     this._bindInput();
@@ -55,21 +55,21 @@ export default class FileUploader {
   @bind
   destroy() {
     this._removeProgressNode();
-    this._unbindDragEvents();
+    this._unbindEvents();
   }
 
   disable() {
     if (!this.isEnabled) { return; }
 
     this.isEnabled = false;
-    this._unbindDragEvents();
+    this._unbindEvents();
   }
 
   enable() {
     if (this.isEnabled) { return; }
 
     this.isEnabled = true;
-    this._bindDragEvents();
+    this._bindEvents();
   }
 
   get filesUploadedCount() {
@@ -117,14 +117,14 @@ export default class FileUploader {
     });
   }
 
-  _bindDragEvents() {
+  _bindEvents() {
     document.addEventListener('dragenter', this._docEnter);
     document.addEventListener('dragleave', this._docLeave);
     document.addEventListener('dragover', this._docOver);
     document.addEventListener('drop', this._docDrop);
   }
 
-  _unbindDragEvents() {
+  _unbindEvents() {
     document.removeEventListener('drop', this._docDrop);
     document.removeEventListener('dragenter', this._docEnter);
     document.removeEventListener('dragover', this._docOver);
