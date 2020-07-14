@@ -3283,6 +3283,18 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
+shiki-utils@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/shiki-utils/-/shiki-utils-0.1.7.tgz#c5389d8189dfcbc90a942986d3834ad1920b3461"
+  integrity sha512-Vawx6GinZvrN8//IKO9ODy3CbNbpA9pHu/PSESESxUSOGqxpgyET/EifkpeEhUPG3YbaK9DEiX54Qtp1qgzDbw==
+  dependencies:
+    "@uppy/core" "^1.11.0"
+    "@uppy/xhr-upload" "^1.6.0"
+    decko "^1.2.0"
+    is-visible "^2.2.0"
+    toastify-js "^1.8.0"
+    uevent "^2.0.0"
+
 signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
