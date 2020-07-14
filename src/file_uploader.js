@@ -122,6 +122,8 @@ export default class FileUploader {
     document.addEventListener('dragleave', this._docLeave);
     document.addEventListener('dragover', this._docOver);
     document.addEventListener('drop', this._docDrop);
+
+    this.node.addEventListener('paste', this._paste);
   }
 
   _unbindEvents() {
@@ -129,6 +131,8 @@ export default class FileUploader {
     document.removeEventListener('dragenter', this._docEnter);
     document.removeEventListener('dragover', this._docOver);
     document.removeEventListener('dragleave', this._docLeave);
+
+    this.node.removeEventListener('paste', this._paste);
   }
 
   _initUppy() {
@@ -363,6 +367,16 @@ export default class FileUploader {
       this.docLeaveTimer = setTimeout(this._removeDropNode, 200);
     } else {
       this._removeDropNode();
+    }
+  }
+
+  @bind
+  _paste(e) {
+    if (e.clipboardData.files.length) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+
+      this.addFiles(e.clipboardData.files);
     }
   }
 }
