@@ -27,7 +27,7 @@ export default class FileUploader {
     progressContainerNode: null,
     locale: null,
     xhrEndpoint: null,
-    xhrHeaders: null,
+    xhrHeaders: () => ({}),
     xhrFieldName: 'image',
     maxNumberOfFiles: 150,
     isResetAfterUpload: true
@@ -39,6 +39,11 @@ export default class FileUploader {
       this.defaultOptions,
       options
     );
+
+    if (!options.node) {
+      throw new Error('FileUploader options.node is not set', 'file_uploader');
+    }
+
     uEvent.mixin(this);
 
     this.uppy = this._initUppy();
