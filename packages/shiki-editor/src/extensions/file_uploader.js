@@ -1,8 +1,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
 import { bind } from 'decko';
-
-import ShikiUploader from 'shiki-uploader';
+import { ShikiUploader } from 'shiki-uploader';
 
 import {
   insertUploadPlaceholder,
@@ -29,11 +28,11 @@ export default class FileUploader extends Extension {
   async init() {
     console.log(process.env.VUE_APP_USER)
     // const { default: ShikiUploader } = await import(
-    //   // process.env.VUE_APP_USER === 'morr' ?
+    //   process.env.VUE_APP_USER === 'morr' ?
     //   // '../../../packages/shiki-utils/src/file_uploader' :
     //     'shiki-uploader'
     // );
-    // 
+
     this.fileUploader = this.buildFileUploader(ShikiUploader);
     this.fileUploader
       .on('upload:file:added', (_e, uppyFile) =>
