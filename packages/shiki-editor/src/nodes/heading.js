@@ -34,16 +34,15 @@ export default class Heading extends Node {
       toDOM: node => {
         if (node.attrs.level <= 3) {
           return [`h${node.attrs.level + 1}`, 0];
-        } else {
-          const css_class = node.attrs.level === 4 ? 'headline' : 'midheadline';
-          return ['div', { class: css_class }, 0];
         }
+        const css_class = node.attrs.level === 4 ? 'headline' : 'midheadline';
+        return ['div', { class: css_class }, 0];
       }
     };
   }
 
   inputRules({ type }) {
-    return [1,2,3,4,5].map(level => textblockTypeInputRule(
+    return [1, 2, 3, 4, 5].map(level => textblockTypeInputRule(
       new RegExp(`^(#{1,${level}})\\s$`),
       type,
       () => ({ level })

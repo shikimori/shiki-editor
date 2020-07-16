@@ -49,7 +49,7 @@ export default class Smiley extends Node {
   // }
   //
   commands({ type }) {
-    return (kind) => (state, dispatch) => {
+    return kind => (state, dispatch) => {
       if (kind == null) { return; }
 
       const { selection } = state;

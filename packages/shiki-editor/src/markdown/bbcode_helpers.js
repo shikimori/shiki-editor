@@ -43,7 +43,7 @@ export function parseImageMeta(meta) {
   const split = meta.split(' ');
 
   split.forEach(attribute => {
-    let match = attribute.match(IMAGE_ATTIRUBYTES);
+    const match = attribute.match(IMAGE_ATTIRUBYTES);
     if (!match) { return; }
 
     if (match.groups.no_zoom) {

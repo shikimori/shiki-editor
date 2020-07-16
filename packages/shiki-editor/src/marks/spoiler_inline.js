@@ -18,7 +18,7 @@ export default class SpoilerInline extends Mark {
           isOpened: node.classList.contains('is-opened')
         })
       }],
-      toDOM: (node) => [
+      toDOM: node => [
         'span',
         {
           class: `b-spoiler_inline${node.attrs.isOpened ? ' is-opened' : ''}`

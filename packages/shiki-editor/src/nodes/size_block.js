@@ -24,7 +24,7 @@ export default class SizeBlock extends Node {
           return match ? { size: match[1] } : null;
         }
       }],
-      toDOM: (node) => [
+      toDOM: node => [
         'div',
         {
           class: 'size',

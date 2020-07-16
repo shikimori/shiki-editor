@@ -19,7 +19,7 @@ export default class Color extends Mark {
           return match ? { color: match[1] } : null;
         }
       }],
-      toDOM: (node) => [
+      toDOM: node => [
         'span',
         { style: `color: ${node.attrs.color};` },
         0

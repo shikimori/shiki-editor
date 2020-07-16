@@ -33,7 +33,7 @@ export default class Quote extends Node {
         }),
         contentElement: 'div.quote-content'
       }],
-      toDOM: (node) => {
+      toDOM: node => {
         if (node.attrs.nickname) {
           let innerQuoteable;
 

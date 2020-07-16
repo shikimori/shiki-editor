@@ -6,4 +6,3 @@ export default function findPlaceholder(state, id) {
 
   return found.length ? found[0].from : null;
 }
-

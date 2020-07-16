@@ -27,7 +27,7 @@ export default class Div extends Node {
             .map(attribute => [attribute, node.getAttribute(attribute)])
         })
       }],
-      toDOM: (node) => {
+      toDOM: node => {
         const attributes = {};
 
         if (node.attrs.class) {
@@ -68,14 +68,14 @@ export default class Div extends Node {
 }
 
 function serializeClassAttr(node) {
-  return node.attrs.class ? `=${node.attrs.class}`: '';
+  return node.attrs.class ? `=${node.attrs.class}` : '';
 }
 
 function serializeDataAttr(node) {
   if (!node.attrs.data.length) { return ''; }
 
   const data = node.attrs.data
-    .map(v => v[1] ? `${v[0]}=${v[1]}` : v[0])
+    .map(v => (v[1] ? `${v[0]}=${v[1]}` : v[0]))
     .join(' ');
 
   return ` ${data}`;

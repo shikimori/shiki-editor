@@ -10,11 +10,11 @@ export default new Plugin({
       // Adjust decoration positions to changes made by the transaction
       set = set.map(tr.mapping, tr.doc);
       // See if the transaction adds or removes any placeholders
-      let action = tr.getMeta(this);
+      const action = tr.getMeta(this);
       if (action && action.add) {
-        let widget = createPlaceholder(action.add.file);
+        const widget = createPlaceholder(action.add.file);
 
-        let deco = Decoration.widget(
+        const deco = Decoration.widget(
           action.add.pos,
           widget,
           { id: action.add.id }

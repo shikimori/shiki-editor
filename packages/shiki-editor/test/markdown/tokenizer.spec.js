@@ -4,7 +4,7 @@ import { MarkdownTokenizer } from '../../src/markdown';
 function text(content) {
   return [
     { type: 'paragraph', direction: 'open' },
-    { type: 'inline', children: [ { type: 'text', content } ] },
+    { type: 'inline', children: [{ type: 'text', content }] },
     { type: 'paragraph', direction: 'close' }
   ];
 }
@@ -318,7 +318,8 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'color',
                 direction: 'open',
-                attrs: [['color', 'red']], bbcode: '[color=red]'
+                attrs: [['color', 'red']],
+                bbcode: '[color=red]'
               },
               { type: 'text', content: 'zxc' },
               { type: 'color', direction: 'close', bbcode: '[/color]' }
@@ -431,7 +432,7 @@ describe('MarkdownTokenizer', () => {
         it('# a', () => {
           expect(MarkdownTokenizer.parse('# a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 1]] },
-            { type: 'inline', children: [ { type: 'text', content: 'a' } ] },
+            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -441,7 +442,7 @@ describe('MarkdownTokenizer', () => {
         it('## a', () => {
           expect(MarkdownTokenizer.parse('## a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 2]] },
-            { type: 'inline', children: [ { type: 'text', content: 'a' } ] },
+            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -451,7 +452,7 @@ describe('MarkdownTokenizer', () => {
         it('### a', () => {
           expect(MarkdownTokenizer.parse('### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 3]] },
-            { type: 'inline', children: [ { type: 'text', content: 'a' } ] },
+            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -461,7 +462,7 @@ describe('MarkdownTokenizer', () => {
         it('#### a', () => {
           expect(MarkdownTokenizer.parse('#### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 4]] },
-            { type: 'inline', children: [ { type: 'text', content: 'a' } ] },
+            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -471,7 +472,7 @@ describe('MarkdownTokenizer', () => {
         it('##### a', () => {
           expect(MarkdownTokenizer.parse('##### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 5]] },
-            { type: 'inline', children: [ { type: 'text', content: 'a' } ] },
+            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -894,7 +895,8 @@ describe('MarkdownTokenizer', () => {
 
       it('[quote=x]z[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote=x]z[/quote]')).to.eql([{
-          type: 'quote', direction: 'open',
+          type: 'quote',
+          direction: 'open',
           attrs: [['nickname', 'x']]
         },
         ...text('z'),
@@ -905,7 +907,8 @@ describe('MarkdownTokenizer', () => {
 
       it('[quote=t1;2;x]z[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote=t1;2;x]z[/quote]')).to.eql([{
-          type: 'quote', direction: 'open',
+          type: 'quote',
+          direction: 'open',
           attrs: [['topic_id', 1], ['user_id', 2], ['nickname', 'x']]
         },
         ...text('z'),
@@ -916,7 +919,8 @@ describe('MarkdownTokenizer', () => {
 
       it('[quote=m1;2;x]z[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote=m1;2;x]z[/quote]')).to.eql([{
-          type: 'quote', direction: 'open',
+          type: 'quote',
+          direction: 'open',
           attrs: [['message_id', 1], ['user_id', 2], ['nickname', 'x']]
         },
         ...text('z'),
@@ -1038,7 +1042,8 @@ describe('MarkdownTokenizer', () => {
           '[div data-test data-fofo]z[/div]'
         )).to.eql([
           {
-            type: 'div', direction: 'open',
+            type: 'div',
+            direction: 'open',
             attrs: [['data', [['data-test', ''], ['data-fofo', '']]]]
           },
           ...text('z'),
@@ -1053,7 +1058,8 @@ describe('MarkdownTokenizer', () => {
           '[div=aaa bb-cd_e data-test data-fofo]z[/div]'
         )).to.eql([
           {
-            type: 'div', direction: 'open',
+            type: 'div',
+            direction: 'open',
             attrs: [
               ['class', 'aaa bb-cd_e'],
               ['data', [['data-test', ''], ['data-fofo', '']]]

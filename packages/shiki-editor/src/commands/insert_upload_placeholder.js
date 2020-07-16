@@ -3,7 +3,7 @@ import { uploadPlaceholder } from '../plugins';
 export default function(editor, { uploadId, file }) {
   const { state } = editor;
   const { dispatch } = editor.view;
-  const tr = state.tr;
+  const { tr } = state;
 
   if (!tr.selection.empty) tr.deleteSelection();
 

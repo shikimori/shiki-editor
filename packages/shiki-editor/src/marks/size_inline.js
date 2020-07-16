@@ -20,7 +20,7 @@ export default class SizeInline extends Mark {
           return match ? { size: match[1] } : null;
         }
       }],
-      toDOM: (node) => [
+      toDOM: node => [
         'span',
         {
           style: `font-size: ${ensureDimension(node.attrs.size, 'px')};`

@@ -43,20 +43,19 @@ export default class LinkInline extends Mark {
       let marks = [];
       const { from, to } = state.selection;
 
-      state.doc.nodesBetween(from, to, (node) => {
+      state.doc.nodesBetween(from, to, node => {
         marks = [...marks, ...node.marks];
       });
 
-      const mark = marks.find((markItem) => markItem.type.name === 'link_inline');
+      const mark = marks.find(markItem => markItem.type.name === 'link_inline');
 
       if (mark && mark.attrs.href) {
         return removeMark(type);
-      } else {
-        const href = prompt(I18n.t('frontend.shiki_editor.prompt.link_url'));
-        return href ?
-          updateMark(type, { href: fixUrl(href) }) :
-          () => {};
       }
+      const href = prompt(I18n.t('frontend.shiki_editor.prompt.link_url'));
+      return href ?
+        updateMark(type, { href: fixUrl(href) }) :
+        () => {};
     };
   }
 

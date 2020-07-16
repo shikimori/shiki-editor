@@ -23,7 +23,7 @@ export default class SpoilerInlineView extends DOMView {
   toggle() {
     const { dispatch, tr, view, mark } = this;
     const attrs = this.mergeAttrs({ isOpened: !mark.attrs.isOpened });
-    const type = mark.type;
+    const { type } = mark;
 
     const range = getMarkRange(view.state.selection.$from, type);
 

@@ -25,7 +25,7 @@ export default class LinkBlock extends Node {
           })
         }
       ],
-      toDOM: (node) => [
+      toDOM: node => [
         'a',
         {
           href: fixUrl(node.attrs.href),

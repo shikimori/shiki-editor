@@ -95,12 +95,10 @@ export function rollbackUnbalancedTokens(tokens) {
       } else {
         cache[token.type] = true;
       }
+    } else if (cache[token.type]) {
+      cache[token.type] = false;
     } else {
-      if (cache[token.type]) {
-        cache[token.type] = false;
-      } else {
-        tokens[index] = { type: 'text', content: token.bbcode };
-      }
+      tokens[index] = { type: 'text', content: token.bbcode };
     }
   });
 

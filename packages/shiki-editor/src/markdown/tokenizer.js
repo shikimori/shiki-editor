@@ -68,9 +68,8 @@ export default class MarkdownTokenizer {
 
     if (this.exitSequence && !this.isExitSequence) {
       return null;
-    } else {
-      return this.tokens;
     }
+    return this.tokens;
   }
 
   parseLine(skippableSequence = '') {
@@ -318,9 +317,7 @@ export default class MarkdownTokenizer {
     if (seq2 === '||' && seq3 !== '|||') {
       if (this.lastMark !== seq2) {
         if (this.processMarkOpen('spoiler_inline', '||', '||')) { return; }
-      } else {
-        if (this.processMarkClose('spoiler_inline', '||', '||')) { return; }
-      }
+      } else if (this.processMarkClose('spoiler_inline', '||', '||')) { return; }
     }
 
     if (char1 === '`') {
@@ -540,7 +537,7 @@ export default class MarkdownTokenizer {
   }
 
   processImage(tagStart, tagEnd, isPoster, metaAttributes) {
-    let index = this.index + tagStart.length;
+    const index = this.index + tagStart.length;
 
     const src = extractUntil(this.text, tagEnd, index, index + 255);
 
@@ -871,7 +868,7 @@ export default class MarkdownTokenizer {
 
     this.inlineTokens = [];
     this.marksStack = [];
-    this.paragraphToken= null;
+    this.paragraphToken = null;
   }
 
   addSmiley(kind) {
