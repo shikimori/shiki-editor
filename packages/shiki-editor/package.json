@@ -63,7 +63,6 @@
     "webpack-dev-server": "^3.9.0",
     "shiki-editor": "^0.6.2",
     "shiki-uploader": "^0.2.1",
-    "shiki-utils": "^0.2.1",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
