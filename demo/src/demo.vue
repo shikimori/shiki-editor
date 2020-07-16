@@ -7,7 +7,7 @@
 
     <div class='fc-2'>
       <div v-if='isColumn1' class='f-column'>
-        <Editor
+        <EditorApp
           ref='editor1'
           :content='text1'
           :locale='locale'
@@ -18,7 +18,7 @@
         />
       </div>
       <div v-if='isColumn2' class='f-column'>
-        <Editor
+        <EditorApp
           ref='editor2'
           :content='text2'
           :locale='locale'
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import Editor from '../../src/editor_app';
+import EditorApp from '../../packages/shiki-editor';
 
 export default {
   name: 'App',
   components: {
-    Editor
+    EditorApp
   },
   data: () => ({
     uploadHeaders: () => ({}),

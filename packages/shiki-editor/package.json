@@ -3,7 +3,7 @@
   "title": "Shikimori text editor",
   "description": "Shikimori text editor",
   "version": "0.6.1",
-  "main": "src/index.js",
+  "main": "src/editor_app.vue",
   "author": "morr",
   "license": "OSL-3.0",
   "homepage": "https://github.com/shikimori/shiki-editor",

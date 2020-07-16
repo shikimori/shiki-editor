@@ -5,7 +5,7 @@ import Demo from './demo.vue';
 import 'reset-css/reset.css';
 import '@/stylesheets/application.sass';
 import '@/stylesheets/prosemirror.sass';
-import 'shiki-utils/src/stylesheets/index.sass';
+import '@/../../packages/shiki-uploader/index.css';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
