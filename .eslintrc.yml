@@ -1,36 +1,42 @@
----
 root: true
 env:
   browser: true
   node: true
   es6: true
-  jquery: true
 
-parser: babel-eslint
-
-extends:
-  - airbnb-base
-  - eslint:recommended
-  - plugin:import/errors
-  - plugin:import/warnings
-
-globals:
-  I18n: true
-  it: true
-  describe: true
+parser: vue-eslint-parser
 
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
   parser: babel-eslint
 
+extends:
+  - plugin:vue/recommended
+  - eslint:recommended
+  # TODO: enable when eslint-import-resolver-webpack is fixed
+  # - plugin:import/errors
+  # - plugin:import/warnings
+
+plugins:
+  - vue
+
+globals:
+  I18n: true
+  describe: true
+  it: true
+
 rules:
   quotes:
     - error
     - single
+    - avoidEscape: true
   object-curly-spacing:
     - error
     - always
+  space-before-function-paren:
+    - error
+    - never
   semi:
     - error
     - always
@@ -39,7 +45,7 @@ rules:
     - 2
     - as-needed
   arrow-parens:
-    - 2
+    - 0
     - as-needed
   no-console: 0
   no-alert: 0
@@ -57,10 +63,7 @@ rules:
   no-use-before-define: 0
   no-mixed-operators: 0
   no-new: 0
-  no-shadow:
-    - 2
-    - allow:
-      - '_'
+  no-debugger: 0
   function-paren-newline: 0
   comma-dangle:
     - warn
@@ -70,7 +73,7 @@ rules:
     - 100
     - ignoreComments: true
       ignoreUrls: true
-      ignorePattern: "\\s*<"
+      ignorePattern: "^\\s*<|^\\$|\\s*background|\\s*transition|\\s*\\+|\\s*\\$"
   indent:
     - error
     - 2
@@ -79,9 +82,6 @@ rules:
   linebreak-style:
     - error
     - unix
-  space-before-function-paren:
-    - error
-    - never
   func-names: 0
   implicit-arrow-linebreak: 0
   prefer-template: 0
@@ -90,18 +90,27 @@ rules:
   operator-linebreak:
     - 2
     - after
+    - overrides:
+        '|>': 'before'
   keyword-spacing:
     - error
     - after: true
       before: true
   lines-between-class-members: 0
-  import/no-extraneous-dependencies: 0
-  import/no-unresolved: 2
-  import/no-webpack-loader-syntax: 0
-  import/prefer-default-export: 0
-  import/extensions:
+  vue/max-attributes-per-line:
     - error
-    - always
-    - js: never
-  import/first: 0
-  import/order: 0
+    - singleline: 3
+      multiline:
+        max: 1
+        allowFirstLine: false
+  vue/singleline-html-element-content-newline: 0
+  vue/html-quotes: 0
+    # - 1
+    # - single
+  vue/component-name-in-template-casing:
+    - 2
+    - PascalCase
+    - ignores:
+      - router-view
+      - router-link
+  vue/no-v-html: 0

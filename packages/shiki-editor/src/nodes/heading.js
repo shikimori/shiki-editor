@@ -35,8 +35,8 @@ export default class Heading extends Node {
         if (node.attrs.level <= 3) {
           return [`h${node.attrs.level + 1}`, 0];
         }
-        const css_class = node.attrs.level === 4 ? 'headline' : 'midheadline';
-        return ['div', { class: css_class }, 0];
+        const cssClass = node.attrs.level === 4 ? 'headline' : 'midheadline';
+        return ['div', { class: cssClass }, 0];
       }
     };
   }

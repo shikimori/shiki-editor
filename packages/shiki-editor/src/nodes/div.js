@@ -21,7 +21,7 @@ export default class Div extends Node {
           data: node
             .getAttributeNames()
             .filter(name => (
-              name != 'data-div' && name != 'data-pm-slice' &&
+              name !== 'data-div' && name !== 'data-pm-slice' &&
                 name.startsWith('data-')
             ))
             .map(attribute => [attribute, node.getAttribute(attribute)])
@@ -33,7 +33,7 @@ export default class Div extends Node {
         if (node.attrs.class) {
           attributes.class = node.attrs.class;
         }
-        node.attrs.data.forEach(data => attributes[data[0]] = data[1]);
+        node.attrs.data.forEach(data => attributes[data[0]] = data[1]); // eslint-disable-line
 
         return [
           'div',

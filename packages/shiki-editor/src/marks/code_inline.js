@@ -49,7 +49,7 @@ function backticksFor(node, side) {
     }
   }
   let result = len > 0 && side > 0 ? ' `' : '`';
-  for (let i = 0; i < len; i++) result += '`';
+  for (let i = 0; i < len; i += 1) result += '`';
   if (len > 0 && side < 0) result += ' ';
   return result;
 }

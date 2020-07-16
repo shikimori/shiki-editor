@@ -22,7 +22,7 @@ export default new Plugin({
         set = set.add(tr.doc, [deco]);
       } else if (action && action.remove) {
         set = set.remove(
-          set.find(null, null, spec => spec.id == action.remove.id)
+          set.find(null, null, spec => spec.id === action.remove.id)
         );
       }
       return set;
