@@ -25,10 +25,11 @@ export default class FileUploader extends Extension {
   }
 
   async init() {
+    console.log(process.env.VUE_APP_USER)
     const { default: ShikiFileUploader } = await import(
-      process.env.VUE_APP_USER === 'morr' ?
-        '../../../shiki-utils/src/file_uploader' :
-        'shiki-utils/src/file_uploader'
+      // process.env.VUE_APP_USER === 'morr' ?
+      // '../../../packages/shiki-utils/src/file_uploader' :
+        'shiki-uploader'
     );
 
     this.fileUploader = this.buildFileUploader(ShikiFileUploader);

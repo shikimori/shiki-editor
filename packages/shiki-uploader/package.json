@@ -16,10 +16,12 @@
   "dependencies": {
     "@uppy/core": "^1.11.0",
     "@uppy/xhr-upload": "^1.6.0",
+    "is-visible": "^2.2.0"
+  },
+  "peerDepencencies": {
     "decko": "^1.2.0",
-    "is-visible": "^2.2.0",
-    "shiki-utils": "^0.2.0",
-    "uevent": "^2.0.0"
+    "uevent": "^2.0.0",
+    "shiki-utils": "^0.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",

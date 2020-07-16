@@ -60,9 +60,6 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.4.4",
-    "axios": "^0.19.2",
-    "decko": "^1.2.0",
-    "imagesloaded": "^4.1.4",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-dropcursor": "^1.3.2",
     "prosemirror-gapcursor": "^1.1.5",
@@ -76,10 +73,15 @@
     "prosemirror-tables": "^1.1.0",
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.0",
-    "shiki-utils": "^0.1.6",
-    "toastify-js": "^1.8.0",
-    "uevent": "^2.0.0",
     "vue-keypress": "^2.1.1",
     "withinviewport": "^2.1.2"
+  },
+  "peerDepencencies": {
+    "uevent": "^2.0.0",
+    "shiki-uploader": "^0.2.0",
+    "shiki-utils": "^0.2.0",
+    "axios": "^0.19.2",
+    "decko": "^1.2.0",
+    "imagesloaded": "^4.1.4"
   }
 }

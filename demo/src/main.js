@@ -1,4 +1,4 @@
-/* eslint max-len: 0 */
+// /* eslint max-len: 0 */
 import Vue from 'vue';
 import Demo from './demo.vue';
 
@@ -33,6 +33,8 @@ window.I18n = {
   locale: 'ru',
   t: key => TRANSLATIONS[key] || `:${key}`
 };
+
+console.log('VUE_APP_USER', process.env.VUE_APP_USER);
 
 new Vue({
   render: h => h(Demo)
