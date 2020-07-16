@@ -1,20 +1,13 @@
 {
-  "name": "shiki-utils",
-  "title": "Shikimori utils",
-  "version": "0.1.7",
-  "main": "src/index.js",
-  "author": "morr",
-  "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-utils/packages/shiki-utils",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shikimori/shiki-utils.git"
-  },
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
-  },
+  "private": true,
   "dependencies": {
-    "toastify-js": "^1.8.0"
+    "@uppy/core": "^1.11.0",
+    "@uppy/xhr-upload": "^1.6.0",
+    "decko": "^1.2.0",
+    "is-visible": "^2.2.0",
+    "shiki-utils": "^0.1.7",
+    "toastify-js": "^1.8.0",
+    "uevent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -29,3 +22,4 @@
     "eslint-plugin-import": "^2.18.2"
   }
 }
+

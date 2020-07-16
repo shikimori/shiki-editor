@@ -1,11 +1,11 @@
 {
-  "name": "shiki-utils",
+  "name": "shiki-uploader",
   "title": "Shikimori utils",
-  "version": "0.1.7",
-  "main": "src/index.js",
+  "version": "0.0.1",
+  "main": "src/file_uploader.js",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-utils",
+  "homepage": "https://github.com/shikimori/shiki-utils/packages/shiki-uploader",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-utils.git"
@@ -19,7 +19,6 @@
     "decko": "^1.2.0",
     "is-visible": "^2.2.0",
     "shiki-utils": "^0.1.7",
-    "toastify-js": "^1.8.0",
     "uevent": "^2.0.0"
   },
   "devDependencies": {
