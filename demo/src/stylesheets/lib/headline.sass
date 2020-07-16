@@ -1,0 +1,176 @@
+header.head
+  margin-bottom: 15px
+
+  h1, h2
+    border-bottom: none
+    color: #111
+    display: inline-block
+    font: 26px normal tahoma, verdana, arial, sans-serif
+
+    +iphone
+      font-size: 24px
+
+    a.back
+      +link_color
+      display: inline-block
+      font-size: 24px
+      margin-left: -5px
+      position: relative
+      width: 40px
+
+      &:before
+        color: #123
+        content: '←'
+        left: 5px
+        position: absolute
+        top: -32px
+
+      &:after
+        content: attr(data-text)
+        font-size: 9px
+        position: absolute
+        //text-align: center
+        //top: -9px
+        //width: 35px
+      body[data-locale=ru] &:after
+        margin: -9px 0 0 4px
+
+      body[data-locale=en] &:after
+        margin: -9px 0 0 7px
+
+      &:hover:after
+        border-bottom: 1px solid $link-border-hover
+
+  .misc, a.edit
+    color: $gray-2
+    display: inline-block
+    font-family: $font-main
+    font-size: 11px
+    line-height: 12px
+    padding: 17px 0 0 10px
+
+  a.misc, a.edit
+    +link
+
+  +iphone
+    h1, h2
+      display: block
+
+    .misc, a.edit
+      line-height: 1.65
+      padding: 0 0 0 1px
+
+  .notice
+    clear: left
+    color: #333
+    font-size: 12px
+    line-height: $line_height
+    margin: 2px 0 2px 1px
+
+.headline
+  +ellipsis2
+  background: darken(#ebeef1, 1%)
+  border-left: 5px solid darken(#dbe0e6, 1%)
+  color: #123
+  font-size: 18px
+  font-weight: bold
+  line-height: $line_height
+  margin-bottom: 5px
+  padding: 4px 10px 2px
+  text-transform: uppercase
+  transition: color 0.2s ease
+  position: relative
+
+  +gte_desktop
+    margin-bottom: 10px
+
+  & > a
+    +ellipsis2
+    //transition: color 0.2s ease
+    +link
+    //color: #123
+    display: block
+    text-decoration: none
+    padding-right: 20px
+
+    &:before
+      +shikimori('\e81c')
+      //transition: color 0.2s ease
+      color: $gray-2
+      position: absolute
+      right: 10px
+
+    &:hover
+      //color: $link-hover
+      &:before
+        color: $link-hover
+
+    &:active
+      //color: $link-active
+      &:before
+        color: $link-active
+
+  &.linkheadline
+    & > a
+      text-decoration: underline
+      color: inherit
+
+      &:before
+        color: inherit
+
+      &:hover,
+      &:hover:before
+        color: $link-hover
+
+      +gte_laptop
+        &:active,
+        &:active:before
+          color: $link-active
+
+.midheadline
+  @extend .headline
+  font-size: 16px
+  margin-bottom: 10px
+  padding-bottom: 2px
+  padding-top: 3px
+
+.subheadline
+  @extend .headline
+  margin-bottom: 5px
+
+  +gte_laptop
+    font-size: 14px
+    padding: 6px 10px 4px 8px
+    line-height: 14px
+
+  +lte_ipad
+    font-size: 16px
+    padding-top: 3px
+    padding-bottom: 2px
+
+    .b-user16 img
+      margin-top: 5px
+
+  .b-link
+    display: inline
+    padding-right: 0
+
+    &:before
+      display: none
+
+  .b-user16
+    text-transform: none
+
+.mischeadline
+  font-size: 13px
+  font-weight: bold
+  margin-bottom: 5px
+
+.subheadline-buttons
+  position: absolute
+  right: 3px
+  margin-top: 2px
+
+  +lte_ipad
+    margin-top: 1px
+    right: 8px

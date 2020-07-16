@@ -1,0 +1,127 @@
+---
+root: true
+env:
+  browser: true
+  node: true
+  es6: true
+
+parser: vue-eslint-parser
+
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: module
+  parser: babel-eslint
+
+extends:
+  - plugin:vue/recommended
+  - eslint:recommended
+  # TODO: enable when eslint-import-resolver-webpack is fixed
+  # - plugin:import/errors
+  # - plugin:import/warnings
+
+plugins:
+  - vue
+
+globals:
+  I18n: true
+
+rules:
+  quotes:
+    - error
+    - single
+    - avoidEscape: true
+  object-curly-spacing:
+    - error
+    - always
+  space-before-function-paren:
+    - error
+    - never
+  semi:
+    - error
+    - always
+  object-curly-newline: 0
+  arrow-body-style:
+    - 2
+    - as-needed
+  arrow-parens:
+    - 0
+    - as-needed
+  no-console: 0
+  no-alert: 0
+  no-trailing-spaces:
+    - error
+  no-return-assign: 0
+  no-param-reassign:
+    - 2
+    - props: false
+  no-underscore-dangle: 0
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: ^_
+      varsIgnorePattern: ^_
+  no-use-before-define: 0
+  no-mixed-operators: 0
+  no-new: 0
+  no-debugger: 0
+  function-paren-newline: 0
+  comma-dangle:
+    - warn
+    - never
+  max-len:
+    - warn
+    - 100
+    - ignoreComments: true
+      ignoreUrls: true
+      ignorePattern: "^\\s*<|^\\$|\\s*background|\\s*transition|\\s*\\+|\\s*\\$"
+  indent:
+    - error
+    - 2
+    - ignoreComments: true
+      SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  func-names: 0
+  implicit-arrow-linebreak: 0
+  prefer-template: 0
+  class-methods-use-this: 0
+  radix: 0
+  operator-linebreak:
+    - 2
+    - after
+    - overrides:
+        '|>': 'before'
+  keyword-spacing:
+    - error
+    - after: true
+      before: true
+  lines-between-class-members: 0
+  vue/max-attributes-per-line:
+    - error
+    - singleline: 3
+      multiline:
+        max: 1
+        allowFirstLine: false
+  vue/singleline-html-element-content-newline: 0
+  vue/html-quotes: 0
+    # - 1
+    # - single
+  vue/component-name-in-template-casing:
+    - 2
+    - PascalCase
+    - ignores:
+      - router-view
+      - router-link
+  vue/no-v-html: 0
+  # TODO: enable when eslint-import-resolver-webpack is fixed
+  # import/no-extraneous-dependencies: 0
+  # import/no-unresolved: 2
+  # import/no-webpack-loader-syntax: 0
+  # import/prefer-default-export: 0
+  # import/extensions:
+  #   - error
+  #   - always
+  #   - js: never
+  #     vue: never
+  # import/first: 0
+  # import/order: 0

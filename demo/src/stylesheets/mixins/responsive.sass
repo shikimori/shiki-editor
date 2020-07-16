@@ -1,0 +1,114 @@
+=iphone5
+  @media screen and (max-width: 374px) and (orientation: portrait)
+    @content
+
+=iphone5-portrait
+  @media screen and (max-width: 568px) and (orientation: landscape)
+    @content
+
+=iphone8
+  @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (max-device-height: 667px) and (orientation: portrait)
+    @content
+
+=iphonePlus
+  @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait)
+    @content
+
+=iphoneX
+  @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio : 3) and (orientation: portrait)
+    @content
+
+=iphoneX-iphonePlus
+  @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation: portrait)
+    @content
+
+  @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio : 3) and (orientation: portrait)
+    @content
+
+=iphone
+  @media screen and (max-width: 767px) and (orientation: portrait)
+    @content
+
+=iphone-portrait
+  @media screen and (max-width: 767px) and (orientation: landscape)
+    @content
+
+=iphone-landscape
+  @media screen and (min-width: 481px) and (max-width: 767px), screen and (max-width: $iphone_max) and (orientation: landscape)
+    @content
+
+=ipad
+  @media screen and (min-width: 568px) and (max-width: 1023px) and (orientation: landscape)
+    @content
+
+  @media screen and (min-width: 768px) and (max-width: 1023px)
+    @content
+
+=lte_ipad
+  @media screen and (max-width: 1023px)
+    @content
+
+=gte_ipad
+  +ipad
+    @content
+
+  +gte_laptop
+    @content
+
+=ipad_laptop
+  +ipad
+    @content
+
+  +laptop
+    @content
+
+=ipad_laptop_hd
+  +ipad
+    @content
+
+  +laptop_hd
+    @content
+
+=lte_laptop
+  @media screen and (max-width: 1279px)
+    @content
+
+=laptop
+  @media screen and (min-width: 1024px) and (max-width: 1279px)
+    @content
+
+=gte_laptop
+  @media screen and (min-width: 1024px)
+    @content
+
+=laptop_desktop
+  @media screen and (min-width: 1024px) and (max-width: 1439px)
+    @content
+
+=desktop
+  @media screen and (min-width: 1280px) and (max-width: 1439px)
+    @content
+
+=gte_desktop
+  @media screen and (min-width: 1280px)
+    @content
+
+=laptop_hd
+  @media screen and (min-width: 1024px) and (max-width: 1919px)
+    @content
+
+=desktop_hd
+  @media screen and (min-width: 1280px) and (max-width: 1919px)
+    @content
+
+=hd
+  @media screen and (min-width: 1440px) and (max-width: 1919px)
+    @content
+
+=gte_hd
+  @media screen and (min-width: 1440px)
+    @content
+
+=uhd
+  @media screen and (min-width: 1920px)
+    @content

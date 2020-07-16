@@ -1,0 +1,65 @@
+.b-image
+  +image_editable
+  +media
+
+  &:not(.no-zoom)
+    cursor: zoom-in !important
+
+  &:hover
+    img
+      opacity: 0.85
+
+  &.fixed
+    margin-bottom: 0
+
+    img
+      width: $media_width
+
+  &.no-zoom:hover
+  &.b-poster:hover
+    img
+      opacity: 1
+
+  &.b-poster img
+    max-width: 100%
+
+  &.unprocessed img,
+  &.check-width img
+    max-width: $media_width !important
+    max-height: $media_width !important
+
+  &.is-uploading
+    &:empty
+      background: #ccc
+      width: $media_width
+      height: $media_height
+
+  .normalized_width
+    max-width: $media_width !important
+
+  .normalized_height
+    max-height: $media_width !important
+
+  .marker
+    +media_marker
+    letter-spacing: 0.25px
+
+    &:empty:before
+      display: none
+
+    &:before
+      +shikimori('\e83d')
+      font-size: 12px
+      line-height: 20px
+      padding: 0 5px 0 1px
+
+img
+  &.check-width
+    max-width: $media_width !important
+    max-height: $media_width !important
+
+  &.normalized_width
+    max-width: $media_width !important
+
+  &.normalized_height
+    max-height: $media_width !important

@@ -1,0 +1,107 @@
+@import ./core
+
+// shikimori blocks
+@import ./blocks/b-ajax
+@import ./blocks/b-button
+@import ./blocks/b-code_block
+@import ./blocks/b-code_inline
+@import ./blocks/b-dropzone
+@import ./blocks/b-image
+@import ./blocks/b-link
+@import ./blocks/b-link_button
+@import ./blocks/b-list
+@import ./blocks/b-poster
+@import ./blocks/b-quote
+@import ./blocks/b-quote-v2
+@import ./blocks/b-spoiler_block
+@import ./blocks/b-spoiler_inline
+@import ./blocks/b-user16
+@import ./lib/columns
+@import ./lib/headline
+@import ./lib/blocks
+@import ./lib/flex_columns
+
+@import ./prosemirror
+
+\:root
+  @each $variable, $value in $variables
+    #{$variable}: $value
+
+@font-face
+  font-family: 'shikimori'
+  src: url(https://raw.githubusercontent.com/shikimori/shikimori/prosemirror/app/assets/fonts/shikimori.woff2) format('woff2')
+
+@font-face
+  font-family: 'shikimori'
+  src: url(/font/shikimori.woff2) format('woff2')
+
+*
+  box-sizing: border-box
+
+body
+  font-family: Helvetica Neue, Arial, Verdana, sans-serif
+  font-size: 13px
+  line-height: 1.65
+  min-height: 100vh
+
+strong
+  font-weight: bold
+
+em
+  font-style: italic
+
+textarea
+  line-height: 1.65
+
+  +lte_ipad
+    font-size: 16px
+
+  +gte_laptop
+    font-size: 13px
+
+.container
+  margin-left: auto
+  margin-right: auto
+  max-width: 1200px
+  width: 100%
+
+  +lte_ipad
+    padding: 0 20px 0
+
+  +gte_laptop
+    padding: 40px 20px 0
+
+.right-text
+  text-align: right
+
+textarea
+  +input-colors
+
+.editor-inner
+  margin-bottom: 40px
+
+h2,
+h3,
+h4,
+  color: #123
+  font-family: var(--font-alt)
+  font-weight: normal
+
+h2
+  font-size: 25px
+  margin-top: 8px
+  margin-bottom: 12px
+
+h3
+  font-size: 21px
+  margin-top: 6px
+  margin-bottom: 10px
+
+h4
+  font-size: 18px
+  margin-top: 4px
+  margin-bottom: 8px
+
+.smiley
+  vertical-align: middle
+  height: 32px

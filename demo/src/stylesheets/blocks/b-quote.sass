@@ -1,0 +1,54 @@
+$quote_odd: #f9f9f9
+$quote_even: #f6f6f6
+
+.b-quote
+  background: $quote_odd
+  border: 1px dashed #DDDDDD
+  color: #333333
+  font-style: italic
+  margin: 5px 0 5px 5px
+  overflow: hidden
+  padding: 5px 10px
+
+  +lte_ipad
+    margin-left: 0
+    overflow: hidden
+
+  .quoteable
+    cursor: default // not-allowed
+    font-style: normal
+    line-height: 21px
+    margin: -4px 0 0 -3px
+    position: relative
+
+    a
+      margin-right: 0
+      padding-right: 4px
+
+    &:before
+      +shikimori('"')
+      color: #333
+      margin-right: 5px
+      position: relative
+
+      +lte_ipad
+        font-size: 14px
+        top: 0px
+
+      +gte_laptop
+        font-size: 12px
+        top: 2px
+
+    .b-user16 img
+      +lte_ipad
+        margin-top: 5px
+
+  .b-quote
+    background: $quote_even
+    margin-left: 5px !important
+
+    .b-quote
+      background: $quote_odd
+
+      .b-quote
+        background: $quote_even
