@@ -14,9 +14,6 @@
     "decko": "^1.2.0",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
-    "shiki-editor": "^0.6.2",
-    "shiki-uploader": "0.2.1",
-    "shiki-utils": "0.2.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
