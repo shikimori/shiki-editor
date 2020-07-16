@@ -8,7 +8,7 @@
   "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-uploader",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shikimori/shiki-utils.git"
+    "url": "git+https://github.com/shikimori/shiki-packages.git"
   },
   "scripts": {
     "lint": "./node_modules/.bin/eslint src/**/*.js"

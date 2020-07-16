@@ -8,7 +8,7 @@
   "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-utils",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shikimori/shiki-utils.git"
+    "url": "git+https://github.com/shikimori/shiki-packages.git"
   },
   "dependencies": {
     "toastify-js": "^1.8.0"

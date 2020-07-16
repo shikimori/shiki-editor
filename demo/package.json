@@ -11,9 +11,11 @@
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "decko": "^1.2.0",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
     "shiki-uploader": "0.2.1",
+    "shiki-utils": "0.2.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {

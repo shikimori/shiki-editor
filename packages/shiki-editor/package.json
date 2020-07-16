@@ -58,7 +58,6 @@
     "webpack-dev-server": "^3.9.0",
     "webpack-merge": "^4.2.2",
     "uevent": "^2.0.0",
-    "shiki-uploader": "^0.2.1",
     "shiki-utils": "^0.2.1",
     "axios": "^0.19.2",
     "decko": "^1.2.0",
@@ -80,7 +79,8 @@
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.0",
     "vue-keypress": "^2.1.1",
-    "withinviewport": "^2.1.2"
+    "withinviewport": "^2.1.2",
+    "shiki-uploader": "^0.2.1"
   },
   "peerDepencencies": {
     "uevent": "^2.0.0",
