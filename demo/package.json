@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
+    "shiki-uploader": "0.2.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {

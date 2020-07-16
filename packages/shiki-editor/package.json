@@ -2,7 +2,7 @@
   "name": "shiki-editor",
   "title": "Shikimori text editor",
   "description": "Shikimori text editor",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "src/editor_app.vue",
   "author": "morr",
   "license": "OSL-3.0",
@@ -58,8 +58,8 @@
     "webpack-dev-server": "^3.9.0",
     "webpack-merge": "^4.2.2",
     "uevent": "^2.0.0",
-    "shiki-uploader": "^0.2.0",
-    "shiki-utils": "^0.2.0",
+    "shiki-uploader": "^0.2.1",
+    "shiki-utils": "^0.2.1",
     "axios": "^0.19.2",
     "decko": "^1.2.0",
     "imagesloaded": "^4.1.4"
@@ -84,8 +84,8 @@
   },
   "peerDepencencies": {
     "uevent": "^2.0.0",
-    "shiki-uploader": "^0.2.0",
-    "shiki-utils": "^0.2.0",
+    "shiki-uploader": "^0.2.1",
+    "shiki-utils": "^0.2.1",
     "axios": "^0.19.2",
     "decko": "^1.2.0",
     "imagesloaded": "^4.1.4"
