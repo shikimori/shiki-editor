@@ -1,0 +1,56 @@
+.shiki-file_uploader-drop_placeholder
+  background: white
+  border-radius: 1px
+  border: 2px dashed #006eff
+  box-sizing: border-box
+  font-family: var(--font-alt)
+  font-size: 25px
+  min-height: 89px
+  position: absolute
+  text-align: center
+  transition: opacity 0.5s ease, border-color 0.5s ease, color 0.5s ease
+  z-index: 10
+
+  &.disallowed
+    border-color: rgba(#ff4136, 0.6)
+    color: #ff4136
+
+  &.hovered:not(.disallowed)
+    border-color: #2ecc40
+    color: #2ecc40
+
+  &:before
+    content: attr(data-text)
+
+.shiki-file_uploader-upload_progress
+  height: 12px
+  margin-bottom: 8px
+  margin-top: 3px
+  overflow: hidden
+  line-height: 12px
+  font-size: 11px
+
+  &:not(.active)
+    display: none
+
+  &:before
+    color: #123
+    content: attr(data-progress)
+    padding-left: 7px
+    position: absolute
+    z-index: 1
+
+  .bar
+    background-color: #2586d0
+    color: white
+    display: block
+    height: 12px
+    min-width: 35px
+    overflow: hidden
+    padding-left: 7px
+    position: relative
+    text-align: left
+    transition: width 0.35s
+    white-space: nowrap
+    width: 0
+    z-index: 2

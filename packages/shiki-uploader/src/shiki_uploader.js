@@ -5,10 +5,10 @@ import isVisible from 'is-visible';
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 
+import { flash } from 'shiki-utils';
+
 import fixChromeDocEvent from './utils/fix_chrome_doc_event';
 import notFiles from './utils/not_files';
-
-import flash from './flash';
 import ruLocale from './locale/ru';
 
 const I18N_KEY = 'frontend.lib.file_uploader';
