@@ -56,7 +56,13 @@
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.9.0",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "uevent": "^2.0.0",
+    "shiki-uploader": "^0.2.0",
+    "shiki-utils": "^0.2.0",
+    "axios": "^0.19.2",
+    "decko": "^1.2.0",
+    "imagesloaded": "^4.1.4"
   },
   "dependencies": {
     "@popperjs/core": "^2.4.4",

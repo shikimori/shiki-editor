@@ -21,7 +21,7 @@
   "peerDepencencies": {
     "decko": "^1.2.0",
     "uevent": "^2.0.0",
-    "shiki-utils": "^0.2.0"
+    "shiki-utils": "^0.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -33,7 +33,10 @@
     "eslint": "7.1.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-import-resolver-webpack": "0.12.1",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "decko": "^1.2.0",
+    "uevent": "^2.0.0",
+    "shiki-utils": "^0.2.1"
   },
   "postcss": {
     "plugins": {
