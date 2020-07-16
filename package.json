@@ -1,5 +1,8 @@
 {
   "private": true,
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ./**/*.js"
+  },
   "dependencies": {
     "@uppy/core": "^1.11.0",
     "@uppy/xhr-upload": "^1.6.0",

@@ -1,8 +1,8 @@
 {
   "name": "shiki-utils",
   "title": "Shikimori utils",
-  "version": "0.1.7",
-  "main": "src/index.js",
+  "version": "0.1.8",
+  "main": "index.js",
   "author": "morr",
   "license": "OSL-3.0",
   "homepage": "https://github.com/shikimori/shiki-utils/packages/shiki-utils",
@@ -10,12 +10,19 @@
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-utils.git"
   },
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
-  },
   "dependencies": {
     "toastify-js": "^1.8.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.8.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.4",
+    "@babel/preset-env": "^7.7.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "7.1.0",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-import-resolver-webpack": "0.12.1",
+    "eslint-plugin-import": "^2.18.2"
   }
 }
