@@ -1,11 +1,11 @@
 {
   "name": "shiki-uploader",
-  "title": "Shikimori utils",
-  "version": "0.2.0",
+  "title": "Shikimori Uploader",
+  "version": "0.2.1",
   "main": "src/file_shiki.js",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-utils/packages/shiki-uploader",
+  "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-uploader",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-utils.git"

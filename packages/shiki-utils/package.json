@@ -1,11 +1,11 @@
 {
   "name": "shiki-utils",
-  "title": "Shikimori utils",
+  "title": "Shikimori Utils",
   "version": "0.2.0",
   "main": "index.js",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-utils/packages/shiki-utils",
+  "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-utils",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-utils.git"

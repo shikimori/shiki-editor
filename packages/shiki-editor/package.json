@@ -6,7 +6,7 @@
   "main": "src/editor_app.vue",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-editor",
+  "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-editor",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-editor.git"
