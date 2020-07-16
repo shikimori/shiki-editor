@@ -13,7 +13,7 @@ import ruLocale from './locale/ru';
 
 const I18N_KEY = 'frontend.lib.file_uploader';
 
-export default class FileUploader {
+export default class ShikiUploader {
   uploadIDs = []
   docLeaveTimer = null
   progressNode = null
@@ -41,7 +41,7 @@ export default class FileUploader {
     );
 
     if (!options.node) {
-      throw new Error('FileUploader options.node is not set', 'file_uploader');
+      throw new Error('ShikiUploader options.node is not set', 'file_uploader');
     }
 
     uEvent.mixin(this);
