@@ -1,32 +1,43 @@
 <template>
   <div class='container'>
-    <div class='samples'>
-      <label><input v-model='isColumn1' type='checkbox'>Sample 1</label>
-      <label><input v-model='isColumn2' type='checkbox'>Sample 2</label>
-    </div>
-
-    <div class='fc-2'>
-      <div v-if='isColumn1' class='f-column'>
-        <EditorApp
-          ref='editor1'
-          :content='text1'
-          :locale='locale'
-          :base-url='baseUrl'
-          :upload-endpoint='uploadEndpoint'
-          :upload-headers='uploadHeaders'
-          @update='(value) => text1 = value'
-        />
+    <div class='block'>
+      <div class='headline'>shiki-utils</div>
+      <div class='samples'>
+        <button @click='info'>info</button>
+        <button @click='error'>error</button>
+        <button @click='notice'>notice</button>
       </div>
-      <div v-if='isColumn2' class='f-column'>
-        <EditorApp
-          ref='editor2'
-          :content='text2'
-          :locale='locale'
-          :base-url='baseUrl'
-          :upload-endpoint='uploadEndpoint'
-          :upload-headers='uploadHeaders'
-          @update='(value) => text2 = value'
-        />
+    </div>
+    <div class='block'>
+      <div class='headline'>shiki-editor</div>
+      <div class='samples'>
+        <label><input v-model='isColumn1' type='checkbox'>Sample 1</label>
+        <label><input v-model='isColumn2' type='checkbox'>Sample 2</label>
+      </div>
+
+      <div class='fc-2'>
+        <div v-if='isColumn1' class='f-column'>
+          <EditorApp
+            ref='editor1'
+            :content='text1'
+            :locale='locale'
+            :base-url='baseUrl'
+            :upload-endpoint='uploadEndpoint'
+            :upload-headers='uploadHeaders'
+            @update='(value) => text1 = value'
+          />
+        </div>
+        <div v-if='isColumn2' class='f-column'>
+          <EditorApp
+            ref='editor2'
+            :content='text2'
+            :locale='locale'
+            :base-url='baseUrl'
+            :upload-endpoint='uploadEndpoint'
+            :upload-headers='uploadHeaders'
+            @update='(value) => text2 = value'
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -34,6 +45,7 @@
 
 <script>
 import EditorApp from '../../packages/shiki-editor';
+import { flash } from '../../packages/shiki-utils';
 
 export default {
   name: 'App',
@@ -154,6 +166,17 @@ div [div=b-link_button]inside line is not parsed[/div]
   mounted() {
     window.shikiTokenizer = (this.$refs.editor1 || this.$refs.editor2)
       .editor.markdownParser.tokenizer;
+  },
+  methods: {
+    info() {
+      flash.info('info flash');
+    },
+    error() {
+      flash.error('error flash');
+    },
+    notice() {
+      flash.notice('notice flash');
+    }
   }
 };
 </script>
@@ -163,7 +186,10 @@ div [div=b-link_button]inside line is not parsed[/div]
   width: 100%
 
 .samples
-  margin-bottom: 16px
+  margin-bottom: 4px
+
+  button
+    margin-right: 16px
 
   label
     display: inline-flex
