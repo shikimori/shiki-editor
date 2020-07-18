@@ -17,23 +17,25 @@ export default class FileUploader extends Extension {
 
   get defaultOptions() {
     return {
-      progressContainerNode: null,
+      shikiUploader: null,
       locale: null,
       uploadEndpoint: null,
       uploadHeaders: null
     };
   }
 
-  async init() {
-    console.log(process.env.VUE_APP_USER);
-    const { default: ShikiUploader } = await import(
-      process.env.VUE_APP_USER === 'morr' ?
-        '../../../../packages/shiki-uploader' :
-        'shiki-uploader'
-    );
+  init() {
+  }
 
-    this.fileUploader = this.buildFileUploader(ShikiUploader);
-    this.fileUploader
+  buildShikiUploader({ node, progressContainerNode }) {
+    this.fileUploader = new this.options.shikiUploader({
+      node,
+      progressContainerNode,
+      locale: this.options.locale,
+      xhrEndpoint: this.options.uploadEndpoint,
+      xhrHeaders: this.options.uploadHeaders,
+      maxNumberOfFiles: 10
+    })
       .on('upload:file:added', (_e, uppyFile) =>
         insertUploadPlaceholder(
           this.editor,
@@ -68,17 +70,6 @@ export default class FileUploader extends Extension {
 
   disable() {
     this.fileUploader.disable();
-  }
-
-  buildFileUploader(ShikiFileUploader) {
-    return new ShikiFileUploader({
-      node: this.editor.view.dom,
-      progressContainerNode: this.options.progressContainerNode,
-      locale: this.options.locale,
-      xhrEndpoint: this.options.uploadEndpoint,
-      xhrHeaders: this.options.uploadHeaders,
-      maxNumberOfFiles: 10
-    });
   }
 
   get plugins() {

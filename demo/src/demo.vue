@@ -8,6 +8,7 @@
         <button @click='notice'>notice</button>
       </div>
     </div>
+
     <div class='block'>
       <div class='headline'>shiki-editor</div>
       <div class='samples'>
@@ -24,6 +25,7 @@
             :base-url='baseUrl'
             :upload-endpoint='uploadEndpoint'
             :upload-headers='uploadHeaders'
+            :shiki-uploader='ShikiUploader'
             @update='(value) => text1 = value'
           />
         </div>
@@ -35,6 +37,7 @@
             :base-url='baseUrl'
             :upload-endpoint='uploadEndpoint'
             :upload-headers='uploadHeaders'
+            :shiki-uploader='ShikiUploader'
             @update='(value) => text2 = value'
           />
         </div>
@@ -46,6 +49,7 @@
 <script>
 import EditorApp from '../../packages/shiki-editor';
 import { flash } from '../../packages/shiki-utils';
+import ShikiUploader from '../../packages/shiki-uploader';
 
 export default {
   name: 'App',
@@ -161,6 +165,9 @@ div [div=b-link_button]inside line is not parsed[/div]
       return `${this.baseUrl}/api/user_images?linked_type=Comment` + (
         process.env.NODE_ENV === 'development' ? '&test=1' : ''
       );
+    },
+    ShikiUploader() {
+      return ShikiUploader;
     }
   },
   mounted() {
