@@ -92,7 +92,7 @@ export default {
 
   &:before
     // it is a copy of shikimori font mixin
-    font-family: shikimori
+    font-family: shiki-editor
     -webkit-font-smoothing: antialiased
     -moz-osx-font-smoothing: grayscale
     font-feature-settings: 'liga'
