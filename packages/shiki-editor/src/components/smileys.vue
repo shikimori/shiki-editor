@@ -132,10 +132,10 @@ $padding-vertical: 8px
 
     +gte_laptop
       &:hover
-        outline: 2px solid var(--link-hover-color)
+        outline: 2px solid var(--link-hover-color, #dd5202)
 
     &:active
-      outline: 2px solid var(--link-active-color)
+      outline: 2px solid var(--link-active-color, #ff0202)
 
   .inner
     overflow-y: auto

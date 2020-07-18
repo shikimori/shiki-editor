@@ -1,4 +1,4 @@
-@import ./core
+@import ./responsive
 
 .ProseMirror-menubar-wrapper
   color: #123
@@ -10,8 +10,10 @@
     font-size: 13px
 
 .ProseMirror
-  +input_colors
   -webkit-font-variant-ligatures: none
+  background-color: #fcfcfc
+  border: 1px solid #ddd
+  color: #123
   font-variant-ligatures: none
   min-height: 89px
   outline: none
@@ -21,7 +23,6 @@
   word-wrap: break-word
 
   &-focused
-    +input_focus
 
   pre
     white-space: pre-wrap
@@ -173,10 +174,10 @@ li.ProseMirror-selectednode
 
   +gte_laptop
     &:hover
-      color: $link-hover
+      color: var(--link-hover-color, #dd5202)
 
   &:active
-    color: #ff0202
+    color: var(--link-active-color, #ff0202)
 
 .ProseMirror-menuseparator
   margin-top: 6px

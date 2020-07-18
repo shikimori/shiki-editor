@@ -239,6 +239,10 @@ export default {
 };
 </script>
 
+<style lang='sass'>
+@import ./stylesheets/prosemirror.sass
+</style>
+
 <style scoped lang='sass'>
 .menubar
   background: #fff
