@@ -48,7 +48,7 @@ export default class SpoilerBlockView extends DOMView {
     const { getPos, node, view, dispatch, tr } = this;
 
     const label = prompt(
-      I18n.t('frontend.shiki_editor.prompt.spoiler_label'),
+      window.I18n.t('frontend.shiki_editor.prompt.spoiler_label'),
       node.attrs.label
     );
     if (!label) { return; }

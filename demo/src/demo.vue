@@ -154,7 +154,7 @@ div [div=b-link_button]inside line is not parsed[/div]
   }),
   computed: {
     locale() {
-      return I18n.locale;
+      return window.I18n.locale;
     },
     baseUrl() {
       return process.env.VUE_APP_USER === 'morr' ?

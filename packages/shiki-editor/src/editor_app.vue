@@ -120,14 +120,14 @@ export default {
     menuItems() {
       return MENU_ITEMS.map(items => items.map(item => ({
         type: item,
-        title: I18n.t(`frontend.shiki_editor.${item}`),
+        title: window.I18n.t(`frontend.shiki_editor.${item}`),
         isEnabled: this.isEnabledMappings[item]
       })));
     },
     menuSourceItem() {
       return {
         type: 'source',
-        title: I18n.t('frontend.shiki_editor.undo')
+        title: window.I18n.t('frontend.shiki_editor.undo')
       };
     },
     isActive() {

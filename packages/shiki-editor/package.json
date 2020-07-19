@@ -81,11 +81,12 @@
     "vue-keypress": "^2.1.1",
     "withinviewport": "^2.1.2"
   },
-  "peerDepencencies": {
+  "peerDependencies": {
     "uevent": "^2.0.0",
     "shiki-utils": "^0.2.1",
     "axios": "^0.19.2",
     "decko": "^1.2.0",
-    "imagesloaded": "^4.1.4"
+    "imagesloaded": "^4.1.4",
+    "autosize": "^4.0.2"
   }
 }

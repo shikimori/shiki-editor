@@ -52,7 +52,7 @@ export default class LinkInline extends Mark {
       if (mark && mark.attrs.href) {
         return removeMark(type);
       }
-      const href = prompt(I18n.t('frontend.shiki_editor.prompt.link_url'));
+      const href = prompt(window.I18n.t('frontend.shiki_editor.prompt.link_url'));
       return href ?
         updateMark(type, { href: fixUrl(href) }) :
         () => {};

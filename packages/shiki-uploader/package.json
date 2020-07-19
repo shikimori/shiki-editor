@@ -18,7 +18,7 @@
     "@uppy/xhr-upload": "^1.6.0",
     "is-visible": "^2.2.0"
   },
-  "peerDepencencies": {
+  "peerDependencies": {
     "decko": "^1.2.0",
     "uevent": "^2.0.0",
     "shiki-utils": "^0.2.1"
