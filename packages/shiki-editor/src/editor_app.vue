@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div ref='menubar' class='menubar'>
+    <div
+      ref='menubar'
+      class='menubar'
+      :class='{ "is-offset": isMenuBarOffset }'
+    >
       <div v-if='editor' class='icons'>
         <div
           v-for='(items, index) in menuItems'
@@ -100,7 +104,8 @@ export default {
     isSource: false,
     isLinkBlock: false,
     isSmiley: false,
-    fileUploaderExtension: null
+    fileUploaderExtension: null,
+    isMenuBarOffset: false
   }),
   computed: {
     isEnabled() {
@@ -259,6 +264,9 @@ export default {
   right: 0
   top: 0
   z-index: 10
+
+  &.is-offset
+    top: 45px
 
   .icons
     color: #456
