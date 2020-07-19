@@ -178,7 +178,7 @@ export default class ShikiUploader {
 
     const height = this.node.offsetHeight;
     const width = this.node.offsetWidth;
-    const text = I18n.t(`${I18N_KEY}.drop_pictures_here`);
+    const text = window.I18n.t(`${I18N_KEY}.drop_pictures_here`);
 
     this.dropNode = document.createElement('div');
     this.dropNode.classList.add('shiki-file_uploader-drop_placeholder');
@@ -262,12 +262,12 @@ export default class ShikiUploader {
     let text;
 
     if (file && this.uploadIDs.length === 1) {
-      text = I18n.t(`${I18N_KEY}.uploading_file`, {
+      text = window.I18n.t(`${I18N_KEY}.uploading_file`, {
         filename: file.name,
         filesize: Math.ceil(file.size / 1024)
       });
     } else {
-      text = I18n.t(`${I18N_KEY}.uploading_files`, {
+      text = window.I18n.t(`${I18N_KEY}.uploading_files`, {
         uploadedCount: Math.min(this.filesUploadedCount + 1, this.uploadIDs.length),
         totalCount: this.uploadIDs.length,
         kbUploaded: Math.ceil(this.bytesUploaded / 1024),
