@@ -23,7 +23,7 @@ import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
   from './markdown';
 import { VueView } from './node_views';
 import { trackFocus, buildNodesAndMarks, uploadPlaceholder } from './plugins';
-import { TrailingNode } from './extensions';
+import { buildExtensions } from './extensions';
 
 export default class ShikiEditor {
   options = {
@@ -85,8 +85,8 @@ export default class ShikiEditor {
   createExtensionManager() {
     return new ExtensionManager([
       ...buildNodesAndMarks(this),
-      ...this.options.extensions,
-      new TrailingNode()
+      ...buildExtensions(this),
+      ...this.options.extensions
     ], this);
   }
 
