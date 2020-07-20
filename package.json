@@ -5,8 +5,8 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "eslint ./**/*.js",
-    "test": "yarn run mocha-webpack --webpack-config webpack.config.test.js packages/**/*.spec.js --recursive"
+    "lint": "eslint packages/**/*.js",
+    "test": "mocha-webpack --webpack-config webpack.config.test.js packages/**/*.spec.js --recursive"
   },
   "dependencies": {
     "@uppy/core": "^1.11.0",
