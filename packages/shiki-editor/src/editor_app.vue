@@ -296,6 +296,9 @@ export default {
     &:before
       display: none
 
+.editor-container
+  line-height: 0
+
 textarea.ProseMirror
   min-height: 89px
   outline: none
