@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/shikimori/shiki-editor.svg?branch=master)](https://travis-ci.org/shikimori/shiki-editor)
 ## About 
 `shiki-editor` is a wysiwyg editor based on [prosemirror](https://prosemirror.net/). To understand how it works internally please read [prosemirror guide](https://prosemirror.net/docs/guide/).
 
