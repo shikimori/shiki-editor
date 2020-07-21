@@ -114,7 +114,7 @@ export function parseSpoilerMeta(meta) {
   };
 }
 
-export function parseShikiLinkMeta(match1, match2) {
+export function parseShikiBasicMeta(match1, match2) {
   return {
     type: match1,
     id: parseInt(match2)

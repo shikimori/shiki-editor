@@ -1255,6 +1255,70 @@ describe('MarkdownTokenizer', () => {
           { type: 'paragraph', direction: 'close' }
         ]);
       });
+
+      it('[poster=1]', () => {
+        expect(MarkdownTokenizer.parse('[poster=1]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'poster'],
+                  ['id', 1],
+                  ['bbcode', '[poster=1]']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
+      it('[image=1]', () => {
+        expect(MarkdownTokenizer.parse('[image=1]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'image'],
+                  ['id', 1],
+                  ['bbcode', '[image=1]']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
+      it('[image=1]zxc[/image]', () => {
+        expect(MarkdownTokenizer.parse('[image=1]zxc[/image]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'image'],
+                  ['id', 1],
+                  ['bbcode', '[image=1]']
+                ]
+              },
+              {
+                type: 'text',
+                content: 'zxc[/image]'
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
     });
   });
 

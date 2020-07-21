@@ -13,7 +13,7 @@ import {
   parseQuoteMeta,
   parseSizeMeta,
   parseSpoilerMeta,
-  parseShikiLinkMeta
+  parseShikiBasicMeta
 } from './bbcode_helpers';
 
 import processBlock from './processors/block';
@@ -42,6 +42,7 @@ export default class MarkdownTokenizer {
   EMPTY_SPACES_REGEXP = /^ +$/
 
   SHIKI_LINK_REGEXP = /^\[(anime|manga|ranobe|character|person)=(\d+)\]$/
+  SHIKI_IMAGE_REGEXP = /^\[(poster|image)=(\d+)\]$/
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
@@ -434,11 +435,20 @@ export default class MarkdownTokenizer {
         case '[pers':
           match = bbcode.match(this.SHIKI_LINK_REGEXP);
           if (!match) { break; }
-          meta = parseShikiLinkMeta(match[1], match[2]);
+          meta = parseShikiBasicMeta(match[1], match[2]);
 
-          if (processShikiInline(this, bbcode, meta)) {
+          if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) {
             return;
           }
+          break;
+
+        case '[post':
+        case '[imag':
+          match = bbcode.match(this.SHIKI_IMAGE_REGEXP);
+          if (!match) { break; }
+          meta = parseShikiBasicMeta(match[1], match[2]);
+
+          if (processShikiInline(this, bbcode, null, meta)) { return; }
           break;
       }
     }

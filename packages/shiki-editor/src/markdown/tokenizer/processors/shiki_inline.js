@@ -1,13 +1,15 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
 
-export default function(state, startSequence, meta) {
-  const endSequence = `[/${meta.type}]`;
-  const text = extractUntil(
-    state.text,
-    endSequence,
-    state.index + startSequence.length
-  );
+export default function(state, startSequence, endSequence, meta) {
+  let text;
+  if (endSequence) {
+    text = extractUntil(
+      state.text,
+      endSequence,
+      state.index + startSequence.length
+    );
+  }
 
   if (text) {
     const sequence = `${startSequence}${text}${endSequence}`;
