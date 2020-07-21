@@ -1,8 +1,4 @@
 import { Node } from '../base';
-// import { nodeInputRule } from '../commands';
-// import { ImageView } from '../node_views';
-//
-// const IMAGE_INPUT_REGEX = /\[img\](.*?)\[\/img\]/;
 
 export default class Smiley extends Node {
   get name() {
@@ -39,15 +35,6 @@ export default class Smiley extends Node {
     };
   }
 
-  // inputRules({ type }) {
-  //   return [
-  //     nodeInputRule(IMAGE_INPUT_REGEX, type, match => {
-  //       const [, src] = match;
-  //       return { src };
-  //     })
-  //   ];
-  // }
-  //
   commands({ type }) {
     return kind => (state, dispatch) => {
       if (kind == null) { return; }
