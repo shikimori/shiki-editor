@@ -2,7 +2,6 @@ import Token from './token';
 
 import {
   extractBbCode,
-  extractMarkdownLanguage,
   extractUntil,
   extractUntilWith,
   hasInlineSequence,
@@ -19,7 +18,9 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
-export default class MarkdownTokenizerParser {
+import { processCodeBlock } from './handlers';
+
+export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
   MAX_SMILEY_SIZE = 18
 
@@ -54,7 +55,7 @@ export default class MarkdownTokenizerParser {
   }
 
   static parse(text) {
-    return new MarkdownTokenizerParser(text, 0).parse();
+    return new MarkdownTokenizer(text, 0).parse();
   }
 
   parse() {
@@ -124,7 +125,7 @@ export default class MarkdownTokenizerParser {
 
         switch (seq3) {
           case '```':
-            if (this.processCodeBlock(seq3, '\n```', null, true)) {
+            if (processCodeBlock(this, seq3, '\n```', null, true)) {
               break outer;
             }
             break;
@@ -224,7 +225,8 @@ export default class MarkdownTokenizerParser {
         if (seq5 === '[code' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
           const meta = parseCodeMeta(match[1]);
           if (isStart || meta) {
-            isProcessed = this.processCodeBlock(
+            isProcessed = processCodeBlock(
+              this,
               bbcode, '[/code]', meta,
               isStart, isOnlySpacingsBefore
             );
@@ -607,7 +609,7 @@ export default class MarkdownTokenizerParser {
     let index = this.index + startSequence.length;
     if (this.text[index] === '\n') { index += 1; }
 
-    const tokenizer = new MarkdownTokenizerParser(
+    const tokenizer = new MarkdownTokenizer(
       this.text,
       index,
       this.nestedSequence,
@@ -640,7 +642,7 @@ export default class MarkdownTokenizerParser {
   }
 
   processInlineBlock(startSequence, exitSequence) {
-    const tokenizer = new MarkdownTokenizerParser(
+    const tokenizer = new MarkdownTokenizer(
       this.text,
       this.index + startSequence.length,
       '',
@@ -750,64 +752,6 @@ export default class MarkdownTokenizerParser {
     } while (this.isSequenceContinued());
 
     this.nestedSequence = nestedSequenceBackup;
-  }
-
-  processCodeBlock(
-    startSequence,
-    endSequence,
-    meta,
-    isStart,
-    isOnlySpacingsBefore
-  ) {
-    const isMarkdown = startSequence === '```';
-    let index = this.index + startSequence.length;
-    let language;
-
-    if (isMarkdown) {
-      language = extractMarkdownLanguage(this.text, index);
-      index += language ? language.length + 1 : 1;
-    } else {
-      if (meta && meta.language) {
-        language = meta.language;
-      }
-      if (this.text[index] === '\n') {
-        index += 1;
-      }
-    }
-
-    const startIndex = index;
-    let isEnded = false;
-
-    while (index <= this.text.length) {
-      if (this.text[index] === endSequence[0] &&
-        this.text.slice(index, index + endSequence.length) === endSequence
-      ) {
-        isEnded = true;
-        break;
-      }
-      index += 1;
-    }
-    if (!isEnded) {
-      return false;
-    }
-
-    const endIndex = isMarkdown ?
-      index :
-      this.text[index - 1] === '\n' ? index - 1 : index;
-    const text = this.text.slice(startIndex, endIndex);
-    const languageAttr = language ? [['language', language]] : null;
-    index += endSequence.length;
-
-    if (isOnlySpacingsBefore) {
-      this.inlineTokens = [];
-    } else if (!isStart) {
-      this.finalizeParagraph();
-    }
-
-    this.push(new Token('code_block', text, null, languageAttr));
-    this.next(index - this.index, true);
-
-    return true;
   }
 
   processHr(bbcode) {
