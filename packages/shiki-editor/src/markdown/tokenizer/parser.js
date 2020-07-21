@@ -21,6 +21,8 @@ import processBlockQuote from './processors/block_quote';
 import processBulletList from './processors/bulle_list';
 import processCodeBlock from './processors/code_block';
 import processCodeInline from './processors/code_inline';
+import processHeading from './processors/heading';
+import processHr from './processors/hr';
 import processImage from './processors/image';
 import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
@@ -109,19 +111,19 @@ export default class MarkdownTokenizer {
       if (isStart) {
         switch (seq5) {
           case '#### ':
-            this.processHeading(seq5, 4);
+            processHeading(this, seq5, 4);
             break outer;
 
           case '#####':
             if (this.text[this.index + 5] === ' ') {
-              this.processHeading(seq5 + ' ', 5);
+              processHeading(this, seq5 + ' ', 5);
               break outer;
             }
         }
 
         switch (seq4) {
           case '### ':
-            this.processHeading(seq4, 3);
+            processHeading(this, seq4, 3);
             break outer;
         }
 
@@ -133,7 +135,7 @@ export default class MarkdownTokenizer {
             break;
 
           case '## ':
-            this.processHeading(seq3, 2);
+            processHeading(this, seq3, 2);
             break outer;
         }
 
@@ -149,7 +151,7 @@ export default class MarkdownTokenizer {
             break outer;
 
           case '# ':
-            this.processHeading(seq2, 1);
+            processHeading(this, seq2, 1);
             break outer;
         }
 
@@ -315,7 +317,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[hr]':
-        this.processHr(bbcode);
+        processHr(this, bbcode);
         return true;
 
       case '[br]':
@@ -465,18 +467,6 @@ export default class MarkdownTokenizer {
     this.next(closeBbcode.length);
 
     return true;
-  }
-
-
-  processHr(bbcode) {
-    this.ensureParagraphClosed();
-    this.next(bbcode.length, true);
-    this.push(new Token('hr', null, null, null));
-  }
-
-  processHeading(sequence, level) {
-    this.paragraphToken = this.tagOpen('heading', { level });
-    this.next(sequence.length);
   }
 
   tagOpen(type, attributes = null, bbcode) {
