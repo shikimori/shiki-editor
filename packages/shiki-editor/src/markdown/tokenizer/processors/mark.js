@@ -1,0 +1,25 @@
+import { hasInlineSequence } from '../helpers';
+
+export function processMarkOpen(state, type, openBbcode, closeBbcode, attributes) {
+  if (!hasInlineSequence(state.text, closeBbcode, state.index)) { return false; }
+
+  state.marksStack.push(state.MARK_STACK_MAPPINGS[type] || openBbcode);
+  state.inlineTokens.push(
+    state.tagOpen(type, attributes, openBbcode)
+  );
+  state.next(openBbcode.length);
+
+  return true;
+}
+
+export function processMarkClose(state, type, openBbcode, closeBbcode) {
+  if (state.lastMark !== openBbcode) { return false; }
+
+  state.marksStack.pop();
+  state.inlineTokens.push(
+    state.tagClose(type, closeBbcode)
+  );
+  state.next(closeBbcode.length);
+
+  return true;
+}

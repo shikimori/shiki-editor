@@ -2,7 +2,6 @@ import Token from './token';
 
 import {
   extractBbCode,
-  hasInlineSequence,
   rollbackUnbalancedTokens
 } from './helpers';
 
@@ -28,6 +27,7 @@ import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
 import processPseudoBlock from './processors/pseudo_block';
 import processSmiley from './processors/smiley';
+import { processMarkOpen, processMarkClose } from './processors/mark';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -265,47 +265,47 @@ export default class MarkdownTokenizer {
   parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
-        if (this.processMarkOpen('bold', '[b]', '[/b]')) { return; }
+        if (processMarkOpen(this, 'bold', '[b]', '[/b]')) { return; }
         break;
 
       case '[/b]':
-        if (this.processMarkClose('bold', '[b]', '[/b]')) { return; }
+        if (processMarkClose(this, 'bold', '[b]', '[/b]')) { return; }
         break;
 
       case '[i]':
-        if (this.processMarkOpen('italic', '[i]', '[/i]')) { return; }
+        if (processMarkOpen(this, 'italic', '[i]', '[/i]')) { return; }
         break;
 
       case '[/i]':
-        if (this.processMarkClose('italic', '[i]', '[/i]')) { return; }
+        if (processMarkClose(this, 'italic', '[i]', '[/i]')) { return; }
         break;
 
       case '[u]':
-        if (this.processMarkOpen('underline', '[u]', '[/u]')) { return; }
+        if (processMarkOpen(this, 'underline', '[u]', '[/u]')) { return; }
         break;
 
       case '[/u]':
-        if (this.processMarkClose('underline', '[u]', '[/u]')) { return; }
+        if (processMarkClose(this, 'underline', '[u]', '[/u]')) { return; }
         break;
 
       case '[s]':
-        if (this.processMarkOpen('strike', '[s]', '[/s]')) { return; }
+        if (processMarkOpen(this, 'strike', '[s]', '[/s]')) { return; }
         break;
 
       case '[/s]':
-        if (this.processMarkClose('strike', '[s]', '[/s]')) { return; }
+        if (processMarkClose(this, 'strike', '[s]', '[/s]')) { return; }
         break;
 
       case '[/url]':
-        if (this.processMarkClose('link_inline', '[url]', '[/url]')) { return; }
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return; }
         break;
 
       case '[/color]':
-        if (this.processMarkClose('color', '[color]', '[/color]')) { return; }
+        if (processMarkClose(this, 'color', '[color]', '[/color]')) { return; }
         break;
 
       case '[/size]':
-        if (this.processMarkClose('size', '[size]', '[/size]')) { return; }
+        if (processMarkClose(this, 'size', '[size]', '[/size]')) { return; }
         break;
 
       case '[poster]':
@@ -331,8 +331,8 @@ export default class MarkdownTokenizer {
 
     if (seq2 === '||' && seq3 !== '|||') {
       if (this.lastMark !== seq2) {
-        if (this.processMarkOpen('spoiler_inline', '||', '||')) { return; }
-      } else if (this.processMarkClose('spoiler_inline', '||', '||')) { return; }
+        if (processMarkOpen(this, 'spoiler_inline', '||', '||')) { return; }
+      } else if (processMarkClose(this, 'spoiler_inline', '||', '||')) { return; }
     }
 
     if (char1 === '`') {
@@ -374,7 +374,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = { color: match[1] };
-          if (this.processMarkOpen('color', bbcode, '[/color]', meta)) {
+          if (processMarkOpen(this, 'color', bbcode, '[/color]', meta)) {
             return;
           }
           break;
@@ -384,7 +384,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = parseSizeMeta(match[1]);
-          if (this.processMarkOpen('size', bbcode, '[/size]', meta)) {
+          if (processMarkOpen(this, 'size', bbcode, '[/size]', meta)) {
             return;
           }
           break;
@@ -443,30 +443,6 @@ export default class MarkdownTokenizer {
       this.text[this.index + 2] +
       this.text[this.index + 3] +
       this.text[this.index + 4];
-  }
-
-  processMarkOpen(type, openBbcode, closeBbcode, attributes) {
-    if (!hasInlineSequence(this.text, closeBbcode, this.index)) { return false; }
-
-    this.marksStack.push(this.MARK_STACK_MAPPINGS[type] || openBbcode);
-    this.inlineTokens.push(
-      this.tagOpen(type, attributes, openBbcode)
-    );
-    this.next(openBbcode.length);
-
-    return true;
-  }
-
-  processMarkClose(type, openBbcode, closeBbcode) {
-    if (this.lastMark !== openBbcode) { return false; }
-
-    this.marksStack.pop();
-    this.inlineTokens.push(
-      this.tagClose(type, closeBbcode)
-    );
-    this.next(closeBbcode.length);
-
-    return true;
   }
 
   tagOpen(type, attributes = null, bbcode) {
