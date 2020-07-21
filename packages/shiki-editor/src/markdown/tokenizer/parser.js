@@ -24,6 +24,7 @@ import processBlock from './processors/block';
 import processPseudoBlock from './processors/pseudo_block';
 import processCodeBlock from './processors/code_block';
 import processCodeInline from './processors/code_inline';
+import processLinkInline from './processors/link_inline';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -369,7 +370,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
           meta = parseLinkMeta(match[1]);
 
-          if (this.processLinkInline(bbcode, meta)) { return; }
+          if (processLinkInline(this, bbcode, meta)) { return; }
           break;
 
         case '[colo':
@@ -469,17 +470,6 @@ export default class MarkdownTokenizer {
     );
     this.next(closeBbcode.length);
 
-    return true;
-  }
-
-  processLinkInline(bbcode, attrs) {
-    if (!hasInlineSequence(this.text, '[/url]', this.index)) { return false; }
-
-    this.marksStack.push('[url]');
-    this.inlineTokens.push(
-      this.tagOpen('link_inline', attrs, bbcode)
-    );
-    this.next(bbcode.length);
     return true;
   }
 
