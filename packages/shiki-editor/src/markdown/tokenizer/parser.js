@@ -18,7 +18,10 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
-import { processBlock, processPseudoBlock, processCodeBlock } from './handlers';
+import processBlock from './processors/block';
+import processPseudoBlock from './processors/pseudo_block';
+import processCodeBlock from './processors/code_block';
+import processCodeInline from './processors/code_inline';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -308,7 +311,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[code]':
-        if (this.processInlineCode(bbcode, '[/code]')) { return; }
+        if (processCodeInline(this, bbcode, '[/code]')) { return; }
         break;
 
       case '[hr]':
@@ -331,7 +334,7 @@ export default class MarkdownTokenizer {
     }
 
     if (char1 === '`') {
-      if (this.processInlineCode(char1)) { return; }
+      if (processCodeInline(this, char1)) { return; }
     }
 
     if (char1 === ':' || char1 === '+') {
@@ -464,48 +467,6 @@ export default class MarkdownTokenizer {
     this.next(closeBbcode.length);
 
     return true;
-  }
-
-  processInlineCode(startSequence, endSequence) {
-    if (!endSequence) {
-      let index = this.index + 1;
-      let tag = startSequence;
-      let isFirstSymbolPassed = false;
-
-      while (index <= this.text.length) {
-        const char = this.text[index];
-        const isEnd = char === '\n' || char === undefined;
-
-        if (!isFirstSymbolPassed) {
-          if (char === '`') {
-            tag += '`';
-          } else {
-            isFirstSymbolPassed = true;
-            break;
-          }
-        }
-
-        if (isEnd) {
-          return false;
-        }
-
-        index += 1;
-      }
-      startSequence = tag; // eslint-disable-line no-param-reassign
-      endSequence = tag; // eslint-disable-line no-param-reassign
-    }
-
-    const startIndex = this.index + startSequence.length;
-    const code = extractUntil(this.text, endSequence, startIndex);
-    if (code) {
-      this.inlineTokens.push(
-        new Token('code_inline', code)
-      );
-      this.next(code.length + startSequence.length + endSequence.length);
-      return true;
-    }
-
-    return false;
   }
 
   processLinkInline(bbcode, attrs) {
