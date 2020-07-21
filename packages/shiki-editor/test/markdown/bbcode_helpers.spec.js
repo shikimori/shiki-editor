@@ -6,7 +6,8 @@ import {
   parseLinkMeta,
   parseQuoteMeta,
   parseSizeMeta,
-  parseSpoilerMeta
+  parseSpoilerMeta,
+  parseShikiLinkMeta
 } from '../../src/markdown/tokenizer/bbcode_helpers';
 
 describe('tokenizer_helpers', () => {
@@ -94,5 +95,9 @@ describe('tokenizer_helpers', () => {
   it('parseSpoilerMeta', () => {
     expect(parseSpoilerMeta('')).to.eq(null);
     expect(parseSpoilerMeta('qwe')).to.eql({ label: 'qwe' });
+  });
+
+  it('parseShikiLinkMeta', () => {
+    expect(parseShikiLinkMeta('anime', '1')).to.eql({ type: 'anime', id: 1 });
   });
 });

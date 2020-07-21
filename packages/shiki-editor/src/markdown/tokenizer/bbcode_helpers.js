@@ -113,3 +113,10 @@ export function parseSpoilerMeta(meta) {
     label: meta
   };
 }
+
+export function parseShikiLinkMeta(match1, match2) {
+  return {
+    type: match1,
+    id: parseInt(match2)
+  };
+}
