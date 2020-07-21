@@ -58,6 +58,40 @@ export default class MarkdownTokenizer {
     this.paragraphToken = null;
   }
 
+  get bbcode() {
+    return this.char1 === '[' ?
+      extractBbCode(this.text, this.index, this.index + this.MAX_BBCODE_SIZE) :
+      null;
+  }
+
+  get lastMark() {
+    return this.marksStack[this.marksStack.length - 1];
+  }
+
+  get seq2() {
+    return this.char1 + this.text[this.index + 1];
+  }
+
+  get seq3() {
+    return this.char1 +
+      this.text[this.index + 1] +
+      this.text[this.index + 2];
+  }
+
+  get seq4() {
+    return this.char1 +
+      this.text[this.index + 1] +
+      this.text[this.index + 2] +
+      this.text[this.index + 3];
+  }
+  get seq5() {
+    return this.char1 +
+      this.text[this.index + 1] +
+      this.text[this.index + 2] +
+      this.text[this.index + 3] +
+      this.text[this.index + 4];
+  }
+
   static parse(text) {
     return new MarkdownTokenizer(text, 0).parse();
   }
@@ -409,40 +443,6 @@ export default class MarkdownTokenizer {
     if (isSkipNewLine && (this.char1 === '\n' || this.char1 === undefined)) {
       this.next();
     }
-  }
-
-  get bbcode() {
-    return this.char1 === '[' ?
-      extractBbCode(this.text, this.index, this.index + this.MAX_BBCODE_SIZE) :
-      null;
-  }
-
-  get lastMark() {
-    return this.marksStack[this.marksStack.length - 1];
-  }
-
-  get seq2() {
-    return this.char1 + this.text[this.index + 1];
-  }
-
-  get seq3() {
-    return this.char1 +
-      this.text[this.index + 1] +
-      this.text[this.index + 2];
-  }
-
-  get seq4() {
-    return this.char1 +
-      this.text[this.index + 1] +
-      this.text[this.index + 2] +
-      this.text[this.index + 3];
-  }
-  get seq5() {
-    return this.char1 +
-      this.text[this.index + 1] +
-      this.text[this.index + 2] +
-      this.text[this.index + 3] +
-      this.text[this.index + 4];
   }
 
   tagOpen(type, attributes = null, bbcode) {
