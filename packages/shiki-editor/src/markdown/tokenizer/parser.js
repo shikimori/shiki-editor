@@ -18,6 +18,8 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
+import processBlockQuote from './processors/block_quote';
+import processBulletList from './processors/bulle_list';
 import processBlock from './processors/block';
 import processPseudoBlock from './processors/pseudo_block';
 import processCodeBlock from './processors/code_block';
@@ -140,13 +142,13 @@ export default class MarkdownTokenizer {
 
         switch (seq2) {
           case '> ':
-            this.processBlockQuote(seq2);
+            processBlockQuote(this, seq2);
             break outer;
 
           case '- ':
           case '+ ':
           case '* ':
-            this.processBulletList(seq2);
+            processBulletList(this, seq2);
             break outer;
 
           case '# ':
@@ -156,7 +158,8 @@ export default class MarkdownTokenizer {
 
         switch (bbcode) {
           case '[*]':
-            this.processBulletList(
+            processBulletList(
+              this,
               this.text[this.index + bbcode.length] === ' ' ?
                 bbcode + ' ' :
                 bbcode
@@ -600,57 +603,6 @@ export default class MarkdownTokenizer {
     this.appendInlineContent(exitSequence);
 
     return true;
-  }
-
-  processBlockQuote(tagSequence) {
-    let isFirstLine = true;
-    this.push(this.tagOpen('blockquote'));
-    this.nestedSequence += tagSequence;
-
-    do {
-      this.parseLine(isFirstLine ? tagSequence : '');
-      isFirstLine = false;
-    } while (this.isSequenceContinued());
-
-    this.push(this.tagClose('blockquote'));
-    this.nestedSequence = this.nestedSequence
-      .slice(0, this.nestedSequence.length - tagSequence.length);
-  }
-
-  processBulletList(tagSequence) {
-    const priorSequence = this.nestedSequence;
-
-    this.push(this.tagOpen('bullet_list'));
-    this.nestedSequence += tagSequence;
-
-    do {
-      this.next(tagSequence.length);
-      this.push(this.tagOpen('list_item'));
-      this.processBulletListLines(priorSequence, '  ');
-      this.push(this.tagClose('list_item'));
-    } while (this.isSequenceContinued());
-
-    this.push(this.tagClose('bullet_list'));
-    this.nestedSequence = this.nestedSequence
-      .slice(0, this.nestedSequence.length - tagSequence.length);
-  }
-
-  processBulletListLines(priorSequence, tagSequence) {
-    const nestedSequenceBackup = this.nestedSequence;
-
-    this.nestedSequence = priorSequence + tagSequence;
-    let line = 0;
-
-    do {
-      if (line > 0) {
-        this.next(this.nestedSequence.length);
-      }
-
-      this.parseLine();
-      line += 1;
-    } while (this.isSequenceContinued());
-
-    this.nestedSequence = nestedSequenceBackup;
   }
 
   processHr(bbcode) {
