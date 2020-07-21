@@ -59,7 +59,7 @@ import { undo, redo } from 'prosemirror-history';
 import autosize from 'autosize';
 import withinviewport from 'withinviewport';
 
-import Editor from './editor';
+import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
 import { scrollTop } from './utils';
 import { FileUploader } from './extensions';
@@ -166,7 +166,7 @@ export default {
       uploadHeaders: this.uploadHeaders
     });
 
-    this.editor = new Editor({
+    this.editor = new ShikiEditor({
       extensions: [this.fileUploaderExtension],
       content: this.content,
       baseUrl: this.baseUrl
@@ -305,6 +305,9 @@ textarea.ProseMirror
   width: 100%
 
 /deep/
+  span[contenteditable=false]
+    cursor: default
+
   [data-image]:hover,
   [data-image].is-prosemirror-selected,
   [data-link]:hover,

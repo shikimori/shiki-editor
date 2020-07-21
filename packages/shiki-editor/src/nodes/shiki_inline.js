@@ -12,21 +12,18 @@ export default class ShikiInline extends Node {
       attrs: {
         id: {},
         type: {},
-        text: {},
+        text: { default: null },
         bbcode: {}
       },
       group: 'inline',
       draggable: false,
-      // parseDOM: [{
-      //   tag: '.b-image',
-      //   getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
-      // }, {
-      //   tag: 'img.b-poster',
-      //   getAttrs: node => ({ src: node.src, isPoster: true })
-      // }],
       toDOM: node =>
         [
           'span',
+          {
+            'data-attrs': JSON.stringify(node.attrs),
+            class: 'b-ajax vk-like'
+          },
           node.attrs.bbcode
         ]
     };
