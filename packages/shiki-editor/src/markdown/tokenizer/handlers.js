@@ -59,3 +59,44 @@ export function processCodeBlock(
 
   return true;
 }
+
+export function processBlock(
+  tokenizer,
+  type,
+  startSequence,
+  exitSequence,
+  metaAttributes,
+  isStart = true,
+  isOnlySpacingsBefore = false
+) {
+  let index = tokenizer.index + startSequence.length;
+  if (tokenizer.text[index] === '\n') { index += 1; }
+
+  const innerTokenizer = new tokenizer.constructor(
+    tokenizer.text,
+    index,
+    tokenizer.nestedSequence,
+    exitSequence
+  );
+  const tokens = innerTokenizer.parse();
+
+  if (!tokens) { return false; }
+
+  if (isOnlySpacingsBefore) {
+    tokenizer.inlineTokens = [];
+  } else if (!isStart) {
+    tokenizer.finalizeParagraph();
+  }
+
+  tokenizer.next(startSequence.length);
+  tokenizer.push(tokenizer.tagOpen(type, metaAttributes), true);
+
+  tokenizer.tokens = tokenizer.tokens.concat(tokens);
+  tokenizer.index = innerTokenizer.index;
+
+  tokenizer.next(exitSequence.length, true);
+  tokenizer.push(tokenizer.tagClose(type));
+
+  return true;
+}
+
