@@ -1,6 +1,8 @@
 import { extractUntil } from '../helpers';
 import processBlock from './block';
 
+const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
+
 export default function(
   state,
   type,
@@ -21,7 +23,7 @@ export default function(
       null,
       isNewLineAhead
     );
-    if (!state.PSEUDO_BLOCK_TEST_REGEXP.test(content)) { return false; }
+    if (!PSEUDO_BLOCK_TEST_REGEXP.test(content)) { return false; }
   }
 
   return processBlock(

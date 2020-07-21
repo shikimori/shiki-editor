@@ -37,9 +37,6 @@ export default class MarkdownTokenizer {
   LINK_REGEXP = /^\[url=(.+?)\]$/
   EMPTY_SPACES_REGEXP = /^ +$/
 
-  PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/
-
-
   MARK_STACK_MAPPINGS = {
     color: '[color]',
     size: '[size]'
