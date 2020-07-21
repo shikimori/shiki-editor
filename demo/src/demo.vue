@@ -18,7 +18,7 @@
 
       <div class='fc-2'>
         <div v-if='isColumn1' class='f-column'>
-          <EditorApp
+          <ShikiEditorApp
             ref='editor1'
             :content='text1'
             :locale='locale'
@@ -30,7 +30,7 @@
           />
         </div>
         <div v-if='isColumn2' class='f-column'>
-          <EditorApp
+          <ShikiEditorApp
             ref='editor2'
             :content='text2'
             :locale='locale'
@@ -47,21 +47,21 @@
 </template>
 
 <script>
-import EditorApp from '../../packages/shiki-editor';
+import { ShikiEditorApp } from '../../packages/shiki-editor';
 import { flash } from '../../packages/shiki-utils';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 export default {
   name: 'App',
   components: {
-    EditorApp
+    ShikiEditorApp
   },
   data: () => ({
     uploadHeaders: () => ({}),
     isColumn1: false,
     isColumn2: true,
     // text2: `[center] [url=ya.ru][quote][b]www[/b][/quote]
-    text2: `[anime=1]
+    text2: `[anime=1] zxc
 
 `,
 //     text2: `[div=c-column b-catalog_entry][div=cover][div=image-decor][anime=1292][div=image-cutter]
