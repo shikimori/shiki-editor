@@ -1,5 +1,6 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
+import { ShikiInlineView } from '../node_views';
 
 export default class ShikiInline extends Node {
   get name() {
@@ -15,19 +16,23 @@ export default class ShikiInline extends Node {
         text: { default: null },
         bbcode: {}
       },
+      defining: true,
       group: 'inline',
-      draggable: false,
       toDOM: node =>
         [
           'span',
           {
-            'data-attrs': JSON.stringify(node.attrs),
-            class: 'b-ajax vk-like'
+            'data-attrs': JSON.stringify(node.attrs)
           },
           node.attrs.bbcode
         ]
     };
   }
+
+  view(node, view, getPos, decorations) {
+    return new ShikiInlineView({ node, view, getPos, decorations });
+  }
+
 
   get markdownParserToken() {
     return {

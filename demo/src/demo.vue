@@ -63,6 +63,7 @@ export default {
     // text2: `[center] [url=ya.ru][quote][b]www[/b][/quote]
     text2: `[anime=1] zxc
 
+[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 `,
 //     text2: `[div=c-column b-catalog_entry][div=cover][div=image-decor][anime=1292][div=image-cutter]
 // [poster]https://kawai.shikimori.one/system/animes/original/1292.jpg?1578039620[/poster][/div][/anime][div=text]
