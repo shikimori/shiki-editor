@@ -2,7 +2,6 @@ import Token from './token';
 
 import {
   extractBbCode,
-  extractUntil,
   extractUntilWith,
   hasInlineSequence,
   isMatchedToken,
@@ -21,6 +20,7 @@ import {
 import processBlockQuote from './processors/block_quote';
 import processBulletList from './processors/bulle_list';
 import processBlock from './processors/block';
+import processImage from './processors/image';
 import processPseudoBlock from './processors/pseudo_block';
 import processCodeBlock from './processors/code_block';
 import processCodeInline from './processors/code_inline';
@@ -311,7 +311,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[poster]':
-        if (this.processImage(bbcode, '[/poster]', true)) { return; }
+        if (processImage(this, bbcode, '[/poster]', true)) { return; }
         break;
 
       case '[code]':
@@ -358,7 +358,7 @@ export default class MarkdownTokenizer {
 
         case '[img':
           meta = parseImageMeta(bbcode.slice(4, bbcode.length - 1).trim());
-          if (this.processImage(bbcode, '[/img]', false, meta)) {
+          if (processImage(this, bbcode, '[/img]', false, meta)) {
             return;
           }
           break;
@@ -471,31 +471,6 @@ export default class MarkdownTokenizer {
     this.next(closeBbcode.length);
 
     return true;
-  }
-
-  processImage(tagStart, tagEnd, isPoster, metaAttributes) {
-    const index = this.index + tagStart.length;
-
-    const src = extractUntil(this.text, tagEnd, index, index + 255);
-
-    if (src) {
-      this.inlineTokens.push(
-        new Token(
-          'image',
-          null,
-          null,
-          {
-            src,
-            isPoster,
-            ...(metaAttributes || {})
-          }
-        )
-      );
-      this.next(src.length + tagStart.length + tagEnd.length);
-      return true;
-    }
-
-    return false;
   }
 
   processSmiley(char1, seq2, seq3) {
