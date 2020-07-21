@@ -30,9 +30,9 @@ export default class ShikiInline extends Node {
     };
   }
 
-  view(node, view, getPos, decorations) {
-    if (node.attrs.isLoading) {
-      return new ShikiInlineView({ node, view, getPos, decorations });
+  view(options) {
+    if (options.node.attrs.isLoading) {
+      return new ShikiInlineView(options);
     } else {
       return null;
     }

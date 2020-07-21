@@ -39,7 +39,7 @@ export default class SpoilerBlock extends Node {
     };
   }
 
-  view(node, view, getPos, decorations) {
+  view({ node, view, getPos, decorations }) {
     return new SpoilerBlockView({ node, view, getPos, decorations });
   }
 

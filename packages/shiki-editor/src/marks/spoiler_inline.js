@@ -28,8 +28,8 @@ export default class SpoilerInline extends Mark {
     };
   }
 
-  view(node, view, _inline) {
-    return new SpoilerInlineView({ node, view });
+  view(options) {
+    return new SpoilerInlineView(options);
   }
 
   inputRules({ type }) {

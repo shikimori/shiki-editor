@@ -1,9 +1,16 @@
 export default class DOMView {
-  constructor({ node, view, getPos, decorations }) {
+  node = null
+  view = null
+  getPos = null
+  decorations = null
+  editor = null
+
+  constructor({ node, view, getPos, decorations, editor }) {
     this.node = node;
     this.view = view;
     this.getPos = getPos;
     this.decorations = decorations;
+    this.editor = editor;
   }
 
   get dispatch() {

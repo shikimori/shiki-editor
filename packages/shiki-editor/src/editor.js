@@ -211,7 +211,13 @@ export default class ShikiEditor {
       .reduce((nodeViews, extension) => {
         const nodeView = (node, view, getPos, decorations) => {
           if (extension.view.constructor === Function) {
-            return extension.view(node, view, getPos, decorations);
+            return extension.view({
+              editor: this,
+              node,
+              view,
+              getPos,
+              decorations
+            });
           }
           const component = extension.view;
 
