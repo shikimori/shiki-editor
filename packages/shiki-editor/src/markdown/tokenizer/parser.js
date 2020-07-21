@@ -17,14 +17,15 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
+import processBlock from './processors/block';
 import processBlockQuote from './processors/block_quote';
 import processBulletList from './processors/bulle_list';
-import processBlock from './processors/block';
-import processImage from './processors/image';
-import processPseudoBlock from './processors/pseudo_block';
 import processCodeBlock from './processors/code_block';
 import processCodeInline from './processors/code_inline';
+import processImage from './processors/image';
+import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
+import processPseudoBlock from './processors/pseudo_block';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -351,9 +352,7 @@ export default class MarkdownTokenizer {
     if (bbcode) {
       switch (seq4) {
         case '[div':
-          if (this.processInlineBlock(bbcode, '[/div]')) {
-            return;
-          }
+          if (processInlineBlock(this, bbcode, '[/div]')) { return; }
           break;
 
         case '[img':
@@ -506,68 +505,6 @@ export default class MarkdownTokenizer {
     }
 
     return false;
-  }
-
-  processInlineBlock(startSequence, exitSequence) {
-    const tokenizer = new MarkdownTokenizer(
-      this.text,
-      this.index + startSequence.length,
-      '',
-      exitSequence
-    );
-    const tokens = tokenizer.parse();
-
-    if (!tokens) { return false; }
-    // const endSequence =
-    //   this.text.slice(tokenizer.index, tokenizer.index + exitSequence.length);
-    // if (endSequence !== exitSequence) { return false; }
-
-    this.appendInlineContent(startSequence);
-
-    let slicedTokens;
-    let isNewLineAtEnd = false;
-
-    // append first paragraph to current inlineTokens
-    if (isMatchedToken(tokens[0], 'paragraph', 'open')) {
-      tokens[1].children.forEach(token => {
-        if (token.type === 'text') {
-          this.appendInlineContent(token.content, false);
-        } else {
-          this.inlineTokens.push(token);
-        }
-      });
-      slicedTokens = tokens.slice(3);
-      // close parahraph after prior content was joined
-      if (slicedTokens.length) {
-        this.finalizeParagraph();
-      }
-    } else {
-      slicedTokens = tokens;
-    }
-
-    this.index = tokenizer.index;
-
-    // insert new line at the end to maintain original formatting
-    if (isMatchedToken(tokens[tokens.length - 1], 'paragraph', 'close')) {
-      if (this.text[this.index - 1] === '\n') {
-        isNewLineAtEnd = true;
-        this.finalizeParagraph();
-      }
-    }
-
-    // unwrap final paragraph
-    if (!isNewLineAtEnd && slicedTokens.length &&
-      isMatchedToken(slicedTokens[slicedTokens.length - 1], 'paragraph', 'close')
-    ) {
-      this.inlineTokens = slicedTokens[slicedTokens.length - 2].children;
-      slicedTokens = slicedTokens.slice(0, slicedTokens.length - 3);
-    }
-
-    this.tokens = [...this.tokens, ...slicedTokens];
-
-    this.appendInlineContent(exitSequence);
-
-    return true;
   }
 
   processHr(bbcode) {
