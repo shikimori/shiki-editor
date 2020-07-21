@@ -18,7 +18,7 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
-import { processBlock, processCodeBlock } from './handlers';
+import { processBlock, processPseudoBlock, processCodeBlock } from './handlers';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -192,7 +192,8 @@ export default class MarkdownTokenizer {
         }
 
         if (seq4 === '[url' && (match = bbcode.match(this.LINK_REGEXP))) {
-          isProcessed = this.processPseudoBlock(
+          isProcessed = processPseudoBlock(
+            this,
             'link_block', bbcode, '[/url]', parseLinkMeta(match[1]),
             isStart, isOnlySpacingsBefore
           );
@@ -200,7 +201,8 @@ export default class MarkdownTokenizer {
         }
 
         if (seq5 === '[size' && (match = bbcode.match(this.SIZE_REGEXP))) {
-          isProcessed = this.processPseudoBlock(
+          isProcessed = processPseudoBlock(
+            this,
             'size_block', bbcode, '[/size]', parseSizeMeta(match[1]),
             isStart, isOnlySpacingsBefore
           );
@@ -515,33 +517,6 @@ export default class MarkdownTokenizer {
     );
     this.next(bbcode.length);
     return true;
-  }
-
-  processPseudoBlock(
-    type,
-    startSequence,
-    endSequence,
-    meta,
-    isStart,
-    isOnlySpacingsBefore
-  ) {
-    const index = this.index + startSequence.length;
-    const isNewLineAhead = this.text[index] === '\n';
-
-    if (!isNewLineAhead) {
-      const content = extractUntil(
-        this.text,
-        endSequence,
-        index,
-        null,
-        isNewLineAhead
-      );
-      if (!this.PSEUDO_BLOCK_TEST_REGEXP.test(content)) { return false; }
-    }
-
-    return processBlock(
-      this, type, startSequence, endSequence, meta, isStart, isOnlySpacingsBefore
-    );
   }
 
   processImage(tagStart, tagEnd, isPoster, metaAttributes) {
