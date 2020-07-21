@@ -4,9 +4,9 @@ import {
   extractBbCode,
   extractUntilWith,
   hasInlineSequence,
-  isMatchedToken,
   rollbackUnbalancedTokens
 } from './helpers';
+
 import {
   parseCodeMeta,
   parseDivMeta,
@@ -259,13 +259,13 @@ export default class MarkdownTokenizer {
         }
       }
 
-      if (this.processInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
+      if (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
         break;
       }
     }
   }
 
-  processInline(char1, bbcode, seq2, seq3, seq4, seq5) {
+  parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
         if (this.processMarkOpen('bold', '[b]', '[/b]')) { return; }
