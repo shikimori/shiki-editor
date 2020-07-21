@@ -1235,26 +1235,26 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      // it('[anime=1]zx[/anime]', () => {
-      //   expect(MarkdownTokenizer.parse('[anime=1]zx[/anime]')).to.eql([
-      //     { type: 'paragraph', direction: 'open' },
-      //     {
-      //       type: 'inline',
-      //       children: [
-      //         {
-      //           type: 'shiki_inline',
-      //           attrs: [
-      //             ['type', 'anime'],
-      //             ['id', 1],
-      //             ['text', 'zxc'],
-      //             ['bbcode', '[anime=1]zx[/anime]']
-      //           ]
-      //         }
-      //       ]
-      //     },
-      //     { type: 'paragraph', direction: 'close' }
-      //   ]);
-      // });
+      it('[anime=1]zx[/anime]', () => {
+        expect(MarkdownTokenizer.parse('[anime=1]zx[/anime]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'anime'],
+                  ['id', 1],
+                  ['text', 'zx'],
+                  ['bbcode', '[anime=1]zx[/anime]']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
     });
   });
 
