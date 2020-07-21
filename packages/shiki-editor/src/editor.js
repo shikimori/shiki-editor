@@ -146,7 +146,7 @@ export default class ShikiEditor {
       nodeViews: this.initNodeViews({
         parent: this.element,
         extensions: this.extensionsManager.extensions
-      })
+      }, false)
     });
   }
 
@@ -202,10 +202,12 @@ export default class ShikiEditor {
     });
   }
 
-  initNodeViews({ parent, extensions }) {
+  initNodeViews({ parent, extensions }, isVue) {
     return extensions
       .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => extension.view)
+      .filter(extension => (
+        extension.view && (isVue || extension.view.constructor === Function)
+      ))
       .reduce((nodeViews, extension) => {
         const nodeView = (node, view, getPos, decorations) => {
           if (extension.view.constructor === Function) {
@@ -269,7 +271,7 @@ export default class ShikiEditor {
       nodeViews: this.initNodeViews({
         parent: component,
         extensions: this.extensionsManager.extensions
-      })
+      }, true)
     });
   }
 
