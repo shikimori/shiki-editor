@@ -14,25 +14,29 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         text: { default: null },
-        bbcode: {}
+        bbcode: {},
+        isLoading: { default: true }
       },
-      defining: true,
-      group: 'inline',
-      toDOM: node =>
-        [
-          'span',
-          {
-            'data-attrs': JSON.stringify(node.attrs)
-          },
-          node.attrs.bbcode
-        ]
+      group: 'inline'
+      // content: 'inline*',
+      // toDOM: node =>
+      //   [
+      //     'span',
+      //     {
+      //       'data-attrs': JSON.stringify(node.attrs)
+      //     },
+      //     node.attrs.bbcode
+      //   ]
     };
   }
 
   view(node, view, getPos, decorations) {
-    return new ShikiInlineView({ node, view, getPos, decorations });
+    if (node.attrs.isLoading) {
+      return new ShikiInlineView({ node, view, getPos, decorations });
+    } else {
+      return null;
+    }
   }
-
 
   get markdownParserToken() {
     return {
