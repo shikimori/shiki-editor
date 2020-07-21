@@ -2,7 +2,6 @@ import Token from './token';
 
 import {
   extractBbCode,
-  extractUntilWith,
   hasInlineSequence,
   rollbackUnbalancedTokens
 } from './helpers';
@@ -26,10 +25,10 @@ import processImage from './processors/image';
 import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
 import processPseudoBlock from './processors/pseudo_block';
+import processSmiley from './processors/smiley';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
-  MAX_SMILEY_SIZE = 18
 
   BLOCK_BBCODE_REGEXP = /^\[(?:quote|spoiler|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
@@ -40,7 +39,6 @@ export default class MarkdownTokenizer {
 
   PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/
 
-  SMILEY_REGEXP = /^:(?:!|8\)|Ban|Bath2|Cry2|Cry3|Cry4|Happy Birthday|Im dead|V2|V3|V|Warning|advise|angry2|angry3|angry4|angry5|angry6|angry|animal|ball|bath|bdl2|bdl|bored|bow|bullied|bunch|bye|caterpillar|cold2|cold|cool2|cool|cry5|cry6|cry|dance|depressed2|depressed|diplom|disappointment|dont listen|dont want|dunno|evil2|evil3|evil|flute|frozen2|frozen3|frozen|gamer|gaze|happy3|happy|happy_cry|hi|hope2|hope3|hope|hopeless|hot2|hot3|hot|hunf|hurray|hypno|ill|interested|kia|kiss|kya|liar|lol|love2|love|noooo|oh2|oh|ololo|ooph|perveted|play|prcl|relax|revenge|roll|s1|s2|s3|s4|s|sad2|sarcasm|scared|scream|shock2|shock|shocked2|shocked3|shocked4|shocked|shy2|shy|sick|sleep|sleepy|smoker2|smoker|star|strange1|strange2|strange3|strange4|strange|stress|study2|study3|study|tea shock|tea2|thumbup|twisted|very sad2|very sad|watching|water|whip|wink|yahoo):$/
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
@@ -343,7 +341,7 @@ export default class MarkdownTokenizer {
     }
 
     if (char1 === ':' || char1 === '+') {
-      if (this.processSmiley(char1, seq2, seq3)) { return; }
+      if (processSmiley(this, char1, seq2, seq3)) { return; }
     }
 
     let match;
@@ -472,40 +470,6 @@ export default class MarkdownTokenizer {
     return true;
   }
 
-  processSmiley(char1, seq2, seq3) {
-    if (char1 === ':') {
-      const maxIndex = this.index + this.MAX_SMILEY_SIZE;
-      const kind = extractUntilWith(this.text, ':', this.index, maxIndex);
-
-      if (kind && kind.match(this.SMILEY_REGEXP)) {
-        return this.addSmiley(kind);
-      }
-    }
-
-    switch (seq2) {
-      case ':)':
-      case ':D':
-      case ':(':
-        return this.addSmiley(seq2);
-
-      default:
-        break;
-    }
-
-    switch (seq3) {
-      case ':-D':
-      case '+_+':
-      case ':-(':
-      case ':-o':
-      case ':-P':
-        return this.addSmiley(seq3);
-
-      default:
-        break;
-    }
-
-    return false;
-  }
 
   processHr(bbcode) {
     this.ensureParagraphClosed();
@@ -565,14 +529,6 @@ export default class MarkdownTokenizer {
     this.inlineTokens = [];
     this.marksStack = [];
     this.paragraphToken = null;
-  }
-
-  addSmiley(kind) {
-    this.inlineTokens.push(
-      new Token('smiley', null, null, { kind })
-    );
-    this.next(kind.length);
-    return true;
   }
 
   isSequenceContinued() {
