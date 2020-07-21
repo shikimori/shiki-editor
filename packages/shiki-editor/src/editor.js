@@ -142,7 +142,11 @@ export default class ShikiEditor {
   createView() {
     return new EditorView(this.element, {
       state: this.createState(),
-      dispatchTransaction: this.dispatchTransaction
+      dispatchTransaction: this.dispatchTransaction,
+      nodeViews: this.initNodeViews({
+        parent: this.element,
+        extensions: this.extensionsManager.extensions
+      })
     });
   }
 
@@ -264,8 +268,7 @@ export default class ShikiEditor {
     this.view.setProps({
       nodeViews: this.initNodeViews({
         parent: component,
-        extensions: this.extensionsManager.extensions,
-        editable: this.options.editable
+        extensions: this.extensionsManager.extensions
       })
     });
   }
