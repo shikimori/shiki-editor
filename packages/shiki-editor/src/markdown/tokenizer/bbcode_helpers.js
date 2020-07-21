@@ -1,4 +1,4 @@
-import fixUrl from '../utils/fix_url';
+import fixUrl from '../../utils/fix_url';
 
 export function parseCodeMeta(meta) {
   if (!meta) { return null; }

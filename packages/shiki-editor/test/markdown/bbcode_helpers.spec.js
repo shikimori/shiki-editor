@@ -7,7 +7,7 @@ import {
   parseQuoteMeta,
   parseSizeMeta,
   parseSpoilerMeta
-} from '../../src/markdown/bbcode_helpers';
+} from '../../src/markdown/tokenizer/bbcode_helpers';
 
 describe('tokenizer_helpers', () => {
   it('parseCodeMeta', () => {

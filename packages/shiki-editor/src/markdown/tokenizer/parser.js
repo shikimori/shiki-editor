@@ -8,7 +8,7 @@ import {
   hasInlineSequence,
   isMatchedToken,
   rollbackUnbalancedTokens
-} from './tokenizer_helpers';
+} from './helpers';
 import {
   parseCodeMeta,
   parseDivMeta,
@@ -19,7 +19,7 @@ import {
   parseSpoilerMeta
 } from './bbcode_helpers';
 
-export default class MarkdownTokenizer {
+export default class MarkdownTokenizerParser {
   MAX_BBCODE_SIZE = 512
   MAX_SMILEY_SIZE = 18
 
@@ -54,7 +54,7 @@ export default class MarkdownTokenizer {
   }
 
   static parse(text) {
-    return new MarkdownTokenizer(text, 0).parse();
+    return new MarkdownTokenizerParser(text, 0).parse();
   }
 
   parse() {
@@ -596,7 +596,6 @@ export default class MarkdownTokenizer {
     return false;
   }
 
-
   processBlock(
     type,
     startSequence,
@@ -608,7 +607,7 @@ export default class MarkdownTokenizer {
     let index = this.index + startSequence.length;
     if (this.text[index] === '\n') { index += 1; }
 
-    const tokenizer = new MarkdownTokenizer(
+    const tokenizer = new MarkdownTokenizerParser(
       this.text,
       index,
       this.nestedSequence,
@@ -641,7 +640,7 @@ export default class MarkdownTokenizer {
   }
 
   processInlineBlock(startSequence, exitSequence) {
-    const tokenizer = new MarkdownTokenizer(
+    const tokenizer = new MarkdownTokenizerParser(
       this.text,
       this.index + startSequence.length,
       '',

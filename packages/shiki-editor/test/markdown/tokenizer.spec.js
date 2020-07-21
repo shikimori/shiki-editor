@@ -1213,6 +1213,51 @@ describe('MarkdownTokenizer', () => {
     });
   });
 
+  describe('shiki nodes', () => {
+    describe('shiki_inline', () => {
+      it('[anime=1]', () => {
+        expect(MarkdownTokenizer.parse('[anime=1]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'anime'],
+                  ['id', 1],
+                  ['bbcode', '[anime=1]']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
+      // it('[anime=1]zx[/anime]', () => {
+      //   expect(MarkdownTokenizer.parse('[anime=1]zx[/anime]')).to.eql([
+      //     { type: 'paragraph', direction: 'open' },
+      //     {
+      //       type: 'inline',
+      //       children: [
+      //         {
+      //           type: 'shiki_inline',
+      //           attrs: [
+      //             ['type', 'anime'],
+      //             ['id', 1],
+      //             ['text', 'zxc'],
+      //             ['bbcode', '[anime=1]zx[/anime]']
+      //           ]
+      //         }
+      //       ]
+      //     },
+      //     { type: 'paragraph', direction: 'close' }
+      //   ]);
+      // });
+    });
+  });
+
   describe('complex cases', () => {
     it('outside broken formatting', () => {
       expect(MarkdownTokenizer.parse(
