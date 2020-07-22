@@ -33,8 +33,10 @@ export default class ShikiLoader extends Extension {
 
   @debounce(50)
   async sendRequest() {
-    const { queue } = this;
+    const queue = this.respondFromCache(this.queue);
     this.queue = null;
+
+    if (!Object.keys(queue).length) { return; }
 
     const params = Object.keys(queue)
       .map(kind => `${kind}=${Object.keys(queue[kind]).join(',')}`)
@@ -58,11 +60,33 @@ export default class ShikiLoader extends Extension {
         const result = results?.[kind].find(v => v.id === parseInt(id));
 
         CACHE[kind] ||= {};
-        CACHE[kind][id] ||= result;
+        CACHE[kind][id] ||= (result || null);
 
         promises.forEach(promise => promise.resolve(result));
       });
     });
+  }
+
+  respondFromCache(queue) {
+    const requestQueue = {};
+
+    Object.keys(queue).forEach(kind => {
+      const queueById = queue[kind];
+
+      Object.keys(queueById).forEach(id => {
+        const promises = queueById[id];
+        const result = CACHE?.[kind]?.[id];
+
+        if (result !== undefined) {
+          promises.forEach(promise => promise.resolve(result));
+        } else {
+          requestQueue[kind] ||= {};
+          requestQueue[kind][id] = promises;
+        }
+      });
+    });
+
+    return requestQueue;
   }
 
   fixedType(type) {
