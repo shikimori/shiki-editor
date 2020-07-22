@@ -13,8 +13,9 @@ export default class ShikiInline extends Node {
       attrs: {
         id: {},
         type: {},
-        text: { default: null },
         bbcode: {},
+        meta: { default: {} },
+        text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
       },

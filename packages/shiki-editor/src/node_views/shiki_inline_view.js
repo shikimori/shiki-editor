@@ -56,7 +56,8 @@ export default class ShikiInlineView extends DOMView {
         this.editor.schema.nodes.image.create({
           id: result.id,
           src: result.url,
-          isPoster: this.type === 'poster'
+          isPoster: this.type === 'poster',
+          ...this.node.attrs.meta
         }),
         false
       );
