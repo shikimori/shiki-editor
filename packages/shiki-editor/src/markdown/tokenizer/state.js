@@ -8,7 +8,6 @@ import {
 import {
   parseCodeMeta,
   parseDivMeta,
-  parseImageMeta,
   parseLinkMeta,
   parseQuoteMeta,
   parseSizeMeta,
@@ -392,10 +391,7 @@ export default class MarkdownTokenizer {
           break;
 
         case '[img':
-          meta = parseImageMeta(bbcode.slice(4, bbcode.length - 1).trim());
-          if (processImage(this, bbcode, '[/img]', false, meta)) {
-            return;
-          }
+          if (processImage(this, bbcode, '[/img]', false)) { return; }
           break;
       }
 
