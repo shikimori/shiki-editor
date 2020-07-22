@@ -147,6 +147,9 @@ function serializeImageAttributes(node) {
   if (attrs.isNoZoom) {
     attributes.push('no-zoom');
   }
+  if (attrs.class) {
+    attributes.push(`class=${attrs.class}`);
+  }
   if (attrs.width && attrs.height) {
     attributes.push(`${attrs.width}x${attrs.height}`);
   } else {

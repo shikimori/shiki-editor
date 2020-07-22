@@ -13,7 +13,7 @@ import {
   parseQuoteMeta,
   parseShikiBasicMeta,
   parseSizeMeta,
-  parseSpoilerMeta,
+  parseSpoilerMeta
 } from './bbcode_helpers';
 
 import processBlock from './processors/block';
