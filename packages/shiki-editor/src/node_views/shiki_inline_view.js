@@ -41,6 +41,8 @@ export default class ShikiInlineView extends DOMView {
 
   async fetch() {
     const result = await this.shikiLoader.fetch(this.node.attrs);
+    if (this.isDestroyed) { return; }
+
     if (result) {
       this.success(result);
     } else {
@@ -58,13 +60,6 @@ export default class ShikiInlineView extends DOMView {
         })
       );
     }
-    // const { getPos, view, dispatch, tr } = this;
-    // const attrs = this.mergeAttrs({ isLoading: false, isError: false });
-    // 
-    // dispatch(
-    //   tr.setNodeMarkup(getPos(), null, attrs)
-    // );
-    // view.focus();
   }
 
   error() {

@@ -4,6 +4,7 @@ export default class DOMView {
   getPos = null
   decorations = null
   editor = null
+  isDestroyed = false
 
   constructor({ node, view, getPos, decorations, editor }) {
     this.node = node;
@@ -36,5 +37,9 @@ export default class DOMView {
       )
     );
     view.focus();
+  }
+
+  destroy() {
+    this.isDestroyed = true;
   }
 }
