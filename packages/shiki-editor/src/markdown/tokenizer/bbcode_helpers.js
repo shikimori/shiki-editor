@@ -35,7 +35,7 @@ export function parseDivMeta(meta) {
   return attributes;
 }
 
-const IMAGE_ATTIRUBYTES = /(?:c(?:lass)?=(?<css_class>[\w_-]+))|(?:(?<width>\d+)x(?<height>\d+))|(?:w(?:idth)?=(?<width2>\d+))|(?:h(?:eight)?=(?<height2>\d+))|(?<no_zoom>no-zoom)/;
+export const IMAGE_META_REGEXP = /(?:c(?:lass)?=(?<css_class>[\w_-]+))|(?:(?<width>\d+)x(?<height>\d+))|(?:w(?:idth)?=(?<width2>\d+))|(?:h(?:eight)?=(?<height2>\d+))|(?<no_zoom>no-zoom)/;
 
 export function parseImageMeta(meta) {
   if (!meta) { return null; }
@@ -43,7 +43,7 @@ export function parseImageMeta(meta) {
   const split = meta.split(' ');
 
   split.forEach(attribute => {
-    const match = attribute.match(IMAGE_ATTIRUBYTES);
+    const match = attribute.match(IMAGE_META_REGEXP);
     if (!match) { return; }
 
     if (match.groups.no_zoom) {
@@ -114,9 +114,12 @@ export function parseSpoilerMeta(meta) {
   };
 }
 
-export function parseShikiBasicMeta(match1, match2) {
-  return {
-    type: match1,
-    id: parseInt(match2)
-  };
+export function parseShikiBasicMeta(type, id, tagMeta) {
+  const meta = { type, id: parseInt(id) };
+
+  if (tagMeta) {
+    meta.meta = tagMeta;
+  }
+
+  return meta;
 }

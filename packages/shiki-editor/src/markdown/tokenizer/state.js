@@ -8,11 +8,12 @@ import {
 import {
   parseCodeMeta,
   parseDivMeta,
+  parseImageMeta,
   parseLinkMeta,
   parseQuoteMeta,
+  parseShikiBasicMeta,
   parseSizeMeta,
   parseSpoilerMeta,
-  parseShikiBasicMeta
 } from './bbcode_helpers';
 
 import processBlock from './processors/block';
@@ -41,7 +42,7 @@ export default class MarkdownTokenizer {
   EMPTY_SPACES_REGEXP = /^ +$/
 
   SHIKI_LINK_REGEXP = /^\[(anime|manga|ranobe|character|person)=(\d+)\]$/
-  SHIKI_IMAGE_REGEXP = /^\[(poster|image)=(\d+)\]$/
+  SHIKI_IMAGE_REGEXP = /^\[(poster|image)=(\d+)(?: ([^\]]+))?\]$/
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
@@ -442,7 +443,13 @@ export default class MarkdownTokenizer {
         case '[imag':
           match = bbcode.match(this.SHIKI_IMAGE_REGEXP);
           if (!match) { break; }
-          meta = parseShikiBasicMeta(match[1], match[2]);
+
+          let imageMeta; // eslint-disable-line
+          if (match[3]) {
+            imageMeta = parseImageMeta(match[3]);
+            if (!imageMeta) { break; }
+          }
+          meta = parseShikiBasicMeta(match[1], match[2], imageMeta);
 
           if (processShikiInline(this, bbcode, null, meta)) { return; }
           break;

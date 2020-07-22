@@ -1320,6 +1320,30 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[image=1 c=zxc 400x500]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[image=1 c=zxc 400x500]'
+        )).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['type', 'image'],
+                  ['id', 1],
+                  ['meta', { 'class': 'zxc', 'height': '500', 'width': '400' }],
+                  ['bbcode', '[image=1 c=zxc 400x500]']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
+
       it('[image=1]zxc[/image]', () => {
         expect(MarkdownTokenizer.parse('[image=1]zxc[/image]')).to.eql([
           { type: 'paragraph', direction: 'open' },
