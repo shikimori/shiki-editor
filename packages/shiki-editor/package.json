@@ -61,6 +61,7 @@
     "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
     "@popperjs/core": "^2.4.4",
     "add": "^2.0.6",
+    "debounce-decorator": "^1.0.6",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-dropcursor": "^1.3.2",
     "prosemirror-gapcursor": "^1.1.5",
