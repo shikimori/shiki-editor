@@ -8,13 +8,16 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
+    "add": "^2.0.6",
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "decko": "^1.2.0",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "yarn": "^1.22.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
