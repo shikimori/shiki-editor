@@ -57,7 +57,8 @@ export default class ShikiInlineView extends DOMView {
           id: result.id,
           src: result.url,
           isPoster: this.type === 'poster'
-        })
+        }),
+        false
       );
     }
   }
@@ -67,7 +68,9 @@ export default class ShikiInlineView extends DOMView {
     const attrs = this.mergeAttrs({ isLoading: false, isError: true });
 
     dispatch(
-      tr.setNodeMarkup(getPos(), null, attrs)
+      tr
+        .setMeta('addToHistory', false)
+        .setNodeMarkup(getPos(), null, attrs)
     );
     view.focus();
   }

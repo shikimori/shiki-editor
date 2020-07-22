@@ -26,16 +26,13 @@ export default class DOMView {
     return { ...this.node.attrs, ...attrs };
   }
 
-  replaceWith(replacement) {
+  replaceWith(replacement, isAddToHistory=true) {
     const { getPos, view, dispatch, tr } = this;
 
-    tr.setMeta('addToHistory', false);
     dispatch(
-      tr.replaceWith(
-        getPos(),
-        getPos() + 1,
-        replacement
-      )
+      tr
+        .setMeta('addToHistory', isAddToHistory)
+        .replaceWith(getPos(), getPos() + 1, replacement)
     );
     view.focus();
   }
