@@ -23,8 +23,8 @@ export default class ShikiLoader extends Extension {
     const deferred = pDefer();
 
     this.queue ||= {};
-    this.queue[this.fixedType(type)] ||= {};
-    (this.queue[this.fixedType(type)][id] ||= []).push(deferred);
+    this.queue[fixedType(type)] ||= {};
+    (this.queue[fixedType(type)][id] ||= []).push(deferred);
 
     this.sendRequest();
 
@@ -88,16 +88,16 @@ export default class ShikiLoader extends Extension {
 
     return requestQueue;
   }
+}
 
-  fixedType(type) {
-    if (type === 'ranobe') {
-      return 'manga';
-    } else if (type === 'poster') {
-      return 'user_image';
-    } else if (type === 'image') {
-      return 'user_image';
-    } else {
-      return type;
-    }
+function fixedType(type) {
+  if (type === 'ranobe') {
+    return 'manga';
+  } else if (type === 'poster') {
+    return 'user_image';
+  } else if (type === 'image') {
+    return 'user_image';
+  } else {
+    return type;
   }
 }
