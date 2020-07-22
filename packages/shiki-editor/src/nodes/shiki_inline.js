@@ -15,7 +15,8 @@ export default class ShikiInline extends Node {
         type: {},
         text: { default: null },
         bbcode: {},
-        isLoading: { default: true }
+        isLoading: { default: true },
+        isError: { default: false }
       },
       group: 'inline'
       // content: 'inline*',
@@ -31,7 +32,7 @@ export default class ShikiInline extends Node {
   }
 
   view(options) {
-    if (options.node.attrs.isLoading) {
+    if (options.node.attrs.isLoading || options.node.attrs.isError) {
       return new ShikiInlineView(options);
     } else {
       return null;

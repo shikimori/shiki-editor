@@ -8,8 +8,15 @@ export default class ShikiInlineView extends DOMView {
 
     this.dom = document.createElement('span');
 
-    this.dom.classList.add('b-ajax');
-    this.dom.classList.add('vk-like');
+    this.dom.classList.add('b-shiki_editor-node');
+
+    if (this.node.attrs.isLoading) {
+      this.dom.classList.add('b-ajax');
+      this.dom.classList.add('vk-like');
+    }
+    if (this.node.attrs.isError) {
+      this.dom.classList.add('is-error');
+    }
 
     this.dom.innerText = this.node.attrs.bbcode;
     this.dom.addEventListener('click', this.stop);
@@ -37,6 +44,20 @@ export default class ShikiInlineView extends DOMView {
 
   async fetch() {
     const result = await this.shikiLoader.fetch(this.node.attrs);
-    console.log(this.node.bbcode, 'loaded', result);
+    if (result) {
+      console.log(this.node.bbcode, 'loaded', result);
+    } else {
+      this.error();
+    }
+  }
+
+  error() {
+    const { getPos, view, dispatch, tr } = this;
+    const attrs = this.mergeAttrs({ isLoading: false, isError: true });
+
+    dispatch(
+      tr.setNodeMarkup(getPos(), null, attrs)
+    );
+    view.focus();
   }
 }

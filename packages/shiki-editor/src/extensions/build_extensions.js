@@ -1,9 +1,9 @@
 import ShikiLoader from './shiki_loader';
 import TrailingNode from './trailing_node';
 
-export default function(_editor) {
+export default function(editor) {
   return [
     new TrailingNode(),
-    new ShikiLoader()
+    new ShikiLoader({ baseUrl: editor.options.baseUrl })
   ];
 }
