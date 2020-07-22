@@ -29,8 +29,7 @@
 import imagesloaded from 'imagesloaded';
 import { NodeSelection } from 'prosemirror-state';
 
-import { serializeImageAttributes } from '../nodes/image';
-
+import { tagSequence } from '../nodes/image';
 
 export default {
   name: 'ImageView',
@@ -74,8 +73,7 @@ export default {
       return this.naturalWidth > this.imageWidth;
     },
     tagPreview() {
-      if (this.node.attrs.isPoster) { return '[poster]'; }
-      return `[img${serializeImageAttributes(this.node)}]`;
+      return tagSequence(this.node);
     }
   },
   mounted() {
