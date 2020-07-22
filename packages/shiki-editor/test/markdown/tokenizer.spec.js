@@ -685,6 +685,30 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[img c=zxc 400x500]https://test.com[/img]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[img c=zxc 400x500]https://test.com[/img]'
+        )).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'image',
+                attrs: [
+                  ['src', 'https://test.com'],
+                  ['isPoster', false],
+                  ['class', 'zxc'],
+                  ['width', '400'],
+                  ['height', '500']
+                ]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
       it('[poster]https://test.com[/poster]', () => {
         expect(MarkdownTokenizer.parse(
           '[poster]https://test.com[/poster]'
