@@ -7370,7 +7370,7 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-editor@file:./packages/shiki-editor":
-  version "0.7.2"
+  version "0.7.3"
   dependencies:
     "@popperjs/core" "^2.4.4"
     prosemirror-commands "^1.1.4"
@@ -7390,7 +7390,7 @@ shebang-regex@^3.0.0:
     withinviewport "^2.1.2"
 
 "shiki-uploader@file:./packages/shiki-uploader":
-  version "0.7.2"
+  version "0.7.3"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"

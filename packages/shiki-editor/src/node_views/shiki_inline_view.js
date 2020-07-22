@@ -1,5 +1,6 @@
 import { bind } from 'decko';
 import DOMView from './dom_view';
+import { getShikiLoader } from '../utils';
 
 export default class ShikiInlineView extends DOMView {
   constructor(options) {
@@ -12,6 +13,8 @@ export default class ShikiInlineView extends DOMView {
 
     this.dom.innerText = this.node.attrs.bbcode;
     this.dom.addEventListener('click', this.stop);
+
+    this.fetch();
   }
 
   @bind
@@ -26,5 +29,14 @@ export default class ShikiInlineView extends DOMView {
       )
     );
     view.focus();
+  }
+
+  get shikiLoader() {
+    return getShikiLoader(this.editor);
+  }
+
+  async fetch() {
+    const result = await this.shikiLoader.fetch(this.node.attrs);
+    console.log(this.node.bbcode, 'loaded', result);
   }
 }

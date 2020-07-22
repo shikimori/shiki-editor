@@ -5,6 +5,7 @@ export { default as fixUrl } from './fix_url';
 export { default as getMarkAttrs } from './get_mark_attrs';
 export { default as getMarkRange } from './get_mark_range';
 export { default as getNodeAttrs } from './get_node_attrs';
+export { default as getShikiLoader } from './get_shiki_loader';
 export { default as minMax } from './min_max';
 export { default as nodeEqualsType } from './node_equals_type';
 export { default as scrollTop } from './scroll_top';
