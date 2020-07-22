@@ -57,6 +57,9 @@ export default class ShikiLoader extends Extension {
         const promises = queueById[id];
         const result = results?.[kind].find(v => v.id === parseInt(id));
 
+        CACHE[kind] ||= {};
+        CACHE[kind][id] ||= result;
+
         promises.forEach(promise => promise.resolve(result));
       });
     });
