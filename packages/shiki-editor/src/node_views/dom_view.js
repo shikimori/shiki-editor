@@ -29,6 +29,7 @@ export default class DOMView {
   replaceWith(replacement) {
     const { getPos, view, dispatch, tr } = this;
 
+    tr.setMeta('addToHistory', false);
     dispatch(
       tr.replaceWith(
         getPos(),
