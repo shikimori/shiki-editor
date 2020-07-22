@@ -18,16 +18,16 @@ export default class ShikiInline extends Node {
         isLoading: { default: true },
         isError: { default: false }
       },
-      group: 'inline'
+      group: 'inline',
       // content: 'inline*',
-      // toDOM: node =>
-      //   [
-      //     'span',
-      //     {
-      //       'data-attrs': JSON.stringify(node.attrs)
-      //     },
-      //     node.attrs.bbcode
-      //   ]
+      toDOM: node =>
+        [
+          'span',
+          {
+            'data-attrs': JSON.stringify(node.attrs)
+          },
+          node.attrs.bbcode
+        ]
     };
   }
 

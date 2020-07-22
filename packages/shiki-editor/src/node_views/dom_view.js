@@ -24,4 +24,17 @@ export default class DOMView {
   mergeAttrs(attrs) {
     return { ...this.node.attrs, ...attrs };
   }
+
+  replaceWith(replacement) {
+    const { getPos, view, dispatch, tr } = this;
+
+    dispatch(
+      tr.replaceWith(
+        getPos(),
+        getPos() + 1,
+        replacement
+      )
+    );
+    view.focus();
+  }
 }

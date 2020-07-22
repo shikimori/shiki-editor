@@ -14,6 +14,7 @@ export class Image extends Node {
     return {
       inline: true,
       attrs: {
+        id: { default: null },
         src: {},
         isPoster: { default: false },
         width: { default: null },

@@ -24,18 +24,15 @@ export default class ShikiInlineView extends DOMView {
     this.fetch();
   }
 
+  get type() {
+    return this.node.attrs.type;
+  }
+
   @bind
   stop() {
-    const { getPos, node, view, dispatch, tr } = this;
-
-    dispatch(
-      tr.replaceWith(
-        getPos(),
-        getPos() + 1,
-        view.state.schema.text(node.attrs.bbcode)
-      )
+    this.replaceWith(
+      this.view.state.schema.text(this.node.attrs.bbcode)
     );
-    view.focus();
   }
 
   get shikiLoader() {
@@ -45,10 +42,29 @@ export default class ShikiInlineView extends DOMView {
   async fetch() {
     const result = await this.shikiLoader.fetch(this.node.attrs);
     if (result) {
-      console.log(this.node.bbcode, 'loaded', result);
+      this.success(result);
     } else {
       this.error();
     }
+  }
+
+  success(result) {
+    if (this.type === 'poster' || this.type === 'image') {
+      this.replaceWith(
+        this.editor.schema.nodes.image.create({
+          id: result.id,
+          src: result.url,
+          isPoster: this.type === 'poster'
+        })
+      );
+    }
+    // const { getPos, view, dispatch, tr } = this;
+    // const attrs = this.mergeAttrs({ isLoading: false, isError: false });
+    // 
+    // dispatch(
+    //   tr.setNodeMarkup(getPos(), null, attrs)
+    // );
+    // view.focus();
   }
 
   error() {
