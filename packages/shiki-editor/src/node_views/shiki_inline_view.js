@@ -1,10 +1,15 @@
 import { bind } from 'decko';
+// import { DOMSerializer } from 'prosemirror-model';
+
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
 
 export default class ShikiInlineView extends DOMView {
   constructor(options) {
     super(options);
+
+    // const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
+    // debugger
 
     this.dom = document.createElement('span');
 
@@ -31,7 +36,10 @@ export default class ShikiInlineView extends DOMView {
   @bind
   stop() {
     this.replaceWith(
-      this.view.state.schema.text(this.node.attrs.bbcode)
+      this.view.state.schema.text(
+        this.node.attrs.bbcode,
+        this.node.marks
+      )
     );
   }
 
@@ -68,6 +76,7 @@ export default class ShikiInlineView extends DOMView {
         this.view.state.schema.text(
           attrs.text || result.text,
           [
+            ...this.node.marks,
             this.view.state.schema.marks.link_inline.create({
               ...result,
               type: this.type
