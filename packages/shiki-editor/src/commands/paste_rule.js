@@ -8,23 +8,25 @@ export default function(regexp, type, getAttrs) {
 
     fragment.forEach(child => {
       if (child.isText) {
-        let { text } = child;
+        const { text } = child;
         let pos = 0;
         let match;
 
         do {
-          match = regexp.exec(text);
+          const matchedText = text.slice(pos);
+
+          match = regexp.exec(matchedText);
           if (match) {
-            const start = match.index;
+            const start = pos + match.index;
             const end = start + match[0].length;
             const attrs = getAttrs instanceof Function ? getAttrs(...match) : getAttrs;
 
-            if (start > 0) {
+            if (start > pos) {
               nodes.push(child.cut(pos, start));
             }
 
             nodes.push(type.create(attrs));
-            text = text.slice(start + end);
+            pos = end;
           }
         } while (match);
 
