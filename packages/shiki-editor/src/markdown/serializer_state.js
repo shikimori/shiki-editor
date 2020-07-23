@@ -234,7 +234,18 @@ export default class MarkdownSerializerState {
         if (noEsc && node.isText) {
           this.text(this.markString(inner, true, parent, index) + node.text +
                     this.markString(inner, false, parent, index + 1), false);
-        } else this.render(node, parent, index);
+        } else {
+          const i = active.length - 1;
+          const isSelfContaining = active.length > 0 &&
+            this.marks[active[i].type.name].isSelfContaining &&
+            this.marks[active[i].type.name].isSelfContaining(active[i], node);
+
+          if (isSelfContaining) {
+            active.pop();
+          } else {
+            this.render(node, parent, index);
+          }
+        }
       }
     };
     parent.forEach(progress);
