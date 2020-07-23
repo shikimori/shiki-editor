@@ -1,7 +1,16 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
 
-export default function(state, startSequence, endSequence, meta) {
+export const SHIKI_LINK_REGEXP =
+  /^\[(anime|manga|ranobe|character|person)=(\d+)\]$/;
+export const SHIKI_IMAGE_REGEXP = /^\[(poster|image)=(\d+)(?: ([^\]]+))?\]$/;
+
+export function processShikiInline(
+  state,
+  startSequence,
+  endSequence,
+  meta
+) {
   let text;
   if (endSequence) {
     text = extractUntil(

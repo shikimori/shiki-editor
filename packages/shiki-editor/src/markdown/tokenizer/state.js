@@ -29,7 +29,8 @@ import processLinkInline from './processors/link_inline';
 import processPseudoBlock from './processors/pseudo_block';
 import processSmiley from './processors/smiley';
 import { processMarkOpen, processMarkClose } from './processors/mark';
-import processShikiInline from './processors/shiki_inline';
+import { processShikiInline, SHIKI_LINK_REGEXP, SHIKI_IMAGE_REGEXP } from
+  './processors/shiki_inline';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -40,9 +41,6 @@ export default class MarkdownTokenizer {
   SIZE_REGEXP = /^\[size=(\d+)\]$/
   LINK_REGEXP = /^\[url=(.+?)\]$/
   EMPTY_SPACES_REGEXP = /^ +$/
-
-  SHIKI_LINK_REGEXP = /^\[(anime|manga|ranobe|character|person)=(\d+)\]$/
-  SHIKI_IMAGE_REGEXP = /^\[(poster|image)=(\d+)(?: ([^\]]+))?\]$/
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
@@ -430,7 +428,7 @@ export default class MarkdownTokenizer {
         case '[rano':
         case '[char':
         case '[pers':
-          match = bbcode.match(this.SHIKI_LINK_REGEXP);
+          match = bbcode.match(SHIKI_LINK_REGEXP);
           if (!match) { break; }
           meta = parseShikiBasicMeta(match[1], match[2]);
 
@@ -441,7 +439,7 @@ export default class MarkdownTokenizer {
 
         case '[post':
         case '[imag':
-          match = bbcode.match(this.SHIKI_IMAGE_REGEXP);
+          match = bbcode.match(SHIKI_IMAGE_REGEXP);
           if (!match) { break; }
 
           let imageMeta; // eslint-disable-line
