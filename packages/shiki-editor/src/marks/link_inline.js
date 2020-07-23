@@ -104,11 +104,14 @@ export default class LinkInline extends Mark {
   get markdownSerializerToken() {
     return {
       open(_state, mark, _parent, _index) {
-        console.log(mark.attrs);
-        return `[url=${mark.attrs.url}]`;
+        return mark.attrs.type && mark.attrs.id ?
+          `[${mark.attrs.type}=${mark.attrs.id}]` :
+          `[url=${mark.attrs.url}]`;
       },
-      close(_state, _mark, _parent, _index) {
-        return '[/url]';
+      close(_state, mark, _parent, _index) {
+        return mark.attrs.type && mark.attrs.id ?
+          `[/${mark.attrs.type}]` :
+          '[/url]';
       }
     };
   }
