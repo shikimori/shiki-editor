@@ -8,7 +8,7 @@ export default function(regexp, type, getAttrs) {
 
     fragment.forEach(child => {
       if (child.isText) {
-        const { text } = child;
+        let { text } = child;
         let pos = 0;
         let match;
 
@@ -23,12 +23,8 @@ export default function(regexp, type, getAttrs) {
               nodes.push(child.cut(pos, start));
             }
 
-            nodes.push(child
-              .cut(start, end)
-              .mark(type.create(attrs)
-                .addToSet(child.marks)));
-
-            pos = end;
+            nodes.push(type.create(attrs));
+            text = text.slice(start + end);
           }
         } while (match);
 
