@@ -25,7 +25,7 @@ export function extractBbCode(text, startIndex, maxIndex) {
 }
 
 export function extractUntil(text, sequence, startIndex, maxIndex, isIgnoreNewLine) {
-  for (let i = startIndex + 1; i <= (maxIndex || text.length); i++) {
+  for (let i = startIndex; i <= (maxIndex || text.length); i++) {
     const char = text[i];
     const isEnd = isIgnoreNewLine ?
       (char === undefined) :
@@ -39,13 +39,6 @@ export function extractUntil(text, sequence, startIndex, maxIndex, isIgnoreNewLi
     if (isEnd) { return null; }
   }
   return null;
-}
-
-export function extractUntilWith(text, sequence, startIndex, maxIndex, isIgnoreNewLine) {
-  const extracted =
-    extractUntil(text, sequence, startIndex, maxIndex, isIgnoreNewLine);
-
-  return extracted ? extracted + sequence : null;
 }
 
 export function hasInlineSequence(text, sequence, startIndex, maxIndex) {

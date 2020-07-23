@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import {
   extractBbCode,
   extractUntil,
-  extractUntilWith,
   hasInlineSequence,
   extractMarkdownLanguage,
   isMatchedToken,
@@ -23,7 +22,7 @@ describe('tokenizer_helpers', () => {
   it('extractUntil', () => {
     expect(extractUntil('te1st', '1', 0)).to.eq('te');
     expect(extractUntil('te1st', '1', 1)).to.eq('e');
-    expect(extractUntil('te1st', '1', 2)).to.eq(null);
+    expect(extractUntil('te1st', '1', 2)).to.eq('');
 
     expect(extractUntil('te1st', 'st', 0)).to.eq('te1');
 
@@ -32,20 +31,6 @@ describe('tokenizer_helpers', () => {
 
     expect(extractUntil('te1st', '1', 0, 99)).to.eq('te');
     expect(extractUntil('te1st', '1', 0, 1)).to.eq(null);
-  });
-
-  it('extractUntilWith', () => {
-    expect(extractUntilWith('te1st', '1', 0)).to.eq('te1');
-    expect(extractUntilWith('te1st', '1', 1)).to.eq('e1');
-    expect(extractUntilWith('te1st', '1', 2)).to.eq(null);
-
-    expect(extractUntilWith('te1stz', 'st', 0)).to.eq('te1st');
-
-    expect(extractUntilWith('te1\nst', 'st', 0)).to.eq(null);
-    expect(extractUntilWith('te1\nst2z', '2', 0, null, true)).to.eq('te1\nst2');
-
-    expect(extractUntilWith('te1st', '1', 0, 99)).to.eq('te1');
-    expect(extractUntilWith('te1st', '1', 0, 1)).to.eq(null);
   });
 
   it('hasInlineSequence', () => {
