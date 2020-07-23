@@ -103,7 +103,7 @@ export default class LinkInline extends Mark {
 
   get markdownSerializerToken() {
     return {
-      isSelfContaining(mark, node) {
+      isShortcut(mark, node) {
         return mark.attrs.type && mark.attrs.id && node.text == mark.attrs.text;
       },
       open(_state, mark, _parent, _index) {

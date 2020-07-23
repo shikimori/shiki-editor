@@ -236,11 +236,11 @@ export default class MarkdownSerializerState {
                     this.markString(inner, false, parent, index + 1), false);
         } else {
           const i = active.length - 1;
-          const isSelfContaining = active.length > 0 &&
-            this.marks[active[i].type.name].isSelfContaining &&
-            this.marks[active[i].type.name].isSelfContaining(active[i], node);
+          const isShortcut = active.length > 0 &&
+            this.marks[active[i].type.name].isShortcut &&
+            this.marks[active[i].type.name].isShortcut(active[i], node);
 
-          if (isSelfContaining) {
+          if (isShortcut) {
             active.pop();
           } else {
             this.render(node, parent, index);
