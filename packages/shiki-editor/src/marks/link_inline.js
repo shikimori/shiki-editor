@@ -28,12 +28,18 @@ export default class LinkInline extends Mark {
         {
           tag: 'a[href]:not(.prosemirror-block)',
           getAttrs: node => ({
-            url: node.getAttribute('href')
+            url: node.getAttribute('href'),
+            id: node.getAttribute('data-id'),
+            type: node.getAttribute('data-type'),
+            text: node.getAttribute('data-text')
           })
         }
       ],
       toDOM: node => ['a', {
         href: fixUrl(node.attrs.url),
+        'data-id': node.attrs.id,
+        'data-type': node.attrs.type,
+        'data-text': node.attrs.text,
         class: 'b-link',
         rel: 'noopener noreferrer nofollow',
         target: '_blank'
