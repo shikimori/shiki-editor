@@ -70,7 +70,7 @@ export default class ShikiEditor {
 
     this.setActiveNodesAndMarks();
 
-    if (this.options.autoFocus !== null) {
+    if (this.options.autoFocus != null) {
       this.focus(this.options.autoFocus);
     }
 

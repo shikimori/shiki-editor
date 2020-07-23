@@ -41,6 +41,7 @@ export default class ShikiInlineView extends DOMView {
         this.node.marks
       )
     );
+    this.view.focus();
   }
 
   get shikiLoader() {
@@ -89,7 +90,7 @@ export default class ShikiInlineView extends DOMView {
   }
 
   error() {
-    const { getPos, view, dispatch, tr } = this;
+    const { getPos, dispatch, tr } = this;
     const attrs = this.mergeAttrs({ isLoading: false, isError: true });
 
     dispatch(
@@ -97,6 +98,5 @@ export default class ShikiInlineView extends DOMView {
         .setMeta('addToHistory', false)
         .setNodeMarkup(getPos(), null, attrs)
     );
-    view.focus();
   }
 }
