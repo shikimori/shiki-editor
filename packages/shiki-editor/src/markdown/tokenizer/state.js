@@ -205,15 +205,20 @@ export default class MarkdownTokenizer {
             );
             break outer;
 
-          // case '[list]':
-          //   meta = { data: [['data-list', 'remove-it']] };
-          //   isProcessed = processBlock(
-          //     this,
-          //     'div', bbcode, '[/list]', meta,
-          //     isStart, isOnlySpacingsBefore
-          //   );
-          //   if (isProcessed) { return; }
-          //   break;
+          case '[list]':
+            meta = {
+              data: [[
+                'data-deperecation',
+                '[list] is deprecated, use [*] without wrapping them in [list] tag'
+              ]]
+            };
+            isProcessed = processBlock(
+              this,
+              'div', bbcode, '[/list]', meta,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed) { return; }
+            break;
         }
       }
 
