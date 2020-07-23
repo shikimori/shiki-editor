@@ -17,7 +17,7 @@ export default function(regexp, type, getAttrs) {
           if (match) {
             const start = match.index;
             const end = start + match[0].length;
-            const attrs = getAttrs instanceof Function ? getAttrs(...match) : getAttrs;
+            const attrs = getAttrs instanceof Function ? getAttrs(match[0]) : getAttrs;
 
             if (start > 0) {
               nodes.push(child.cut(pos, start));

@@ -1,6 +1,17 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
 import { ShikiInlineView } from '../node_views';
+import { pasteRule } from '../commands';
+
+import {
+  SHIKI_LINK_REGEXP,
+  SHIKI_IMAGE_REGEXP
+} from '../markdown/tokenizer/processors/shiki_inline';
+
+import {
+  parseShikiBasicMeta
+} from '../markdown/tokenizer/bbcode_helpers';
+
 
 export default class ShikiInline extends Node {
   get name() {
@@ -38,6 +49,16 @@ export default class ShikiInline extends Node {
     } else {
       return null;
     }
+  }
+
+  pasteRules({ type }) {
+    return [
+      pasteRule(
+        SHIKI_LINK_REGEXP,
+        type,
+        (bbcode, type, id) => parseShikiBasicMeta(bbcode, type, id)
+      )
+    ];
   }
 
   get markdownParserToken() {
