@@ -51,14 +51,29 @@ export default class ShikiInlineView extends DOMView {
   }
 
   success(result) {
+    const { attrs } = this.node;
+
     if (this.type === 'poster' || this.type === 'image') {
       this.replaceWith(
-        this.editor.schema.nodes.image.create({
+        this.view.state.schema.nodes.image.create({
           id: result.id,
           src: result.url,
           isPoster: this.type === 'poster',
           ...this.node.attrs.meta
         }),
+        false
+      );
+    } else {
+      this.replaceWith(
+        this.view.state.schema.text(
+          attrs.text || result.text,
+          [
+            this.view.state.schema.marks.link_inline.create({
+              ...result,
+              type: this.type
+            })
+          ]
+        ),
         false
       );
     }

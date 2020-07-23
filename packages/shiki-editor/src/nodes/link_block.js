@@ -12,7 +12,7 @@ export default class LinkBlock extends Node {
   get schema() {
     return {
       attrs: {
-        href: {}
+        url: {}
       },
       content: 'block+',
       group: 'block',
@@ -21,18 +21,18 @@ export default class LinkBlock extends Node {
         {
           tag: 'a[href]',
           getAttrs: node => ({
-            href: node.getAttribute('href')
+            url: node.getAttribute('href')
           })
         }
       ],
       toDOM: node => [
         'a',
         {
-          href: fixUrl(node.attrs.href),
+          href: fixUrl(node.attrs.url),
           class: 'b-link prosemirror-block',
           rel: 'noopener noreferrer nofollow',
           target: '_blank',
-          'data-link': `[url=${node.attrs.href}]`
+          'data-link': `[url=${node.attrs.url}]`
         },
         0
       ]
@@ -55,6 +55,6 @@ export default class LinkBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'url', `=${node.attrs.href}`);
+    state.renderBlock(node, 'url', `=${node.attrs.url}`);
   }
 }

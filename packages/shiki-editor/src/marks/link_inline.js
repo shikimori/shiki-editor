@@ -18,19 +18,22 @@ export default class LinkInline extends Mark {
   get schema() {
     return {
       attrs: {
-        href: {}
+        url: {},
+        id: { default: null },
+        type: { default: null },
+        text: { default: null }
       },
       inclusive: false,
       parseDOM: [
         {
           tag: 'a[href]:not(.prosemirror-block)',
           getAttrs: node => ({
-            href: node.getAttribute('href')
+            url: node.getAttribute('href')
           })
         }
       ],
       toDOM: node => ['a', {
-        href: fixUrl(node.attrs.href),
+        href: fixUrl(node.attrs.url),
         class: 'b-link',
         rel: 'noopener noreferrer nofollow',
         target: '_blank'
@@ -49,12 +52,12 @@ export default class LinkInline extends Mark {
 
       const mark = marks.find(markItem => markItem.type.name === 'link_inline');
 
-      if (mark && mark.attrs.href) {
+      if (mark && mark.attrs.url) {
         return removeMark(type);
       }
-      const href = prompt(window.I18n.t('frontend.shiki_editor.prompt.link_url'));
-      return href ?
-        updateMark(type, { href: fixUrl(href) }) :
+      const url = prompt(window.I18n.t('frontend.shiki_editor.prompt.link_url'));
+      return url ?
+        updateMark(type, { href: fixUrl(url) }) :
         () => {};
     };
   }
@@ -64,7 +67,7 @@ export default class LinkInline extends Mark {
       pasteRule(
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g, // eslint-disable-line
         type,
-        url => ({ href: url })
+        url => ({ url })
       )
     ];
   }
@@ -81,9 +84,9 @@ export default class LinkInline extends Mark {
             const { schema } = view.state;
             const attrs = getMarkAttrs(schema.marks.link_inline, view.state);
 
-            if (attrs.href && event.target instanceof HTMLAnchorElement) {
+            if (attrs.url && event.target instanceof HTMLAnchorElement) {
               event.stopPropagation();
-              window.open(attrs.href);
+              window.open(attrs.url);
             }
           }
         }
@@ -101,9 +104,12 @@ export default class LinkInline extends Mark {
   get markdownSerializerToken() {
     return {
       open(_state, mark, _parent, _index) {
-        return `[url=${mark.attrs.href}]`;
+        console.log(mark.attrs);
+        return `[url=${mark.attrs.url}]`;
       },
-      close: '[/url]'
+      close(_state, _mark, _parent, _index) {
+        return '[/url]';
+      }
     };
   }
 }

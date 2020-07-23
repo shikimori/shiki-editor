@@ -53,8 +53,8 @@ describe('tokenizer_helpers', () => {
   });
 
   it('parseLinkMeta', () => {
-    expect(parseLinkMeta('qwe')).to.eql({ href: '//qwe' });
-    expect(parseLinkMeta('https://ya.ru')).to.eql({ href: 'https://ya.ru' });
+    expect(parseLinkMeta('qwe')).to.eql({ url: '//qwe' });
+    expect(parseLinkMeta('https://ya.ru')).to.eql({ url: 'https://ya.ru' });
   });
 
   it('parseQuoteMeta', () => {

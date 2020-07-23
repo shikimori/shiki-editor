@@ -382,7 +382,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'link_inline',
                 direction: 'open',
                 bbcode: '[url=https://ya.ru]',
-                attrs: [['href', 'https://ya.ru']]
+                attrs: [['url', 'https://ya.ru']]
               },
               { type: 'text', content: 'zxc' },
               { type: 'link_inline', direction: 'close', bbcode: '[/url]' }
@@ -402,7 +402,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'link_inline',
                 direction: 'open',
                 bbcode: '[url=ya.ru]',
-                attrs: [['href', '//ya.ru']]
+                attrs: [['url', '//ya.ru']]
               },
               { type: 'text', content: 'zxc' },
               { type: 'link_inline', direction: 'close', bbcode: '[/url]' }
@@ -1182,7 +1182,7 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru][quote]z[/quote][/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['href', '//ya.ru']] },
+          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
           { type: 'quote', direction: 'open' },
           ...text('z'),
           { type: 'quote', direction: 'close' },
@@ -1194,7 +1194,7 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru]\n[quote]\nz\n[/quote]\n[/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['href', '//ya.ru']] },
+          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
           { type: 'quote', direction: 'open' },
           ...text('z'),
           { type: 'quote', direction: 'close' },
@@ -1205,7 +1205,7 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru]\nz\n[/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['href', '//ya.ru']] },
+          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
           ...text('z'),
           { type: 'link_block', direction: 'close' }]);
       });

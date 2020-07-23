@@ -66,7 +66,7 @@ export function parseImageMeta(meta) {
 
 export function parseLinkMeta(meta) {
   return {
-    href: fixUrl(meta)
+    url: fixUrl(meta)
   };
 }
 
