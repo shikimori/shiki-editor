@@ -430,7 +430,7 @@ export default class MarkdownTokenizer {
         case '[pers':
           match = bbcode.match(SHIKI_LINK_REGEXP);
           if (!match) { break; }
-          meta = parseShikiBasicMeta(match[1], match[2]);
+          meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
 
           if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) {
             return;
@@ -447,7 +447,7 @@ export default class MarkdownTokenizer {
             imageMeta = parseImageMeta(match[3]);
             if (!imageMeta) { break; }
           }
-          meta = parseShikiBasicMeta(match[1], match[2], imageMeta);
+          meta = parseShikiBasicMeta(bbcode, match[1], match[2], imageMeta);
 
           if (processShikiInline(this, bbcode, null, meta)) { return; }
           break;

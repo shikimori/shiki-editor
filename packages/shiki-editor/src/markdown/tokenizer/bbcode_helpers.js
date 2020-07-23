@@ -114,8 +114,12 @@ export function parseSpoilerMeta(meta) {
   };
 }
 
-export function parseShikiBasicMeta(type, id, tagMeta) {
-  const meta = { type, id: parseInt(id) };
+export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {
+  const meta = {
+    bbcode,
+    type,
+    id: parseInt(id)
+  };
 
   if (tagMeta) {
     meta.meta = tagMeta;

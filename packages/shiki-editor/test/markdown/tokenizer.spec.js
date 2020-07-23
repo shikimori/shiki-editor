@@ -1248,9 +1248,9 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[anime=1]'],
                   ['type', 'anime'],
-                  ['id', 1],
-                  ['bbcode', '[anime=1]']
+                  ['id', 1]
                 ]
               }
             ]
@@ -1268,10 +1268,10 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[anime=1]zx[/anime]'],
                   ['type', 'anime'],
                   ['id', 1],
-                  ['text', 'zx'],
-                  ['bbcode', '[anime=1]zx[/anime]']
+                  ['text', 'zx']
                 ]
               }
             ]
@@ -1289,9 +1289,9 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[poster=1]'],
                   ['type', 'poster'],
-                  ['id', 1],
-                  ['bbcode', '[poster=1]']
+                  ['id', 1]
                 ]
               }
             ]
@@ -1309,9 +1309,9 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[image=1]'],
                   ['type', 'image'],
-                  ['id', 1],
-                  ['bbcode', '[image=1]']
+                  ['id', 1]
                 ]
               }
             ]
@@ -1331,10 +1331,10 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[image=1 c=zxc 400x500]'],
                   ['type', 'image'],
                   ['id', 1],
-                  ['meta', { 'class': 'zxc', 'height': '500', 'width': '400' }],
-                  ['bbcode', '[image=1 c=zxc 400x500]']
+                  ['meta', { 'class': 'zxc', 'height': '500', 'width': '400' }]
                 ]
               }
             ]
@@ -1353,9 +1353,9 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'shiki_inline',
                 attrs: [
+                  ['bbcode', '[image=1]'],
                   ['type', 'image'],
-                  ['id', 1],
-                  ['bbcode', '[image=1]']
+                  ['id', 1]
                 ]
               },
               {

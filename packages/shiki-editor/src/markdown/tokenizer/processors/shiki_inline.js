@@ -38,7 +38,7 @@ export function processShikiInline(
   } else {
     state.inlineTokens.push(
       new Token(
-        'shiki_inline', null, null, { ...meta, bbcode: startSequence }
+        'shiki_inline', null, null, { ...meta }
       )
     );
     state.next(startSequence.length);

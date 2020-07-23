@@ -98,6 +98,10 @@ describe('tokenizer_helpers', () => {
   });
 
   it('parseShikiBasicMeta', () => {
-    expect(parseShikiBasicMeta('anime', '1')).to.eql({ type: 'anime', id: 1 });
+    expect(parseShikiBasicMeta('[anime=1]', 'anime', '1')).to.eql({
+      bbcode: '[anime=1]',
+      type: 'anime',
+      id: 1
+    });
   });
 });
