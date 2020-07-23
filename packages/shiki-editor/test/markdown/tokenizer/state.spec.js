@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MarkdownTokenizer } from '../../src/markdown';
+import { MarkdownTokenizer } from '../../../src/markdown';
 
 function text(content) {
   return [
@@ -994,15 +994,27 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    // describe('list', () => {
-    //   it('[list]z[/list]', () => {
-    //     expect(MarkdownTokenizer.parse('[list]z[/list]')).to.eql([
-    //       { type: 'div', direction: 'open', attrs: [['data', [['data-list', 'remove-it']]]] },
-    //       ...text('z'),
-    //       { type: 'div', direction: 'close' }
-    //     ]);
-    //   });
-    // });
+    describe('list', () => {
+      it('[list]z[/list]', () => {
+        expect(MarkdownTokenizer.parse('[list]z[/list]')).to.eql([
+          {
+            type: 'div',
+            direction: 'open',
+            attrs: [
+              [
+                'data',
+                [[
+                  'data-deperecation',
+                  '[list] is deprecated, use [*] without wrapping them in [list] tag'
+                ]]
+              ]
+            ]
+          },
+          ...text('z'),
+          { type: 'div', direction: 'close' }
+        ]);
+      });
+    });
 
     describe('div', () => {
       it('[div]z[/div]', () => {

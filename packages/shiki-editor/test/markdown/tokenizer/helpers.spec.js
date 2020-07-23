@@ -6,7 +6,7 @@ import {
   extractMarkdownLanguage,
   isMatchedToken,
   rollbackUnbalancedTokens
-} from '../../src/markdown/tokenizer/helpers';
+} from '../../../src/markdown/tokenizer/helpers';
 
 describe('tokenizer_helpers', () => {
   it('extractBbCode', () => {

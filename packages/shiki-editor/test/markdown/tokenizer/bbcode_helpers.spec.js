@@ -8,7 +8,7 @@ import {
   parseSizeMeta,
   parseSpoilerMeta,
   parseShikiBasicMeta
-} from '../../src/markdown/tokenizer/bbcode_helpers';
+} from '../../../src/markdown/tokenizer/bbcode_helpers';
 
 describe('tokenizer_helpers', () => {
   it('parseCodeMeta', () => {
