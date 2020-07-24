@@ -2,8 +2,10 @@ import pDefer from 'p-defer';
 import debounce from 'debounce-decorator';
 import axios from 'axios';
 
-import { Extension } from '../base';
 import { flash } from 'shiki-utils';
+
+import { Extension } from '../base';
+import fixUrl from '../utils/fix_url';
 
 export const CACHE = {};
 
@@ -58,6 +60,10 @@ export class ShikiLoader extends Extension {
       Object.keys(queueById).forEach(id => {
         const promises = queueById[id];
         const result = results?.[kind].find(v => v.id === parseInt(id));
+
+        if (result.url) {
+          result.url = fixUrl(result.url, this.options.baseUrl);
+        }
 
         CACHE[kind] ||= {};
         CACHE[kind][id] ||= (result || null);
