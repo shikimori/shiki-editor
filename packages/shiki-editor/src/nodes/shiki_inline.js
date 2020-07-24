@@ -26,6 +26,7 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         bbcode: {},
+        meta: { default: {} }, // can be used to append additional options to final node
         text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
@@ -45,7 +46,7 @@ export default class ShikiInline extends Node {
 
   view(options) {
     if (options.node.attrs.isLoading || options.node.attrs.isError) {
-      console.log(options.node.attrs);
+      console.log(options.node.attjkkjkkjkkrs);
       return new ShikiInlineView(options);
     } else {
       console.error('ShikInline node without nodeView!', options.node);
