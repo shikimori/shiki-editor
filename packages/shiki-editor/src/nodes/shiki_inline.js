@@ -5,9 +5,9 @@ import { ShikiInlineView } from '../node_views';
 import { pasteRule } from '../commands';
 
 import {
-  SHIKI_LINK_REGEXP,
-  SHIKI_LINK_FULL_REGEXP,
-  SHIKI_IMAGE_REGEXP
+  SHIKI_BBCODE_LINK_REGEXP,
+  SHIKI_BBCODE_LINK_FULL_REGEXP,
+  SHIKI_BBCODE_IMAGE_REGEXP
 } from '../markdown/tokenizer/processors/shiki_inline';
 
 import {
@@ -56,10 +56,10 @@ export default class ShikiInline extends Node {
 
   inputRules({ type }) {
     return [
-      nodeInputRule(SHIKI_LINK_REGEXP, type, ([bbcode, type, id]) => (
+      nodeInputRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
         parseShikiBasicMeta(bbcode, type, id)
       )),
-      nodeInputRule(SHIKI_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
+      nodeInputRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
         parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
       ))
     ];
@@ -67,16 +67,16 @@ export default class ShikiInline extends Node {
 
   pasteRules({ type }) {
     return [
-      pasteRule(SHIKI_LINK_FULL_REGEXP, type, ([bbcode, type, id, text]) => (
+      pasteRule(SHIKI_BBCODE_LINK_FULL_REGEXP, type, ([bbcode, type, id, text]) => (
         {
           ...parseShikiBasicMeta(bbcode, type, id),
           text
         }
       )),
-      pasteRule(SHIKI_LINK_REGEXP, type, ([bbcode, type, id]) => (
+      pasteRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
         parseShikiBasicMeta(bbcode, type, id)
       )),
-      pasteRule(SHIKI_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
+      pasteRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
         parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
       ))
     ];

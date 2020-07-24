@@ -25,11 +25,11 @@ import processHeading from './processors/heading';
 import processHr from './processors/hr';
 import processImage from './processors/image';
 import processInlineBlock from './processors/inline_block';
-import processLinkInline from './processors/link_inline';
+import { processLinkInline } from './processors/link_inline';
 import processPseudoBlock from './processors/pseudo_block';
 import processSmiley from './processors/smiley';
 import { processMarkOpen, processMarkClose } from './processors/mark';
-import { processShikiInline, SHIKI_LINK_REGEXP, SHIKI_IMAGE_REGEXP } from
+import { processShikiInline, SHIKI_BBCODE_LINK_REGEXP, SHIKI_BBCODE_IMAGE_REGEXP } from
   './processors/shiki_inline';
 
 export default class MarkdownTokenizer {
@@ -42,8 +42,8 @@ export default class MarkdownTokenizer {
   LINK_REGEXP = /^\[url=(.+?)\]$/
   EMPTY_SPACES_REGEXP = /^ +$/
 
-  SINGLE_SHIKI_LINK_REGEXP = new RegExp(`^${SHIKI_LINK_REGEXP.source}$`)
-  SINGLE_SHIKI_IMAGE_REGEXP = new RegExp(`^${SHIKI_IMAGE_REGEXP.source}$`)
+  SINGLE_SHIKI_BBCODE_LINK_REGEXP = new RegExp(`^${SHIKI_BBCODE_LINK_REGEXP.source}$`)
+  SINGLE_SHIKI_BBCODE_IMAGE_REGEXP = new RegExp(`^${SHIKI_BBCODE_IMAGE_REGEXP.source}$`)
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
@@ -436,7 +436,7 @@ export default class MarkdownTokenizer {
         case '[rano':
         case '[char':
         case '[pers':
-          match = bbcode.match(this.SINGLE_SHIKI_LINK_REGEXP);
+          match = bbcode.match(this.SINGLE_SHIKI_BBCODE_LINK_REGEXP);
           if (!match) { break; }
           meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
 
@@ -447,7 +447,7 @@ export default class MarkdownTokenizer {
 
         case '[post':
         case '[imag':
-          match = bbcode.match(this.SINGLE_SHIKI_IMAGE_REGEXP);
+          match = bbcode.match(this.SINGLE_SHIKI_BBCODE_IMAGE_REGEXP);
           if (!match) { break; }
 
           let imageMeta; // eslint-disable-line
