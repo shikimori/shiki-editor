@@ -1,5 +1,6 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
+import { nodeInputRule } from '../commands';
 import { ShikiInlineView } from '../node_views';
 import { pasteRule } from '../commands';
 
@@ -51,6 +52,19 @@ export default class ShikiInline extends Node {
       console.error('ShikInline node without nodeView!', options.node);
       return null;
     }
+  }
+
+  inputRules({ type }) {
+    return [
+      nodeInputRule(SHIKI_LINK_REGEXP, type, match => {
+        const [bbcode, type, id] = match;
+        return parseShikiBasicMeta(bbcode, type, id);
+      }),
+      nodeInputRule(SHIKI_IMAGE_REGEXP, type, match => {
+        const [bbcode, type, id, other] = match;
+        return parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other));
+      })
+    ];
   }
 
   pasteRules({ type }) {
