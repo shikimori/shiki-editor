@@ -28,6 +28,8 @@ function processShikiImage(state, startSequence, meta) {
 
 function processShikiLink(state, startSequence, endSequence, meta) {
   let text;
+  let sequence = startSequence;
+  let tagMeta = { ...meta };
 
   if (endSequence) {
     text = extractUntil(
@@ -38,22 +40,15 @@ function processShikiLink(state, startSequence, endSequence, meta) {
   }
 
   if (text) {
-    const sequence = `${startSequence}${text}${endSequence}`;
-    state.inlineTokens.push(
-      new Token(
-        'shiki_inline',
-        null,
-        null,
-        { ...meta, text, bbcode: sequence }
-      )
-    );
-    state.next(sequence.length);
-  } else {
-    state.inlineTokens.push(
-      new Token('shiki_inline', null, null, { ...meta })
-    );
-    state.next(startSequence.length);
+    sequence = `${startSequence}${text}${endSequence}`;
+    tagMeta = { ...meta, text, bbcode: sequence };
   }
+
+  state.inlineTokens.push(
+    new Token('shiki_inline', null, null, tagMeta)
+  );
+  state.next(sequence.length);
+
   return true;
 }
 
