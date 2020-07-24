@@ -26,7 +26,6 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         bbcode: {},
-        meta: { default: {} },
         text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
