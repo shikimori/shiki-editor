@@ -45,6 +45,7 @@ export default class ShikiInline extends Node {
 
   view(options) {
     if (options.node.attrs.isLoading || options.node.attrs.isError) {
+      console.log(options.node.ars);
       return new ShikiInlineView(options);
     } else {
       console.error('ShikInline node without nodeView!', options.node);
