@@ -61,7 +61,7 @@ export class ShikiLoader extends Extension {
         const promises = queueById[id];
         const result = results?.[kind].find(v => v.id === parseInt(id));
 
-        if (result.url) {
+        if (result?.url) {
           result.url = fixUrl(result.url, this.options.baseUrl);
         }
 
