@@ -5,9 +5,9 @@ import axios from 'axios';
 import { Extension } from '../base';
 import { flash } from 'shiki-utils';
 
-const CACHE = {};
+export const CACHE = {};
 
-export default class ShikiLoader extends Extension {
+export class ShikiLoader extends Extension {
   queue = null
   API_PATH = 'api/shiki_editor'
 
