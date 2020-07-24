@@ -26,7 +26,7 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         bbcode: {},
-        meta: { default: {} }, // can be used to append additional options to final node
+        meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
         text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
