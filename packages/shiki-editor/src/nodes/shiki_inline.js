@@ -56,14 +56,12 @@ export default class ShikiInline extends Node {
 
   inputRules({ type }) {
     return [
-      nodeInputRule(SHIKI_LINK_REGEXP, type, match => {
-        const [bbcode, type, id] = match;
-        return parseShikiBasicMeta(bbcode, type, id);
-      }),
-      nodeInputRule(SHIKI_IMAGE_REGEXP, type, match => {
-        const [bbcode, type, id, other] = match;
-        return parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other));
-      })
+      nodeInputRule(SHIKI_LINK_REGEXP, type, ([bbcode, type, id]) => (
+        parseShikiBasicMeta(bbcode, type, id)
+      )),
+      nodeInputRule(SHIKI_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
+        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
+      ))
     ];
   }
 
