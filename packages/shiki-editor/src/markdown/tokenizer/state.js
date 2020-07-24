@@ -341,6 +341,10 @@ export default class MarkdownTokenizer {
         if (processMarkClose(this, 'strike', '[s]', '[/s]')) { return; }
         break;
 
+      case '[url]':
+        if (processLinkInline(this, bbcode)) { return; }
+        break;
+
       case '[/url]':
         if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return; }
         break;

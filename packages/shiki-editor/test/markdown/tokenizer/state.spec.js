@@ -412,6 +412,26 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[url]https://ya.ru[/url]', () => {
+        expect(MarkdownTokenizer.parse('[url]https://ya.ru[/url]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'link_inline',
+                direction: 'open',
+                attrs: [['url', 'https://ya.ru']]
+              },
+              { type: 'text', content: 'https://ya.ru' },
+              { type: 'link_inline', direction: 'close' }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
+
       it('[url=a]z', () => {
         expect(MarkdownTokenizer.parse('[url=a]z')).to.eql([
           ...text('[url=a]z')
