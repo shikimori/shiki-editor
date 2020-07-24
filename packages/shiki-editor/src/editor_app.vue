@@ -305,6 +305,13 @@ textarea.ProseMirror
   span[contenteditable=false]
     cursor: default
 
+  .b-image
+    position: static
+
+    &:hover,
+    &.is-prosemirror-selected
+      position: relative
+
   [data-image]:hover,
   [data-image].is-prosemirror-selected,
   [data-link]:hover,
