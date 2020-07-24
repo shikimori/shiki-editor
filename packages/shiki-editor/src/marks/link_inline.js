@@ -1,7 +1,12 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/marks/LinkInline.js
 import { Plugin } from 'prosemirror-state';
 import { Mark } from '../base';
-import { updateMark, removeMark, linkPasteRule } from '../commands';
+import {
+  updateMark,
+  removeMark,
+  linkUrlPasteRule,
+  linkBbcodePasteRule
+} from '../commands';
 import { getMarkAttrs, fixUrl } from '../utils';
 
 export default class LinkInline extends Mark {
@@ -70,11 +75,12 @@ export default class LinkInline extends Mark {
 
   pasteRules({ type }) {
     return [
-      linkPasteRule(
+      linkUrlPasteRule(
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g, // eslint-disable-line
         type,
         url => ({ url })
-      )
+      ),
+      linkBbcodePasteRule(type)
     ];
   }
 

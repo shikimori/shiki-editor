@@ -1,7 +1,10 @@
+// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/pasteRule.js
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 
-export default function(regexp, type, getAttrs) {
+const URL_REGEXP = /(\[url(?:=([^\]]+))?\])([^\]]+)(\[\/url\])/;
+
+export default function(type) {
   const handler = fragment => {
     const nodes = [];
 
@@ -13,20 +16,26 @@ export default function(regexp, type, getAttrs) {
 
         do {
           const matchedText = text.slice(pos);
+          match = URL_REGEXP.exec(matchedText);
 
-          match = regexp.exec(matchedText);
           if (match) {
             const start = pos + match.index;
             const end = start + match[0].length;
-            const attrs = getAttrs instanceof Function ?
-              getAttrs(match) :
-              getAttrs;
+            const [, openBbcode, urlOrNothing, textOrUrl, closeBbCode] = match;
 
-            if (start > pos) {
+            if (start > 0) {
               nodes.push(child.cut(pos, start));
             }
 
-            nodes.push(type.create(attrs));
+            nodes.push(
+              child
+                .cut(start + openBbcode.length, end - closeBbCode.length)
+                .mark(
+                  type
+                    .create({ url: urlOrNothing || textOrUrl })
+                    .addToSet(child.marks)
+                )
+            );
             pos = end;
           }
         } while (match);

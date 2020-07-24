@@ -25,7 +25,7 @@ import processHeading from './processors/heading';
 import processHr from './processors/hr';
 import processImage from './processors/image';
 import processInlineBlock from './processors/inline_block';
-import { processLinkInline } from './processors/link_inline';
+import processLinkInline from './processors/link_inline';
 import processPseudoBlock from './processors/pseudo_block';
 import processSmiley from './processors/smiley';
 import { processMarkOpen, processMarkClose } from './processors/mark';
