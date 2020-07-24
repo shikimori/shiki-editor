@@ -47,7 +47,8 @@ export default class MarkdownTokenizer {
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
-    size_inline: '[size]'
+    size_inline: '[size]',
+    link_inline: '[url]'
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
