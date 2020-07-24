@@ -1,5 +1,4 @@
 import { bind } from 'decko';
-// import { DOMSerializer } from 'prosemirror-model';
 
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
@@ -7,9 +6,6 @@ import { getShikiLoader } from '../utils';
 export default class ShikiInlineView extends DOMView {
   constructor(options) {
     super(options);
-
-    // const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
-    // debugger
 
     this.dom = document.createElement('span');
 
