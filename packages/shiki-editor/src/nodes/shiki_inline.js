@@ -67,18 +67,12 @@ export default class ShikiInline extends Node {
 
   pasteRules({ type }) {
     return [
-      pasteRule(
-        SHIKI_LINK_REGEXP,
-        type,
-        (bbcode, type, id) => parseShikiBasicMeta(bbcode, type, id)
-      ),
-      pasteRule(
-        SHIKI_IMAGE_REGEXP,
-        type,
-        (bbcode, type, id, other) => (
-          parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
-        )
-      )
+      pasteRule(SHIKI_LINK_REGEXP, type, ([bbcode, type, id]) => (
+        parseShikiBasicMeta(bbcode, type, id)
+      )),
+      pasteRule(SHIKI_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
+        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
+      ))
     ];
   }
 

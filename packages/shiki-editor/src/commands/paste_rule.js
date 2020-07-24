@@ -20,7 +20,7 @@ export default function(regexp, type, getAttrs) {
             const start = pos + match.index;
             const end = start + match[0].length;
             const attrs = getAttrs instanceof Function ?
-              getAttrs(...match) :
+              getAttrs(match) :
               getAttrs;
 
             if (start > pos) {
