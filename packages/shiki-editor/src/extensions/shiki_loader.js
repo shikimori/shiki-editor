@@ -90,7 +90,7 @@ export class ShikiLoader extends Extension {
   }
 }
 
-function fixedType(type) {
+export function fixedType(type) {
   if (type === 'ranobe') {
     return 'manga';
   } else if (type === 'poster') {
