@@ -13,6 +13,7 @@ export { default as Paragraph } from './paragraph';
 export { default as Quote } from './quote';
 export { default as Right } from './right';
 export { default as SizeBlock } from './size_block';
+export { default as BoldBlock } from './bold_block';
 export { default as Smiley } from './smiley';
 export { default as ShikiInline } from './shiki_inline';
 export { default as SpoilerBlock } from './spoiler_block';

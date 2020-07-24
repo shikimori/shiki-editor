@@ -1,5 +1,6 @@
 import {
   Blockquote,
+  BoldBlock,
   BulltList,
   Center,
   CodeBlock,
@@ -21,14 +22,14 @@ import {
 } from '../nodes';
 
 import {
+  BoldInline,
   CodeInline,
   Color,
-  Strike,
   Italic,
   LinkInline,
   SizeInline,
   SpoilerInline,
-  BoldInline,
+  Strike,
   Underline
 } from '../marks';
 
@@ -51,6 +52,7 @@ export default function(editor) {
     new Right(),
     new LinkBlock(),
     new ShikiInline(),
+    new BoldBlock(),
     new SizeBlock(),
     new Blockquote(),
     new BulltList(),
