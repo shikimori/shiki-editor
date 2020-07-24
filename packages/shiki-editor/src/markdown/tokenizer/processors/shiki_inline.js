@@ -1,5 +1,6 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
+import { CACHE } from '../../../extensions/shiki_loader';
 
 export const SHIKI_LINK_REGEXP =
   /\[(anime|manga|ranobe|character|person)=(\d+)\]/;
@@ -44,9 +45,27 @@ function processShikiLink(state, startSequence, endSequence, meta) {
     tagMeta = { ...meta, text, bbcode: sequence };
   }
 
-  state.inlineTokens.push(
-    new Token('shiki_inline', null, null, tagMeta)
-  );
+  const cache = CACHE?.[meta.type]?.[meta.id];
+
+  if (cache) {
+    state.inlineTokens.push(
+      state.tagOpen('link_inline', {
+        url: cache.url,
+        id: meta.id,
+        type: meta.type,
+        text: cache.text
+      })
+    );
+    state.inlineTokens.push(new Token('text', text || cache.text));
+    state.inlineTokens.push(
+      state.tagClose('link_inline')
+    );
+
+  } else {
+    state.inlineTokens.push(
+      new Token('shiki_inline', null, null, tagMeta)
+    );
+  }
   state.next(sequence.length);
 
   return true;
