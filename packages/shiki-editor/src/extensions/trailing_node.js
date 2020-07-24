@@ -37,7 +37,9 @@ export default class TrailingNode extends Extension {
 
             const { doc, schema, tr } = state;
             const type = schema.nodes[this.options.node];
-            const transaction = tr.insert(doc.content.size, type.create());
+            const transaction = tr
+              .insert(doc.content.size, type.create())
+              .setMeta('addToHistory', false);
             view.dispatch(transaction);
           }
         }),
