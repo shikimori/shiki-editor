@@ -9,7 +9,8 @@ import {
 } from '../markdown/tokenizer/processors/shiki_inline';
 
 import {
-  parseShikiBasicMeta
+  parseShikiBasicMeta,
+  parseImageMeta
 } from '../markdown/tokenizer/bbcode_helpers';
 
 
@@ -57,6 +58,13 @@ export default class ShikiInline extends Node {
         SHIKI_LINK_REGEXP,
         type,
         (bbcode, type, id) => parseShikiBasicMeta(bbcode, type, id)
+      ),
+      pasteRule(
+        SHIKI_IMAGE_REGEXP,
+        type,
+        (bbcode, type, id, other) => (
+          parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
+        )
       )
     ];
   }
