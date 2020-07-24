@@ -179,20 +179,6 @@ export default class ExtensionManager {
       }, {});
   }
 
-  disabledChecks({ schema, view }) {
-    return this.extensions
-      .filter(extension => extension.disabledCheck)
-      .reduce((memo, extension) => {
-        const { name, type } = extension;
-        const schemaType = schema[`${type}s`][name];
-
-        memo[extension.name] = _state => (
-          extension.disabledCheck(schemaType, view.state)
-        );
-        return memo;
-      }, {});
-  }
-
   commands({ schema, view }) {
     return this.extensions
       .filter(extension => extension.commands)
