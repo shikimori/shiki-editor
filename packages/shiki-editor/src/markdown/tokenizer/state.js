@@ -26,7 +26,7 @@ import processHr from './processors/hr';
 import processImage from './processors/image';
 import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
-import processPseudoBlock from './processors/pseudo_block';
+import processInlineOrBlock from './processors/inline_or_block';
 import processSmiley from './processors/smiley';
 import { processMarkOpen, processMarkClose } from './processors/mark';
 import { processShikiInline, SHIKI_BBCODE_LINK_REGEXP, SHIKI_BBCODE_IMAGE_REGEXP } from
@@ -242,7 +242,7 @@ export default class MarkdownTokenizer {
         }
 
         if (seq4 === '[url' && (match = bbcode.match(this.LINK_REGEXP))) {
-          isProcessed = processPseudoBlock(
+          isProcessed = processInlineOrBlock(
             this,
             'link_block', bbcode, '[/url]', parseLinkMeta(match[1]),
             isStart, isOnlySpacingsBefore
@@ -251,7 +251,7 @@ export default class MarkdownTokenizer {
         }
 
         if (seq5 === '[size' && (match = bbcode.match(this.SIZE_REGEXP))) {
-          isProcessed = processPseudoBlock(
+          isProcessed = processInlineOrBlock(
             this,
             'size_block', bbcode, '[/size]', parseSizeMeta(match[1]),
             isStart, isOnlySpacingsBefore
@@ -302,10 +302,9 @@ export default class MarkdownTokenizer {
       }
 
       switch (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
-        case true:
+        case true: // it means that was parsed as a block
           return;
-
-        case undefined:
+        case false: // it means that was parsed as an inline
           continue;
       }
 
@@ -316,59 +315,59 @@ export default class MarkdownTokenizer {
   parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
-        if (processMarkOpen(this, 'bold', '[b]', '[/b]')) { return; }
+        if (processMarkOpen(this, 'bold', '[b]', '[/b]')) { return false; }
         break;
 
       case '[/b]':
-        if (processMarkClose(this, 'bold', '[b]', '[/b]')) { return; }
+        if (processMarkClose(this, 'bold', '[b]', '[/b]')) { return false; }
         break;
 
       case '[i]':
-        if (processMarkOpen(this, 'italic', '[i]', '[/i]')) { return; }
+        if (processMarkOpen(this, 'italic', '[i]', '[/i]')) { return false; }
         break;
 
       case '[/i]':
-        if (processMarkClose(this, 'italic', '[i]', '[/i]')) { return; }
+        if (processMarkClose(this, 'italic', '[i]', '[/i]')) { return false; }
         break;
 
       case '[u]':
-        if (processMarkOpen(this, 'underline', '[u]', '[/u]')) { return; }
+        if (processMarkOpen(this, 'underline', '[u]', '[/u]')) { return false; }
         break;
 
       case '[/u]':
-        if (processMarkClose(this, 'underline', '[u]', '[/u]')) { return; }
+        if (processMarkClose(this, 'underline', '[u]', '[/u]')) { return false; }
         break;
 
       case '[s]':
-        if (processMarkOpen(this, 'strike', '[s]', '[/s]')) { return; }
+        if (processMarkOpen(this, 'strike', '[s]', '[/s]')) { return false; }
         break;
 
       case '[/s]':
-        if (processMarkClose(this, 'strike', '[s]', '[/s]')) { return; }
+        if (processMarkClose(this, 'strike', '[s]', '[/s]')) { return false; }
         break;
 
       case '[url]':
-        if (processLinkInline(this, bbcode)) { return; }
+        if (processLinkInline(this, bbcode)) { return false; }
         break;
 
       case '[/url]':
-        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return; }
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return false; }
         break;
 
       case '[/color]':
-        if (processMarkClose(this, 'color', '[color]', '[/color]')) { return; }
+        if (processMarkClose(this, 'color', '[color]', '[/color]')) { return false; }
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size', '[size]', '[/size]')) { return; }
+        if (processMarkClose(this, 'size', '[size]', '[/size]')) { return false; }
         break;
 
       case '[poster]':
-        if (processImage(this, bbcode, '[/poster]', true)) { return; }
+        if (processImage(this, bbcode, '[/poster]', true)) { return false; }
         break;
 
       case '[code]':
-        if (processCodeInline(this, bbcode, '[/code]')) { return; }
+        if (processCodeInline(this, bbcode, '[/code]')) { return false; }
         break;
 
       case '[hr]':
@@ -379,23 +378,20 @@ export default class MarkdownTokenizer {
         this.next(bbcode.length);
         this.finalizeParagraph();
         return true;
-
-      default:
-        break;
     }
 
     if (seq2 === '||' && seq3 !== '|||') {
       if (this.lastMark !== seq2) {
-        if (processMarkOpen(this, 'spoiler_inline', '||', '||')) { return; }
-      } else if (processMarkClose(this, 'spoiler_inline', '||', '||')) { return; }
+        if (processMarkOpen(this, 'spoiler_inline', '||', '||')) { return false; }
+      } else if (processMarkClose(this, 'spoiler_inline', '||', '||')) { return false; }
     }
 
     if (char1 === '`') {
-      if (processCodeInline(this, char1)) { return; }
+      if (processCodeInline(this, char1)) { return false; }
     }
 
     if (char1 === ':' || char1 === '+') {
-      if (processSmiley(this, char1, seq2, seq3)) { return; }
+      if (processSmiley(this, char1, seq2, seq3)) { return false; }
     }
 
     let match;
@@ -404,11 +400,11 @@ export default class MarkdownTokenizer {
     if (bbcode) {
       switch (seq4) {
         case '[div':
-          if (processInlineBlock(this, bbcode, '[/div]')) { return; }
+          if (processInlineBlock(this, bbcode, '[/div]')) { return false; }
           break;
 
         case '[img':
-          if (processImage(this, bbcode, '[/img]', false)) { return; }
+          if (processImage(this, bbcode, '[/img]', false)) { return false; }
           break;
       }
 
@@ -418,7 +414,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
           meta = parseLinkMeta(match[1]);
 
-          if (processLinkInline(this, bbcode, meta)) { return; }
+          if (processLinkInline(this, bbcode, meta)) { return false; }
           break;
 
         case '[colo':
@@ -427,7 +423,7 @@ export default class MarkdownTokenizer {
 
           meta = { color: match[1] };
           if (processMarkOpen(this, 'color', bbcode, '[/color]', meta)) {
-            return;
+            return false;
           }
           break;
 
@@ -437,7 +433,7 @@ export default class MarkdownTokenizer {
 
           meta = parseSizeMeta(match[1]);
           if (processMarkOpen(this, 'size', bbcode, '[/size]', meta)) {
-            return;
+            return false;
           }
           break;
 
@@ -450,9 +446,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
           meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
 
-          if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) {
-            return;
-          }
+          if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) { return false; }
           break;
 
         case '[post':
@@ -467,12 +461,12 @@ export default class MarkdownTokenizer {
           }
           meta = parseShikiBasicMeta(bbcode, match[1], match[2], imageMeta);
 
-          if (processShikiInline(this, bbcode, null, meta)) { return; }
+          if (processShikiInline(this, bbcode, null, meta)) { return false; }
           break;
       }
     }
 
-    return false;
+    return undefined;
   }
 
   next(steps = 1, isSkipNewLine = false) {

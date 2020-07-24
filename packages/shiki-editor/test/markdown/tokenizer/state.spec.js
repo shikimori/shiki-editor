@@ -1266,6 +1266,16 @@ describe('MarkdownTokenizer', () => {
           { type: 'quote', direction: 'close' },
           { type: 'size_block', direction: 'close' }]);
       });
+
+      it('[size=24]qwe\\zxc[/size]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[size=24]qwe\\zxc[/size]'
+        )).to.eql([
+          { type: 'size_block', direction: 'open', attrs: [['size', '24']] },
+          ...text('qwe'),
+          ...text('zxc'),
+          { type: 'size_block', direction: 'close' }]);
+      });
     });
   });
 
