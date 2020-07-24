@@ -4,6 +4,8 @@ import { CACHE, fixedType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_LINK_REGEXP =
   /\[(anime|manga|ranobe|character|person)=(\d+)\]/;
+export const SHIKI_LINK_FULL_REGEXP =
+  /\[(anime|manga|ranobe|character|person)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
 export const SHIKI_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
 export function processShikiInline(
