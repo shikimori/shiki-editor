@@ -33,8 +33,6 @@ window.I18n = {
   t: key => TRANSLATIONS[key] || `:${key}`
 };
 
-console.log('VUE_APP_USER', process.env.VUE_APP_USER);
-
 new Vue({
   render: h => h(Demo)
 }).$mount('#app');
