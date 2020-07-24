@@ -9,7 +9,7 @@ export default function(state, startSequence, exitSequence) {
   );
   const tokens = tokenizer.parse();
 
-  if (!tokens) { return false; }
+  if (!tokens) { return; }
   // const endSequence =
   //   state.text.slice(tokenizer.index, tokenizer.index + exitSequence.length);
   // if (endSequence !== exitSequence) { return false; }

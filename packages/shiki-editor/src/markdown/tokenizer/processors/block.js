@@ -18,7 +18,7 @@ export default function(
   );
   const tokens = innerstate.parse();
 
-  if (!tokens) { return false; }
+  if (!tokens) { return; }
 
   if (isOnlySpacingsBefore) {
     state.inlineTokens = [];
