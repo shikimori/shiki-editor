@@ -301,9 +301,15 @@ export default class MarkdownTokenizer {
         }
       }
 
-      if (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
-        break;
+      switch (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
+        case true:
+          return;
+
+        case undefined:
+          continue;
       }
+
+      this.appendInlineContent(char1);
     }
   }
 
@@ -466,7 +472,7 @@ export default class MarkdownTokenizer {
       }
     }
 
-    this.appendInlineContent(char1);
+    return false;
   }
 
   next(steps = 1, isSkipNewLine = false) {
