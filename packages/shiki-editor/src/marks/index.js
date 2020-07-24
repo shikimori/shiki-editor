@@ -1,4 +1,4 @@
-export { default as Bold } from './bold';
+export { default as BoldInline } from './bold_inline';
 export { default as Italic } from './italic';
 export { default as SizeInline } from './size_inline';
 export { default as Color } from './color';

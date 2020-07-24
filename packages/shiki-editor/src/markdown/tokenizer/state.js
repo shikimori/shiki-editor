@@ -318,11 +318,11 @@ export default class MarkdownTokenizer {
   parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
-        if (processMarkOpen(this, 'bold', '[b]', '[/b]')) { return false; }
+        if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) { return false; }
         break;
 
       case '[/b]':
-        if (processMarkClose(this, 'bold', '[b]', '[/b]')) { return false; }
+        if (processMarkClose(this, 'bold_inline', '[b]', '[/b]')) { return false; }
         break;
 
       case '[i]':

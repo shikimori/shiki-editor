@@ -99,7 +99,7 @@ export default {
     text-transform: none
     letter-spacing: normal
 
-  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "link_block": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\e81d", "smiley": "\e800", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b")
+  $icons: ("bold_inline": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "link_block": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\e81d", "smiley": "\e800", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b")
   @each $name, $glyph in $icons
     &.#{$name}:before
       content: $glyph

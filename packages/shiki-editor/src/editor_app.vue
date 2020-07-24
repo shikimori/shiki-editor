@@ -69,7 +69,7 @@ import Smileys from './components/smileys';
 
 const MENU_ITEMS = [
   [
-    'bold',
+    'bold_inline',
     'italic',
     'underline',
     'strike',

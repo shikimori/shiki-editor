@@ -58,9 +58,9 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'inline',
             children: [
-              { type: 'bold', direction: 'open', bbcode: '[b]' },
+              { type: 'bold_inline', direction: 'open', bbcode: '[b]' },
               { type: 'text', content: 'zxc' },
-              { type: 'bold', direction: 'close', bbcode: '[/b]' }
+              { type: 'bold_inline', direction: 'close', bbcode: '[/b]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
@@ -85,12 +85,12 @@ describe('MarkdownTokenizer', () => {
       //   }, {
       //     type: 'inline',
       //     children: [{
-      //       type: 'bold', direction: 'open'
+      //       type: 'bold_inline', direction: 'open'
       //     }, {
       //       content: 'zxc',
       //       type: 'text'
       //     }, {
-      //       type: 'bold', direction: 'close', bbcode: '[/b]'
+      //       type: 'bold_inline', direction: 'close', bbcode: '[/b]'
       //     }]
       //   }, {
       //     type: 'paragraph', direction: 'close'
@@ -116,9 +116,9 @@ describe('MarkdownTokenizer', () => {
             type: 'inline',
             children: [
               { type: 'text', content: 'a' },
-              { type: 'bold', direction: 'open', bbcode: '[b]' },
+              { type: 'bold_inline', direction: 'open', bbcode: '[b]' },
               { type: 'text', content: 'zxc' },
-              { type: 'bold', direction: 'close', bbcode: '[/b]' },
+              { type: 'bold_inline', direction: 'close', bbcode: '[/b]' },
               { type: 'text', content: 'A' }
             ]
           },

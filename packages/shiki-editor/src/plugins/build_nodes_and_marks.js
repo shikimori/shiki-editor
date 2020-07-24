@@ -28,7 +28,7 @@ import {
   LinkInline,
   SizeInline,
   SpoilerInline,
-  Bold,
+  BoldInline,
   Underline
 } from '../marks';
 
@@ -39,7 +39,7 @@ export default function(editor) {
     new Paragraph(),
     new Heading(),
     new SpoilerInline(), // must be above other marks in order to obtain greater priorirty
-    new Bold(),
+    new BoldInline(),
     new Italic(),
     new Color(),
     new SizeInline(),
