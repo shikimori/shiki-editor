@@ -435,7 +435,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = parseSizeMeta(match[1]);
-          if (processMarkOpen(this, 'size', bbcode, '[/size]', meta)) {
+          if (processMarkOpen(this, 'size_inline', bbcode, '[/size]', meta)) {
             return false;
           }
           break;

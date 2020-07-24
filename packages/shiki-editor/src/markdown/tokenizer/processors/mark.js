@@ -1,7 +1,9 @@
 import { hasInlineSequence } from '../helpers';
 
 export function processMarkOpen(state, type, openBbcode, closeBbcode, attributes) {
-  if (!hasInlineSequence(state.text, closeBbcode, state.index)) { return; }
+  const isCloseBbcode =
+    hasInlineSequence(state.text, closeBbcode, state.index + openBbcode.length);
+  if (!isCloseBbcode) { return; }
 
   state.marksStack.push(state.MARK_STACK_MAPPINGS[type] || openBbcode);
   state.inlineTokens.push(
