@@ -342,16 +342,21 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    describe('size', () => {
+    describe('size_inline', () => {
       it('[size=20]zxc[/size]', () => {
         expect(MarkdownTokenizer.parse('[size=20]zxc[/size]')).to.eql([
           { type: 'paragraph', direction: 'open' },
           {
             type: 'inline',
             children: [
-              { type: 'size', direction: 'open', attrs: [['size', '20']], bbcode: '[size=20]' },
+              {
+                type: 'size_inline',
+                direction: 'open',
+                attrs: [['size', '20']],
+                bbcode: '[size=20]'
+              },
               { type: 'text', content: 'zxc' },
-              { type: 'size', direction: 'close', bbcode: '[/size]' }
+              { type: 'size_inline', direction: 'close', bbcode: '[/size]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
@@ -1267,9 +1272,9 @@ describe('MarkdownTokenizer', () => {
           { type: 'size_block', direction: 'close' }]);
       });
 
-      it('[size=24]qwe\\zxc[/size]', () => {
+      it('[size=24]qwe\\nzxc[/size]', () => {
         expect(MarkdownTokenizer.parse(
-          '[size=24]qwe\\zxc[/size]'
+          '[size=24]qwe\nzxc[/size]'
         )).to.eql([
           { type: 'size_block', direction: 'open', attrs: [['size', '24']] },
           ...text('qwe'),

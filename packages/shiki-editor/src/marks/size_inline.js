@@ -5,7 +5,7 @@ export default class SizeInline extends Mark {
   SIZE_REGEXP = /^(\d+)/
 
   get name() {
-    return 'size';
+    return 'size_inline';
   }
 
   get schema() {

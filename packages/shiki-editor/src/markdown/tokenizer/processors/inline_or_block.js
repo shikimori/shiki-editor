@@ -1,4 +1,6 @@
 import { extractUntil } from '../helpers';
+import { processMarkOpen } from './mark';
+
 import processBlock from './block';
 
 const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
@@ -6,40 +8,32 @@ const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
 export default function(
   state,
   type,
-  startSequence,
-  endSequence,
+  openBbcode,
+  closeBbcode,
   meta,
   isStart,
   isOnlySpacingsBefore
 ) {
-  const index = state.index + startSequence.length;
+  const index = state.index + openBbcode.length;
+  const isNewLineAhead = state.text[index] === '\n';
 
-  const lineContent = extractUntil(
+  const inlineSequence = isNewLineAhead ? null : extractUntil(
     state.text,
-    endSequence,
+    closeBbcode,
     index
   );
+  const isBlocksInSequence = inlineSequence &&
+    PSEUDO_BLOCK_TEST_REGEXP.test(inlineSequence);
 
-  if (false && lineContent) {
+  if (inlineSequence && !isBlocksInSequence) {
     // process as inline
-  } else {
-    // try to process as block
-    const isNewLineAhead = state.text[index] === '\n';
-
-    if (!isNewLineAhead) {
-      const content = extractUntil(
-        state.text,
-        endSequence,
-        index,
-        null,
-        isNewLineAhead
-      );
-      if (!PSEUDO_BLOCK_TEST_REGEXP.test(content)) { return false; }
+    if (processMarkOpen(state, `${type}_inline`, openBbcode, closeBbcode, meta)) {
+      return false;
     }
-
+  } else {
     return processBlock(
       state,
-      type, startSequence, endSequence,
+      `${type}_block`, openBbcode, closeBbcode,
       meta, isStart, isOnlySpacingsBefore
     );
   }

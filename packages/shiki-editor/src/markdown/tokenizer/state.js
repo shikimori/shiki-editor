@@ -47,7 +47,7 @@ export default class MarkdownTokenizer {
 
   MARK_STACK_MAPPINGS = {
     color: '[color]',
-    size: '[size]'
+    size_inline: '[size]'
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
@@ -244,19 +244,21 @@ export default class MarkdownTokenizer {
         if (seq4 === '[url' && (match = bbcode.match(this.LINK_REGEXP))) {
           isProcessed = processInlineOrBlock(
             this,
-            'link_block', bbcode, '[/url]', parseLinkMeta(match[1]),
+            'link', bbcode, '[/url]', parseLinkMeta(match[1]),
             isStart, isOnlySpacingsBefore
           );
-          if (isProcessed) { return; }
+          if (isProcessed === true) { return; }
+          if (isProcessed === false) { continue; }
         }
 
         if (seq5 === '[size' && (match = bbcode.match(this.SIZE_REGEXP))) {
           isProcessed = processInlineOrBlock(
             this,
-            'size_block', bbcode, '[/size]', parseSizeMeta(match[1]),
+            'size', bbcode, '[/size]', parseSizeMeta(match[1]),
             isStart, isOnlySpacingsBefore
           );
-          if (isProcessed) { return; }
+          if (isProcessed === true) { return; }
+          if (isProcessed === false) { continue; }
         }
       }
 
@@ -359,7 +361,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size', '[size]', '[/size]')) { return false; }
+        if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) { return false; }
         break;
 
       case '[poster]':
