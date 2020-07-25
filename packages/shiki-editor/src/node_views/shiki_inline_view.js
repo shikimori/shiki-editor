@@ -47,14 +47,6 @@ export default class ShikiInlineView extends DOMView {
   @bind
   stop() {
     this.updateAttrs({ isLoading: false });
-
-    // this.replaceWith(
-    //   this.view.state.schema.text(
-    //     this.node.attrs.bbcode,
-    //     this.node.marks
-    //   )
-    // );
-
     this.view.focus();
   }
 
@@ -73,20 +65,7 @@ export default class ShikiInlineView extends DOMView {
     }
   }
 
-  // fetch() {
-  //   this.shikiLoader.fetch(this.node.attrs).then(result => {
-  //     if (this.isDestroyed) { return; }
-  // 
-  //     if (result) {
-  //       this.success(result);
-  //     } else {
-  //       this.error();
-  //     }
-  //   });
-  // }
-
   success(result) {
-    // console.log('success');
     if (this.type === 'poster' || this.type === 'image') {
       this.replaceImage(result);
     } else if (this.node.attrs.text) {
