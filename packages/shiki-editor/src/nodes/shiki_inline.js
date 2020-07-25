@@ -27,6 +27,8 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         bbcode: {},
+        openBbcode: { default: null },
+        closeBbcode: { default: null },
         meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
         text: { default: null },
         isLoading: { default: false },
@@ -38,19 +40,14 @@ export default class ShikiInline extends Node {
       selectable: true,
       toDOM: node => {
         if (node.attrs.text) {
-          const split_1 = node.attrs.bbcode.split(']');
-          const openBbcode = `${split_1[0]}]`;
-          const split_2 = (split_1[split_1.length - 2]).split('[');
-          const closeBbcode = `[${split_2[split_2.length - 1]}]`;
-
           return [
             'span',
             {
               'data-attrs': JSON.stringify(node.attrs)
             },
-            ['span', openBbcode],
+            ['span', node.attrs.openBbcode],
             ['span', 0],
-            ['span', closeBbcode]
+            ['span', node.attrs.closeBbcode]
           ];
         } else {
           return [

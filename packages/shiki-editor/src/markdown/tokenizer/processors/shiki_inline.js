@@ -11,13 +11,13 @@ export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]
 export function processShikiInline(
   state,
   openBbcode,
-  endBbcode,
+  closeBbcode,
   meta
 ) {
   if (isImage(meta)) {
     return processShikiImage(state, openBbcode, meta);
   } else {
-    return processShikiLink(state, openBbcode, endBbcode, meta);
+    return processShikiLink(state, openBbcode, closeBbcode, meta);
   }
 }
 
@@ -43,29 +43,36 @@ function processShikiImage(state, openBbcode, meta) {
   return true;
 }
 
-function processShikiLink(state, openBbcode, endBbcode, meta) {
+function processShikiLink(state, openBbcode, closeBbcode, meta) {
   let text;
   let sequence = openBbcode;
   let tagMeta = { ...meta };
   let children = null;
 
-  if (endBbcode) {
+  if (closeBbcode) {
     text = extractUntil(
       state.text,
-      endBbcode,
+      closeBbcode,
       state.index + openBbcode.length
     );
   }
 
   if (text) {
-    sequence = `${openBbcode}${text}${endBbcode}`;
-    tagMeta = { ...meta, text, bbcode: sequence };
+    sequence = `${openBbcode}${text}${closeBbcode}`;
+
+    tagMeta = {
+      ...meta,
+      bbcode: sequence,
+      openBbcode,
+      closeBbcode,
+      text
+    };
 
     const tokenizer = new state.constructor(
       state.text,
       state.index + openBbcode.length,
       null,
-      endBbcode
+      closeBbcode
     );
     const tokens = tokenizer.parse();
 

@@ -56,7 +56,6 @@ export default class MarkdownParseState {
         token.direction ? `${token.type}_${token.direction}` : token.type
       ];
       if (!handler) throw new Error('Token type `' + token.type + '` not supported by Markdown parser');
-      // if (token.type === "shiki_inline") debugger
       handler(this, token);
     }
   }

@@ -1423,6 +1423,8 @@ describe('MarkdownTokenizer', () => {
                   ['bbcode', '[anime=1]zx[/anime]'],
                   ['type', 'anime'],
                   ['id', 1],
+                  ['openBbcode', '[anime=1]'],
+                  ['closeBbcode', '[/anime]'],
                   ['text', 'zx']
                 ],
                 children: [{ type: 'text', content: 'zx' }]
