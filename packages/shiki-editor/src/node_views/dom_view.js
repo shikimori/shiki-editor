@@ -36,6 +36,23 @@ export default class DOMView {
     );
   }
 
+  updateAttrs(attrs) {
+    const { state } = this.view;
+    const { type } = this.node;
+    const pos = this.getPos();
+    const newAttrs = {
+      ...this.node.attrs,
+      ...attrs
+    };
+    const transaction = this.isMark ?
+      state.tr
+        .removeMark(pos.from, pos.to, type)
+        .addMark(pos.from, pos.to, type.create(newAttrs)) :
+      state.tr.setNodeMarkup(pos, null, newAttrs);
+
+    this.view.dispatch(transaction);
+  }
+
   destroy() {
     this.isDestroyed = true;
   }
