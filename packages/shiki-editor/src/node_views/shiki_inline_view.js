@@ -24,9 +24,11 @@ export default class ShikiInlineView extends DOMView {
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
     if (this.node.attrs.text) {
+      this.dom.append(this.node.attrs.openBbcode);
       this.dom.appendChild(
         domSerializer.serializeFragment(options.node.content)
       );
+      this.dom.append(this.node.attrs.closeBbcode);
     } else {
       this.dom.innerText = this.node.attrs.bbcode;
     }
