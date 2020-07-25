@@ -1,10 +1,10 @@
 import { Mark } from '../base';
 
-export default class Color extends Mark {
+export default class ColorInline extends Mark {
   COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
 
   get name() {
-    return 'color';
+    return 'color_inline';
   }
 
   get schema() {

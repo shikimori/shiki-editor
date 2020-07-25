@@ -134,9 +134,9 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'inline',
             children: [
-              { type: 'italic', direction: 'open', bbcode: '[i]' },
+              { type: 'italic_inline', direction: 'open', bbcode: '[i]' },
               { type: 'text', content: 'zxc' },
-              { type: 'italic', direction: 'close', bbcode: '[/i]' }
+              { type: 'italic_inline', direction: 'close', bbcode: '[/i]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
@@ -316,13 +316,13 @@ describe('MarkdownTokenizer', () => {
             type: 'inline',
             children: [
               {
-                type: 'color',
+                type: 'color_inline',
                 direction: 'open',
                 attrs: [['color', 'red']],
                 bbcode: '[color=red]'
               },
               { type: 'text', content: 'zxc' },
-              { type: 'color', direction: 'close', bbcode: '[/color]' }
+              { type: 'color_inline', direction: 'close', bbcode: '[/color]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
@@ -1248,7 +1248,7 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    describe('Size_block', () => {
+    describe('size_block', () => {
       it('[size=24][quote]z[/quote][/size]', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24][quote]z[/quote][/size]'
@@ -1280,6 +1280,41 @@ describe('MarkdownTokenizer', () => {
           ...text('qwe'),
           ...text('zxc'),
           { type: 'size_block', direction: 'close' }]);
+      });
+    });
+
+    describe('color_block', () => {
+      it('[color=red][quote]z[/quote][/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red][quote]z[/quote][/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'color_block', direction: 'close' }
+        ]);
+      });
+
+      it('[color=red]\\n[quote]\\nz\\n[/quote]\\n[/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red]\n[quote]\nz\n[/quote]\n[/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'color_block', direction: 'close' }]);
+      });
+
+      it('[color=red]qwe\\nzxc[/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red]qwe\nzxc[/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          ...text('qwe'),
+          ...text('zxc'),
+          { type: 'color_block', direction: 'close' }]);
       });
     });
 
@@ -1315,6 +1350,41 @@ describe('MarkdownTokenizer', () => {
           ...text('qwe'),
           ...text('zxc'),
           { type: 'bold_block', direction: 'close' }]);
+      });
+    });
+
+    describe('italic_block', () => {
+      it('[i][quote]z[/quote][/i]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[i][quote]z[/quote][/i]'
+        )).to.eql([
+          { type: 'italic_block', direction: 'open' },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'italic_block', direction: 'close' }
+        ]);
+      });
+
+      it('[i]\\n[quote]\\nz\\n[/quote]\\n[/i]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[i]\n[quote]\nz\n[/quote]\n[/i]'
+        )).to.eql([
+          { type: 'italic_block', direction: 'open' },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'italic_block', direction: 'close' }]);
+      });
+
+      it('[i]qwe\\nzxc[/i]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[i]qwe\nzxc[/i]'
+        )).to.eql([
+          { type: 'italic_block', direction: 'open' },
+          ...text('qwe'),
+          ...text('zxc'),
+          { type: 'italic_block', direction: 'close' }]);
       });
     });
   });
@@ -1353,8 +1423,11 @@ describe('MarkdownTokenizer', () => {
                   ['bbcode', '[anime=1]zx[/anime]'],
                   ['type', 'anime'],
                   ['id', 1],
+                  ['openBbcode', '[anime=1]'],
+                  ['closeBbcode', '[/anime]'],
                   ['text', 'zx']
-                ]
+                ],
+                children: [{ type: 'text', content: 'zx' }]
               }
             ]
           },

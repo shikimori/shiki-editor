@@ -213,6 +213,7 @@ export default class ShikiEditor {
           if (extension.view.constructor === Function) {
             return extension.view({
               editor: this,
+              extension,
               node,
               view,
               getPos,

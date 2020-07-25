@@ -119,7 +119,6 @@ export default {
 .b-image
   &:hover,
   &.is-prosemirror-selected
-    outline: 2px solid #8cf
     z-index: 9
 
     &:after

@@ -1,4 +1,3 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ShikiInlineView } from '../node_views';
@@ -15,7 +14,6 @@ import {
   parseImageMeta
 } from '../markdown/tokenizer/bbcode_helpers';
 
-
 export default class ShikiInline extends Node {
   get name() {
     return 'shiki_inline';
@@ -28,30 +26,43 @@ export default class ShikiInline extends Node {
         id: {},
         type: {},
         bbcode: {},
+        openBbcode: { default: null },
+        closeBbcode: { default: null },
         meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
         text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
       },
-      group: 'inline'
-      // content: 'inline*',
-      // toDOM: node =>
-      //   [
-      //     'span',
-      //     {
-      //       'data-attrs': JSON.stringify(node.attrs)
-      //     },
-      //     node.attrs.bbcode
-      //   ]
+      content: 'inline*',
+      group: 'inline',
+      draggable: true,
+      selectable: true
+      // toDOM: node => {
+      //   if (node.attrs.text) {
+      //     return [
+      //       'span',
+      //       {
+      //         'data-attrs': JSON.stringify(node.attrs)
+      //       },
+      //       ['span', node.attrs.openBbcode],
+      //       ['span', 0],
+      //       ['span', node.attrs.closeBbcode]
+      //     ];
+      //   } else {
+      //     return [
+      //       'span',
+      //       {
+      //         'data-attrs': JSON.stringify(node.attrs)
+      //       },
+      //       node.attrs.bbcode
+      //     ];
+      //   }
+      // }
     };
   }
 
   view(options) {
-    if (options.node.attrs.isLoading || options.node.attrs.isError) {
-      return new ShikiInlineView(options);
-    } else {
-      console.error('ShikInline node without nodeView!', options.node);
-    }
+    return new ShikiInlineView(options);
   }
 
   inputRules({ type }) {
@@ -84,7 +95,7 @@ export default class ShikiInline extends Node {
 
   get markdownParserToken() {
     return {
-      node: this.name,
+      inlineNode: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }

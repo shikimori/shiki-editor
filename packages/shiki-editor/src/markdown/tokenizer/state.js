@@ -28,9 +28,13 @@ import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
 import processInlineOrBlock from './processors/inline_or_block';
 import processSmiley from './processors/smiley';
-import { processMarkOpen, processMarkClose } from './processors/mark';
-import { processShikiInline, SHIKI_BBCODE_LINK_REGEXP, SHIKI_BBCODE_IMAGE_REGEXP } from
-  './processors/shiki_inline';
+import processMarkOpen from './processors/mark_open';
+import processMarkClose from './processors/mark_close';
+import {
+  processShikiInline,
+  SHIKI_BBCODE_LINK_REGEXP,
+  SHIKI_BBCODE_IMAGE_REGEXP
+} from './processors/shiki_inline';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -46,7 +50,7 @@ export default class MarkdownTokenizer {
   SINGLE_SHIKI_BBCODE_IMAGE_REGEXP = new RegExp(`^${SHIKI_BBCODE_IMAGE_REGEXP.source}$`)
 
   MARK_STACK_MAPPINGS = {
-    color: '[color]',
+    color_inline: '[color]',
     size_inline: '[size]',
     link_inline: '[url]'
   }
@@ -261,6 +265,16 @@ export default class MarkdownTokenizer {
           if (isProcessed === true) { return; }
           if (isProcessed === false) { continue; }
         }
+
+        if (seq5 === '[colo' && (match = bbcode.match(this.COLOR_REGEXP))) {
+          isProcessed = processInlineOrBlock(
+            this,
+            'color', bbcode, '[/color]', { color: match[1] },
+            isStart, isOnlySpacingsBefore
+          );
+          if (isProcessed === true) { return; }
+          if (isProcessed === false) { continue; }
+        }
       }
 
       if (bbcode) {
@@ -287,6 +301,16 @@ export default class MarkdownTokenizer {
             isProcessed = processInlineOrBlock(
               this,
               'bold', bbcode, '[/b]', null,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
+
+          case '[i]':
+            isProcessed = processInlineOrBlock(
+              this,
+              'italic', bbcode, '[/i]', null,
               isStart, isOnlySpacingsBefore
             );
             if (isProcessed === true) { return; }
@@ -330,19 +354,19 @@ export default class MarkdownTokenizer {
   parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
-        if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) { return false; }
+        if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) return false;
         break;
 
       case '[/b]':
-        if (processMarkClose(this, 'bold_inline', '[b]', '[/b]')) { return false; }
+        if (processMarkClose(this, 'bold_inline', '[b]', '[/b]')) return false;
         break;
 
       case '[i]':
-        if (processMarkOpen(this, 'italic', '[i]', '[/i]')) { return false; }
+        if (processMarkOpen(this, 'italic_inline', '[i]', '[/i]')) return false;
         break;
 
       case '[/i]':
-        if (processMarkClose(this, 'italic', '[i]', '[/i]')) { return false; }
+        if (processMarkClose(this, 'italic_inline', '[i]', '[/i]')) return false;
         break;
 
       case '[u]':
@@ -350,7 +374,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/u]':
-        if (processMarkClose(this, 'underline', '[u]', '[/u]')) { return false; }
+        if (processMarkClose(this, 'underline', '[u]', '[/u]')) return false;
         break;
 
       case '[s]':
@@ -366,15 +390,18 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/url]':
-        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return false; }
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]'))
+          return false;
         break;
 
       case '[/color]':
-        if (processMarkClose(this, 'color', '[color]', '[/color]')) { return false; }
+        if (processMarkClose(this, 'color_inline', '[color]', '[/color]'))
+          return false;
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) { return false; }
+        if (processMarkClose(this, 'size_inline', '[size]', '[/size]'))
+          return false;
         break;
 
       case '[poster]':
@@ -437,7 +464,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = { color: match[1] };
-          if (processMarkOpen(this, 'color', bbcode, '[/color]', meta)) {
+          if (processMarkOpen(this, 'color_inline', bbcode, '[/color]', meta)) {
             return false;
           }
           break;

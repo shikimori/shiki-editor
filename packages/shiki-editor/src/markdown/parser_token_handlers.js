@@ -6,6 +6,7 @@ export default function tokenHandlers(schema, tokens) {
 
   for (const type in tokens) {
     const spec = tokens[type];
+
     if (spec.block) {
       const nodeType = schema.nodeType(spec.block);
       if (noOpenClose(type)) {
@@ -18,9 +19,25 @@ export default function tokenHandlers(schema, tokens) {
         handlers[type + '_open'] = (state, token) => state.openNode(nodeType, attrs(spec, token));
         handlers[type + '_close'] = state => state.closeNode();
       }
+
     } else if (spec.node) {
       const nodeType = schema.nodeType(spec.node);
       handlers[type] = (state, token) => state.addNode(nodeType, attrs(spec, token));
+
+    } else if (spec.inlineNode) {
+      const nodeType = schema.nodeType(spec.inlineNode);
+      handlers[type] = (state, token) => {
+        if (token.children?.length) {
+          state.openNode(nodeType, attrs(spec, token));
+          if (token.children) {
+            state.parseTokens(token.children)
+          }
+          state.closeNode();
+        } else {
+          state.addNode(nodeType, attrs(spec, token))
+        }
+      }
+
     } else if (spec.mark) {
       const markType = schema.marks[spec.mark];
       if (noOpenClose(type)) {
@@ -33,6 +50,7 @@ export default function tokenHandlers(schema, tokens) {
         handlers[type + '_open'] = (state, token) => state.openMark(markType.create(attrs(spec, token)));
         handlers[type + '_close'] = state => state.closeMark(markType);
       }
+
     } else if (spec.ignore) {
       if (noOpenClose(type)) {
         handlers[type] = noOp;
@@ -40,6 +58,7 @@ export default function tokenHandlers(schema, tokens) {
         handlers[type + '_open'] = noOp;
         handlers[type + '_close'] = noOp;
       }
+
     } else {
       throw new RangeError('Unrecognized parsing spec ' + JSON.stringify(spec));
     }

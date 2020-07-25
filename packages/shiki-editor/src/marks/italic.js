@@ -3,7 +3,7 @@ import { markInputRule, markPasteRule } from '../commands';
 
 export default class Italic extends Mark {
   get name() {
-    return 'italic';
+    return 'italic_inline';
   }
 
   get schema() {
