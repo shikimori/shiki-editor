@@ -29,6 +29,10 @@ export default class DOMView {
     return this.view.state.tr;
   }
 
+  get nodeSelection() {
+    return new NodeSelection(this.view.state.tr.doc.resolve(this.getPos()));
+  }
+
   @bind
   focus() {
     const { getPos, dispatch, tr, view } = this;
@@ -48,28 +52,30 @@ export default class DOMView {
     return { ...this.node.attrs, ...attrs };
   }
 
-  replaceWith(replacement, isAddToHistory=true) {
-    const { getPos, dispatch, tr } = this;
+  replaceWith(replacement, isAddToHistory = true) {
+    const { dispatch, tr } = this;
+    const selection = this.nodeSelection;
 
     dispatch(
       tr
         .setMeta('addToHistory', isAddToHistory)
-        .replaceWith(getPos(), getPos() + 1, replacement)
+        .replaceWith(selection.$from.pos, selection.$to.pos, replacement)
     );
   }
 
-  // prevent a full re-render of the vue component on update
-  // we'll handle prop updates in `update()`
-  ignoreMutation(mutation) {
-    // allow leaf nodes to be selected
-    if (mutation.type === 'selection') {
+  update(node, decorations) {
+    if (node.type !== this.node.type) {
       return false;
     }
 
-    if (!this.contentDOM) {
+    if (node === this.node && this.decorations === decorations) {
       return true;
     }
-    return !this.contentDOM.contains(mutation.target);
+
+    this.node = node;
+    this.decorations = decorations;
+
+    return true;
   }
 
   // disable (almost) all prosemirror event listener for node views

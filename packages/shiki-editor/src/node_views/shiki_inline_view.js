@@ -66,6 +66,7 @@ export default class ShikiInlineView extends DOMView {
   }
 
   async fetch() {
+    // console.log('fetch');
     const result = await this.shikiLoader.fetch(this.node.attrs);
     if (this.isDestroyed) { return; }
 
@@ -77,33 +78,63 @@ export default class ShikiInlineView extends DOMView {
   }
 
   success(result) {
-    const { attrs } = this.node;
-
+    // console.log('success');
     if (this.type === 'poster' || this.type === 'image') {
-      this.replaceWith(
-        this.view.state.schema.nodes.image.create({
-          id: result.id,
-          src: result.url,
-          isPoster: this.type === 'poster',
-          ...this.node.attrs.meta
-        }),
-        false
-      );
+      this.replaceImage(result);
+    } else if (this.node.attrs.text) {
+      this.replaceFragment(result);
     } else {
-      this.replaceWith(
-        this.view.state.schema.text(
-          attrs.text || result.text,
-          [
-            ...this.node.marks,
-            this.view.state.schema.marks.link_inline.create({
-              ...result,
-              type: this.type
-            })
-          ]
-        ),
-        false
-      );
+      this.replaceNode(result);
     }
+  }
+
+  replaceImage(result) {
+    this.replaceWith(
+      this.view.state.schema.nodes.image.create({
+        id: result.id,
+        src: result.url,
+        isPoster: this.type === 'poster',
+        ...this.node.attrs.meta
+      }),
+      false
+    );
+  }
+
+  replaceFragment(result) {
+    const { dispatch, tr } = this;
+    const selection = this.nodeSelection;
+
+    dispatch(
+      tr
+        .setMeta('addToHistory', false)
+        .addMark(
+          selection.$from.pos,
+          selection.$to.pos,
+          this.markLinkInline(result)
+        )
+    );
+
+    // this.replaceWith(this.node.content, false);
+  }
+
+  replaceNode(result) {
+    this.replaceWith(
+      this.view.state.schema.text(
+        result.text,
+        [
+          ...this.node.marks,
+          this.markLinkInline(result)
+        ]
+      ),
+      false
+    );
+  }
+
+  markLinkInline(result) {
+    return this.view.state.schema.marks.link_inline.create({
+      ...result,
+      type: this.type
+    });
   }
 
   error() {
