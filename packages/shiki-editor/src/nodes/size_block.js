@@ -18,7 +18,7 @@ export default class SizeBlock extends Node {
       group: 'block',
       draggable: false,
       parseDOM: [{
-        tag: 'div.size',
+        tag: 'div.prosemirror-size',
         getAttrs: node => {
           const match = node.style.fontSize.match(this.SIZE_REGEXP);
           return match ? { size: match[1] } : null;
@@ -27,7 +27,7 @@ export default class SizeBlock extends Node {
       toDOM: node => [
         'div',
         {
-          class: 'size',
+          class: 'prosemirror-size',
           style: `font-size: ${ensureDimension(node.attrs.size, 'px')};`
         },
         0

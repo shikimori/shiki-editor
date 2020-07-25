@@ -13,9 +13,9 @@ export default class BoldBlock extends Node {
       group: 'block',
       draggable: false,
       parseDOM: [{
-        tag: 'div.bold'
+        tag: 'div.prosemirror-bold'
       }],
-      toDOM: () => ['div', { class: 'bold' }, 0]
+      toDOM: () => ['div', { class: 'prosemirror-bold' }, 0]
     };
   }
 
@@ -27,6 +27,6 @@ export default class BoldBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'bold');
+    state.renderBlock(node, 'b');
   }
 }
