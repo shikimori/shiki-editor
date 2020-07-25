@@ -33,26 +33,26 @@ export default class ShikiInline extends Node {
         isLoading: { default: true },
         isError: { default: false }
       },
-      group: 'inline'
-      // content: 'inline*',
-      // toDOM: node =>
-      //   [
-      //     'span',
-      //     {
-      //       'data-attrs': JSON.stringify(node.attrs)
-      //     },
-      //     node.attrs.bbcode
-      //   ]
+      content: 'inline*',
+      group: 'inline',
+      toDOM: node =>
+        [
+          'span',
+          {
+            'data-attrs': JSON.stringify(node.attrs)
+          },
+          0
+        ]
     };
   }
 
-  view(options) {
-    if (options.node.attrs.isLoading || options.node.attrs.isError) {
-      return new ShikiInlineView(options);
-    } else {
-      console.error('ShikInline node without nodeView!', options.node);
-    }
-  }
+  // view(options) {
+  //   if (options.node.attrs.isLoading || options.node.attrs.isError) {
+  //     return new ShikiInlineView(options);
+  //   } else {
+  //     console.error('ShikInline node without nodeView!', options.node);
+  //   }
+  // }
 
   inputRules({ type }) {
     return [
