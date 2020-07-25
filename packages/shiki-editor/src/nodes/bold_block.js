@@ -15,7 +15,14 @@ export default class BoldBlock extends Node {
       parseDOM: [{
         tag: 'div.prosemirror-bold'
       }],
-      toDOM: () => ['div', { class: 'prosemirror-bold' }, 0]
+      toDOM: () => [
+        'div',
+        {
+          class: 'prosemirror-bold',
+          'data-div': '[b]'
+        },
+        0
+      ]
     };
   }
 

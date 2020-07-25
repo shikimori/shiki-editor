@@ -28,7 +28,8 @@ export default class SizeBlock extends Node {
         'div',
         {
           class: 'prosemirror-size',
-          style: `font-size: ${ensureDimension(node.attrs.size, 'px')};`
+          style: `font-size: ${ensureDimension(node.attrs.size, 'px')};`,
+          'data-div': `[size=${node.attrs.size}]`
         },
         0
       ]
