@@ -46,7 +46,7 @@ export default class MarkdownTokenizer {
   SINGLE_SHIKI_BBCODE_IMAGE_REGEXP = new RegExp(`^${SHIKI_BBCODE_IMAGE_REGEXP.source}$`)
 
   MARK_STACK_MAPPINGS = {
-    color: '[color]',
+    color_inline: '[color]',
     size_inline: '[size]',
     link_inline: '[url]'
   }
@@ -330,11 +330,11 @@ export default class MarkdownTokenizer {
   parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
     switch (bbcode) {
       case '[b]':
-        if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) { return false; }
+        if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) return false;
         break;
 
       case '[/b]':
-        if (processMarkClose(this, 'bold_inline', '[b]', '[/b]')) { return false; }
+        if (processMarkClose(this, 'bold_inline', '[b]', '[/b]')) return false;
         break;
 
       case '[i]':
@@ -350,7 +350,7 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/u]':
-        if (processMarkClose(this, 'underline', '[u]', '[/u]')) { return false; }
+        if (processMarkClose(this, 'underline', '[u]', '[/u]')) return false;
         break;
 
       case '[s]':
@@ -366,15 +366,18 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/url]':
-        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) { return false; }
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]'))
+          return false;
         break;
 
       case '[/color]':
-        if (processMarkClose(this, 'color', '[color]', '[/color]')) { return false; }
+        if (processMarkClose(this, 'color_inline', '[color]', '[/color]'))
+          return false;
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) { return false; }
+        if (processMarkClose(this, 'size_inline', '[size]', '[/size]'))
+          return false;
         break;
 
       case '[poster]':
@@ -437,7 +440,7 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = { color: match[1] };
-          if (processMarkOpen(this, 'color', bbcode, '[/color]', meta)) {
+          if (processMarkOpen(this, 'color_inline', bbcode, '[/color]', meta)) {
             return false;
           }
           break;

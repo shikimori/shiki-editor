@@ -316,13 +316,13 @@ describe('MarkdownTokenizer', () => {
             type: 'inline',
             children: [
               {
-                type: 'color',
+                type: 'color_inline',
                 direction: 'open',
                 attrs: [['color', 'red']],
                 bbcode: '[color=red]'
               },
               { type: 'text', content: 'zxc' },
-              { type: 'color', direction: 'close', bbcode: '[/color]' }
+              { type: 'color_inline', direction: 'close', bbcode: '[/color]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
