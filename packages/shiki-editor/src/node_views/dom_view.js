@@ -1,4 +1,5 @@
 import { bind } from 'decko';
+import { NodeSelection } from 'prosemirror-state';
 
 export default class DOMView {
   node = null
@@ -30,7 +31,18 @@ export default class DOMView {
 
   @bind
   focus() {
+    const { getPos, dispatch, tr, view } = this;
+
+    dispatch(
+      tr.setSelection(
+        new NodeSelection(view.state.tr.doc.resolve(getPos()))
+      )
+    );
   }
+
+  // selectNode() {
+  //   debugger
+  // }
 
   mergeAttrs(attrs) {
     return { ...this.node.attrs, ...attrs };

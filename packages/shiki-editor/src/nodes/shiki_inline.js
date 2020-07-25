@@ -29,12 +29,13 @@ export default class ShikiInline extends Node {
         bbcode: {},
         meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
         text: { default: null },
-        isLoading: { default: true },
+        isLoading: { default: false },
         isError: { default: false }
       },
       content: 'inline*',
       group: 'inline',
       draggable: true,
+      selectable: true,
       toDOM: node => {
         if (node.attrs.text) {
           const split_1 = node.attrs.bbcode.split(']');

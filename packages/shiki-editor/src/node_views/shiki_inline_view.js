@@ -9,7 +9,7 @@ export default class ShikiInlineView extends DOMView {
 
     this.dom = document.createElement('span');
 
-    this.dom.setAttribute('tabindex', 0);
+    // this.dom.setAttribute('tabindex', 0);
     this.dom.classList.add('b-shiki_editor-node');
 
     if (this.node.attrs.isLoading) {
@@ -24,10 +24,10 @@ export default class ShikiInlineView extends DOMView {
 
     if (this.node.attrs.isLoading) {
       this.dom.addEventListener('click', this.stop);
-      this.dom.addEventListener('focus', this.focus);
+      // this.dom.addEventListener('focus', this.focus);
     } else {
       this.dom.addEventListener('click', this.focus);
-      this.dom.addEventListener('focus', this.focus);
+      // this.dom.addEventListener('focus', this.focus);
     }
 
     // this.fetch();
