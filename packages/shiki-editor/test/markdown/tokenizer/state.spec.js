@@ -1424,7 +1424,8 @@ describe('MarkdownTokenizer', () => {
                   ['type', 'anime'],
                   ['id', 1],
                   ['text', 'zx']
-                ]
+                ],
+                children: [{ type: 'text', content: 'zx' }]
               }
             ]
           },

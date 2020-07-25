@@ -15,7 +15,6 @@ import {
   parseImageMeta
 } from '../markdown/tokenizer/bbcode_helpers';
 
-
 export default class ShikiInline extends Node {
   get name() {
     return 'shiki_inline';
@@ -35,14 +34,13 @@ export default class ShikiInline extends Node {
       },
       content: 'inline*',
       group: 'inline',
-      toDOM: node =>
-        [
-          'span',
-          {
-            'data-attrs': JSON.stringify(node.attrs)
-          },
-          0
-        ]
+      toDOM: node => [
+        'span',
+        {
+          'data-attrs': JSON.stringify(node.attrs)
+        },
+        0
+      ]
     };
   }
 
@@ -84,7 +82,7 @@ export default class ShikiInline extends Node {
 
   get markdownParserToken() {
     return {
-      node: this.name,
+      inlineNode: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }
