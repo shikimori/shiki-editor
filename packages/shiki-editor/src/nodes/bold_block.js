@@ -15,7 +15,7 @@ export default class BoldBlock extends Node {
       parseDOM: [{
         tag: 'div.bold'
       }],
-      toDOM: ['div', { class: 'bold' }, 0]
+      toDOM: () => ['div', { class: 'bold' }, 0]
     };
   }
 

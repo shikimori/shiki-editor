@@ -1248,7 +1248,7 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    describe('size_block', () => {
+    describe('Size_block', () => {
       it('[size=24][quote]z[/quote][/size]', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24][quote]z[/quote][/size]'
@@ -1280,6 +1280,41 @@ describe('MarkdownTokenizer', () => {
           ...text('qwe'),
           ...text('zxc'),
           { type: 'size_block', direction: 'close' }]);
+      });
+    });
+
+    describe('bold_block', () => {
+      it('[b][quote]z[/quote][/b]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[b][quote]z[/quote][/b]'
+        )).to.eql([
+          { type: 'bold_block', direction: 'open' },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'bold_block', direction: 'close' }
+        ]);
+      });
+
+      it('[b]\\n[quote]\\nz\\n[/quote]\\n[/b]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[b]\n[quote]\nz\n[/quote]\n[/b]'
+        )).to.eql([
+          { type: 'bold_block', direction: 'open' },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'bold_block', direction: 'close' }]);
+      });
+
+      it('[b]qwe\\nzxc[/b]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[b]qwe\nzxc[/b]'
+        )).to.eql([
+          { type: 'bold_block', direction: 'open' },
+          ...text('qwe'),
+          ...text('zxc'),
+          { type: 'bold_block', direction: 'close' }]);
       });
     });
   });
@@ -1420,13 +1455,13 @@ describe('MarkdownTokenizer', () => {
   describe('complex cases', () => {
     it('outside broken formatting', () => {
       expect(MarkdownTokenizer.parse(
-        '[b][center]z[/center][/b]'
+        '[b][center]z[/center][/i]'
       )).to.eql([
         ...text('[b]'),
         { type: 'center', direction: 'open' },
         ...text('z'),
         { type: 'center', direction: 'close' },
-        ...text('[/b]')
+        ...text('[/i]')
       ]);
     });
 

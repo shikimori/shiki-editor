@@ -264,22 +264,34 @@ export default class MarkdownTokenizer {
       }
 
       if (bbcode) {
-        if (bbcode === '[center]') {
-          isProcessed = processBlock(
-            this,
-            'center', bbcode, '[/center]', null,
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed) { return; }
-        }
+        switch (bbcode) {
+          case '[center]':
+            isProcessed = processBlock(
+              this,
+              'center', bbcode, '[/center]', null,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed) { return; }
+            break;
 
-        if (bbcode === '[right]') {
-          isProcessed = processBlock(
-            this,
-            'right', bbcode, '[/right]', null,
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed) { return; }
+          case '[right]':
+            isProcessed = processBlock(
+              this,
+              'right', bbcode, '[/right]', null,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed) { return; }
+            break;
+
+          case '[b]':
+            isProcessed = processInlineOrBlock(
+              this,
+              'bold', bbcode, '[/b]', null,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
         }
 
         if (seq5 === '[code' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
