@@ -16,6 +16,7 @@ import {
   Right,
   ShikiInline,
   SizeBlock,
+  ColorBlock,
   Smiley,
   SpoilerBlock,
   Text
@@ -54,6 +55,7 @@ export default function(editor) {
     new ShikiInline(),
     new BoldBlock(),
     new SizeBlock(),
+    new ColorBlock(),
     new Blockquote(),
     new BulltList(),
     new CodeBlock(),
