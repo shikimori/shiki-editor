@@ -11,14 +11,9 @@ export default class ShikiInlineView extends DOMView {
     this.dom = document.createElement('span');
 
     this.dom.classList.add('b-shiki_editor-node');
-
-    if (this.node.attrs.isLoading) {
-      this.dom.classList.add('b-ajax');
-      this.dom.classList.add('vk-like');
-    }
-    if (this.node.attrs.isError) {
-      this.dom.classList.add('is-error');
-    }
+    this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
+    this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
+    this.dom.classList.toggle('is-error', this.node.attrs.isError);
 
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
@@ -43,6 +38,9 @@ export default class ShikiInlineView extends DOMView {
   get type() {
     return this.node.attrs.type;
   }
+
+  // rerender node view every time on any update
+  update() { return false; }
 
   @bind
   stop() {
@@ -125,13 +123,9 @@ export default class ShikiInlineView extends DOMView {
   }
 
   error() {
-    const { getPos, dispatch, tr } = this;
-    const attrs = this.mergeAttrs({ isLoading: false, isError: true });
-
-    dispatch(
-      tr
-        .setMeta('addToHistory', false)
-        .setNodeMarkup(getPos(), null, attrs)
-    );
+    this.updateAttrs({
+      isLoading: false,
+      isError: true
+    });
   }
 }
