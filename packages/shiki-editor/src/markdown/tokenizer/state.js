@@ -302,6 +302,16 @@ export default class MarkdownTokenizer {
             if (isProcessed === true) { return; }
             if (isProcessed === false) { continue; }
             break;
+
+          case '[i]':
+            isProcessed = processInlineOrBlock(
+              this,
+              'italic', bbcode, '[/i]', null,
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
         }
 
         if (seq5 === '[code' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
@@ -348,11 +358,11 @@ export default class MarkdownTokenizer {
         break;
 
       case '[i]':
-        if (processMarkOpen(this, 'italic', '[i]', '[/i]')) { return false; }
+        if (processMarkOpen(this, 'italic_inline', '[i]', '[/i]')) return false;
         break;
 
       case '[/i]':
-        if (processMarkClose(this, 'italic', '[i]', '[/i]')) { return false; }
+        if (processMarkClose(this, 'italic_inline', '[i]', '[/i]')) return false;
         break;
 
       case '[u]':
