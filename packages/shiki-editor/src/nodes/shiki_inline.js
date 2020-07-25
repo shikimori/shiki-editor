@@ -34,23 +34,38 @@ export default class ShikiInline extends Node {
       },
       content: 'inline*',
       group: 'inline',
-      toDOM: node => [
-        'span',
-        {
-          'data-attrs': JSON.stringify(node.attrs)
-        },
-        0
-      ]
+      toDOM: node => {
+        if (node.attrs.text) {
+          const split_1 = node.attrs.bbcode.split(']');
+          const openBbcode = `${split_1[0]}]`;
+          const split_2 = (split_1[split_1.length - 2]).split('[');
+          const closeBbcode = `[${split_2[split_2.length - 1]}]`;
+
+          return [
+            'span',
+            {
+              'data-attrs': JSON.stringify(node.attrs)
+            },
+            ['span', openBbcode],
+            ['span', 0],
+            ['span', closeBbcode]
+          ];
+        } else {
+          return [
+            'span',
+            {
+              'data-attrs': JSON.stringify(node.attrs)
+            },
+            node.attrs.bbcode
+          ];
+        }
+      }
     };
   }
 
-  // view(options) {
-  //   if (options.node.attrs.isLoading || options.node.attrs.isError) {
-  //     return new ShikiInlineView(options);
-  //   } else {
-  //     console.error('ShikInline node without nodeView!', options.node);
-  //   }
-  // }
+  view(options) {
+    return new ShikiInlineView(options);
+  }
 
   inputRules({ type }) {
     return [

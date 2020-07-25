@@ -70,7 +70,6 @@ function processShikiLink(state, openBbcode, endBbcode, meta) {
     const tokens = tokenizer.parse();
 
     if (tokens.length !== 3 || tokens[1].type !== 'inline') { return; }
-    // children = [tokens[1]];
     children = tokens[1].children;
   }
 

@@ -22,7 +22,7 @@ export default class ShikiInlineView extends DOMView {
     this.dom.innerText = this.node.attrs.bbcode;
     this.dom.addEventListener('click', this.stop);
 
-    this.fetch();
+    // this.fetch();
   }
 
   get type() {
@@ -31,12 +31,15 @@ export default class ShikiInlineView extends DOMView {
 
   @bind
   stop() {
-    this.replaceWith(
-      this.view.state.schema.text(
-        this.node.attrs.bbcode,
-        this.node.marks
-      )
-    );
+    this.updateAttrs({ isLoading: false });
+
+    // this.replaceWith(
+    //   this.view.state.schema.text(
+    //     this.node.attrs.bbcode,
+    //     this.node.marks
+    //   )
+    // );
+    //
     this.view.focus();
   }
 
