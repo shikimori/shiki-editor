@@ -3,7 +3,7 @@ import { Node } from '../base';
 // NOTE: this node cannot be generated in WYSIWYG mode
 export default class BoldBlock extends Node {
   get name() {
-    return 'bold_block';
+    return 'italic_block';
   }
 
   get schema() {
@@ -13,13 +13,13 @@ export default class BoldBlock extends Node {
       group: 'block',
       draggable: false,
       parseDOM: [{
-        tag: 'div.prosemirror-bold'
+        tag: 'div.prosemirror-italic'
       }],
       toDOM: () => [
         'div',
         {
-          class: 'prosemirror-bold',
-          'data-div': '[b]'
+          class: 'prosemirror-italic',
+          'data-div': '[i]'
         },
         0
       ]
@@ -27,6 +27,6 @@ export default class BoldBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'b');
+    state.renderBlock(node, 'i');
   }
 }
