@@ -313,13 +313,16 @@ textarea.ProseMirror
       position: relative
 
   [data-image]:hover,
-  [data-image].is-prosemirror-selected,
+  [data-link]:hover,
+  [data-div]:hover
+    outline: 1px solid #9cf
+    position: relative
+
+  [data-image]:hover,
   [data-link]:hover,
   [data-div]:hover,
+  [data-image].is-prosemirror-selected,
   [data-div].is-prosemirror-selected
-    position: relative
-    outline: 1px solid #8cf
-
     &:before
       background: #fcfcfc
       font-family: Monaco, Menlo, Consolas, Courier New, monospace;
@@ -337,6 +340,11 @@ textarea.ProseMirror
       text-shadow: 1px 1px 0px #fff
       top: 0
       z-index: 999
+
+  [data-image].is-prosemirror-selected,
+  [data-div].is-prosemirror-selected
+    outline: 2px solid #9cf
+    position: relative
 
   [data-image]
     &.is-prosemirror-selected:before,
