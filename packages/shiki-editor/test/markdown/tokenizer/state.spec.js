@@ -1248,7 +1248,7 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    describe('Size_block', () => {
+    describe('size_block', () => {
       it('[size=24][quote]z[/quote][/size]', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24][quote]z[/quote][/size]'
@@ -1280,6 +1280,41 @@ describe('MarkdownTokenizer', () => {
           ...text('qwe'),
           ...text('zxc'),
           { type: 'size_block', direction: 'close' }]);
+      });
+    });
+
+    describe('color_block', () => {
+      it('[color=red][quote]z[/quote][/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red][quote]z[/quote][/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'color_block', direction: 'close' }
+        ]);
+      });
+
+      it('[color=red]\\n[quote]\\nz\\n[/quote]\\n[/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red]\n[quote]\nz\n[/quote]\n[/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          { type: 'quote', direction: 'open' },
+          ...text('z'),
+          { type: 'quote', direction: 'close' },
+          { type: 'color_block', direction: 'close' }]);
+      });
+
+      it('[color=red]qwe\\nzxc[/color]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[color=red]qwe\nzxc[/color]'
+        )).to.eql([
+          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          ...text('qwe'),
+          ...text('zxc'),
+          { type: 'color_block', direction: 'close' }]);
       });
     });
 

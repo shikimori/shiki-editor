@@ -261,6 +261,16 @@ export default class MarkdownTokenizer {
           if (isProcessed === true) { return; }
           if (isProcessed === false) { continue; }
         }
+
+        if (seq5 === '[colo' && (match = bbcode.match(this.COLOR_REGEXP))) {
+          isProcessed = processInlineOrBlock(
+            this,
+            'color', bbcode, '[/color]', { color: match[1] },
+            isStart, isOnlySpacingsBefore
+          );
+          if (isProcessed === true) { return; }
+          if (isProcessed === false) { continue; }
+        }
       }
 
       if (bbcode) {
