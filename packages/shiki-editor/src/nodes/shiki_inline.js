@@ -37,28 +37,28 @@ export default class ShikiInline extends Node {
       content: 'inline*',
       group: 'inline',
       draggable: true,
-      selectable: true,
-      toDOM: node => {
-        if (node.attrs.text) {
-          return [
-            'span',
-            {
-              'data-attrs': JSON.stringify(node.attrs)
-            },
-            ['span', node.attrs.openBbcode],
-            ['span', 0],
-            ['span', node.attrs.closeBbcode]
-          ];
-        } else {
-          return [
-            'span',
-            {
-              'data-attrs': JSON.stringify(node.attrs)
-            },
-            node.attrs.bbcode
-          ];
-        }
-      }
+      selectable: true
+      // toDOM: node => {
+      //   if (node.attrs.text) {
+      //     return [
+      //       'span',
+      //       {
+      //         'data-attrs': JSON.stringify(node.attrs)
+      //       },
+      //       ['span', node.attrs.openBbcode],
+      //       ['span', 0],
+      //       ['span', node.attrs.closeBbcode]
+      //     ];
+      //   } else {
+      //     return [
+      //       'span',
+      //       {
+      //         'data-attrs': JSON.stringify(node.attrs)
+      //       },
+      //       node.attrs.bbcode
+      //     ];
+      //   }
+      // }
     };
   }
 
