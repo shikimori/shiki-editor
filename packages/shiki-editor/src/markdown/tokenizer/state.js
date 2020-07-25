@@ -28,9 +28,13 @@ import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
 import processInlineOrBlock from './processors/inline_or_block';
 import processSmiley from './processors/smiley';
-import { processMarkOpen, processMarkClose } from './processors/mark';
-import { processShikiInline, SHIKI_BBCODE_LINK_REGEXP, SHIKI_BBCODE_IMAGE_REGEXP } from
-  './processors/shiki_inline';
+import processMarkOpen from './processors/mark_open';
+import processMarkClose from './processors/mark_close';
+import {
+  processShikiInline,
+  SHIKI_BBCODE_LINK_REGEXP,
+  SHIKI_BBCODE_IMAGE_REGEXP
+} from './processors/shiki_inline';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512

@@ -1,5 +1,5 @@
 import { extractUntil } from '../helpers';
-import { processMarkOpen } from './mark';
+import processMarkOpen from './mark_open';
 
 import processBlock from './block';
 
