@@ -24,8 +24,10 @@ export default class ShikiInlineView extends DOMView {
 
     if (this.node.attrs.isLoading) {
       this.dom.addEventListener('click', this.stop);
+      this.dom.addEventListener('focus', this.focus);
     } else {
       this.dom.addEventListener('click', this.focus);
+      this.dom.addEventListener('focus', this.focus);
     }
 
     // this.fetch();

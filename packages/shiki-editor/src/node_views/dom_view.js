@@ -30,7 +30,6 @@ export default class DOMView {
 
   @bind
   focus() {
-    this.dom.focus();
   }
 
   mergeAttrs(attrs) {
