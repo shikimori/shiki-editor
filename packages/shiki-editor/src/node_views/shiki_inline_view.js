@@ -10,7 +10,6 @@ export default class ShikiInlineView extends DOMView {
 
     this.dom = document.createElement('span');
 
-    // this.dom.setAttribute('tabindex', 0);
     this.dom.classList.add('b-shiki_editor-node');
 
     if (this.node.attrs.isLoading) {
@@ -36,10 +35,8 @@ export default class ShikiInlineView extends DOMView {
     if (this.node.attrs.isLoading) {
       this.fetch();
       this.dom.addEventListener('click', this.stop);
-      // this.dom.addEventListener('focus', this.focus);
     } else {
       this.dom.addEventListener('click', this.focus);
-      // this.dom.addEventListener('focus', this.focus);
     }
   }
 
@@ -66,7 +63,6 @@ export default class ShikiInlineView extends DOMView {
   }
 
   async fetch() {
-    // console.log('fetch');
     const result = await this.shikiLoader.fetch(this.node.attrs);
     if (this.isDestroyed) { return; }
 
@@ -76,6 +72,18 @@ export default class ShikiInlineView extends DOMView {
       this.error();
     }
   }
+
+  // fetch() {
+  //   this.shikiLoader.fetch(this.node.attrs).then(result => {
+  //     if (this.isDestroyed) { return; }
+  // 
+  //     if (result) {
+  //       this.success(result);
+  //     } else {
+  //       this.error();
+  //     }
+  //   });
+  // }
 
   success(result) {
     // console.log('success');
@@ -101,20 +109,20 @@ export default class ShikiInlineView extends DOMView {
   }
 
   replaceFragment(result) {
-    const { dispatch, tr } = this;
     const selection = this.nodeSelection;
+    this.replaceWith(this.node.content, false);
 
-    dispatch(
-      tr
+    const pos = this.view.state.tr.doc.resolve(selection.$from.pos);
+
+    this.view.dispatch(
+      this.view.state.tr
         .setMeta('addToHistory', false)
         .addMark(
-          selection.$from.pos,
-          selection.$to.pos,
+          pos.start(),
+          pos.end(),
           this.markLinkInline(result)
         )
     );
-
-    // this.replaceWith(this.node.content, false);
   }
 
   replaceNode(result) {

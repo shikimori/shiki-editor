@@ -35,18 +35,12 @@ export default class DOMView {
 
   @bind
   focus() {
-    const { getPos, dispatch, tr, view } = this;
+    const { dispatch, tr } = this;
 
     dispatch(
-      tr.setSelection(
-        new NodeSelection(view.state.tr.doc.resolve(getPos()))
-      )
+      tr.setSelection(this.nodeSelection)
     );
   }
-
-  // selectNode() {
-  //   debugger
-  // }
 
   mergeAttrs(attrs) {
     return { ...this.node.attrs, ...attrs };
