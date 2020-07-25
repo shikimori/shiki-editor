@@ -34,6 +34,7 @@ export default class ShikiInline extends Node {
       },
       content: 'inline*',
       group: 'inline',
+      draggable: true,
       toDOM: node => {
         if (node.attrs.text) {
           const split_1 = node.attrs.bbcode.split(']');

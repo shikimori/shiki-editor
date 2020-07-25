@@ -9,6 +9,7 @@ export default class ShikiInlineView extends DOMView {
 
     this.dom = document.createElement('span');
 
+    this.dom.setAttribute('tabindex', 0);
     this.dom.classList.add('b-shiki_editor-node');
 
     if (this.node.attrs.isLoading) {
@@ -20,7 +21,12 @@ export default class ShikiInlineView extends DOMView {
     }
 
     this.dom.innerText = this.node.attrs.bbcode;
-    this.dom.addEventListener('click', this.stop);
+
+    if (this.node.attrs.isLoading) {
+      this.dom.addEventListener('click', this.stop);
+    } else {
+      this.dom.addEventListener('click', this.focus);
+    }
 
     // this.fetch();
   }
@@ -39,7 +45,7 @@ export default class ShikiInlineView extends DOMView {
     //     this.node.marks
     //   )
     // );
-    //
+
     this.view.focus();
   }
 
