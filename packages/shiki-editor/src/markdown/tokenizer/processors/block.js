@@ -10,13 +10,13 @@ export default function(
   let index = state.index + startSequence.length;
   if (state.text[index] === '\n') { index += 1; }
 
-  const innerstate = new state.constructor(
+  const tokenizer = new state.constructor(
     state.text,
     index,
     state.nestedSequence,
     exitSequence
   );
-  const tokens = innerstate.parse();
+  const tokens = tokenizer.parse();
 
   if (!tokens) { return; }
 
@@ -30,7 +30,7 @@ export default function(
   state.push(state.tagOpen(type, metaAttributes), true);
 
   state.tokens = state.tokens.concat(tokens);
-  state.index = innerstate.index;
+  state.index = tokenizer.index;
 
   state.next(exitSequence.length, true);
   state.push(state.tagClose(type));
