@@ -112,10 +112,10 @@ export default {
       font-weight: bold
 
       body[data-locale=ru] &
-        content: '<код>'
+        content: '<bbcode>'
 
       body[data-locale=en] &
-        content: '<source>'
+        content: '<bbcode>'
 
 input
   display: none
