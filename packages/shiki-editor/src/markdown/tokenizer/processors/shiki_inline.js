@@ -77,31 +77,33 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
     const tokens = tokenizer.parse();
 
     if (tokens.length !== 3 || tokens[1].type !== 'inline') { return; }
-    // children = tokens[1].children;
     children = tokens[1].children;
   }
 
-  // const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
-  // 
-  // if (cache) {
-  //   state.inlineTokens.push(
-  //     state.tagOpen('link_inline', {
-  //       url: cache.url,
-  //       id: meta.id,
-  //       type: meta.type,
-  //       text: cache.text
-  //     })
-  //   );
-  //   state.inlineTokens.push(new Token('text', text || cache.text));
-  //   state.inlineTokens.push(
-  //     state.tagClose('link_inline')
-  //   );
-  // 
-  // } else {
+  const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
+
+  if (cache) {
+    state.inlineTokens.push(
+      state.tagOpen('link_inline', {
+        url: cache.url,
+        id: meta.id,
+        type: meta.type,
+        text: cache.text
+      })
+    );
+    if (children) {
+      state.inlineTokens.push(...children);
+    } else {
+      state.inlineTokens.push(new Token('text', cache.text));
+    }
+    state.inlineTokens.push(
+      state.tagClose('link_inline')
+    );
+  } else {
     state.inlineTokens.push(
       new Token('shiki_inline', null, children, tagMeta)
     );
-  // }
+  }
   state.next(sequence.length);
 
   return true;
