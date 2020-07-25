@@ -101,7 +101,11 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
     );
   } else {
     state.inlineTokens.push(
-      new Token('shiki_inline', null, children, tagMeta)
+      new Token('shiki_inline', null, children, {
+        ...tagMeta,
+        isLoading: cache === undefined,
+        isError: cache !== undefined
+      })
     );
   }
   state.next(sequence.length);
