@@ -1,4 +1,5 @@
 import { bind } from 'decko';
+import { DOMSerializer } from 'prosemirror-model';
 
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
@@ -20,7 +21,15 @@ export default class ShikiInlineView extends DOMView {
       this.dom.classList.add('is-error');
     }
 
-    this.dom.innerText = this.node.attrs.bbcode;
+    const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
+
+    if (this.node.attrs.text) {
+      this.dom.appendChild(
+        domSerializer.serializeFragment(options.node.content)
+      );
+    } else {
+      this.dom.innerText = this.node.attrs.bbcode;
+    }
 
     if (this.node.attrs.isLoading) {
       this.dom.addEventListener('click', this.stop);
