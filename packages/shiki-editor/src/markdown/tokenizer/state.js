@@ -228,15 +228,34 @@ export default class MarkdownTokenizer {
       }
 
       if (bbcode && (isStart || isOnlySpacingsBefore)) {
-        if (seq4 === '[div' && (match = bbcode.match(this.DIV_REGEXP))) {
-          meta = parseDivMeta(match[1]);
-          isProcessed = processBlock(
-            this,
-            'div', bbcode, '[/div]', meta,
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed) { return; }
+        switch (seq4) {
+          case '[div':
+            match = bbcode.match(this.DIV_REGEXP);
+            if (!match) { break; }
+
+            isProcessed = processBlock(
+              this,
+              'div', bbcode, '[/div]', parseDivMeta(match[1]),
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed) { return; }
+            break;
+
+          case '[url':
+            match = bbcode.match(this.LINK_REGEXP);
+            if (!match) { break; }
+
+            isProcessed = processInlineOrBlock(
+              this,
+              'link', bbcode, '[/url]', parseLinkMeta(match[1]),
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
         }
+
+
         if (seq5 === '[spoi' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
           isProcessed = processBlock(
             this,
@@ -244,16 +263,6 @@ export default class MarkdownTokenizer {
             isStart, isOnlySpacingsBefore
           );
           if (isProcessed) { return; }
-        }
-
-        if (seq4 === '[url' && (match = bbcode.match(this.LINK_REGEXP))) {
-          isProcessed = processInlineOrBlock(
-            this,
-            'link', bbcode, '[/url]', parseLinkMeta(match[1]),
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed === true) { return; }
-          if (isProcessed === false) { continue; }
         }
 
         if (seq5 === '[size' && (match = bbcode.match(this.SIZE_REGEXP))) {
