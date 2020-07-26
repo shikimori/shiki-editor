@@ -14,7 +14,7 @@ import {
   parseImageMeta
 } from '../markdown/tokenizer/bbcode_helpers';
 
-export default class ShikiInline extends Node {
+export default class ShikiBlock extends Node {
   get name() {
     return 'shiki_inline';
   }
@@ -28,15 +28,13 @@ export default class ShikiInline extends Node {
         openBbcode: { default: null },
         closeBbcode: { default: null },
         meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
-        text: { default: null },
         isLoading: { default: true },
         isError: { default: false }
       },
-      inline: true,
-      content: 'inline*',
-      group: 'inline',
-      draggable: true,
-      selectable: true
+      content: 'block+',
+      group: 'block',
+      draggable: false,
+      selectable: false
       // toDOM: node => {
       //   if (node.attrs.text) {
       //     return [
@@ -65,37 +63,9 @@ export default class ShikiInline extends Node {
     return new ShikiInlineView(options);
   }
 
-  inputRules({ type }) {
-    return [
-      nodeInputRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
-        parseShikiBasicMeta(bbcode, type, id)
-      )),
-      nodeInputRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
-        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
-      ))
-    ];
-  }
-
-  pasteRules({ type }) {
-    return [
-      pasteRule(SHIKI_BBCODE_LINK_FULL_REGEXP, type, ([bbcode, type, id, text]) => (
-        {
-          ...parseShikiBasicMeta(bbcode, type, id),
-          text
-        }
-      )),
-      pasteRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
-        parseShikiBasicMeta(bbcode, type, id)
-      )),
-      pasteRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
-        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
-      ))
-    ];
-  }
-
   get markdownParserToken() {
     return {
-      inlineNode: this.name,
+      block: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }
