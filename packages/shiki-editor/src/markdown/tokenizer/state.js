@@ -293,6 +293,19 @@ export default class MarkdownTokenizer {
             if (isProcessed === true) { return; }
             if (isProcessed === false) { continue; }
             break;
+
+          case '[anim':
+          case '[mang':
+          case '[rano':
+          case '[char':
+          case '[pers':
+            match = bbcode.match(this.SINGLE_SHIKI_BBCODE_LINK_REGEXP);
+            if (!match) { break; }
+            meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
+
+            if (processShikiBlock(this, bbcode, `[/${meta.type}]`, meta)) { return; }
+            break;
+
         }
       }
 
