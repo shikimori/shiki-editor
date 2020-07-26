@@ -255,34 +255,44 @@ export default class MarkdownTokenizer {
             break;
         }
 
+        switch (seq5) {
+          case '[spoi':
+            match = bbcode.match(this.BLOCK_BBCODE_REGEXP);
+            if (!match) { break; }
 
-        if (seq5 === '[spoi' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
-          isProcessed = processBlock(
-            this,
-            'spoiler_block', bbcode, '[/spoiler]', parseSpoilerMeta(match[1]),
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed) { return; }
-        }
+            isProcessed = processBlock(
+              this,
+              'spoiler_block', bbcode, '[/spoiler]', parseSpoilerMeta(match[1]),
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed) { return; }
+            break;
 
-        if (seq5 === '[size' && (match = bbcode.match(this.SIZE_REGEXP))) {
-          isProcessed = processInlineOrBlock(
-            this,
-            'size', bbcode, '[/size]', parseSizeMeta(match[1]),
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed === true) { return; }
-          if (isProcessed === false) { continue; }
-        }
+          case '[size':
+            match = bbcode.match(this.SIZE_REGEXP);
+            if (!match) { break; }
 
-        if (seq5 === '[colo' && (match = bbcode.match(this.COLOR_REGEXP))) {
-          isProcessed = processInlineOrBlock(
-            this,
-            'color', bbcode, '[/color]', { color: match[1] },
-            isStart, isOnlySpacingsBefore
-          );
-          if (isProcessed === true) { return; }
-          if (isProcessed === false) { continue; }
+            isProcessed = processInlineOrBlock(
+              this,
+              'size', bbcode, '[/size]', parseSizeMeta(match[1]),
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
+
+          case '[colo':
+            match = bbcode.match(this.COLOR_REGEXP);
+            if (!match) { break; }
+
+            isProcessed = processInlineOrBlock(
+              this,
+              'color', bbcode, '[/color]', { color: match[1] },
+              isStart, isOnlySpacingsBefore
+            );
+            if (isProcessed === true) { return; }
+            if (isProcessed === false) { continue; }
+            break;
         }
       }
 
