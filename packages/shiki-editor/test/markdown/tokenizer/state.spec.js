@@ -1402,7 +1402,9 @@ describe('MarkdownTokenizer', () => {
                 attrs: [
                   ['bbcode', '[anime=1]'],
                   ['type', 'anime'],
-                  ['id', 1]
+                  ['id', 1],
+                  ['isLoading', true],
+                  ['isError', false]
                 ]
               }
             ]
@@ -1425,7 +1427,9 @@ describe('MarkdownTokenizer', () => {
                   ['id', 1],
                   ['openBbcode', '[anime=1]'],
                   ['closeBbcode', '[/anime]'],
-                  ['text', 'zx']
+                  ['text', 'zx'],
+                  ['isLoading', true],
+                  ['isError', false]
                 ],
                 children: [{ type: 'text', content: 'zx' }]
               }
