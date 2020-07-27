@@ -10,7 +10,7 @@ export default class SpoilerBlock extends Node {
 
   get schema() {
     return {
-      content: 'block+',
+      content: 'block*',
       group: 'block',
       defining: true,
       draggable: false,

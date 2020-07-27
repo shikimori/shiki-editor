@@ -102,7 +102,10 @@ export default class MarkdownSerializerState {
     }
 
     if (nAfterOpen) {
-      this.ensureNewLine();
+      // paragraph anyway produces new lines
+      if (node.content?.content?.[0]?.type?.name !== 'paragraph') {
+        this.ensureNewLine();
+      }
       this.renderContent(node);
     } else {
       const indexToCheck = this.out.length;
