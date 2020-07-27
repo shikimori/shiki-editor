@@ -325,10 +325,9 @@ textarea.ProseMirror
   [data-div].is-prosemirror-selected
     &:before
       background: #fcfcfc
-      font-family: Monaco, Menlo, Consolas, Courier New, monospace;
       color: #2b8acc
       cursor: pointer
-      display: inline
+      font-family: Monaco, Menlo, Consolas, Courier New, monospace;
       font-size: 9px
       font-weight: normal
       left: 0
@@ -339,6 +338,7 @@ textarea.ProseMirror
       position: absolute
       text-shadow: 1px 1px 0px #fff
       top: 0
+      width: 100%
       z-index: 999
 
   [data-image].is-prosemirror-selected,
