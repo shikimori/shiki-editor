@@ -9,6 +9,7 @@ export default class ShikiBlock extends Node {
   get schema() {
     return {
       attrs: {
+        bbcode: {},
         id: {},
         type: {},
         openBbcode: { },
@@ -29,7 +30,7 @@ export default class ShikiBlock extends Node {
 
   get markdownParserToken() {
     return {
-      block: this.name,
+      node: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }
