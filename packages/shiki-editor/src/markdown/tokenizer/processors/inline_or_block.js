@@ -3,9 +3,9 @@ import processMarkOpen from './mark_open';
 
 import processBlock from './block';
 
-const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
+export const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
 
-export default function(
+export function processInlineOrBlock(
   state,
   type,
   openBbcode,
