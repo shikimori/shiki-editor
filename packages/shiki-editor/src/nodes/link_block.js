@@ -12,7 +12,9 @@ export default class LinkBlock extends Node {
   get schema() {
     return {
       attrs: {
-        url: {}
+        url: {},
+        id: { default: null },
+        type: { default: null }
       },
       content: 'block+',
       group: 'block',
@@ -21,7 +23,9 @@ export default class LinkBlock extends Node {
         {
           tag: 'a[href]',
           getAttrs: node => ({
-            url: node.getAttribute('href')
+            url: node.getAttribute('href'),
+            id: node.getAttribute('data-id'),
+            type: node.getAttribute('data-type')
           })
         }
       ],
@@ -29,6 +33,8 @@ export default class LinkBlock extends Node {
         'a',
         {
           href: fixUrl(node.attrs.url),
+          'data-id': node.attrs.id,
+          'data-type': node.attrs.type,
           class: 'b-link prosemirror-block',
           rel: 'noopener noreferrer nofollow',
           target: '_blank',
