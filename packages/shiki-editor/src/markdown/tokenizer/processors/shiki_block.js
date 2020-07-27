@@ -2,6 +2,13 @@ import Token from '../token';
 import { extractUntil } from '../helpers';
 
 export default function(state, openBbcode, closeBbcode, meta) {
+  const inlineText = extractUntil(
+    state.text,
+    closeBbcode,
+    state.index + openBbcode.length
+  );
+  if (inlineText) { return; }
+
   const text = extractUntil(
     state.text,
     closeBbcode,
