@@ -332,7 +332,7 @@ textarea.ProseMirror
       font-weight: normal
       left: 0
       letter-spacing: 0.8px
-      line-height: 1
+      line-height: 1.25
       padding: 2px
       pointer-events: none
       position: absolute
