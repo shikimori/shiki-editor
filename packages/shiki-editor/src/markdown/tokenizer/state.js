@@ -306,7 +306,6 @@ export default class MarkdownTokenizer {
 
             if (processShikiBlock(this, bbcode, `[/${meta.type}]`, meta)) { return; }
             break;
-
         }
       }
 

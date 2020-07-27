@@ -96,7 +96,7 @@ export default class ShikiView extends DOMView {
     } else if (this.node.attrs.text) {
       this.replaceFragment(result);
     } else if (this.isInline) {
-      this.replaceText(result);
+      this.replaceDefaultLink(result);
     } else {
       this.replaceNode(result);
     }
@@ -116,22 +116,21 @@ export default class ShikiView extends DOMView {
 
   replaceFragment(result) {
     const selection = this.nodeSelection;
-    this.replaceWith(this.node.content, false);
-
-    const pos = this.view.state.tr.doc.resolve(selection.$from.pos);
+    const contentSize = this.node.content.size;
 
     this.view.dispatch(
       this.view.state.tr
         .setMeta('addToHistory', false)
+        .replaceWith(selection.from, selection.to, this.node.content)
         .addMark(
-          pos.start(),
-          pos.end(),
+          selection.from,
+          selection.from + contentSize,
           this.markLinkInline(result)
         )
     );
   }
 
-  replaceText(result) {
+  replaceDefaultLink(result) {
     this.replaceWith(
       this.view.state.schema.text(
         result.text,
