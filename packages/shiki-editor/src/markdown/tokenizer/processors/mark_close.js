@@ -3,7 +3,7 @@ export default function(state, type, openBbcode, closeBbcode) {
 
   state.marksStack.pop();
   state.inlineTokens.push(
-    state.tagClose(type, null, closeBbcode)
+    state.tagClose(type, closeBbcode)
   );
   state.next(closeBbcode.length);
 

@@ -32,12 +32,13 @@ export default function(
   const nBeforeClose =
     state.text[finalIndex - exitSequence.length - 1] === '\n';
   const nAfterClose = state.text[finalIndex + 1] === '\n';
-  const nMeta = { nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose };
-  const meta = { ...metaAttributes, ...nMeta };
+  const meta = {
+    ...metaAttributes, nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose
+  };
 
   state.push(state.tagOpen(type, meta), true);
   state.tokens = state.tokens.concat(tokens);
-  state.push(state.tagClose(type, nMeta));
+  state.push(state.tagClose(type));
 
   state.next(finalIndex, true);
 
