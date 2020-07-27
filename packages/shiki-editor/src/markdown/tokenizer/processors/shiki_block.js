@@ -27,12 +27,23 @@ export default function(state, openBbcode, closeBbcode, meta) {
     URL_REGEXP.test(text)
   ) { return; }
 
+  const nMeta = {
+    nBeforeOpen: state.text[state.index - 1] === '\n',
+    nAfterOpen: state.text[state.index + openBbcode.length] === '\n',
+    nBeforeClose: state.text[state.index + openBbcode.length + text.length - 1] === '\n'
+  };
+
   const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
   const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
 
   if (cache) {
-    const tagMeta = { url: cache.url, id: meta.id, type: meta.type };
+    const tagMeta = {
+      url: cache.url,
+      id: meta.id,
+      type: meta.type,
+      ...nMeta
+    };
     state.push(state.tagOpen('link_block', tagMeta), true);
     state.tokens = state.tokens.concat(tokens);
     state.push(state.tagClose('link_block'));
@@ -46,7 +57,8 @@ export default function(state, openBbcode, closeBbcode, meta) {
         openBbcode,
         closeBbcode,
         isLoading: cache === undefined,
-        isError: cache !== undefined
+        isError: cache !== undefined,
+        ...nMeta
       })
     );
   }

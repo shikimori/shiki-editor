@@ -147,7 +147,10 @@ export default class ShikiView extends DOMView {
     this.replaceWith(
       this.view.state.schema.nodes.link_block.create({
         ...result,
-        type: this.type
+        type: this.type,
+        nBeforeOpen: this.node.nBeforeOpen,
+        nAfterOpen: this.node.nAfterOpen,
+        nBeforeClose: this.node.nBeforeClose
       }, this.node.content)
     );
   }

@@ -1693,7 +1693,8 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false]
+              ['isError', false],
+              ...n(false, true)
             ],
             children: [
               ...text('zx')
@@ -1713,7 +1714,8 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false]
+              ['isError', false],
+              ...n(false, true, true)
             ],
             children: [
               ...text('zx')
@@ -1735,7 +1737,8 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false]
+              ['isError', false],
+              ...n(false, true, true)
             ],
             children: [
               ...text('z')
@@ -1750,7 +1753,8 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=2]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false]
+              ['isError', false],
+              ...n(true, true, true)
             ],
             children: [
               ...text('x')
@@ -1788,7 +1792,8 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false]
+              ['isError', false],
+              ...n(true, true)
             ],
             children: [
               ...text('zx')
