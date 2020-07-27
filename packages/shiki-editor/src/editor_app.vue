@@ -338,7 +338,7 @@ textarea.ProseMirror
       position: absolute
       text-shadow: 1px 1px 0px #fff
       top: 0
-      width: calc(100% - 4px)
+      width: 100%
       z-index: 999
 
   [data-image].is-prosemirror-selected,
