@@ -1,6 +1,7 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
 import { CACHE, fixedType } from '../../../extensions/shiki_loader';
+import { SHIKI_BBCODE_LINK_REGEXP } from './shiki_inline';
 
 export default function(state, openBbcode, closeBbcode, meta) {
   const inlineText = extractUntil(
@@ -18,7 +19,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
     true
   );
 
-  if (!text) { return; }
+  if (!text || SHIKI_BBCODE_LINK_REGEXP.test(text)) { return; }
 
   const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
