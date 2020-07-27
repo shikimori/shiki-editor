@@ -1612,6 +1612,43 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[anime=1]\\nz\\n[/anime]\\n[anime=2]\\nx\\n[/anime]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[anime=1]\nz\n[/anime]\n[anime=2]\nx\n[/anime]'
+        )).to.eql([
+          {
+            type: 'shiki_block',
+            attrs: [
+              ['type', 'anime'],
+              ['id', 1],
+              ['bbcode', '[anime=1]\nz\n[/anime]'],
+              ['openBbcode', '[anime=1]'],
+              ['closeBbcode', '[/anime]'],
+              ['isLoading', true],
+              ['isError', false]
+            ],
+            children: [
+              ...text('z')
+            ]
+          },
+          {
+            type: 'shiki_block',
+            attrs: [
+              ['type', 'anime'],
+              ['id', 2],
+              ['bbcode', '[anime=2]\nx\n[/anime]'],
+              ['openBbcode', '[anime=2]'],
+              ['closeBbcode', '[/anime]'],
+              ['isLoading', true],
+              ['isError', false]
+            ],
+            children: [
+              ...text('x')
+            ]
+          }
+        ]);
+      });
+
 
       it('[anime=1]\\n[anime=1]\\nzx[/anime]', () => {
         expect(MarkdownTokenizer.parse('[anime=1]\n[anime=1]\nzx[/anime]')).to.eql([

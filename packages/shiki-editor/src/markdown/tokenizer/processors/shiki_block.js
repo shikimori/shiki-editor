@@ -51,5 +51,6 @@ export default function(state, openBbcode, closeBbcode, meta) {
     );
   }
 
-  state.next(sequence.length);
+  state.next(sequence.length, true);
+  return true;
 }
