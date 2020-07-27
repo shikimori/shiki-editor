@@ -1080,6 +1080,15 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('q\\n[div]z[/div]', () => {
+        expect(MarkdownTokenizer.parse('q\n[div]z[/div]')).to.eql([
+          ...text('q'),
+          { type: 'div', direction: 'open', attrs: n(true) },
+          ...text('z'),
+          { type: 'div', direction: 'close' }
+        ]);
+      });
+
       it('  [div]z[/div]', () => {
         expect(MarkdownTokenizer.parse('  [div]z[/div]')).to.eql([
           { type: 'div', direction: 'open', attrs: n() },
@@ -1117,6 +1126,28 @@ describe('MarkdownTokenizer', () => {
           { type: 'div', direction: 'close' }
         ]);
       });
+
+      it('[div]z[/div][div]x[/div]', () => {
+        expect(MarkdownTokenizer.parse('[div]z[/div][div]x[/div]')).to.eql([
+          { type: 'div', direction: 'open', attrs: n() },
+          ...text('z'),
+          { type: 'div', direction: 'close' },
+          { type: 'div', direction: 'open', attrs: n() },
+          ...text('x'),
+          { type: 'div', direction: 'close' }
+        ]);
+      });
+
+      // it('[div]z[/div][div]x[/div]', () => {
+      //   expect(MarkdownTokenizer.parse('[div]z[/div][div]x[/div]')).to.eql([
+      //     { type: 'div', direction: 'open', attrs: n() },
+      //     ...text('z'),
+      //     { type: 'div', direction: 'close' },
+      //     { type: 'div', direction: 'open', attrs: n() },
+      //     ...text('x'),
+      //     { type: 'div', direction: 'close' }
+      //   ]);
+      // });
 
       it('[div data-test=qwe]z[/div]', () => {
         expect(MarkdownTokenizer.parse(
@@ -1275,7 +1306,7 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [['url', '//ya.ru'], ...n(false, true, true)]
           },
-          { type: 'quote', direction: 'open', attrs: n(false, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'link_block', direction: 'close' }]);
@@ -1321,7 +1352,7 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [['size', '24'], ...n(false, true, true)]
           },
-          { type: 'quote', direction: 'open', attrs: n(false, true, true, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true, true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'size_block', direction: 'close' }]);
@@ -1368,7 +1399,7 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [['color', 'red'], ...n(false, true, true)]
           },
-          { type: 'quote', direction: 'open', attrs: n(false, true, false, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true, false, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'color_block', direction: 'close' }]);
@@ -1417,7 +1448,7 @@ describe('MarkdownTokenizer', () => {
           '[b]\n[quote]\nz\n[/quote]\n[/b]'
         )).to.eql([
           { type: 'bold_block', direction: 'open', attrs: n(false, true, true) },
-          { type: 'quote', direction: 'open', attrs: n(false, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'bold_block', direction: 'close' }]);
@@ -1452,7 +1483,7 @@ describe('MarkdownTokenizer', () => {
           '[i]\n[quote]\nz\n[/quote]\n[/i]'
         )).to.eql([
           { type: 'italic_block', direction: 'open', attrs: n(false, true, true) },
-          { type: 'quote', direction: 'open', attrs: n(false, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'italic_block', direction: 'close' }]);
@@ -1788,7 +1819,7 @@ describe('MarkdownTokenizer', () => {
         '[hr]\n[spoiler]z[/spoiler]'
       )).to.eql([
         { type: 'hr' },
-        { type: 'spoiler_block', direction: 'open', attrs: n() },
+        { type: 'spoiler_block', direction: 'open', attrs: n(true) },
         ...text('z'),
         { type: 'spoiler_block', direction: 'close' }
       ]);

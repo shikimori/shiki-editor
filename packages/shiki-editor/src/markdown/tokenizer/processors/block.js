@@ -7,7 +7,7 @@ export default function(
   isStart = true,
   isOnlySpacingsBefore = false
 ) {
-  const nBeforeOpen = state.text[state.index] === '\n';
+  const nBeforeOpen = state.text[state.index - 1] === '\n';
   let index = state.index + startSequence.length;
   const nAfterOpen = state.text[index] === '\n';
   if (nAfterOpen) { index += 1; }
