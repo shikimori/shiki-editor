@@ -61,6 +61,10 @@ export default class LinkBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'url', `=${node.attrs.url}`);
+    if (node.attrs.type && node.attrs.id) {
+      state.renderBlock(node, node.attrs.type, `=${node.attrs.id}`);
+    } else {
+      state.renderBlock(node, 'url', `=${node.attrs.url}`);
+    }
   }
 }
