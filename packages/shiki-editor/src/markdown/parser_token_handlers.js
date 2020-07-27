@@ -24,8 +24,8 @@ export default function tokenHandlers(schema, tokens) {
       const nodeType = schema.nodeType(spec.node);
       handlers[type] = (state, token) => state.addNode(nodeType, attrs(spec, token));
 
-    } else if (spec.inlineNode) {
-      const nodeType = schema.nodeType(spec.inlineNode);
+    } else if (spec.contentNode) {
+      const nodeType = schema.nodeType(spec.contentNode);
       handlers[type] = (state, token) => {
         if (token.children?.length) {
           state.openNode(nodeType, attrs(spec, token));

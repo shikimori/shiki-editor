@@ -1,5 +1,5 @@
 import { Node } from '../base';
-import { ShikiInlineView } from '../node_views';
+import { ShikiView } from '../node_views';
 
 export default class ShikiBlock extends Node {
   get name() {
@@ -25,12 +25,12 @@ export default class ShikiBlock extends Node {
   }
 
   view(options) {
-    return new ShikiInlineView(options);
+    return new ShikiView(options);
   }
 
   get markdownParserToken() {
     return {
-      node: this.name,
+      contentNode: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }

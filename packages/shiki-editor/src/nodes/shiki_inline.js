@@ -1,6 +1,6 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
-import { ShikiInlineView } from '../node_views';
+import { ShikiView } from '../node_views';
 import { pasteRule } from '../commands';
 
 import {
@@ -24,7 +24,7 @@ export default class ShikiInline extends Node {
       attrs: {
         id: {},
         type: {},
-        // bbcode: {},
+        bbcode: {},
         openBbcode: { default: null },
         closeBbcode: { default: null },
         meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
@@ -62,7 +62,7 @@ export default class ShikiInline extends Node {
   }
 
   view(options) {
-    return new ShikiInlineView(options);
+    return new ShikiView(options);
   }
 
   inputRules({ type }) {
@@ -95,7 +95,7 @@ export default class ShikiInline extends Node {
 
   get markdownParserToken() {
     return {
-      inlineNode: this.name,
+      contentNode: this.name,
       getAttrs: token => token.serializeAttributes()
     };
   }
