@@ -62,7 +62,8 @@ export default class MarkdownParser {
     const state = new MarkdownParseState(this.schema, this.tokenHandlers);
     let doc;
 
-    state.parseTokens(this.tokenizer.parse(text));
+    const tokens = this.tokenizer.parse(text);
+    state.parseTokens(tokens);
 
     do { doc = state.closeNode(); } while (state.stack.length);
     return doc;

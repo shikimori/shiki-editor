@@ -23,26 +23,26 @@ export default function(state, openBbcode, closeBbcode, meta) {
   const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
   const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
-  let token;
 
   if (cache) {
-    token = new Token('link_block', null, tokens, {
-      url: cache.url,
-      id: meta.id,
-      type: meta.type
-    });
+    const tagMeta = { url: cache.url, id: meta.id, type: meta.type };
+    state.push(state.tagOpen('link_block', tagMeta), true);
+    state.tokens = state.tokens.concat(tokens);
+    state.push(state.tagClose('link_block'));
+
   } else {
-    token = new Token('shiki_block', null, tokens, {
-      type: meta.type,
-      id: meta.id,
-      bbcode: sequence,
-      openBbcode,
-      closeBbcode,
-      isLoading: cache === undefined,
-      isError: cache !== undefined
-    });
+    state.push(
+      new Token('shiki_block', null, tokens, {
+        type: meta.type,
+        id: meta.id,
+        bbcode: sequence,
+        openBbcode,
+        closeBbcode,
+        isLoading: cache === undefined,
+        isError: cache !== undefined
+      })
+    );
   }
 
-  state.push(token);
   state.next(sequence.length);
 }
