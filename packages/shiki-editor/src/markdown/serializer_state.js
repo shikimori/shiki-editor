@@ -89,27 +89,38 @@ export default class MarkdownSerializerState {
     this.closed = node;
   }
 
-  renderBlock(node, bbcode, meta = '') {
-    this.write(`[${bbcode}${meta}]`);
-    this.ensureNewLine();
-    this.renderContent(node);
-    this.write(`[/${bbcode}]`);
-    this.closeBlock(node);
+  renderBlock(
+    node,
+    bbcode,
+    meta = '',
+    { nBeforeOpen, nAfterOpen, nBeforeClose }
+  ) {
+    if (nBeforeOpen) {
+      this.write(`[${bbcode}${meta}]`);
+    } else {
+      this.writeInline(`[${bbcode}${meta}]`);
+    }
 
-    // this.write(`[${bbcode}${meta}]`);
-    //
-    // if (!this.delim) {
-    //   this.ensureNewLine();
-    // }
-    //
-    // this.renderContent(node);
-    //
-    // if (this.delim) {
-    //   this.writeInline(`[/${bbcode}]`);
-    // } else {
-    //   this.write(`[/${bbcode}]`);
-    //   this.closeBlock(node);
-    // }
+    if (nAfterOpen) {
+      this.ensureNewLine();
+      this.renderContent(node);
+    } else {
+      const indexToCheck = this.out.length;
+      this.renderContent(node);
+
+      if (this.out[indexToCheck] === '\n') {
+        // we have explicitly prohibitted nAfterOpen, so lets remove \n here
+        this.out = this.out.slice(0, indexToCheck) +
+          this.out.slice(indexToCheck + 1);
+      }
+    }
+
+    if (nBeforeClose) {
+      this.write(`[/${bbcode}]`);
+    } else {
+      this.writeInline(`[/${bbcode}]`);
+    }
+    this.closeBlock(node);
   }
 
   // :: (string, ?bool)

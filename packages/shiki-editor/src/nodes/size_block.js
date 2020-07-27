@@ -12,7 +12,10 @@ export default class SizeBlock extends Node {
   get schema() {
     return {
       attrs: {
-        size: {}
+        size: {},
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {}
       },
       content: 'block+',
       group: 'block',
@@ -36,14 +39,7 @@ export default class SizeBlock extends Node {
     };
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'size', `=${node.attrs.size}`);
+    state.renderBlock(node, 'size', `=${node.attrs.size}`, node.attrs);
   }
 }

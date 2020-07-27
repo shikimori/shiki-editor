@@ -8,7 +8,11 @@ export default class BoldBlock extends Node {
 
   get schema() {
     return {
-      attrs: {},
+      attrs: {
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {}
+      },
       content: 'block+',
       group: 'block',
       draggable: false,
@@ -27,6 +31,6 @@ export default class BoldBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'b');
+    state.renderBlock(node, 'b', '', node.attrs);
   }
 }

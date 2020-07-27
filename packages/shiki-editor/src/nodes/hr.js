@@ -31,7 +31,6 @@ export default class Hr extends Node {
     ];
   }
 
-
   get markdownParserToken() {
     return { node: this.name };
   }

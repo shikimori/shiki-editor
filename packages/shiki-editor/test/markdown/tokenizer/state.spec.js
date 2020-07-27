@@ -8,6 +8,17 @@ function text(content) {
     { type: 'paragraph', direction: 'close' }
   ];
 }
+function n(
+  nBeforeOpen = false,
+  nAfterOpen = false,
+  nBeforeClose = false
+) {
+  return Object.entries({
+    nBeforeOpen: !!nBeforeOpen,
+    nAfterOpen: !!nAfterOpen,
+    nBeforeClose: !!nBeforeClose
+  });
+}
 
 describe('MarkdownTokenizer', () => {
   it('<empty>', () => {
@@ -96,13 +107,13 @@ describe('MarkdownTokenizer', () => {
       //     type: 'paragraph', direction: 'close'
       //   }]);
       // });
-
+      //
       // it('**z', () => {
       //   expect(MarkdownTokenizer.parse('**z')).to.eql([
       //     ...text('**z')
       //   ]);
       // });
-
+      //
       // it('z**', () => {
       //   expect(MarkdownTokenizer.parse('z**')).to.eql([
       //     ...text('z**')
@@ -503,7 +514,7 @@ describe('MarkdownTokenizer', () => {
         });
       });
     });
-
+  //
     describe('blockquote', () => {
       it('> a', () => {
         expect(MarkdownTokenizer.parse('> a')).to.eql([
@@ -559,7 +570,7 @@ describe('MarkdownTokenizer', () => {
       it('> [quote]\\n> a\\n> [/quote]', () => {
         expect(MarkdownTokenizer.parse('> [quote]\n> a\n> [/quote]')).to.eql([
           { type: 'blockquote', direction: 'open' },
-          { type: 'quote', direction: 'open' },
+          { type: 'quote', direction: 'open', attrs: n(false, true, true) },
           ...text('a'),
           { type: 'quote', direction: 'close' },
           { type: 'blockquote', direction: 'close' }
@@ -847,7 +858,7 @@ describe('MarkdownTokenizer', () => {
     describe('spoiler', () => {
       it('[spoiler]z[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler]z[/spoiler]')).to.eql([
-          { type: 'spoiler_block', direction: 'open' },
+          { type: 'spoiler_block', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
         ]);
@@ -855,7 +866,11 @@ describe('MarkdownTokenizer', () => {
 
       it('[spoiler=qw er]z[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler=qw er]z[/spoiler]')).to.eql([
-          { type: 'spoiler_block', direction: 'open', attrs: [['label', 'qw er']] },
+          {
+            type: 'spoiler_block',
+            direction: 'open',
+            attrs: [['label', 'qw er'], ...n()]
+          },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
         ]);
@@ -874,7 +889,11 @@ describe('MarkdownTokenizer', () => {
 
       it('[spoiler=qw er]z[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler=qw er]z[/spoiler]')).to.eql([
-          { type: 'spoiler_block', direction: 'open', attrs: [['label', 'qw er']] },
+          {
+            type: 'spoiler_block',
+            direction: 'open',
+            attrs: [['label', 'qw er'], ...n()]
+          },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
         ]);
@@ -882,7 +901,11 @@ describe('MarkdownTokenizer', () => {
 
       it('[spoiler]\\nz\\n[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler]\nz\n[/spoiler]')).to.eql([
-          { type: 'spoiler_block', direction: 'open' },
+          {
+            type: 'spoiler_block',
+            direction: 'open',
+            attrs: n(false, true, true)
+          },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
         ]);
@@ -890,7 +913,7 @@ describe('MarkdownTokenizer', () => {
 
       it('[spoiler]\\nz[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler]\nz[/spoiler]')).to.eql([
-          { type: 'spoiler_block', direction: 'open' },
+          { type: 'spoiler_block', direction: 'open', attrs: n(false, true) },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
         ]);
@@ -898,7 +921,7 @@ describe('MarkdownTokenizer', () => {
 
       it('[spoiler]\\nz[/spoiler]qwe', () => {
         expect(MarkdownTokenizer.parse('[spoiler]\nz[/spoiler]qwe')).to.eql([
-          { type: 'spoiler_block', direction: 'open' },
+          { type: 'spoiler_block', direction: 'open', attrs: n(false, true) },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' },
           ...text('qwe')
@@ -909,7 +932,7 @@ describe('MarkdownTokenizer', () => {
     describe('quote', () => {
       it('[quote]z[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote]z[/quote]')).to.eql([
-          { type: 'quote', direction: 'open' },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' }
         ]);
@@ -917,7 +940,7 @@ describe('MarkdownTokenizer', () => {
 
       it('[quote]\\nz\\n[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote]\nz\n[/quote]')).to.eql([
-          { type: 'quote', direction: 'open' },
+          { type: 'quote', direction: 'open', attrs: n(false, true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' }
         ]);
@@ -926,7 +949,7 @@ describe('MarkdownTokenizer', () => {
       it('q[quote]z[/quote]x', () => {
         expect(MarkdownTokenizer.parse('q[quote]z[/quote]x')).to.eql([
           ...text('q'),
-          { type: 'quote', direction: 'open' },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           ...text('x')
@@ -935,7 +958,7 @@ describe('MarkdownTokenizer', () => {
 
       it('[quote]z[/quote]q', () => {
         expect(MarkdownTokenizer.parse('[quote]z[/quote]q')).to.eql([
-          { type: 'quote', direction: 'open' },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           ...text('q')
@@ -943,46 +966,50 @@ describe('MarkdownTokenizer', () => {
       });
 
       it('[quote=x]z[/quote]', () => {
-        expect(MarkdownTokenizer.parse('[quote=x]z[/quote]')).to.eql([{
-          type: 'quote',
-          direction: 'open',
-          attrs: [['nickname', 'x']]
-        },
-        ...text('z'),
-        {
-          type: 'quote', direction: 'close'
-        }]);
+        expect(MarkdownTokenizer.parse('[quote=x]z[/quote]')).to.eql([
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [['nickname', 'x'], ...n()]
+          },
+          ...text('z'),
+          { type: 'quote', direction: 'close' }
+        ]);
       });
 
       it('[quote=t1;2;x]z[/quote]', () => {
-        expect(MarkdownTokenizer.parse('[quote=t1;2;x]z[/quote]')).to.eql([{
-          type: 'quote',
-          direction: 'open',
-          attrs: [['topic_id', 1], ['user_id', 2], ['nickname', 'x']]
-        },
-        ...text('z'),
-        {
-          type: 'quote', direction: 'close'
-        }]);
+        expect(MarkdownTokenizer.parse('[quote=t1;2;x]z[/quote]')).to.eql([
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [['topic_id', 1], ['user_id', 2], ['nickname', 'x'], ...n()]
+          },
+          ...text('z'),
+          {
+            type: 'quote', direction: 'close'
+          }
+        ]);
       });
 
       it('[quote=m1;2;x]z[/quote]', () => {
-        expect(MarkdownTokenizer.parse('[quote=m1;2;x]z[/quote]')).to.eql([{
-          type: 'quote',
-          direction: 'open',
-          attrs: [['message_id', 1], ['user_id', 2], ['nickname', 'x']]
-        },
-        ...text('z'),
-        {
-          type: 'quote', direction: 'close'
-        }]);
+        expect(MarkdownTokenizer.parse('[quote=m1;2;x]z[/quote]')).to.eql([
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [['message_id', 1], ['user_id', 2], ['nickname', 'x'], ...n()]
+          },
+          ...text('z'),
+          {
+            type: 'quote', direction: 'close'
+          }
+        ]);
       });
     });
-
+  //
     describe('center', () => {
       it('[center]z[/center]', () => {
         expect(MarkdownTokenizer.parse('[center]z[/center]')).to.eql([
-          { type: 'center', direction: 'open' },
+          { type: 'center', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'center', direction: 'close' }
         ]);
@@ -991,18 +1018,18 @@ describe('MarkdownTokenizer', () => {
       it('z[center]x[/center]c', () => {
         expect(MarkdownTokenizer.parse('z[center]x[/center]c')).to.eql([
           ...text('z'),
-          { type: 'center', direction: 'open' },
+          { type: 'center', direction: 'open', attrs: n() },
           ...text('x'),
           { type: 'center', direction: 'close' },
           ...text('c')
         ]);
       });
     });
-
+  //
     describe('right', () => {
       it('[right]z[/right]', () => {
         expect(MarkdownTokenizer.parse('[right]z[/right]')).to.eql([
-          { type: 'right', direction: 'open' },
+          { type: 'right', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'right', direction: 'close' }
         ]);
@@ -1011,14 +1038,14 @@ describe('MarkdownTokenizer', () => {
       it('z[right]x[/right]c', () => {
         expect(MarkdownTokenizer.parse('z[right]x[/right]c')).to.eql([
           ...text('z'),
-          { type: 'right', direction: 'open' },
+          { type: 'right', direction: 'open', attrs: n() },
           ...text('x'),
           { type: 'right', direction: 'close' },
           ...text('c')
         ]);
       });
     });
-
+  //
     describe('list', () => {
       it('[list]z[/list]', () => {
         expect(MarkdownTokenizer.parse('[list]z[/list]')).to.eql([
@@ -1032,7 +1059,8 @@ describe('MarkdownTokenizer', () => {
                   'data-deperecation',
                   '[list] is deprecated, use [*] without wrapping them in [list] tag'
                 ]]
-              ]
+              ],
+              ...n()
             ]
           },
           ...text('z'),
@@ -1044,7 +1072,16 @@ describe('MarkdownTokenizer', () => {
     describe('div', () => {
       it('[div]z[/div]', () => {
         expect(MarkdownTokenizer.parse('[div]z[/div]')).to.eql([
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
+          ...text('z'),
+          { type: 'div', direction: 'close' }
+        ]);
+      });
+
+      it('q\\n[div]z[/div]', () => {
+        expect(MarkdownTokenizer.parse('q\n[div]z[/div]')).to.eql([
+          ...text('q'),
+          { type: 'div', direction: 'open', attrs: n(true) },
           ...text('z'),
           { type: 'div', direction: 'close' }
         ]);
@@ -1052,7 +1089,7 @@ describe('MarkdownTokenizer', () => {
 
       it('  [div]z[/div]', () => {
         expect(MarkdownTokenizer.parse('  [div]z[/div]')).to.eql([
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'div', direction: 'close' }
         ]);
@@ -1060,8 +1097,8 @@ describe('MarkdownTokenizer', () => {
 
       it('[div][div]z[/div][/div]', () => {
         expect(MarkdownTokenizer.parse('[div][div]z[/div][/div]')).to.eql([
-          { type: 'div', direction: 'open' },
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
+          { type: 'div', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'div', direction: 'close' },
           { type: 'div', direction: 'close' }
@@ -1070,8 +1107,8 @@ describe('MarkdownTokenizer', () => {
 
       it('[div]  [div]z[/div][/div]', () => {
         expect(MarkdownTokenizer.parse('[div]  [div]z[/div][/div]')).to.eql([
-          { type: 'div', direction: 'open' },
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
+          { type: 'div', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'div', direction: 'close' },
           { type: 'div', direction: 'close' }
@@ -1080,19 +1117,45 @@ describe('MarkdownTokenizer', () => {
 
       it('[div][div]z[/div][/div]', () => {
         expect(MarkdownTokenizer.parse('[div][div]z[/div][/div]')).to.eql([
-          { type: 'div', direction: 'open' },
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
+          { type: 'div', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'div', direction: 'close' },
           { type: 'div', direction: 'close' }
         ]);
       });
 
+      it('[div]z[/div][div]x[/div]', () => {
+        expect(MarkdownTokenizer.parse('[div]z[/div][div]x[/div]')).to.eql([
+          { type: 'div', direction: 'open', attrs: n() },
+          ...text('z'),
+          { type: 'div', direction: 'close' },
+          { type: 'div', direction: 'open', attrs: n() },
+          ...text('x'),
+          { type: 'div', direction: 'close' }
+        ]);
+      });
+
+      // it('[div]z[/div][div]x[/div]', () => {
+      //   expect(MarkdownTokenizer.parse('[div]z[/div][div]x[/div]')).to.eql([
+      //     { type: 'div', direction: 'open', attrs: n() },
+      //     ...text('z'),
+      //     { type: 'div', direction: 'close' },
+      //     { type: 'div', direction: 'open', attrs: n() },
+      //     ...text('x'),
+      //     { type: 'div', direction: 'close' }
+      //   ]);
+      // });
+
       it('[div data-test=qwe]z[/div]', () => {
         expect(MarkdownTokenizer.parse(
           '[div data-test=qwe]z[/div]'
         )).to.eql([
-          { type: 'div', direction: 'open', attrs: [['data', [['data-test', 'qwe']]]] },
+          {
+            type: 'div',
+            direction: 'open',
+            attrs: [['data', [['data-test', 'qwe']]], ...n()]
+          },
           ...text('z'),
           { type: 'div', direction: 'close' }
         ]);
@@ -1105,7 +1168,7 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'div',
             direction: 'open',
-            attrs: [['data', [['data-test', ''], ['data-fofo', '']]]]
+            attrs: [['data', [['data-test', ''], ['data-fofo', '']]], ...n()]
           },
           ...text('z'),
           {
@@ -1123,7 +1186,8 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [
               ['class', 'aaa bb-cd_e'],
-              ['data', [['data-test', ''], ['data-fofo', '']]]
+              ['data', [['data-test', ''], ['data-fofo', '']]],
+              ...n()
             ]
           },
           ...text('z'),
@@ -1135,7 +1199,7 @@ describe('MarkdownTokenizer', () => {
 
       it('[div]q[div]z[/div][/div]', () => {
         expect(MarkdownTokenizer.parse('[div]q[div]z[/div][/div]')).to.eql([
-          { type: 'div', direction: 'open' },
+          { type: 'div', direction: 'open', attrs: n() },
           ...text('q[div]z[/div]'),
           { type: 'div', direction: 'close' }
         ]);
@@ -1219,8 +1283,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru][quote]z[/quote][/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'link_block',
+            direction: 'open',
+            attrs: [['url', '//ya.ru'], ...n()]
+          },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'link_block', direction: 'close' }
@@ -1231,8 +1299,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru]\n[quote]\nz\n[/quote]\n[/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'link_block',
+            direction: 'open',
+            attrs: [['url', '//ya.ru'], ...n(false, true, true)]
+          },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'link_block', direction: 'close' }]);
@@ -1242,7 +1314,11 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[url=//ya.ru]\nz\n[/url]'
         )).to.eql([
-          { type: 'link_block', direction: 'open', attrs: [['url', '//ya.ru']] },
+          {
+            type: 'link_block',
+            direction: 'open',
+            attrs: [['url', '//ya.ru'], ...n(false, true, true)]
+          },
           ...text('z'),
           { type: 'link_block', direction: 'close' }]);
       });
@@ -1253,8 +1329,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24][quote]z[/quote][/size]'
         )).to.eql([
-          { type: 'size_block', direction: 'open', attrs: [['size', '24']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'size_block',
+            direction: 'open',
+            attrs: [['size', '24'], ...n()]
+          },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'size_block', direction: 'close' }
@@ -1265,8 +1345,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24]\n[quote]\nz\n[/quote]\n[/size]'
         )).to.eql([
-          { type: 'size_block', direction: 'open', attrs: [['size', '24']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'size_block',
+            direction: 'open',
+            attrs: [['size', '24'], ...n(false, true, true)]
+          },
+          { type: 'quote', direction: 'open', attrs: n(true, true, true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'size_block', direction: 'close' }]);
@@ -1276,7 +1360,11 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[size=24]qwe\nzxc[/size]'
         )).to.eql([
-          { type: 'size_block', direction: 'open', attrs: [['size', '24']] },
+          {
+            type: 'size_block',
+            direction: 'open',
+            attrs: [['size', '24'], ...n()]
+          },
           ...text('qwe'),
           ...text('zxc'),
           { type: 'size_block', direction: 'close' }]);
@@ -1288,8 +1376,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[color=red][quote]z[/quote][/color]'
         )).to.eql([
-          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'color_block',
+            direction: 'open',
+            attrs: [['color', 'red'], ...n()]
+          },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'color_block', direction: 'close' }
@@ -1300,8 +1392,12 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[color=red]\n[quote]\nz\n[/quote]\n[/color]'
         )).to.eql([
-          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
-          { type: 'quote', direction: 'open' },
+          {
+            type: 'color_block',
+            direction: 'open',
+            attrs: [['color', 'red'], ...n(false, true, true)]
+          },
+          { type: 'quote', direction: 'open', attrs: n(true, true, false, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'color_block', direction: 'close' }]);
@@ -1311,7 +1407,11 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[color=red]qwe\nzxc[/color]'
         )).to.eql([
-          { type: 'color_block', direction: 'open', attrs: [['color', 'red']] },
+          {
+            type: 'color_block',
+            direction: 'open',
+            attrs: [['color', 'red'], ...n()]
+          },
           ...text('qwe'),
           ...text('zxc'),
           { type: 'color_block', direction: 'close' }]);
@@ -1319,12 +1419,22 @@ describe('MarkdownTokenizer', () => {
     });
 
     describe('bold_block', () => {
+      it('[b]\\nz\\n[/b]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[b]\nz\n[/b]'
+        )).to.eql([
+          { type: 'bold_block', direction: 'open', attrs: n(false, true, true) },
+          ...text('z'),
+          { type: 'bold_block', direction: 'close' }
+        ]);
+      });
+
       it('[b][quote]z[/quote][/b]', () => {
         expect(MarkdownTokenizer.parse(
           '[b][quote]z[/quote][/b]'
         )).to.eql([
-          { type: 'bold_block', direction: 'open' },
-          { type: 'quote', direction: 'open' },
+          { type: 'bold_block', direction: 'open', attrs: n() },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'bold_block', direction: 'close' }
@@ -1335,8 +1445,8 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[b]\n[quote]\nz\n[/quote]\n[/b]'
         )).to.eql([
-          { type: 'bold_block', direction: 'open' },
-          { type: 'quote', direction: 'open' },
+          { type: 'bold_block', direction: 'open', attrs: n(false, true, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'bold_block', direction: 'close' }]);
@@ -1346,7 +1456,7 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[b]qwe\nzxc[/b]'
         )).to.eql([
-          { type: 'bold_block', direction: 'open' },
+          { type: 'bold_block', direction: 'open', attrs: n() },
           ...text('qwe'),
           ...text('zxc'),
           { type: 'bold_block', direction: 'close' }]);
@@ -1358,8 +1468,8 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[i][quote]z[/quote][/i]'
         )).to.eql([
-          { type: 'italic_block', direction: 'open' },
-          { type: 'quote', direction: 'open' },
+          { type: 'italic_block', direction: 'open', attrs: n() },
+          { type: 'quote', direction: 'open', attrs: n() },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'italic_block', direction: 'close' }
@@ -1370,8 +1480,8 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[i]\n[quote]\nz\n[/quote]\n[/i]'
         )).to.eql([
-          { type: 'italic_block', direction: 'open' },
-          { type: 'quote', direction: 'open' },
+          { type: 'italic_block', direction: 'open', attrs: n(false, true, true) },
+          { type: 'quote', direction: 'open', attrs: n(true, true) },
           ...text('z'),
           { type: 'quote', direction: 'close' },
           { type: 'italic_block', direction: 'close' }]);
@@ -1381,7 +1491,7 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse(
           '[i]qwe\nzxc[/i]'
         )).to.eql([
-          { type: 'italic_block', direction: 'open' },
+          { type: 'italic_block', direction: 'open', attrs: n() },
           ...text('qwe'),
           ...text('zxc'),
           { type: 'italic_block', direction: 'close' }]);
@@ -1695,7 +1805,7 @@ describe('MarkdownTokenizer', () => {
         '[b][center]z[/center][/i]'
       )).to.eql([
         ...text('[b]'),
-        { type: 'center', direction: 'open' },
+        { type: 'center', direction: 'open', attrs: n() },
         ...text('z'),
         { type: 'center', direction: 'close' },
         ...text('[/i]')
@@ -1707,7 +1817,7 @@ describe('MarkdownTokenizer', () => {
         '[hr]\n[spoiler]z[/spoiler]'
       )).to.eql([
         { type: 'hr' },
-        { type: 'spoiler_block', direction: 'open' },
+        { type: 'spoiler_block', direction: 'open', attrs: n(true) },
         ...text('z'),
         { type: 'spoiler_block', direction: 'close' }
       ]);

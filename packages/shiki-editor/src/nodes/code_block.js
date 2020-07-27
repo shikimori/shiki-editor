@@ -53,13 +53,6 @@ export default class CodeBlock extends Node {
     ];
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     // state.renderBlock(
     //   node,

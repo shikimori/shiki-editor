@@ -12,10 +12,10 @@ export default class ShikiBlock extends Node {
         bbcode: {},
         id: {},
         type: {},
-        openBbcode: { },
-        closeBbcode: { },
-        isLoading: { default: true },
-        isError: { default: false }
+        openBbcode: {},
+        closeBbcode: {},
+        isLoading: {},
+        isError: {}
       },
       content: 'block+',
       group: 'block',

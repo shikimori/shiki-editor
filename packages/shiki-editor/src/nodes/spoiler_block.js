@@ -16,7 +16,10 @@ export default class SpoilerBlock extends Node {
       draggable: false,
       attrs: {
         label: { default: window.I18n.t('frontend.shiki_editor.spoiler') },
-        isOpened: { default: true }
+        isOpened: { default: true },
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {}
       },
       parseDOM: [{
         tag: 'div.b-spoiler_block',
@@ -51,18 +54,12 @@ export default class SpoilerBlock extends Node {
     return nodeIsActive(type, state);
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     state.renderBlock(
       node,
       'spoiler',
-      node.attrs.label ? `=${node.attrs.label}` : ''
+      node.attrs.label ? `=${node.attrs.label}` : '',
+      node.attrs
     );
   }
 }

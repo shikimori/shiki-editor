@@ -6,7 +6,7 @@ export default class Quote extends Node {
   }
 
   get defaultOptions() {
-    return { baseUrl: undefined };
+    return { baseUrl: null };
   }
 
   get schema() {
@@ -16,11 +16,14 @@ export default class Quote extends Node {
       defining: true,
       draggable: false,
       attrs: {
-        comment_id: { default: undefined },
-        message_id: { default: undefined },
-        topic_id: { default: undefined },
-        user_id: { default: undefined },
-        nickname: { default: undefined }
+        comment_id: { default: null },
+        message_id: { default: null },
+        topic_id: { default: null },
+        user_id: { default: null },
+        nickname: { default: null },
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {}
       },
       parseDOM: [{
         tag: 'div.b-quote',
@@ -100,13 +103,6 @@ export default class Quote extends Node {
     };
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     const attributes = [];
 
@@ -128,7 +124,8 @@ export default class Quote extends Node {
     state.renderBlock(
       node,
       'quote',
-      attributes.length ? attributes.join(';') : ''
+      attributes.length ? attributes.join(';') : '',
+      node.attrs
     );
   }
 }
