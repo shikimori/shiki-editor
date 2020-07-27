@@ -8,9 +8,9 @@ export default class Center extends Node {
   get schema() {
     return {
       attrs: {
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       content: 'block*',
       group: 'block',

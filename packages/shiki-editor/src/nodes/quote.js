@@ -21,9 +21,9 @@ export default class Quote extends Node {
         topic_id: { default: null },
         user_id: { default: null },
         nickname: { default: null },
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       parseDOM: [{
         tag: 'div.b-quote',

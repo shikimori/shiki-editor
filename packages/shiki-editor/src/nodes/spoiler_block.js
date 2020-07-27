@@ -17,9 +17,9 @@ export default class SpoilerBlock extends Node {
       attrs: {
         label: { default: window.I18n.t('frontend.shiki_editor.spoiler') },
         isOpened: { default: true },
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       parseDOM: [{
         tag: 'div.b-spoiler_block',

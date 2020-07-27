@@ -10,9 +10,9 @@ export default class Div extends Node {
       attrs: {
         class: { default: null },
         data: { default: [] },
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       content: 'block*',
       group: 'block',

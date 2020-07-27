@@ -12,9 +12,9 @@ export default class ColorBlock extends Node {
     return {
       attrs: {
         color: {},
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       content: 'block*',
       group: 'block',

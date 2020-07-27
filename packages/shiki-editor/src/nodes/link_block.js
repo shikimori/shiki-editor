@@ -15,9 +15,9 @@ export default class LinkBlock extends Node {
         url: {},
         id: { default: null },
         type: { default: null },
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       content: 'block*',
       group: 'block',

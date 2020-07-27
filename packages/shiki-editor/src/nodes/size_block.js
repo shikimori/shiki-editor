@@ -13,9 +13,9 @@ export default class SizeBlock extends Node {
     return {
       attrs: {
         size: {},
-        nBeforeOpen: {},
-        nAfterOpen: {},
-        nBeforeClose: {}
+        nBeforeOpen: { default: true },
+        nAfterOpen: { default: true },
+        nBeforeClose: { default: true }
       },
       content: 'block*',
       group: 'block',
