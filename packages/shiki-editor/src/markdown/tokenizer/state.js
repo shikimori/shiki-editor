@@ -13,7 +13,8 @@ import {
   parseQuoteMeta,
   parseShikiBasicMeta,
   parseSizeMeta,
-  parseSpoilerMeta
+  parseSpoilerMeta,
+  LIST_DEPRECATION_TEXT
 } from './bbcode_helpers';
 
 import processBlock from './processors/block';
@@ -213,10 +214,7 @@ export default class MarkdownTokenizer {
 
           case '[list]':
             meta = {
-              data: [[
-                'data-deperecation',
-                '[list] is deprecated, use [*] without wrapping them in [list] tag'
-              ]]
+              data: [['data-deperecation', LIST_DEPRECATION_TEXT]]
             };
             isProcessed = processBlock(
               this,

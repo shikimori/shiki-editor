@@ -1,5 +1,8 @@
 import fixUrl from '../../utils/fix_url';
 
+export const LIST_DEPRECATION_TEXT =
+  '[list] is deprecated, use [*] without wrapping in [list] tag';
+
 export function parseCodeMeta(meta) {
   if (!meta) { return null; }
 

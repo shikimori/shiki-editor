@@ -1,4 +1,5 @@
 import { Node } from '../base';
+import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
 
 export default class Div extends Node {
   get name() {
@@ -55,7 +56,7 @@ export default class Div extends Node {
   markdownSerialize(state, node) {
     const meta = `${serializeClassAttr(node)}${serializeDataAttr(node)}`;
 
-    if (meta === ' data-list=remove-it') {
+    if (meta === ` data-deperecation=${LIST_DEPRECATION_TEXT}`) {
       state.renderBlock(node, 'list', '', node.attrs);
     } else {
       state.renderBlock(node, 'div', meta, node.attrs);
