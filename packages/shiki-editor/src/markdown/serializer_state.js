@@ -95,8 +95,6 @@ export default class MarkdownSerializerState {
     meta = '',
     { nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose }
   ) {
-    console.log(`[${bbcode}${meta}]`, { nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose });
-
     if (nBeforeOpen) {
       this.write(`[${bbcode}${meta}]`);
     } else {
