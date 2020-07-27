@@ -7,6 +7,11 @@ export default class Center extends Node {
 
   get schema() {
     return {
+      attrs: {
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {}
+      },
       content: 'block*',
       group: 'block',
       draggable: false,
@@ -18,6 +23,6 @@ export default class Center extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'center');
+    state.renderBlock(node, 'center', '', node.attrs);
   }
 }
