@@ -3,7 +3,7 @@ import { ShikiInlineView } from '../node_views';
 
 export default class ShikiBlock extends Node {
   get name() {
-    return 'shiki_inline';
+    return 'shiki_block';
   }
 
   get schema() {
@@ -11,10 +11,8 @@ export default class ShikiBlock extends Node {
       attrs: {
         id: {},
         type: {},
-        bbcode: {},
-        openBbcode: { default: null },
-        closeBbcode: { default: null },
-        meta: { default: {} }, // can be used to append additional options to final node (currently used for images attributes)
+        openBbcode: { },
+        closeBbcode: { },
         isLoading: { default: true },
         isError: { default: false }
       },

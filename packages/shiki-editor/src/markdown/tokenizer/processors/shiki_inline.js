@@ -8,12 +8,7 @@ export const SHIKI_BBCODE_LINK_FULL_REGEXP =
   /\[(anime|manga|ranobe|character|person)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
-export function processShikiInline(
-  state,
-  openBbcode,
-  closeBbcode,
-  meta
-) {
+export function processShikiInline(state, openBbcode, closeBbcode, meta) {
   if (isImage(meta)) {
     return processShikiImage(state, openBbcode, meta);
   } else {
@@ -68,13 +63,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
       text
     };
 
-    const tokenizer = new state.constructor(
-      state.text,
-      state.index + openBbcode.length,
-      null,
-      closeBbcode
-    );
-    const tokens = tokenizer.parse();
+    const tokens = state.constructor.parse(text);
 
     if (tokens.length !== 3 || tokens[1].type !== 'inline') { return; }
     children = tokens[1].children;

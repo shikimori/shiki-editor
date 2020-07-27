@@ -35,6 +35,7 @@ import {
   SHIKI_BBCODE_LINK_REGEXP,
   SHIKI_BBCODE_IMAGE_REGEXP
 } from './processors/shiki_inline';
+import processShikiBlock from './processors/shiki_block';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
@@ -69,6 +70,10 @@ export default class MarkdownTokenizer {
     this.paragraphToken = null;
   }
 
+  static parse(text) {
+    return new MarkdownTokenizer(text, 0).parse();
+  }
+
   get bbcode() {
     return this.char1 === '[' ?
       extractBbCode(this.text, this.index, this.index + this.MAX_BBCODE_SIZE) :
@@ -101,10 +106,6 @@ export default class MarkdownTokenizer {
       this.text[this.index + 2] +
       this.text[this.index + 3] +
       this.text[this.index + 4];
-  }
-
-  static parse(text) {
-    return new MarkdownTokenizer(text, 0).parse();
   }
 
   parse() {

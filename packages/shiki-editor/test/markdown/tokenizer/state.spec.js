@@ -1530,21 +1530,19 @@ describe('MarkdownTokenizer', () => {
 
     describe('shiki_block', () => {
       it('[anime=1]\\nzx[/anime]', () => {
-        expect(MarkdownTokenizer.parse('[anime=1]\\nzx[/anime]')).to.eql([
+        expect(MarkdownTokenizer.parse('[anime=1]\nzx[/anime]')).to.eql([
           {
             type: 'shiki_block',
             attrs: [
-              ['bbcode', '[anime=1]zx[/anime]'],
               ['type', 'anime'],
               ['id', 1],
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
-              ['text', 'zx'],
               ['isLoading', true],
               ['isError', false]
             ],
             children: [
-              ...text('zxc')
+              ...text('zx')
             ]
           }
         ]);
