@@ -19,8 +19,7 @@ export default class SpoilerBlock extends Node {
         isOpened: { default: true },
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       parseDOM: [{
         tag: 'div.b-spoiler_block',

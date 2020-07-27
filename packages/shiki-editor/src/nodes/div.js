@@ -12,8 +12,7 @@ export default class Div extends Node {
         data: { default: [] },
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       content: 'block*',
       group: 'block',

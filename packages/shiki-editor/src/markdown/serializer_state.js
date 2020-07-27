@@ -93,7 +93,7 @@ export default class MarkdownSerializerState {
     node,
     bbcode,
     meta = '',
-    { nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose }
+    { nBeforeOpen, nAfterOpen, nBeforeClose }
   ) {
     if (nBeforeOpen) {
       this.write(`[${bbcode}${meta}]`);

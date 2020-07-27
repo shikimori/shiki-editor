@@ -31,9 +31,8 @@ export default function(
   const finalIndex = tokenizer.index - state.index + exitSequence.length;
   const nBeforeClose =
     state.text[finalIndex - exitSequence.length - 1] === '\n';
-  const nAfterClose = state.text[finalIndex + 1] === '\n';
   const meta = {
-    ...metaAttributes, nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose
+    ...metaAttributes, nBeforeOpen, nAfterOpen, nBeforeClose
   };
 
   state.push(state.tagOpen(type, meta), true);

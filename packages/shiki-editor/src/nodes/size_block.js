@@ -15,8 +15,7 @@ export default class SizeBlock extends Node {
         size: {},
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       content: 'block+',
       group: 'block',

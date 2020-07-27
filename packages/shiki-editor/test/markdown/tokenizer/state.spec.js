@@ -11,14 +11,12 @@ function text(content) {
 function n(
   nBeforeOpen = false,
   nAfterOpen = false,
-  nBeforeClose = false,
-  nAfterClose = false
+  nBeforeClose = false
 ) {
   return Object.entries({
     nBeforeOpen: !!nBeforeOpen,
     nAfterOpen: !!nAfterOpen,
-    nBeforeClose: !!nBeforeClose,
-    nAfterClose: !!nAfterClose
+    nBeforeClose: !!nBeforeClose
   });
 }
 

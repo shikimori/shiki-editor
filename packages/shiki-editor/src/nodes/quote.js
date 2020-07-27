@@ -23,8 +23,7 @@ export default class Quote extends Node {
         nickname: { default: null },
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       parseDOM: [{
         tag: 'div.b-quote',

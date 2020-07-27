@@ -17,8 +17,7 @@ export default class LinkBlock extends Node {
         type: { default: null },
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       content: 'block+',
       group: 'block',

@@ -11,8 +11,7 @@ export default class BoldBlock extends Node {
       attrs: {
         nBeforeOpen: {},
         nAfterOpen: {},
-        nBeforeClose: {},
-        nAfterClose: {}
+        nBeforeClose: {}
       },
       content: 'block+',
       group: 'block',
