@@ -18,8 +18,8 @@ export default class Hr extends Node {
 
   inputRules({ type }) {
     return [
-      nodeInputRule(/^(?:---|___\s|\*\*\*\s)$/, type)
-      // nodeInputRule(/^\[hr\]$/, type)
+      nodeInputRule(/^(?:---|___\s|\*\*\*\s)$/, type),
+      nodeInputRule(/^\[hr\]$/, type)
     ];
   }
 
