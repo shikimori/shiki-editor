@@ -1536,6 +1536,7 @@ describe('MarkdownTokenizer', () => {
             attrs: [
               ['type', 'anime'],
               ['id', 1],
+              ['bbcode', '[anime=1]\nzx[/anime]'],
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],

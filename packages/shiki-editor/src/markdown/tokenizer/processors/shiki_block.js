@@ -19,6 +19,8 @@ export default function(state, openBbcode, closeBbcode, meta) {
   );
 
   if (!text) { return; }
+
+  const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
   const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
   let token;
@@ -33,6 +35,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
     token = new Token('shiki_block', null, tokens, {
       type: meta.type,
       id: meta.id,
+      bbcode: sequence,
       openBbcode,
       closeBbcode,
       isLoading: cache === undefined,
@@ -41,5 +44,5 @@ export default function(state, openBbcode, closeBbcode, meta) {
   }
 
   state.push(token);
-  state.next(openBbcode.length + text.length + closeBbcode.length);
+  state.next(sequence.length);
 }
