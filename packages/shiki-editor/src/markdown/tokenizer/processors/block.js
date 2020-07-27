@@ -7,8 +7,10 @@ export default function(
   isStart = true,
   isOnlySpacingsBefore = false
 ) {
+  const nBeforeOpen = state.text[state.index] === '\n';
   let index = state.index + startSequence.length;
-  if (state.text[index] === '\n') { index += 1; }
+  const nAfterOpen = state.text[index] === '\n';
+  if (nAfterOpen) { index += 1; }
 
   const tokenizer = new state.constructor(
     state.text,
@@ -26,14 +28,18 @@ export default function(
     state.finalizeParagraph();
   }
 
-  state.next(startSequence.length);
-  state.push(state.tagOpen(type, metaAttributes), true);
+  const finalIndex = tokenizer.index - state.index + exitSequence.length;
+  const nBeforeClose =
+    state.text[finalIndex - exitSequence.length - 1] === '\n';
+  const nAfterClose = state.text[finalIndex + 1] === '\n';
+  const nMeta = { nBeforeOpen, nAfterOpen, nBeforeClose, nAfterClose };
+  const meta = { ...metaAttributes, ...nMeta };
 
+  state.push(state.tagOpen(type, meta), true);
   state.tokens = state.tokens.concat(tokens);
-  state.index = tokenizer.index;
+  state.push(state.tagClose(type, nMeta));
 
-  state.next(exitSequence.length, true);
-  state.push(state.tagClose(type));
+  state.next(finalIndex, true);
 
   return true;
 }

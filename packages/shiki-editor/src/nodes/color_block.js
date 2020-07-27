@@ -11,7 +11,11 @@ export default class ColorBlock extends Node {
   get schema() {
     return {
       attrs: {
-        color: {}
+        color: {},
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {},
+        nAfterClose: {}
       },
       content: 'block+',
       group: 'block',
@@ -35,14 +39,7 @@ export default class ColorBlock extends Node {
     };
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'color', `=${node.attrs.color}`);
+    state.renderBlock(node, 'color', `=${node.attrs.color}`, node.attrs);
   }
 }

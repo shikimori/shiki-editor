@@ -14,7 +14,11 @@ export default class LinkBlock extends Node {
       attrs: {
         url: {},
         id: { default: null },
-        type: { default: null }
+        type: { default: null },
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {},
+        nAfterClose: {}
       },
       content: 'block+',
       group: 'block',
@@ -53,18 +57,11 @@ export default class LinkBlock extends Node {
     return nodeIsActive(type, state);
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     if (node.attrs.type && node.attrs.id) {
-      state.renderBlock(node, node.attrs.type, `=${node.attrs.id}`);
+      state.renderBlock(node, node.attrs.type, `=${node.attrs.id}`, node.attrs);
     } else {
-      state.renderBlock(node, 'url', `=${node.attrs.url}`);
+      state.renderBlock(node, 'url', `=${node.attrs.url}`, node.attrs);
     }
   }
 }

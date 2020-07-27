@@ -89,11 +89,24 @@ export default class MarkdownSerializerState {
     this.closed = node;
   }
 
-  renderBlock(node, bbcode, meta = '') {
+  renderBlock(
+    node,
+    bbcode,
+    meta = '',
+    { nAfterOpen, nBeforeClose, nAfterClose }
+  ) {
+    console.log(`[${bbcode}${meta}]`, { nAfterOpen, nBeforeClose, nAfterClose })
+
     this.write(`[${bbcode}${meta}]`);
-    this.ensureNewLine();
+    if (nAfterOpen) {
+      this.ensureNewLine();
+    }
     this.renderContent(node);
-    this.write(`[/${bbcode}]`);
+    if (nBeforeClose) {
+      this.write(`[/${bbcode}]`);
+    } else {
+      this.writeInline(`[/${bbcode}]`);
+    }
     this.closeBlock(node);
 
     // this.write(`[${bbcode}${meta}]`);

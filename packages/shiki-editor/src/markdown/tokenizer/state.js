@@ -564,8 +564,8 @@ export default class MarkdownTokenizer {
     return new Token(type, null, null, attributes, 'open', bbcode);
   }
 
-  tagClose(type, bbcode) {
-    return new Token(type, null, null, null, 'close', bbcode);
+  tagClose(type, attributes = null, bbcode) {
+    return new Token(type, null, null, attributes, 'close', bbcode);
   }
 
   push(token) {

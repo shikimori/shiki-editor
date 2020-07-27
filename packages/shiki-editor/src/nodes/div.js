@@ -7,13 +7,17 @@ export default class Div extends Node {
 
   get schema() {
     return {
+      attrs: {
+        class: { default: null },
+        data: { default: [] },
+        nBeforeOpen: {},
+        nAfterOpen: {},
+        nBeforeClose: {},
+        nAfterClose: {}
+      },
       content: 'block*',
       group: 'block',
       draggable: false,
-      attrs: {
-        class: { default: null },
-        data: { default: [] }
-      },
       parseDOM: [{
         tag: 'div[data-div]',
         getAttrs: node => ({
@@ -49,20 +53,13 @@ export default class Div extends Node {
     };
   }
 
-  get markdownParserToken() {
-    return {
-      block: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     const meta = `${serializeClassAttr(node)}${serializeDataAttr(node)}`;
 
     if (meta === ' data-list=remove-it') {
-      state.renderBlock(node, 'list');
+      state.renderBlock(node, 'list', '', node.attrs);
     } else {
-      state.renderBlock(node, 'div', meta);
+      state.renderBlock(node, 'div', meta, node.attrs);
     }
   }
 }

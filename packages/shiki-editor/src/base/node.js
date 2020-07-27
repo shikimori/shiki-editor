@@ -31,7 +31,10 @@ export default class Node extends Extension {
     //   `${node.name} tokens
     // "block" means that parser will expect
     //    `${node.name}_open` and `${node.name}_open` tokens
-    return { block: this.name };
+    return {
+      block: this.name,
+      getAttrs: token => token.serializeAttributes()
+    };
   }
 
   markdownSerialize(_state, _node) {

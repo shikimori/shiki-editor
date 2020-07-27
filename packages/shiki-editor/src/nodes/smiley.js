@@ -51,13 +51,6 @@ export default class Smiley extends Node {
     };
   }
 
-  get markdownParserToken() {
-    return {
-      node: this.name,
-      getAttrs: token => token.serializeAttributes()
-    };
-  }
-
   markdownSerialize(state, node) {
     state.write(node.attrs.kind);
   }
