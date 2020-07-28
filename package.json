@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "imagesloaded": "^4.1.4",
     "is-visible": "^2.2.0",
+    "bind-decorator": "1.0.11",
     "shiki-editor": "file:./packages/shiki-editor",
     "shiki-uploader": "file:./packages/shiki-uploader",
     "shiki-utils": "file:./packages/shiki-utils",
