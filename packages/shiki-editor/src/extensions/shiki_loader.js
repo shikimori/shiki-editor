@@ -33,6 +33,14 @@ export class ShikiLoader extends Extension {
     return deferred.promise;
   }
 
+  resetCache({ id, type }) {
+    const kind = convertToShikiType(type);
+
+    if (CACHE[kind]?.[id] === null) {
+      delete CACHE[kind][id];
+    }
+  }
+
   @debounce(50)
   async sendRequest() {
     const queue = this.respondFromCache(this.queue);
@@ -83,7 +91,7 @@ export class ShikiLoader extends Extension {
 
       Object.keys(queueById).forEach(id => {
         const promises = queueById[id];
-        const result = CACHE?.[kind]?.[id];
+        const result = CACHE[kind]?.[id];
 
         if (result !== undefined) {
           promises.forEach(promise => promise.resolve(result));
