@@ -59,7 +59,7 @@ export class ShikiLoader extends Extension {
 
       Object.keys(queueById).forEach(id => {
         const promises = queueById[id];
-        const result = results?.[kind]?.[id];
+        const result = results ? results[kind]?.[id] : null;
 
         if (result !== undefined) {
           if (result?.url) {
