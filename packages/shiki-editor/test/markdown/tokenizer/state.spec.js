@@ -1,5 +1,8 @@
 import { expect } from 'chai';
 import { MarkdownTokenizer } from '../../../src/markdown';
+import {
+  LIST_DEPRECATION_TEXT
+} from '../../../src/markdown/tokenizer/bbcode_helpers';
 
 function text(content) {
   return [
@@ -1055,10 +1058,7 @@ describe('MarkdownTokenizer', () => {
             attrs: [
               [
                 'data',
-                [[
-                  'data-deperecation',
-                  '[list] is deprecated, use [*] without wrapping them in [list] tag'
-                ]]
+                [['data-deperecation', LIST_DEPRECATION_TEXT]]
               ],
               ...n()
             ]

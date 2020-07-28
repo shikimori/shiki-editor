@@ -12,7 +12,7 @@ export default class ShikiView extends DOMView {
     this.appendLoader();
 
     if (this.node.attrs.isLoading) {
-      this.fetch();
+      // this.fetch();
       this.dom.addEventListener('click', this.stop);
     } else {
       this.dom.addEventListener('click', this.focus);
