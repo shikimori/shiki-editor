@@ -6,8 +6,11 @@
         <button @click='info'>info</button>
         <button @click='error'>error</button>
         <button @click='notice'>notice</button>
-        <button @click='noticeThrottled'>notice throttled 1s</button>
-        <button @click='noticeDebounced'>notice debounced 1s</button>
+        <button @click='noticeThrottled'>notice throttled 2s</button>
+        <button @click='noticeDebounced'>notice debounced 500ms</button>
+        <button @click='noticeDebouncedThrottled'>
+          notice debounced 500ms throttled 2s
+        </button>
       </div>
     </div>
 
@@ -63,9 +66,7 @@ export default {
     isColumn1: false,
     isColumn2: true,
     // text2: `[center] [url=ya.ru][quote][b]www[/b][/quote]
-    text2: `[anime=1] zxc
-
-[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
+    text2: `zxc
 `,
 //     text2: `[div=c-column b-catalog_entry][div=cover][div=image-decor][anime=1292][div=image-cutter]
 // [poster]https://kawai.shikimori.one/system/animes/original/1292.jpg?1578039620[/poster][/div][/anime][div=text]
@@ -193,6 +194,9 @@ div [div=b-link_button]inside line is not parsed[/div]
     },
     noticeDebounced() {
       this.test.debounced();
+    },
+    noticeDebouncedThrottled() {
+      this.test.debouncedThrottled();
     }
   }
 };
@@ -200,12 +204,18 @@ div [div=b-link_button]inside line is not parsed[/div]
 class Test {
   @throttle(2000)
   throttled() {
-    flash.notice('throttled 500ms flash.notice');
+    flash.notice('throttled 2s flash.notice');
   }
 
   @debounce(500)
   debounced() {
     flash.notice('debounced 500ms flash.notice');
+  }
+
+  @debounce(500)
+  @throttle(2000)
+  debouncedThrottled() {
+    flash.notice('debounced 500ms throttled 2s flash.notice');
   }
 }
 </script>
