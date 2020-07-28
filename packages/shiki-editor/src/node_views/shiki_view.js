@@ -7,7 +7,6 @@ import { getShikiLoader } from '../utils';
 export default class ShikiView extends DOMView {
   constructor(options) {
     super(options);
-    console.log('ShikiView', this.node.attrs.openBbcode)
 
     this.dom = document.createElement(this.elementType);
     this.appendLoader();

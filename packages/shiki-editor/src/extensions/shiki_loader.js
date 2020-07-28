@@ -43,7 +43,6 @@ export class ShikiLoader extends Extension {
   @debounce(50)
   @throttle(2000)
   sendRequest() {
-    console.log('sendRequest');
     const queue = this.respondFromCache(this.queue);
     this.queue = null;
 

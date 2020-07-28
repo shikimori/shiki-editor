@@ -23,12 +23,6 @@ export default class SpoilerBlockView extends DOMView {
     this.dom.appendChild(this.contentDOM);
   }
 
-  // for some reason this fixes headline editing of closed spoiler
-  // https://prosemirror.net/docs/ref/#view.NodeView.update
-  // update(_node, _decorations) {
-    // return false;
-  // }
-
   @bind
   toggle() {
     this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
