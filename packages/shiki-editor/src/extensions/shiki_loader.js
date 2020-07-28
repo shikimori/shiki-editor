@@ -59,20 +59,18 @@ export class ShikiLoader extends Extension {
 
       Object.keys(queueById).forEach(id => {
         const promises = queueById[id];
-        const result = results[kind]?.find(v => v.id === parseInt(id));
+        const result = results?.[kind]?.[id];
 
-        if (results.is_paginated && !result) {
-          promises.forEach(promise => promise.resolve(undefined));
-        } else {
+        if (result !== undefined) {
           if (result?.url) {
             result.url = fixUrl(result.url, this.options.baseUrl);
           }
 
           CACHE[kind] ||= {};
-          CACHE[kind][id] ||= (result || null);
-
-          promises.forEach(promise => promise.resolve(result));
+          CACHE[kind][id] ||= result;
         }
+
+        promises.forEach(promise => promise.resolve(result));
       });
     });
   }
