@@ -14,10 +14,8 @@ export default class ShikiView extends DOMView {
     if (this.node.attrs.isLoading) {
       this.fetch();
       this.dom.addEventListener('click', this.stop);
-    } else if (this.node.attrs.isError) {
-      this.dom.addEventListener('click', this.retry);
     } else {
-      this.dom.addEventListener('click', this.focus);
+      this.dom.addEventListener('click', this.retry);
     }
   }
 
