@@ -27,14 +27,14 @@ export function throttle(method, duration) {
       execAfterTimeout = true;
       return;
     }
+    const self = this;
 
     function delay() {
       timeoutId = null;
 
       if (execAfterTimeout) {
         execAfterTimeout = false;
-        method.apply(this, args);
-
+        method.apply(self, args);
         timeoutId = setTimeout(delay, duration);
       }
     }

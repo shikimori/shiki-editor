@@ -1,7 +1,9 @@
 import pDefer from 'p-defer';
 import axios from 'axios';
+import bind from 'bind-decorator';
 
-import { flash, debounce } from 'shiki-utils';
+import { flash, debounce, throttle } from 'shiki-utils';
+// import { flash, debounce, throttle } from '../../../shiki-utils';
 
 import { Extension } from '../base';
 import fixUrl from '../utils/fix_url';
@@ -27,6 +29,7 @@ export class ShikiLoader extends Extension {
     this.queue[convertToShikiType(type)] ||= {};
     (this.queue[convertToShikiType(type)][id] ||= []).push(deferred);
 
+    // console.log('fetch')
     this.sendRequest();
 
     return deferred.promise;
@@ -40,8 +43,9 @@ export class ShikiLoader extends Extension {
     }
   }
 
-  @debounce(50)
+  @throttle(300)
   async sendRequest() {
+    console.log('sendRequest', this);
     const queue = this.respondFromCache(this.queue);
     this.queue = null;
 
