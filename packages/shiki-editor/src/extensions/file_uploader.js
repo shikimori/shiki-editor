@@ -1,6 +1,6 @@
+import bind from 'bind-decorator';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
-import { bind } from 'decko';
 
 import {
   insertUploadPlaceholder,

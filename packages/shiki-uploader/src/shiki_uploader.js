@@ -1,6 +1,6 @@
-import { bind } from 'decko';
-import uEvent from 'uevent';
+import bind from 'bind-decorator';
 import isVisible from 'is-visible';
+import uEvent from 'uevent';
 
 import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';

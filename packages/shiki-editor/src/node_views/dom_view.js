@@ -1,4 +1,4 @@
-import { bind } from 'decko';
+import bind from 'bind-decorator';
 import { NodeSelection } from 'prosemirror-state';
 
 export default class DOMView {

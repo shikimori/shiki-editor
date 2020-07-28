@@ -1,4 +1,4 @@
-import { bind } from 'decko';
+import bind from 'bind-decorator';
 import { DOMSerializer } from 'prosemirror-model';
 
 import DOMView from './dom_view';

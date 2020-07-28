@@ -19,7 +19,7 @@
     "is-visible": "^2.2.0"
   },
   "peerDependencies": {
-    "decko": "^1.2.0",
+    "with": "^1.2.0",
     "uevent": "^2.0.0",
     "shiki-utils": "^0.7.2"
   },
@@ -34,7 +34,7 @@
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-import-resolver-webpack": "0.12.1",
     "eslint-plugin-import": "^2.18.2",
-    "decko": "^1.2.0",
+    "with": "^1.2.0",
     "uevent": "^2.0.0",
     "shiki-utils": "^0.2.1"
   },

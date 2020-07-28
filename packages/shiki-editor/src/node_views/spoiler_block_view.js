@@ -1,4 +1,4 @@
-import { bind } from 'decko';
+import bind from 'bind-decorator';
 import DOMView from './dom_view';
 
 export default class SpoilerBlockView extends DOMView {
