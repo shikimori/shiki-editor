@@ -42,8 +42,8 @@ export default class SpoilerBlock extends Node {
     };
   }
 
-  view({ node, view, getPos, decorations }) {
-    return new SpoilerBlockView({ node, view, getPos, decorations });
+  view(options) {
+    return new SpoilerBlockView(options);
   }
 
   commands({ schema, type }) {
