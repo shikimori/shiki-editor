@@ -6,6 +6,8 @@
         <button @click='info'>info</button>
         <button @click='error'>error</button>
         <button @click='notice'>notice</button>
+        <button @click='noticeThrottled'>notice throttled 1s</button>
+        <button @click='noticeDebounced'>notice debounced 1s</button>
       </div>
     </div>
 
@@ -48,7 +50,7 @@
 
 <script>
 import { ShikiEditorApp } from '../../packages/shiki-editor';
-import { flash } from '../../packages/shiki-utils';
+import { flash, throttle, debounce } from '../../packages/shiki-utils';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 export default {
@@ -151,7 +153,8 @@ div [div=b-link_button]inside line is not parsed[/div]
 
 [quote]Old style quote support[/quote]
 [quote=zxc]Old style quote with nickname[/quote]
-[quote=c1246;1945;Silentium°]Old style quote with user[/quote]`
+[quote=c1246;1945;Silentium°]Old style quote with user[/quote]`,
+    test: new Test()
   }),
   computed: {
     locale() {
@@ -177,16 +180,34 @@ div [div=b-link_button]inside line is not parsed[/div]
   },
   methods: {
     info() {
-      flash.info('info flash');
+      flash.info('flash.info');
     },
     error() {
-      flash.error('error flash');
+      flash.error('flash.error');
     },
     notice() {
-      flash.notice('notice flash');
+      flash.notice('flash.notice');
+    },
+    noticeThrottled() {
+      this.test.throttled();
+    },
+    noticeDebounced() {
+      this.test.debounced();
     }
   }
 };
+
+class Test {
+  @throttle(2000)
+  throttled() {
+    flash.notice('throttled 500ms flash.notice');
+  }
+
+  @debounce(500)
+  debounced() {
+    flash.notice('debounced 500ms flash.notice');
+  }
+}
 </script>
 
 <style scoped lang='sass'>

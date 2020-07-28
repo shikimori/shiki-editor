@@ -23,11 +23,11 @@
     "babel-eslint": "11.0.0-beta.2",
     "babel-loader": "^8.1.0",
     "babel-plugin-macros": "^2.8.0",
+    "bind-decorator": "1.0.11",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.0",
-    "bind-decorator": "1.0.11",
     "delay": "^4.3.0",
     "eslint": "7.1.0",
     "eslint-config-airbnb-base": "14.1.0",
@@ -61,7 +61,6 @@
     "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
     "@popperjs/core": "^2.4.4",
     "add": "^2.0.6",
-    "debounce-decorator": "^1.0.6",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-dropcursor": "^1.3.2",
     "prosemirror-gapcursor": "^1.1.5",
@@ -80,9 +79,9 @@
     "yarn": "^1.22.4"
   },
   "peerDependencies": {
-    "bind-decorator": "1.0.11",
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
+    "bind-decorator": "1.0.11",
     "imagesloaded": "^4.1.4",
     "shiki-utils": "^0.2.1",
     "uevent": "^2.0.0"
