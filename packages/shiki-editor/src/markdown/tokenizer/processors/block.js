@@ -30,7 +30,7 @@ export default function(
 
   const finalIndex = tokenizer.index - state.index + exitSequence.length;
   const nBeforeClose =
-    state.text[finalIndex - exitSequence.length - 1] === '\n';
+    state.text[state.index + finalIndex - exitSequence.length - 1] === '\n';
   const meta = {
     ...metaAttributes, nBeforeOpen, nAfterOpen, nBeforeClose
   };
