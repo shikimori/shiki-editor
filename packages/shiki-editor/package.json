@@ -74,6 +74,7 @@
     "prosemirror-tables": "^1.1.0",
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.0",
+    "shiki-utils": "^0.8.6",
     "vue-keypress": "^2.1.1",
     "withinviewport": "^2.1.2",
     "yarn": "^1.22.4"

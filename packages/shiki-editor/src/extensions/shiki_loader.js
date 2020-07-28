@@ -1,6 +1,5 @@
 import pDefer from 'p-defer';
 import axios from 'axios';
-import bind from 'bind-decorator';
 
 import { flash, debounce, throttle } from 'shiki-utils';
 // import { flash, debounce, throttle } from '../../../shiki-utils';
