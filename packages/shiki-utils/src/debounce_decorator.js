@@ -10,7 +10,7 @@ export default function outerDecorator(duration) {
     //       enumerable: descriptor.enumerable,
     //       value: debounce(descriptor.value, duration)
     //     });
-    // 
+    //
     //     return this[key];
     //   }
     // };
