@@ -101,14 +101,21 @@ export default class MarkdownSerializerState {
       this.writeInline(`[${bbcode}${meta}]`);
     }
 
+    const indexToCheck = this.out.length;
     if (nAfterOpen) {
       // paragraph anyway produces new lines
       if (node.content?.content?.[0]?.type?.name !== 'paragraph') {
         this.ensureNewLine();
       }
       this.renderContent(node);
+
+      if (this.out[indexToCheck] !== '\n') {
+        // we have to explicitly ad \n because code above that was avoiding
+        // ensureNewLine was wrong
+        this.out = this.out.slice(0, indexToCheck) + '\n' +
+          this.out.slice(indexToCheck);
+      }
     } else {
-      const indexToCheck = this.out.length;
       this.renderContent(node);
 
       if (this.out[indexToCheck] === '\n') {
