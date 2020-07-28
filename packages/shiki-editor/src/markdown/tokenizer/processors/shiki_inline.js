@@ -3,9 +3,9 @@ import { extractUntil } from '../helpers';
 import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_BBCODE_LINK_REGEXP =
-  /\[(anime|manga|ranobe|character|person)=(\d+)\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]/;
 export const SHIKI_BBCODE_LINK_FULL_REGEXP =
-  /\[(anime|manga|ranobe|character|person)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {

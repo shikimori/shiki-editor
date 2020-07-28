@@ -116,8 +116,8 @@ export function convertToShikiType(type) {
     case 'image':
       return 'user_image';
 
-    case 'profile':
-      return 'user';
+    // case 'profile':
+      // return 'user';
 
     case 'entry':
       return 'topic';

@@ -1501,52 +1501,64 @@ describe('MarkdownTokenizer', () => {
 
   describe('shiki nodes', () => {
     describe('shiki_inline', () => {
-      it('[anime=1]', () => {
-        expect(MarkdownTokenizer.parse('[anime=1]')).to.eql([
-          { type: 'paragraph', direction: 'open' },
-          {
-            type: 'inline',
-            children: [
-              {
-                type: 'shiki_inline',
-                attrs: [
-                  ['bbcode', '[anime=1]'],
-                  ['type', 'anime'],
-                  ['id', 1],
-                  ['isLoading', true],
-                  ['isError', false]
-                ]
-              }
-            ]
-          },
-          { type: 'paragraph', direction: 'close' }
-        ]);
-      });
+      [
+        'anime',
+        'manga',
+        'ranobe',
+        'character',
+        'person',
+        'comment',
+        'topic',
+        'entry',
+        'message'
+      ].forEach(kind => {
+        it(`[${kind}=1]`, () => {
+          expect(MarkdownTokenizer.parse(`[${kind}=1]`)).to.eql([
+            { type: 'paragraph', direction: 'open' },
+            {
+              type: 'inline',
+              children: [
+                {
+                  type: 'shiki_inline',
+                  attrs: [
+                    ['bbcode', `[${kind}=1]`],
+                    ['type', kind],
+                    ['id', 1],
+                    ['isLoading', true],
+                    ['isError', false]
+                  ]
+                }
+              ]
+            },
+            { type: 'paragraph', direction: 'close' }
+          ]);
+        });
 
-      it('[anime=1]zx[/anime]', () => {
-        expect(MarkdownTokenizer.parse('[anime=1]zx[/anime]')).to.eql([
-          { type: 'paragraph', direction: 'open' },
-          {
-            type: 'inline',
-            children: [
-              {
-                type: 'shiki_inline',
-                attrs: [
-                  ['bbcode', '[anime=1]zx[/anime]'],
-                  ['type', 'anime'],
-                  ['id', 1],
-                  ['openBbcode', '[anime=1]'],
-                  ['closeBbcode', '[/anime]'],
-                  ['text', 'zx'],
-                  ['isLoading', true],
-                  ['isError', false]
-                ],
-                children: [{ type: 'text', content: 'zx' }]
-              }
-            ]
-          },
-          { type: 'paragraph', direction: 'close' }
-        ]);
+        it(`[${kind}=1]zx[/${kind}]`, () => {
+          expect(MarkdownTokenizer.parse(`[${kind}=1]zx[/${kind}]`)).to.eql([
+            { type: 'paragraph', direction: 'open' },
+            {
+              type: 'inline',
+              children: [
+                {
+                  type: 'shiki_inline',
+                  attrs: [
+                    ['bbcode', `[${kind}=1]zx[/${kind}]`],
+                    ['type', kind],
+                    ['id', 1],
+                    ['openBbcode', `[${kind}=1]`],
+                    ['closeBbcode', `[/${kind}]`],
+                    ['text', 'zx'],
+                    ['isLoading', true],
+                    ['isError', false]
+                  ],
+                  children: [{ type: 'text', content: 'zx' }]
+                }
+              ]
+            },
+            { type: 'paragraph', direction: 'close' }
+          ]);
+        });
       });
 
       it('[anime=1]z[/anime] [anime=2]x[/anime]', () => {
