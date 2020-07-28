@@ -12,7 +12,7 @@ export default class ShikiView extends DOMView {
     this.appendLoader();
 
     if (this.node.attrs.isLoading) {
-      // this.fetch();
+      this.fetch();
       this.dom.addEventListener('click', this.stop);
     } else {
       this.dom.addEventListener('click', this.focus);
@@ -85,6 +85,10 @@ export default class ShikiView extends DOMView {
 
     if (result) {
       this.success(result);
+    } else if (result === undefined) {
+      // undefined means that results were paginated and we have
+      // to ask the server once again
+      this.fetch();
     } else {
       this.error();
     }

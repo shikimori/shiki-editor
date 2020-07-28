@@ -1,6 +1,6 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
-import { CACHE, fixedType } from '../../../extensions/shiki_loader';
+import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_BBCODE_LINK_REGEXP =
   /\[(anime|manga|ranobe|character|person)=(\d+)\]/;
@@ -17,7 +17,7 @@ export function processShikiInline(state, openBbcode, closeBbcode, meta) {
 }
 
 function processShikiImage(state, openBbcode, meta) {
-  const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
+  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     state.inlineTokens.push(
@@ -69,7 +69,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
     children = tokens[1].children;
   }
 
-  const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
+  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     state.inlineTokens.push(

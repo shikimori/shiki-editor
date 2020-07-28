@@ -25,8 +25,8 @@ export class ShikiLoader extends Extension {
     const deferred = pDefer();
 
     this.queue ||= {};
-    this.queue[fixedType(type)] ||= {};
-    (this.queue[fixedType(type)][id] ||= []).push(deferred);
+    this.queue[convertToShikiType(type)] ||= {};
+    (this.queue[convertToShikiType(type)][id] ||= []).push(deferred);
 
     this.sendRequest();
 
@@ -59,16 +59,20 @@ export class ShikiLoader extends Extension {
 
       Object.keys(queueById).forEach(id => {
         const promises = queueById[id];
-        const result = results?.[kind].find(v => v.id === parseInt(id));
+        const result = results[kind]?.find(v => v.id === parseInt(id));
 
-        if (result?.url) {
-          result.url = fixUrl(result.url, this.options.baseUrl);
+        if (results.is_paginated && !result) {
+          promises.forEach(promise => promise.resolve(undefined));
+        } else {
+          if (result?.url) {
+            result.url = fixUrl(result.url, this.options.baseUrl);
+          }
+
+          CACHE[kind] ||= {};
+          CACHE[kind][id] ||= (result || null);
+
+          promises.forEach(promise => promise.resolve(result));
         }
-
-        CACHE[kind] ||= {};
-        CACHE[kind][id] ||= (result || null);
-
-        promises.forEach(promise => promise.resolve(result));
       });
     });
   }
@@ -96,14 +100,24 @@ export class ShikiLoader extends Extension {
   }
 }
 
-export function fixedType(type) {
-  if (type === 'ranobe') {
-    return 'manga';
-  } else if (type === 'poster') {
-    return 'user_image';
-  } else if (type === 'image') {
-    return 'user_image';
-  } else {
-    return type;
+export function convertToShikiType(type) {
+  switch (type) {
+    case 'ranobe':
+      return 'manga';
+
+    case 'poster':
+      return 'user_image';
+
+    case 'image':
+      return 'user_image';
+
+    case 'profile':
+      return 'user';
+
+    case 'entry':
+      return 'topic';
+
+    default:
+      return type;
   }
 }

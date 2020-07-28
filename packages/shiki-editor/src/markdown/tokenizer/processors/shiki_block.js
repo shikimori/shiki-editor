@@ -1,6 +1,6 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
-import { CACHE, fixedType } from '../../../extensions/shiki_loader';
+import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 import { SHIKI_BBCODE_LINK_REGEXP } from './shiki_inline';
 import { PSEUDO_BLOCK_TEST_REGEXP } from './inline_or_block';
 
@@ -36,7 +36,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
 
   const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
-  const cache = CACHE?.[fixedType(meta.type)]?.[meta.id];
+  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     const tagMeta = {
