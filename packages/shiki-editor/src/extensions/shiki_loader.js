@@ -2,7 +2,6 @@ import pDefer from 'p-defer';
 import axios from 'axios';
 
 import { flash, debounce, throttle } from 'shiki-utils';
-// import { flash, debounce, throttle } from '../../../shiki-utils';
 
 import { Extension } from '../base';
 import fixUrl from '../utils/fix_url';
@@ -43,7 +42,8 @@ export class ShikiLoader extends Extension {
 
   @debounce(50)
   @throttle(2000)
-  async sendRequest() {
+  sendRequest() {
+    console.log('sendRequest');
     const queue = this.respondFromCache(this.queue);
     this.queue = null;
 
@@ -53,13 +53,12 @@ export class ShikiLoader extends Extension {
       .map(kind => `${kind}=${Object.keys(queue[kind]).join(',')}`)
       .join('&');
 
-    const result = await axios
+    axios
       .get(`${this.options.baseUrl}/${this.API_PATH}?${params}`)
+      .then(result => this.process(queue, result?.data))
       .catch(_error => (
         flash.error(window.I18n.t('frontend.lib.please_try_again_later'))
       ));
-
-    this.process(queue, result?.data);
   }
 
   process(queue, results) {
