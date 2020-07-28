@@ -2694,11 +2694,6 @@ decamelize@^1.1.1, decamelize@^1.1.2, decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
-decko@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/decko/-/decko-1.2.0.tgz#fd43c735e967b8013306884a56fbe665996b6817"
-  integrity sha1-/UPHNelnuAEzBohKVvvmZZlraBc=
-
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
@@ -7383,7 +7378,7 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-editor@file:./packages/shiki-editor":
-  version "0.7.4"
+  version "0.8.3"
   dependencies:
     "@babel/plugin-proposal-logical-assignment-operators" "^7.10.4"
     "@popperjs/core" "^2.4.4"
@@ -7407,14 +7402,14 @@ shebang-regex@^3.0.0:
     yarn "^1.22.4"
 
 "shiki-uploader@file:./packages/shiki-uploader":
-  version "0.7.4"
+  version "0.8.3"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
 "shiki-utils@file:./packages/shiki-utils":
-  version "0.7.4"
+  version "0.8.3"
   dependencies:
     toastify-js "^1.8.0"
 
