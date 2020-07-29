@@ -169,7 +169,8 @@ export default class ShikiView extends DOMView {
   markLinkInline(result) {
     return this.view.state.schema.marks.link_inline.create({
       ...result,
-      type: this.type
+      type: this.type,
+      meta: this.node.attrs.meta
     });
   }
 
