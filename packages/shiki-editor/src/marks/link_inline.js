@@ -27,7 +27,9 @@ export default class LinkInline extends Mark {
         id: { default: null },
         type: { default: null },
         text: { default: null },
-        isMention: { default: false }
+        meta: {
+          default: { isMention: false }
+        }
       },
       inclusive: false,
       parseDOM: [
@@ -46,7 +48,7 @@ export default class LinkInline extends Mark {
         'data-id': node.attrs.id,
         'data-type': node.attrs.type,
         'data-text': node.attrs.text,
-        class: node.attrs.isMention ? 'b-mention' : 'b-link',
+        class: node.attrs.meta.isMention ? 'b-mention' : 'b-link',
         // rel: 'noopener noreferrer nofollow',
         target: '_blank'
       }, 0]
