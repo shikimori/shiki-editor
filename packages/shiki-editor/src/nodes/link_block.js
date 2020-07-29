@@ -31,7 +31,10 @@ export default class LinkBlock extends Node {
           getAttrs: node => ({
             url: node.getAttribute('href'),
             id: node.getAttribute('data-id'),
-            type: node.getAttribute('data-type')
+            type: node.getAttribute('data-type'),
+            meta: {
+              isMention: node.classList.contains('b-mention')
+            }
           })
         }
       ],

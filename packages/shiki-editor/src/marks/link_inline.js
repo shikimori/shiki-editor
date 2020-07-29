@@ -39,7 +39,10 @@ export default class LinkInline extends Mark {
             url: node.getAttribute('href'),
             id: node.getAttribute('data-id'),
             type: node.getAttribute('data-type'),
-            text: node.getAttribute('data-text')
+            text: node.getAttribute('data-text'),
+            meta: {
+              isMention: node.classList.contains('b-mention')
+            }
           })
         }
       ],
