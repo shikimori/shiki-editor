@@ -21,9 +21,13 @@ export default class Quote extends Node {
         topic_id: { default: null },
         user_id: { default: null },
         nickname: { default: null },
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       parseDOM: [{
         tag: 'div.b-quote',
@@ -125,7 +129,7 @@ export default class Quote extends Node {
       node,
       'quote',
       attributes.length ? attributes.join(';') : '',
-      node.attrs
+      node.attrs.nFormat
     );
   }
 }

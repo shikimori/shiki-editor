@@ -13,9 +13,13 @@ export default class SizeBlock extends Node {
     return {
       attrs: {
         size: {},
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',
@@ -40,6 +44,6 @@ export default class SizeBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'size', `=${node.attrs.size}`, node.attrs);
+    state.renderBlock(node, 'size', `=${node.attrs.size}`, node.attrs.nFormat);
   }
 }

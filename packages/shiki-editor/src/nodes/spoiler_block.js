@@ -17,9 +17,13 @@ export default class SpoilerBlock extends Node {
       attrs: {
         label: { default: window.I18n.t('frontend.shiki_editor.spoiler') },
         isOpened: { default: true },
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       parseDOM: [{
         tag: 'div.b-spoiler_block',
@@ -59,7 +63,7 @@ export default class SpoilerBlock extends Node {
       node,
       'spoiler',
       node.attrs.label ? `=${node.attrs.label}` : '',
-      node.attrs
+      node.attrs.nFormat
     );
   }
 }

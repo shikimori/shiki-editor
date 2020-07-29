@@ -12,9 +12,13 @@ export default class ColorBlock extends Node {
     return {
       attrs: {
         color: {},
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',
@@ -39,6 +43,6 @@ export default class ColorBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'color', `=${node.attrs.color}`, node.attrs);
+    state.renderBlock(node, 'color', `=${node.attrs.color}`, node.attrs.nFormat);
   }
 }

@@ -7,10 +7,12 @@ export default function(
   isStart = true,
   isOnlySpacingsBefore = false
 ) {
-  const nBeforeOpen = state.text[state.index - 1] === '\n';
+  const nFormat = {
+    nBeforeOpen: state.text[state.index - 1] === '\n'
+  }
   let index = state.index + startSequence.length;
-  const nAfterOpen = state.text[index] === '\n';
-  if (nAfterOpen) { index += 1; }
+  nFormat.nAfterOpen = state.text[index] === '\n';
+  if (nFormat.nAfterOpen) { index += 1; }
 
   const tokenizer = new state.constructor(
     state.text,
@@ -29,13 +31,13 @@ export default function(
   }
 
   const finalIndex = tokenizer.index - state.index + exitSequence.length;
-  const nBeforeClose =
+  nFormat.nBeforeClose =
     state.text[state.index + finalIndex - exitSequence.length - 1] === '\n';
-  const meta = {
-    ...metaAttributes, nBeforeOpen, nAfterOpen, nBeforeClose
+  const attrs = {
+    ...metaAttributes, nFormat
   };
 
-  state.push(state.tagOpen(type, meta), true);
+  state.push(state.tagOpen(type, attrs), true);
   state.tokens = state.tokens.concat(tokens);
   state.push(state.tagClose(type));
 

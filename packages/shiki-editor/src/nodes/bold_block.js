@@ -9,9 +9,13 @@ export default class BoldBlock extends Node {
   get schema() {
     return {
       attrs: {
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',
@@ -31,6 +35,6 @@ export default class BoldBlock extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderBlock(node, 'b', '', node.attrs);
+    state.renderBlock(node, 'b', '', node.attrs.nFormat);
   }
 }

@@ -18,9 +18,13 @@ export default class LinkBlock extends Node {
         meta: {
           default: { isMention: false }
         },
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',
@@ -65,9 +69,19 @@ export default class LinkBlock extends Node {
 
   markdownSerialize(state, node) {
     if (node.attrs.type && node.attrs.id) {
-      state.renderBlock(node, node.attrs.type, `=${node.attrs.id}`, node.attrs);
+      state.renderBlock(
+        node,
+        node.attrs.type,
+        `=${node.attrs.id}`,
+        node.attrs.nFormat
+      );
     } else {
-      state.renderBlock(node, 'url', `=${node.attrs.url}`, node.attrs);
+      state.renderBlock(
+        node,
+        'url',
+        `=${node.attrs.url}`,
+        node.attrs.nFormat
+      );
     }
   }
 }

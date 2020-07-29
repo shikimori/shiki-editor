@@ -28,7 +28,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
     URL_REGEXP.test(text)
   ) { return; }
 
-  const nMeta = {
+  const nFormat = {
     nBeforeOpen: state.text[state.index - 1] === '\n',
     nAfterOpen: state.text[state.index + openBbcode.length] === '\n',
     nBeforeClose: state.text[state.index + openBbcode.length + text.length - 1] === '\n'
@@ -43,7 +43,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
       url: cache.url,
       id: meta.id,
       type: meta.type,
-      ...nMeta
+      nFormat
     };
     state.push(state.tagOpen('link_block', attributes), true);
     state.tokens = state.tokens.concat(tokens);
@@ -59,7 +59,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
         closeBbcode,
         isLoading: cache === undefined,
         isError: cache !== undefined,
-        ...nMeta
+        nFormat
       })
     );
   }

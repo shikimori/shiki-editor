@@ -17,9 +17,13 @@ export default class ShikiBlock extends Node {
         meta: { default: {} },
         isLoading: {},
         isError: {},
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',

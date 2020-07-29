@@ -11,9 +11,13 @@ export default class Div extends Node {
       attrs: {
         class: { default: null },
         data: { default: [] },
-        nBeforeOpen: { default: true },
-        nAfterOpen: { default: true },
-        nBeforeClose: { default: true }
+        nFormat: {
+          default: {
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
+          }
+        }
       },
       content: 'block*',
       group: 'block',
@@ -57,9 +61,9 @@ export default class Div extends Node {
     const meta = `${serializeClassAttr(node)}${serializeDataAttr(node)}`;
 
     if (meta === ` data-deperecation=${LIST_DEPRECATION_TEXT}`) {
-      state.renderBlock(node, 'list', '', node.attrs);
+      state.renderBlock(node, 'list', '', node.attrs.nFormat);
     } else {
-      state.renderBlock(node, 'div', meta, node.attrs);
+      state.renderBlock(node, 'div', meta, node.attrs.nFormat);
     }
   }
 }
