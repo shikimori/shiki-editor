@@ -3,6 +3,8 @@ import fixUrl from '../../utils/fix_url';
 export const LIST_DEPRECATION_TEXT =
   '[list] is deprecated, use [*] without wrapping in [list] tag';
 
+import { MENTION_TYPES } from './processors/shiki_inline';
+
 export function parseCodeMeta(meta) {
   if (!meta) { return null; }
 
@@ -118,15 +120,17 @@ export function parseSpoilerMeta(meta) {
 }
 
 export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {
-  const meta = {
+  const attrs = {
     bbcode,
     type,
     id: parseInt(id)
   };
 
   if (tagMeta) {
-    meta.meta = tagMeta;
+    attrs.meta = tagMeta;
+  } else if (MENTION_TYPES.includes(attrs.type)) {
+    attrs.meta = { isMention: true };
   }
 
-  return meta;
+  return attrs;
 }

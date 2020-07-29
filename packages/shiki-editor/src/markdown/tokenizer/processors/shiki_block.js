@@ -39,13 +39,13 @@ export default function(state, openBbcode, closeBbcode, meta) {
   const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
-    const tagMeta = {
+    const attributes = {
       url: cache.url,
       id: meta.id,
       type: meta.type,
       ...nMeta
     };
-    state.push(state.tagOpen('link_block', tagMeta), true);
+    state.push(state.tagOpen('link_block', attributes), true);
     state.tokens = state.tokens.concat(tokens);
     state.push(state.tagClose('link_block'));
 

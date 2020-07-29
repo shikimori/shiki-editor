@@ -3,6 +3,9 @@ import { MarkdownTokenizer } from '../../../src/markdown';
 import {
   LIST_DEPRECATION_TEXT
 } from '../../../src/markdown/tokenizer/bbcode_helpers';
+import {
+  MENTION_TYPES
+} from '../../../src/markdown/tokenizer/processors/shiki_inline';
 
 function text(content) {
   return [
@@ -1524,6 +1527,11 @@ describe('MarkdownTokenizer', () => {
                     ['bbcode', `[${kind}=1]`],
                     ['type', kind],
                     ['id', 1],
+                    ...(
+                      MENTION_TYPES.includes(kind) ?
+                        [['meta', { isMention: true }]] :
+                        []
+                    ),
                     ['isLoading', true],
                     ['isError', false]
                   ]
@@ -1546,6 +1554,11 @@ describe('MarkdownTokenizer', () => {
                     ['bbcode', `[${kind}=1]zx[/${kind}]`],
                     ['type', kind],
                     ['id', 1],
+                    ...(
+                      MENTION_TYPES.includes(kind) ?
+                        [['meta', { isMention: true }]] :
+                        []
+                    ),
                     ['openBbcode', `[${kind}=1]`],
                     ['closeBbcode', `[/${kind}]`],
                     ['text', 'zx'],
@@ -1658,7 +1671,7 @@ describe('MarkdownTokenizer', () => {
                   ['bbcode', '[image=1 c=zxc 400x500]'],
                   ['type', 'image'],
                   ['id', 1],
-                  ['meta', { 'class': 'zxc', 'height': '500', 'width': '400' }]
+                  ['meta', { class: 'zxc', height: '500', width: '400' }]
                 ]
               }
             ]

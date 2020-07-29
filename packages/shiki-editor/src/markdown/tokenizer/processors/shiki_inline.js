@@ -8,6 +8,8 @@ export const SHIKI_BBCODE_LINK_FULL_REGEXP =
   /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
+export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message'];
+
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
   if (isImage(meta)) {
     return processShikiImage(state, openBbcode, meta);
@@ -41,7 +43,7 @@ function processShikiImage(state, openBbcode, meta) {
 function processShikiLink(state, openBbcode, closeBbcode, meta) {
   let text;
   let sequence = openBbcode;
-  let tagMeta = { ...meta };
+  let attributes = { ...meta };
   let children = null;
 
   if (closeBbcode) {
@@ -55,7 +57,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   if (text) {
     sequence = `${openBbcode}${text}${closeBbcode}`;
 
-    tagMeta = {
+    attributes = {
       ...meta,
       bbcode: sequence,
       openBbcode,
@@ -91,7 +93,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   } else {
     state.inlineTokens.push(
       new Token('shiki_inline', null, children, {
-        ...tagMeta,
+        ...attributes,
         isLoading: cache === undefined,
         isError: cache !== undefined
       })
