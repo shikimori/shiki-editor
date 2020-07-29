@@ -15,6 +15,7 @@ export default class LinkBlock extends Node {
         url: {},
         id: { default: null },
         type: { default: null },
+        isMention: { default: false },
         nBeforeOpen: { default: true },
         nAfterOpen: { default: true },
         nBeforeClose: { default: true }
@@ -38,8 +39,9 @@ export default class LinkBlock extends Node {
           href: fixUrl(node.attrs.url),
           'data-id': node.attrs.id,
           'data-type': node.attrs.type,
-          class: 'b-link prosemirror-block',
-          rel: 'noopener noreferrer nofollow',
+          class: (node.attrs.isMention ? 'b-mention' : 'b-link') +
+            'prosemirror-block',
+          // rel: 'noopener noreferrer nofollow',
           target: '_blank',
           'data-link': `[url=${node.attrs.url}]`
         },
