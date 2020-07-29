@@ -9,7 +9,7 @@ export default function(
 ) {
   const nFormat = {
     nBeforeOpen: state.text[state.index - 1] === '\n'
-  }
+  };
   let index = state.index + startSequence.length;
   nFormat.nAfterOpen = state.text[index] === '\n';
   if (nFormat.nAfterOpen) { index += 1; }
