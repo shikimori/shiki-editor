@@ -108,8 +108,10 @@ export default {
     width: auto
 
     &:before
+      display: block
       font-family: Courier New
       font-weight: bold
+      margin-top: -1px
 
       body[data-locale=ru] &
         content: '<bbcode>'

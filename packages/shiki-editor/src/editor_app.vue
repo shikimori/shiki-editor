@@ -21,7 +21,13 @@
             @command='args => command(item.type, args)'
           />
         </div>
-        <div class='menu-group source'>
+        <div class='menu-group offset'>
+          <Icon
+            v-bind='menuPreviewItem'
+            :is-active='isPreview'
+            :is-enabled='isSourceEnabled'
+            @command='() => togglePreviewCommand()'
+          />
           <Icon
             v-bind='menuSourceItem'
             :is-active='isSource'
@@ -105,7 +111,8 @@ export default {
     isLinkBlock: false,
     isSmiley: false,
     fileUploaderExtension: null,
-    isMenuBarOffset: false
+    isMenuBarOffset: false,
+    isPreview: false
   }),
   computed: {
     isEnabled() {
@@ -123,6 +130,12 @@ export default {
         title: window.I18n.t(`frontend.shiki_editor.${item}`),
         isEnabled: this.isEnabledMappings[item]
       })));
+    },
+    menuPreviewItem() {
+      return {
+        type: 'preview',
+        title: window.I18n.t('frontend.shiki_editor.undo')
+      };
     },
     menuSourceItem() {
       return {
@@ -220,6 +233,8 @@ export default {
     redoIsEnabled() {
       return this.isEnabled && redo(this.editor.state);
     },
+    togglePreviewCommand() {
+    },
     toggleSourceCommand() {
       const scrollY = scrollTop();
 
@@ -290,7 +305,7 @@ export default {
     content: ''
     margin: 0 5px 0 3px
 
-  &.source
+  &.offset
     margin-left: auto
 
     &:before
