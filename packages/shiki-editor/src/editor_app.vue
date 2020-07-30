@@ -315,8 +315,6 @@ textarea.ProseMirror
     cursor: default
 
   .b-image
-    position: static
-
     &:hover,
     &.is-prosemirror-selected
       position: relative
