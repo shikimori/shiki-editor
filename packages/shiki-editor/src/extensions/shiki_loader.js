@@ -12,6 +12,7 @@ export const CACHE = {};
 export class ShikiLoader extends Extension {
   queue = null
   API_PATH = 'api/shiki_editor'
+  IDS_PER_REQUEST = 200
 
   get name() {
     return 'shiki_loader';
@@ -51,8 +52,18 @@ export class ShikiLoader extends Extension {
 
     if (!Object.keys(queue).length) { return; }
 
+    let limit = this.IDS_PER_REQUEST;
+
     const params = Object.keys(queue)
-      .map(kind => `${kind}=${Object.keys(queue[kind]).join(',')}`)
+      .map(kind => {
+        if (limit <= 0) { return; }
+
+        const ids = Object.keys(queue[kind]).slice(0, limit);
+        limit -= ids.length;
+
+        return `${kind}=${ids.join(',')}`;
+      })
+      .filter(v => v)
       .join('&');
 
     axios
