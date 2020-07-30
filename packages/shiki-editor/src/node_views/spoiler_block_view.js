@@ -1,4 +1,4 @@
-import bind from 'bind-decorator';
+import { bind } from 'shiki-decorators';
 import DOMView from './dom_view';
 
 export default class SpoilerBlockView extends DOMView {

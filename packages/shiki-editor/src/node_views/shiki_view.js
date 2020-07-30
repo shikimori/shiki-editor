@@ -1,4 +1,4 @@
-import bind from 'bind-decorator';
+import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
 import DOMView from './dom_view';

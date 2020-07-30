@@ -1,6 +1,6 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Editor.js
 
-import bind from 'bind-decorator';
+import { bind } from 'shiki-decorators';
 
 import uEvent from 'uevent';
 import { history, undo, redo } from 'prosemirror-history';

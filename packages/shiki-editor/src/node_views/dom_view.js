@@ -1,4 +1,4 @@
-import bind from 'bind-decorator';
+import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
 
 export default class DOMView {

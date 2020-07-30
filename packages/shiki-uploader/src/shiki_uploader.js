@@ -1,5 +1,3 @@
-import bind from 'bind-decorator';
-import { chain } from 'shiki-decorators';
 import isVisible from 'is-visible';
 import uEvent from 'uevent';
 
@@ -7,6 +5,7 @@ import Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 
 import { flash } from 'shiki-utils';
+import { chain, bind } from 'shiki-decorators';
 
 import fixChromeDocEvent from './utils/fix_chrome_doc_event';
 import notFiles from './utils/not_files';

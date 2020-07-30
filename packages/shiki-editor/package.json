@@ -23,7 +23,6 @@
     "babel-eslint": "11.0.0-beta.2",
     "babel-loader": "^8.1.0",
     "babel-plugin-macros": "^2.8.0",
-    "bind-decorator": "1.0.11",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
@@ -83,7 +82,6 @@
   "peerDependencies": {
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
-    "bind-decorator": "1.0.11",
     "imagesloaded": "^4.1.4",
     "shiki-utils": "0.8.18",
     "shiki-decorators": "0.8.18",
