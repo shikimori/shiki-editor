@@ -49,7 +49,8 @@
 
 <script>
 import { ShikiEditorApp } from '../../packages/shiki-editor';
-import { flash, throttle, debounce } from '../../packages/shiki-utils';
+import { flash } from '../../packages/shiki-utils';
+import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 export default {

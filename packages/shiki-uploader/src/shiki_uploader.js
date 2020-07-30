@@ -1,5 +1,5 @@
 import bind from 'bind-decorator';
-import { chain } from 'chain-decorator';
+import { chain } from 'shiki-decorators';
 import isVisible from 'is-visible';
 import uEvent from 'uevent';
 

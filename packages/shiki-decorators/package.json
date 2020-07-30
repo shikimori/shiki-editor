@@ -1,22 +1,17 @@
 {
-  "name": "shiki-uploader",
-  "title": "Shikimori Uploader",
+  "name": "shiki-decorators",
+  "title": "Shikimori Decorators",
   "version": "0.8.18",
-  "main": "src/shiki_uploader.js",
+  "main": "index.js",
   "author": "morr",
   "license": "OSL-3.0",
-  "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-uploader",
+  "homepage": "https://github.com/shikimori/shiki-packages/tree/master/packages/shiki-decorators",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shikimori/shiki-packages.git"
   },
-  "scripts": {
-    "lint": "./node_modules/.bin/eslint src/**/*.js"
-  },
   "dependencies": {
-    "@uppy/core": "^1.11.0",
-    "@uppy/xhr-upload": "^1.6.0",
-    "is-visible": "^2.2.0"
+    "toastify-js": "^1.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -28,15 +23,7 @@
     "eslint": "7.1.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-import-resolver-webpack": "0.12.1",
-    "eslint-plugin-import": "^2.18.2",
-    "shiki-decorators": "file:./packages/shiki-decorators",
-    "shiki-utils": "file:./packages/shiki-utils",
-    "uevent": "^2.0.0"
-  },
-  "peerDependencies": {
-    "uevent": "^2.0.0",
-    "shiki-utils": "0.8.18",
-    "shiki-decorators": "0.8.18"
+    "eslint-plugin-import": "^2.18.2"
   },
   "postcss": {
     "plugins": {

@@ -1,7 +1,8 @@
 import pDefer from 'p-defer';
 import axios from 'axios';
 
-import { flash, debounce, throttle } from 'shiki-utils';
+import { flash } from 'shiki-utils';
+import { debounce, throttle } from 'shiki-decorators';
 
 import { Extension } from '../base';
 import fixUrl from '../utils/fix_url';
