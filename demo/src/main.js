@@ -34,5 +34,10 @@ window.I18n = {
 };
 
 new Vue({
-  render: h => h(Demo)
+  components: { Demo },
+  render: h => h(Demo, {
+    props: {
+      vue: Vue
+    }
+  })
 }).$mount('#app');

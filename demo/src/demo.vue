@@ -25,6 +25,7 @@
         <div v-if='isColumn1' class='f-column'>
           <ShikiEditorApp
             ref='editor1'
+            :vue='vue'
             :content='text1'
             :locale='locale'
             :base-url='baseUrl'
@@ -37,6 +38,7 @@
         <div v-if='isColumn2' class='f-column'>
           <ShikiEditorApp
             ref='editor2'
+            :vue='vue'
             :content='text2'
             :locale='locale'
             :base-url='baseUrl'
@@ -60,6 +62,9 @@ export default {
   name: 'App',
   components: {
     ShikiEditorApp
+  },
+  props: {
+    vue: { type: Function, required: true }
   },
   data: () => ({
     uploadHeaders: () => ({}),

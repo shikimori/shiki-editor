@@ -59,8 +59,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 import { undo, redo } from 'prosemirror-history';
 import autosize from 'autosize';
 import withinviewport from 'withinviewport';
@@ -96,6 +94,7 @@ export default {
     Smileys
   },
   props: {
+    vue: { type: Function, required: true },
     baseUrl: { type: String, required: true },
     uploadEndpoint: { type: String, required: true },
     uploadHeaders: { type: Function, required: true },
@@ -183,7 +182,7 @@ export default {
       extensions: [this.fileUploaderExtension],
       content: this.content,
       baseUrl: this.baseUrl
-    }, this, Vue);
+    }, this, this.vue);
     this.editorContent = this.content;
   },
   mounted() {
