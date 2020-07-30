@@ -46,17 +46,18 @@ export default class ShikiUploader {
     this.uppy = this._initUppy();
 
     if (options.node) {
-      this.attachTo(options.node);
+      this.attachTo(options);
     }
   }
 
   @chain
-  attachTo(node) {
+  attachTo({ node, progressContainerNode }) {
     if (this.node) {
       throw new Error('ShikiUploader is already attached', 'file_uploader');
     }
 
     this.node = node;
+    this.progressContainerNode = progressContainerNode;
 
     this._bindEvents();
     this._addProgressNode();
