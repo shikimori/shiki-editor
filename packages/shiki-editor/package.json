@@ -47,7 +47,8 @@
     "postcss-loader": "^3.0.0",
     "raw-loader": "^4.0.1",
     "sass-loader": "^8.0.2",
-    "shiki-utils": "0.8.7",
+    "shiki-utils": "file:./packages/shiki-utils",
+    "shiki-uploader": "file:./packages/shiki-uploader",
     "style-loader": "^1.0.1",
     "uevent": "^2.0.0",
     "vue": "^2.6.11",
@@ -75,7 +76,6 @@
     "prosemirror-tables": "^1.1.0",
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.0",
-    "shiki-uploader": "file:./packages/shiki-uploader",
     "vue-keypress": "^2.1.1",
     "withinviewport": "^2.1.2",
     "yarn": "^1.22.4"
@@ -87,6 +87,7 @@
     "chain-decorator": "^1.0.3",
     "imagesloaded": "^4.1.4",
     "shiki-utils": "0.8.7",
+    "shiki-uploader": "0.8.7",
     "uevent": "^2.0.0"
   }
 }
