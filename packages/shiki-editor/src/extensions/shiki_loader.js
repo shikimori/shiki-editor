@@ -25,7 +25,6 @@ export class ShikiLoader extends Extension {
   }
 
   fetch({ id, type }) {
-    // console.log(id, type);
     const deferred = pDefer();
 
     QUEUE[convertToShikiType(type)] ||= {};
@@ -73,13 +72,6 @@ export class ShikiLoader extends Extension {
   }
 
   process(results) {
-    console.log(
-      'QUEUE',
-      JSON.parse(JSON.stringify(QUEUE)),
-      'CACHE',
-      JSON.parse(JSON.stringify(CACHE))
-    );
-
     Object.keys(results).forEach(kind => {
       Object.keys(results[kind]).forEach(id => {
         const result = results[kind][id];
