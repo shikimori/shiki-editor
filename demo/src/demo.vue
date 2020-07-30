@@ -27,11 +27,8 @@
             ref='editor1'
             :vue='vue'
             :content='text1'
-            :locale='locale'
             :base-url='baseUrl'
-            :upload-endpoint='uploadEndpoint'
-            :upload-headers='uploadHeaders'
-            :shiki-uploader='ShikiUploader'
+            :shiki-uploader='shikiUploader'
             @update='(value) => text1 = value'
           />
         </div>
@@ -40,11 +37,8 @@
             ref='editor2'
             :vue='vue'
             :content='text2'
-            :locale='locale'
             :base-url='baseUrl'
-            :upload-endpoint='uploadEndpoint'
-            :upload-headers='uploadHeaders'
-            :shiki-uploader='ShikiUploader'
+            :shiki-uploader='shikiUploader'
             @update='(value) => text2 = value'
           />
         </div>
@@ -71,7 +65,7 @@ export default {
     isColumn1: false,
     isColumn2: true,
     // text2: `[center] [url=ya.ru][quote][b]www[/b][/quote]
-    text2: `zxc
+    text2: `[anime=1]
 `,
 //     text2: `[div=c-column b-catalog_entry][div=cover][div=image-decor][anime=1292][div=image-cutter]
 // [poster]https://kawai.shikimori.one/system/animes/original/1292.jpg?1578039620[/poster][/div][/anime][div=text]
@@ -176,8 +170,13 @@ div [div=b-link_button]inside line is not parsed[/div]
         process.env.NODE_ENV === 'development' ? '&test=1' : ''
       );
     },
-    ShikiUploader() {
-      return ShikiUploader;
+    shikiUploader() {
+      return new ShikiUploader({
+        locale: this.locale,
+        xhrEndpoint: this.uploadEndpoint,
+        xhrHeaders: this.uploadHeaders,
+        maxNumberOfFiles: 10
+      });
     }
   },
   mounted() {

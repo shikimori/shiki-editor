@@ -96,11 +96,8 @@ export default {
   props: {
     vue: { type: Function, required: true },
     baseUrl: { type: String, required: true },
-    uploadEndpoint: { type: String, required: true },
-    uploadHeaders: { type: Function, required: true },
-    locale: { type: String, required: true },
     content: { type: String, required: true },
-    shikiUploader: { type: Function, required: true }
+    shikiUploader: { type: Object, required: true }
   },
   data: () => ({
     editor: null,
@@ -172,10 +169,7 @@ export default {
   },
   created() {
     this.fileUploaderExtension = new FileUploader({
-      shikiUploader: this.shikiUploader,
-      locale: this.locale,
-      uploadEndpoint: this.uploadEndpoint,
-      uploadHeaders: this.uploadHeaders
+      shikiUploader: this.shikiUploader
     });
 
     this.editor = new ShikiEditor({
@@ -183,10 +177,11 @@ export default {
       content: this.content,
       baseUrl: this.baseUrl
     }, this, this.vue);
+
     this.editorContent = this.content;
   },
   mounted() {
-    this.fileUploaderExtension.buildShikiUploader({
+    this.fileUploaderExtension.attachShikiUploader({
       node: this.$refs.editor_container,
       progressContainerNode: this.$refs.menubar
     });

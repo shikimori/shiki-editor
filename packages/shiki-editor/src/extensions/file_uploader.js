@@ -1,4 +1,3 @@
-import bind from 'bind-decorator';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
 
@@ -17,25 +16,13 @@ export default class FileUploader extends Extension {
 
   get defaultOptions() {
     return {
-      shikiUploader: null,
-      locale: null,
-      uploadEndpoint: null,
-      uploadHeaders: null
+      shikiUploader: null
     };
   }
 
-  init() {
-  }
-
-  buildShikiUploader({ node, progressContainerNode }) {
-    this.fileUploader = new this.options.shikiUploader({
-      node,
-      progressContainerNode,
-      locale: this.options.locale,
-      xhrEndpoint: this.options.uploadEndpoint,
-      xhrHeaders: this.options.uploadHeaders,
-      maxNumberOfFiles: 10
-    })
+  attachShikiUploader({ node, progressContainerNode }) {
+    this.fileUploader = this.options.shikiUploader
+      .attachTo({ node, progressContainerNode })
       .on('upload:file:added', (_e, uppyFile) =>
         insertUploadPlaceholder(
           this.editor,
@@ -79,7 +66,6 @@ export default class FileUploader extends Extension {
       new Plugin({
         key: new PluginKey(this.name),
         props: {
-          @bind
           handlePaste(_view, event, _slice) {
             if (event.clipboardData.files.length) {
               event.preventDefault();

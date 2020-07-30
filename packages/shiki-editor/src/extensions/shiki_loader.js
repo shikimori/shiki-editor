@@ -17,7 +17,9 @@ export class ShikiLoader extends Extension {
   }
 
   get defaultOptions() {
-    return { baseUrl: undefined };
+    return {
+      baseUrl: undefined
+    };
   }
 
   fetch({ id, type }) {
