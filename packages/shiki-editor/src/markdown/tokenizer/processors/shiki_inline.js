@@ -5,7 +5,7 @@ import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 export const SHIKI_BBCODE_LINK_REGEXP =
   /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]/;
 export const SHIKI_BBCODE_LINK_FULL_REGEXP =
-  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^\]]+)\[\/(?:\1)\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^[]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
 export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message'];
@@ -52,6 +52,9 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
       closeBbcode,
       state.index + openBbcode.length
     );
+    if (SHIKI_BBCODE_LINK_REGEXP.test(text)) {
+      text = null;
+    }
   }
 
   if (text) {

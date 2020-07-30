@@ -1643,6 +1643,45 @@ describe('MarkdownTokenizer', () => {
         });
       });
 
+      it('[anime=1] [anime=2]x[/anime]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[anime=1] [anime=2]x[/anime]'
+        )).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['bbcode', '[anime=1]'],
+                  ['type', 'anime'],
+                  ['id', 1],
+                  ['isLoading', true],
+                  ['isError', false]
+                ]
+              },
+              { type: 'text', content: ' ' },
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['bbcode', '[anime=2]x[/anime]'],
+                  ['type', 'anime'],
+                  ['id', 2],
+                  ['openBbcode', '[anime=2]'],
+                  ['closeBbcode', '[/anime]'],
+                  ['text', 'x'],
+                  ['isLoading', true],
+                  ['isError', false]
+                ],
+                children: [{ type: 'text', content: 'x' }]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
       it('[anime=1]z[/anime] [anime=2]x[/anime]', () => {
         expect(MarkdownTokenizer.parse(
           '[anime=1]z[/anime] [anime=2]x[/anime]'
