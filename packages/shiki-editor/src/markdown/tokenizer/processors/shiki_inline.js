@@ -79,9 +79,8 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   if (cache) {
     state.inlineTokens.push(
       state.tagOpen('link_inline', {
+        ...attributes,
         url: cache.url,
-        id: meta.id,
-        type: meta.type,
         text: cache.text
       })
     );
