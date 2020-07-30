@@ -48,6 +48,10 @@
 </template>
 
 <script>
+// import { ShikiEditorApp } from 'shiki-editor';
+// import { flash } from 'shiki-utils';
+// import { throttle, debounce } from 'shiki-decorators';
+// import ShikiUploader from 'shiki-uploader';
 import { ShikiEditorApp } from '../../packages/shiki-editor';
 import { flash } from '../../packages/shiki-utils';
 import { throttle, debounce } from '../../packages/shiki-decorators';
@@ -63,17 +67,30 @@ export default {
   },
   data: () => ({
     uploadHeaders: () => ({}),
-    isColumn1: false,
-    isColumn2: true,
-    // text2: `[center] [url=ya.ru][quote][b]www[/b][/quote]
-    text2: `[anime=1]
-`,
-//     text2: `[div=c-column b-catalog_entry][div=cover][div=image-decor][anime=1292][div=image-cutter]
-// [poster]https://kawai.shikimori.one/system/animes/original/1292.jpg?1578039620[/poster][/div][/anime][div=text]
-// 1
-// [/div][/div][/div][/div]
-// `,
-    text1: `# Headings
+    isColumn1: true,
+    isColumn2: false,
+    text2: 'test',
+    text1: `# Shiki BbCodes
+[div fc-2][div f-column]
+[anime=1] text after [anime=1]Anime name[/anime]
+[manga=1]
+[anime=3456789]missing anime[/anime]
+[ranobe=9115]
+
+[image=1124146]
+[/div][div f-column]
+[entry=314310]
+[topic=314310]
+[comment=6104628]
+[message=1278854609]
+
+[topic=99999999999]
+[topic=99999999999]missing topic[/topic]
+[comment=99999999999]
+[message=99999999999]
+[/div][/div]
+
+# Headings
 [hr]
 # Heading level 1: \`# Heading level 1\`
 ## Heading level 2: \`## Heading level 2\`
@@ -150,7 +167,7 @@ Poster
 \`[div=b-link_button]...[/div]\`
 [/div]
 
-div [div=b-link_button]inside line is not parsed[/div]
+div [div=b-link_button]inline divs are not parsed by editor[/div] div
 
 [quote]Old style quote support[/quote]
 [quote=zxc]Old style quote with nickname[/quote]

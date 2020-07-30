@@ -13,7 +13,6 @@
     "add": "^2.0.6",
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
-    "bind-decorator": "1.0.11",
     "core-js": "^3.6.5",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
@@ -34,7 +33,11 @@
     "raw-loader": "^4.0.1",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.0.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "shiki-utils": "file:../packages/shiki-utils",
+    "shiki-decorators": "file:../packages/shiki-decorators",
+    "shiki-uploader": "file:../packages/shiki-uploader",
+    "shiki-editor": "file:../packages/shiki-editor"
   },
   "postcss": {
     "plugins": {
