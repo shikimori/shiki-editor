@@ -19,9 +19,9 @@
     "is-visible": "^2.2.0"
   },
   "peerDependencies": {
-    "with": "^1.2.0",
+    "shiki-utils": "^0.7.2",
     "uevent": "^2.0.0",
-    "shiki-utils": "^0.7.2"
+    "chain-decorator": "^1.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -30,13 +30,13 @@
     "@babel/plugin-proposal-decorators": "^7.10.4",
     "@babel/preset-env": "^7.7.4",
     "babel-eslint": "^10.1.0",
+    "chain-decorator": "^1.0.3",
     "eslint": "7.1.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-import-resolver-webpack": "0.12.1",
     "eslint-plugin-import": "^2.18.2",
-    "with": "^1.2.0",
-    "uevent": "^2.0.0",
-    "shiki-utils": "^0.2.1"
+    "shiki-utils": "^0.2.1",
+    "uevent": "^2.0.0"
   },
   "postcss": {
     "plugins": {

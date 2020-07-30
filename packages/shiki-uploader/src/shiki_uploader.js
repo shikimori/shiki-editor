@@ -1,4 +1,5 @@
 import bind from 'bind-decorator';
+import { chain } from 'chain-decorator';
 import isVisible from 'is-visible';
 import uEvent from 'uevent';
 
@@ -40,16 +41,25 @@ export default class ShikiUploader {
       options
     );
 
-    if (!options.node) {
-      throw new Error('ShikiUploader options.node is not set', 'file_uploader');
+    uEvent.mixin(this);
+    this.node = null;
+    this.uppy = this._initUppy();
+
+    if (options.node) {
+      this.attachTo(options.node);
+    }
+  }
+
+  @chain
+  attachTo(node) {
+    if (this.node) {
+      throw new Error('ShikiUploader is already attached', 'file_uploader');
     }
 
-    uEvent.mixin(this);
+    this.node = node;
 
-    this.uppy = this._initUppy();
     this._bindEvents();
     this._addProgressNode();
-
     this._bindInput();
   }
 
