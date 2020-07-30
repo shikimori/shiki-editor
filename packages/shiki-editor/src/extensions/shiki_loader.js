@@ -47,7 +47,7 @@ export class ShikiLoader extends Extension {
   @debounce(50)
   @throttle(2000)
   sendRequest() {
-    this.respondFromCache();
+    this.resolveFromCache();
     if (!Object.keys(QUEUE).length) { return; }
 
     let idsLimit = this.IDS_PER_REQUEST;
@@ -102,26 +102,28 @@ export class ShikiLoader extends Extension {
     }
   }
 
-  respondFromCache() {
-    // const queue = {};
-    // 
-    // Object.keys(QUEUE).forEach(kind => {
-    //   const queueById = QUEUE[kind];
-    // 
-    //   Object.keys(queueById).forEach(id => {
-    //     const promises = queueById[id];
-    //     const result = CACHE[kind]?.[id];
-    // 
-    //     if (result !== undefined) {
-    //       promises.forEach(promise => promise.resolve(result));
-    //     } else {
-    //       queue[kind] ||= {};
-    //       queue[kind][id] = promises;
-    //     }
-    //   });
-    // });
-    // 
-    // return queue;
+  resolveFromCache() {
+    const toResolve = [];
+
+    Object.keys(QUEUE).forEach(kind => {
+      const queueById = QUEUE[kind];
+
+      Object.keys(queueById).forEach(id => {
+        const result = CACHE[kind]?.[id];
+        if (result === undefined) { return; }
+
+        toResolve.push({
+          promises: queueById[id],
+          result,
+          kind,
+          id
+        });
+      });
+    });
+
+    toResolve.forEach(({ promises, result, kind, id }) => (
+      this.resolve(promises, result, kind, id)
+    ));
   }
 
   resolve(promises, result, kind, id) {
