@@ -8,9 +8,9 @@ import { Extension } from '../base';
 import fixUrl from '../utils/fix_url';
 
 export const CACHE = {};
+const QUEUE = {};
 
 export class ShikiLoader extends Extension {
-  queue = null
   API_PATH = 'api/shiki_editor'
   IDS_PER_REQUEST = 200
 
@@ -25,11 +25,11 @@ export class ShikiLoader extends Extension {
   }
 
   fetch({ id, type }) {
+    // console.log(id, type);
     const deferred = pDefer();
 
-    this.queue ||= {};
-    this.queue[convertToShikiType(type)] ||= {};
-    (this.queue[convertToShikiType(type)][id] ||= []).push(deferred);
+    QUEUE[convertToShikiType(type)] ||= {};
+    (QUEUE[convertToShikiType(type)][id] ||= []).push(deferred);
 
     this.sendRequest();
 
@@ -47,19 +47,17 @@ export class ShikiLoader extends Extension {
   @debounce(50)
   @throttle(2000)
   sendRequest() {
-    const queue = this.respondFromCache(this.queue);
-    this.queue = null;
+    this.respondFromCache();
+    if (!Object.keys(QUEUE).length) { return; }
 
-    if (!Object.keys(queue).length) { return; }
+    let idsLimit = this.IDS_PER_REQUEST;
 
-    let limit = this.IDS_PER_REQUEST;
-
-    const params = Object.keys(queue)
+    const idsGetParams = Object.keys(QUEUE)
       .map(kind => {
-        if (limit <= 0) { return; }
+        if (idsLimit <= 0) { return; }
 
-        const ids = Object.keys(queue[kind]).slice(0, limit);
-        limit -= ids.length;
+        const ids = Object.keys(QUEUE[kind]).slice(0, idsLimit);
+        idsLimit -= ids.length;
 
         return `${kind}=${ids.join(',')}`;
       })
@@ -67,20 +65,24 @@ export class ShikiLoader extends Extension {
       .join('&');
 
     axios
-      .get(`${this.options.baseUrl}/${this.API_PATH}?${params}`)
-      .then(result => this.process(queue, result?.data))
+      .get(`${this.options.baseUrl}/${this.API_PATH}?${idsGetParams}`)
       .catch(_error => (
         flash.error(window.I18n.t('frontend.lib.please_try_again_later'))
-      ));
+      ))
+      .then(result => this.process(result?.data));
   }
 
-  process(queue, results) {
-    Object.keys(queue).forEach(kind => {
-      const queueById = queue[kind];
+  process(results) {
+    console.log(
+      'QUEUE',
+      JSON.parse(JSON.stringify(QUEUE)),
+      'CACHE',
+      JSON.parse(JSON.stringify(CACHE))
+    );
 
-      Object.keys(queueById).forEach(id => {
-        const promises = queueById[id];
-        const result = results ? results[kind]?.[id] : null;
+    Object.keys(results).forEach(kind => {
+      Object.keys(results[kind]).forEach(id => {
+        const result = results[kind][id];
 
         if (result !== undefined) {
           if (result?.url) {
@@ -89,33 +91,51 @@ export class ShikiLoader extends Extension {
 
           CACHE[kind] ||= {};
           CACHE[kind][id] ||= result;
-        }
 
-        promises.forEach(promise => promise.resolve(result));
+          this.resolve(QUEUE[kind]?.[id], result, kind, id);
+        }
       });
     });
+
+    if (Object.keys(QUEUE).length) {
+      this.sendRequest();
+    }
   }
 
-  respondFromCache(queue) {
-    const requestQueue = {};
+  respondFromCache() {
+    // const queue = {};
+    // 
+    // Object.keys(QUEUE).forEach(kind => {
+    //   const queueById = QUEUE[kind];
+    // 
+    //   Object.keys(queueById).forEach(id => {
+    //     const promises = queueById[id];
+    //     const result = CACHE[kind]?.[id];
+    // 
+    //     if (result !== undefined) {
+    //       promises.forEach(promise => promise.resolve(result));
+    //     } else {
+    //       queue[kind] ||= {};
+    //       queue[kind][id] = promises;
+    //     }
+    //   });
+    // });
+    // 
+    // return queue;
+  }
 
-    Object.keys(queue).forEach(kind => {
-      const queueById = queue[kind];
+  resolve(promises, result, kind, id) {
+    if (QUEUE[kind]?.[id]) {
+      delete QUEUE[kind][id];
+    }
 
-      Object.keys(queueById).forEach(id => {
-        const promises = queueById[id];
-        const result = CACHE[kind]?.[id];
+    if (!Object.keys(QUEUE[kind]).length) {
+      delete QUEUE[kind];
+    }
 
-        if (result !== undefined) {
-          promises.forEach(promise => promise.resolve(result));
-        } else {
-          requestQueue[kind] ||= {};
-          requestQueue[kind][id] = promises;
-        }
-      });
-    });
-
-    return requestQueue;
+    if (promises && promises.length) {
+      promises.forEach(promise => promise.resolve(result));
+    }
   }
 }
 
