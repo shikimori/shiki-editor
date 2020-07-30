@@ -24,7 +24,13 @@ export function extractBbCode(text, startIndex, maxIndex) {
   return null;
 }
 
-export function extractUntil(text, sequence, startIndex, maxIndex, isIgnoreNewLine) {
+export function extractUntil(
+  text,
+  sequence,
+  startIndex,
+  maxIndex = 1000,
+  isIgnoreNewLine
+) {
   for (let i = startIndex; i <= (maxIndex || text.length); i++) {
     const char = text[i];
     const isEnd = isIgnoreNewLine ?

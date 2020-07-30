@@ -1,10 +1,8 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
 import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
-import { SHIKI_BBCODE_LINK_REGEXP } from './shiki_inline';
+import { SHIKI_BBCODE_LINK_REGEXP, URL_REGEXP } from './shiki_inline';
 import { PSEUDO_BLOCK_TEST_REGEXP } from './inline_or_block';
-
-const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
 
 export default function(state, openBbcode, closeBbcode, meta) {
   const inlineText = extractUntil(
@@ -18,7 +16,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
     state.text,
     closeBbcode,
     state.index + openBbcode.length,
-    null,
+    10000,
     true
   );
 

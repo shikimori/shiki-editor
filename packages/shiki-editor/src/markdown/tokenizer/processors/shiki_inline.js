@@ -8,6 +8,8 @@ export const SHIKI_BBCODE_LINK_FULL_REGEXP =
   /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^[]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
+export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
+
 export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message'];
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
@@ -52,7 +54,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
       closeBbcode,
       state.index + openBbcode.length
     );
-    if (SHIKI_BBCODE_LINK_REGEXP.test(text)) {
+    if (SHIKI_BBCODE_LINK_REGEXP.test(text) || URL_REGEXP.test(text)) {
       text = null;
     }
   }
