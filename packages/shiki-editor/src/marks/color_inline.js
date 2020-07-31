@@ -1,7 +1,7 @@
 /* eslint no-cond-assign: 0 */
 
 import { Mark } from '../base';
-import { rgbToHex } from '../utils';
+import { rgbToHex, ensureOnlyStyle } from '../utils';
 
 export default class ColorInline extends Mark {
   SIMPLE_COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
@@ -17,8 +17,12 @@ export default class ColorInline extends Mark {
         color: {}
       },
       parseDOM: [{
-        style: 'color',
-        getAttrs: value => {
+        tag: 'span',
+        getAttrs: node => {
+          if (!ensureOnlyStyle(node, 'color')) { return false; }
+
+          const value = node.style.color;
+
           let match;
           let color;
 
@@ -30,7 +34,23 @@ export default class ColorInline extends Mark {
 
           return color ? { color } : false;
         }
-      }],
+      }
+      // {
+      //   style: 'color',
+      //   getAttrs: value => {
+      //     let match;
+      //     let color;
+      // 
+      //     if (match = value.match(this.SIMPLE_COLOR_REGEXP)) {
+      //       color = match[1];
+      //     } else if (match = value.match(this.RGB_COLOR_REGEXP)) {
+      //       color = rgbToHex(match[1], match[2], match[3]);
+      //     }
+      // 
+      //     return color ? { color } : false;
+      //   }
+      // }
+      ],
       toDOM: node => [
         'span',
         { style: `color: ${node.attrs.color};` },
