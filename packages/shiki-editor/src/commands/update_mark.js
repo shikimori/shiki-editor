@@ -1,7 +1,7 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/updateMark.js
 import { getMarkRange } from '../utils';
 
-export default function(type, attrs) {
+export default function updateMark(type, attrs) {
   return (state, dispatch) => {
     const { tr, selection, doc } = state;
     let { from, to } = selection;

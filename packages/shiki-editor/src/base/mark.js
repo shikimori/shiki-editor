@@ -1,6 +1,5 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Utils/Mark.js
-import { toggleMark } from 'prosemirror-commands';
-
+import { toggleMarkWrap } from '../commands';
 import { markIsActive } from '../checks';
 import Extension from './extension';
 
@@ -18,7 +17,7 @@ export default class Mark extends Extension {
   }
 
   commands({ type }) {
-    return () => toggleMark(type);
+    return () => toggleMarkWrap(type);
   }
 
   activeCheck(type, state) {

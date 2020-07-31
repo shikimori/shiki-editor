@@ -1,3 +1,3 @@
-export default function(size, defaultDimension) {
+export default function ensureDimention(size, defaultDimension) {
   return size === String(parseInt(size)) ? `${size}${defaultDimension}` : size;
 }
