@@ -1,7 +1,11 @@
+/* eslint no-cond-assign: 0 */
+
 import { Mark } from '../base';
+import { rgbToHex } from '../utils';
 
 export default class ColorInline extends Mark {
-  COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
+  SIMPLE_COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
+  RGB_COLOR_REGEXP = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/
 
   get name() {
     return 'color_inline';
@@ -15,8 +19,16 @@ export default class ColorInline extends Mark {
       parseDOM: [{
         style: 'color',
         getAttrs: value => {
-          const match = value.match(this.COLOR_REGEXP);
-          return match ? { color: match[1] } : null;
+          let match;
+          let color;
+
+          if (match = value.match(this.SIMPLE_COLOR_REGEXP)) {
+            color = match[1];
+          } else if (match = value.match(this.RGB_COLOR_REGEXP)) {
+            color = rgbToHex(match[1], match[2], match[3]);
+          }
+
+          return color ? { color } : false;
         }
       }],
       toDOM: node => [

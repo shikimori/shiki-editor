@@ -17,7 +17,7 @@ export default class SizeInline extends Mark {
         style: 'font-size',
         getAttrs: value => {
           const match = value.match(this.SIZE_REGEXP);
-          return match ? { size: match[1] } : null;
+          return match ? { size: match[1] } : false;
         }
       }],
       toDOM: node => [
