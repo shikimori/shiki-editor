@@ -10,8 +10,8 @@ export default class ItalicInline extends Mark {
     return {
       parseDOM: [
         { tag: 'i' },
-        { tag: 'em' },
-        { style: 'font-style=italic' }
+        { tag: 'em' }
+        // { style: 'font-style=italic' }
       ],
       toDOM: () => ['em', 0]
     };
