@@ -305,11 +305,6 @@ export default {
     &:before
       display: none
 
-textarea.ProseMirror
-  min-height: 89px
-  outline: none
-  width: 100%
-
 /deep/
   span[contenteditable=false]
     cursor: default
