@@ -262,6 +262,7 @@ export default {
 
 <style lang='sass'>
 @import ./stylesheets/prosemirror.sass
+@import ./stylesheets/prosemirror_shiki.sass
 </style>
 
 <style scoped lang='sass'>
@@ -308,11 +309,6 @@ export default {
 /deep/
   span[contenteditable=false]
     cursor: default
-
-  .b-image
-    &:hover,
-    &.is-prosemirror-selected
-      position: relative
 
   [data-image]:hover,
   [data-link]:hover,

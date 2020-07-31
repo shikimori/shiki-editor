@@ -1,0 +1,14 @@
+.ProseMirror
+  .b-image
+    display: inline-flex // need to fix cursor display in position after image
+
+    &:hover,
+    &.is-prosemirror-selected
+      position: relative
+
+  .b-mention
+    &:before
+      color: #6d9fc2
+      content: '@'
+      display: inline-block
+      text-decoration: none
