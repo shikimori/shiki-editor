@@ -299,7 +299,7 @@ export default {
   position: sticky
   right: 0
   top: 0
-  z-index: 10
+  z-index: 30
 
   &.is-offset
     top: 45px
@@ -362,7 +362,7 @@ export default {
       position: absolute
       text-shadow: 1px 1px 0px #fff
       top: 0
-      z-index: 999
+      z-index: 20
 
   [data-image].is-prosemirror-selected,
   [data-div].is-prosemirror-selected
