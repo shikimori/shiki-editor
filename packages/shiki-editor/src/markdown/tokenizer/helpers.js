@@ -28,7 +28,7 @@ export function extractUntil(
   text,
   sequence,
   startIndex,
-  maxIndex = 1000,
+  maxIndex = startIndex + 1000,
   isIgnoreNewLine
 ) {
   for (let i = startIndex; i <= (maxIndex || text.length); i++) {

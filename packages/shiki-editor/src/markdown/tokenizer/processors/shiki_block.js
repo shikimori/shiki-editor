@@ -16,7 +16,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
     state.text,
     closeBbcode,
     state.index + openBbcode.length,
-    10000,
+    state.index + openBbcode.length + 10000,
     true
   );
 
