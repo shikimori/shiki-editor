@@ -73,7 +73,7 @@ import Smileys from './components/smileys';
 
 const MENU_ITEMS = [
   [
-    'bold_inline',
+    'bold',
     'italic',
     'underline',
     'strike',
@@ -104,6 +104,8 @@ export default {
     editorContent: null,
     editorPosition: null,
     isSource: false,
+    isItalicBlock: false,
+    isBoldBlock: false,
     isLinkBlock: false,
     isSmiley: false,
     fileUploaderExtension: null,
@@ -148,8 +150,15 @@ export default {
           false
       )));
 
+      this.isBoldBlock = this.editor.activeChecks.bold_block(); // eslint-disable-line
+      memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
+
+      this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
+      memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
+
       this.isLinkBlock = this.editor.activeChecks.link_block(); // eslint-disable-line
       memo.link = this.isLinkBlock || this.editor.activeChecks.link_inline();
+
       memo.smiley = this.isSmiley;
 
       return memo;
@@ -194,13 +203,30 @@ export default {
       const method = `${type}Command`;
 
       if (this[method] && this[method].constructor === Function) {
-        this[method](args);
-      } else if (type == 'link') {
-        this.isLinkBlock ?
-          this.editor.commands.link_block() :
-          this.editor.commands.link_inline();
-      } else {
-        this.editor.commands[type]();
+        return this[method](args);
+      }
+
+      switch (type) {
+        case 'link':
+          this.isLinkBlock ?
+            this.editor.commands.link_block() :
+            this.editor.commands.link_inline();
+          break;
+
+        case 'bold':
+          this.isBoldBlock ?
+            this.editor.commands.bold_block() :
+            this.editor.commands.bold_inline();
+          break;
+
+        case 'italic':
+          this.isItalicBlock ?
+            this.editor.commands.italic_block() :
+            this.editor.commands.italic_inline();
+          break;
+
+        default:
+          this.editor.commands[type]();
       }
     },
     undoCommand() {

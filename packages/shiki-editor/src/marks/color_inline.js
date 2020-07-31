@@ -34,23 +34,7 @@ export default class ColorInline extends Mark {
 
           return color ? { color } : false;
         }
-      }
-      // {
-      //   style: 'color',
-      //   getAttrs: value => {
-      //     let match;
-      //     let color;
-      // 
-      //     if (match = value.match(this.SIMPLE_COLOR_REGEXP)) {
-      //       color = match[1];
-      //     } else if (match = value.match(this.RGB_COLOR_REGEXP)) {
-      //       color = rgbToHex(match[1], match[2], match[3]);
-      //     }
-      // 
-      //     return color ? { color } : false;
-      //   }
-      // }
-      ],
+      }],
       toDOM: node => [
         'span',
         { style: `color: ${node.attrs.color};` },
