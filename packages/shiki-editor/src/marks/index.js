@@ -1,5 +1,5 @@
 export { default as BoldInline } from './bold_inline';
-export { default as Italic } from './italic';
+export { default as ItalicInline } from './italic_inline';
 export { default as SizeInline } from './size_inline';
 export { default as ColorInline } from './color_inline';
 export { default as Underline } from './underline';
