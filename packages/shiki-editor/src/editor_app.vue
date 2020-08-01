@@ -132,13 +132,13 @@ export default {
     menuPreviewItem() {
       return {
         type: 'preview',
-        title: window.I18n.t('frontend.shiki_editor.undo')
+        title: window.I18n.t('frontend.shiki_editor.preview')
       };
     },
     menuSourceItem() {
       return {
         type: 'source',
-        title: window.I18n.t('frontend.shiki_editor.undo')
+        title: window.I18n.t('frontend.shiki_editor.source')
       };
     },
     isActive() {
