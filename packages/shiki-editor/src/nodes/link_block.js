@@ -15,9 +15,9 @@ export default class LinkBlock extends Node {
         url: {},
         id: { default: null },
         type: { default: null },
-        meta: {
-          default: { isMention: false }
-        },
+        // meta: {
+        //   default: { isMention: false }
+        // },
         nFormat: {
           default: {
             nBeforeOpen: true,
@@ -35,10 +35,10 @@ export default class LinkBlock extends Node {
           getAttrs: node => ({
             url: node.getAttribute('href'),
             id: node.getAttribute('data-id'),
-            type: node.getAttribute('data-type'),
-            meta: {
-              isMention: node.classList.contains('b-mention')
-            }
+            type: node.getAttribute('data-type')
+            // meta: {
+            //   isMention: node.classList.contains('b-mention')
+            // }
           })
         }
       ],
@@ -48,8 +48,7 @@ export default class LinkBlock extends Node {
           href: fixUrl(node.attrs.url),
           'data-id': node.attrs.id,
           'data-type': node.attrs.type,
-          class: (node.attrs.meta.isMention ? 'b-mention' : 'b-link') +
-            'prosemirror-block',
+          class: 'prosemirror-block', // (node.attrs.meta.isMention ? 'b-mention' : 'b-link') +
           // rel: 'noopener noreferrer nofollow',
           target: '_blank',
           'data-link': `[url=${node.attrs.url}]`

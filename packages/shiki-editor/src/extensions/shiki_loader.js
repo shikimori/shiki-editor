@@ -4,7 +4,7 @@ import axios from 'axios';
 import { flash } from 'shiki-utils';
 import { debounce, throttle } from 'shiki-decorators';
 
-import { Extension } from '../base';
+import Extension from '../base/extension';
 import fixUrl from '../utils/fix_url';
 
 export const CACHE = {};
