@@ -58,7 +58,7 @@ export default class LinkBlock extends Node {
     };
   }
 
-  commands({ type, schema }) {
+  commands({ type }) {
     return () => toggleNodeWrap(type);
   }
 
