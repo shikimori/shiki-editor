@@ -16,7 +16,7 @@ export default class SpoilerBlockView extends DOMView {
     edit.classList.add('edit');
     edit.addEventListener('click', this.changeLabel);
 
-    this.sync();
+    this.syncState();
 
     this.dom.appendChild(this.button);
     this.dom.appendChild(edit);
@@ -26,17 +26,11 @@ export default class SpoilerBlockView extends DOMView {
   @bind
   toggle() {
     this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
-    this.sync();
+    this.syncState();
     this.view.focus();
   }
 
-  update(node, decorations) {
-    if (!super.update(node, decorations)) { return false; }
-    this.sync();
-    return true;
-  }
-
-  sync() {
+  syncState() {
     this.dom.classList.toggle('is-opened', this.node.attrs.isOpened);
     this.button.innerText = this.node.attrs.label;
   }

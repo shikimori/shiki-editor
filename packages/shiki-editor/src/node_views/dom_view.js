@@ -1,9 +1,12 @@
 import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
+import { getMarkRange } from '../utils';
 
 export default class DOMView {
   node = null
   extension = null
+  isNode = null
+  isMark = null
   view = null
   getPos = null
   decorations = null
@@ -15,8 +18,10 @@ export default class DOMView {
   constructor({ node, extension, view, getPos, decorations, editor }) {
     this.node = node;
     this.extension = extension;
+    this.isNode = !!this.node.marks;
+    this.isMark = !this.isNode;
     this.view = view;
-    this.getPos = getPos;
+    this.getPos = this.isMark ? this.getMarkPos : getPos;
     this.decorations = decorations;
     this.editor = editor;
   }
@@ -69,7 +74,10 @@ export default class DOMView {
     this.node = node;
     this.decorations = decorations;
 
-    return true;
+    return this.syncState() !== false;
+  }
+
+  syncState() {
   }
 
   // disable (almost) all prosemirror event listener for node views
@@ -122,6 +130,13 @@ export default class DOMView {
       state.tr.setNodeMarkup(pos, null, newAttrs);
 
     this.view.dispatch(transaction);
+  }
+
+  getMarkPos() {
+    const pos = this.view.posAtDOM(this.dom);
+    const resolvedPos = this.view.state.doc.resolve(pos);
+    const range = getMarkRange(resolvedPos, this.node.type);
+    return range;
   }
 
   destroy() {

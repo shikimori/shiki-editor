@@ -1,5 +1,6 @@
+import { bind } from 'shiki-decorators';
 import DOMView from './dom_view';
-import { getMarkRange } from '../utils';
+// import { getMarkRange } from '../utils';
 
 export default class SpoilerInlineView extends DOMView {
   constructor(options) {
@@ -8,11 +9,10 @@ export default class SpoilerInlineView extends DOMView {
     this.dom = document.createElement('span');
     this.contentDOM = document.createElement('span');
 
+    this.syncState();
+
     this.dom.classList.add('b-spoiler_inline');
-    if (this.mark.attrs.isOpened) {
-      this.dom.classList.add('is-opened');
-    }
-    this.dom.addEventListener('click', this.toggle.bind(this));
+    this.dom.addEventListener('click', this.toggle);
     this.dom.appendChild(this.contentDOM);
   }
 
@@ -20,15 +20,17 @@ export default class SpoilerInlineView extends DOMView {
     return this.node;
   }
 
+  get isOpened() {
+    return this.mark.attrs.isOpened;
+  }
+
+  syncState() {
+    this.dom.classList.toggle('is-opened', this.isOpened);
+  }
+
+  @bind
   toggle() {
-    const { dispatch, tr, view, mark } = this;
-    const attrs = this.mergeAttrs({ isOpened: !mark.attrs.isOpened });
-    const { type } = mark;
-
-    const range = getMarkRange(view.state.selection.$from, type);
-
-    dispatch(
-      tr.addMark(range.from, range.to, type.create(attrs))
-    );
+    this.updateAttrs({ isOpened: !this.isOpened });
+    this.syncState();
   }
 }
