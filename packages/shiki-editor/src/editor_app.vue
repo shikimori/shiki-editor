@@ -119,7 +119,8 @@ export default {
     isEnabledMappings() {
       return {
         undo: this.undoIsEnabled,
-        redo: this.redoIsEnabled
+        redo: this.redoIsEnabled,
+        link: this.linkIsEnabled
       };
     },
     menuItems() {
@@ -252,6 +253,11 @@ export default {
     },
     redoIsEnabled() {
       return this.isEnabled && redo(this.editor.state);
+    },
+    linkIsEnabled() {
+      return this.isEnabled && (
+        this.isActive.link || !this.editor.state.selection.empty
+      );
     },
     togglePreviewCommand() {
     },
