@@ -1,5 +1,5 @@
 import { toggleMark } from 'prosemirror-commands';
-import { getMarkRange } from '../utils';
+import { getMarkRange, resolveWord } from '../utils';
 
 export default function toggleMarkWrap(type, attrs) {
   return (state, dispatch) => {
@@ -9,11 +9,22 @@ export default function toggleMarkWrap(type, attrs) {
     const range = getMarkRange($from, type);
 
     // remove the whole mark at cursor position
-    if (empty && range) {
-      tr.removeMark(range.from, range.to, type);
-      return dispatch(tr);
+    if (empty) {
+      if (range) {
+        return dispatch(tr.removeMark(range.from, range.to, type));
+      } else {
+        const $pos = state.tr.doc.resolve(selection.from);
+        const wordRange = resolveWord($pos);
+
+        if (wordRange) {
+          return dispatch(
+            tr.addMark(wordRange.from, wordRange.to, type.create(attrs))
+          );
+        }
+      }
     }
 
     return toggleMark(type, attrs)(state, dispatch);
   };
 }
+
