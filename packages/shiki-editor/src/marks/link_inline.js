@@ -2,8 +2,9 @@
 import { Plugin } from 'prosemirror-state';
 import { Mark } from '../base';
 import {
-  updateMark,
+  // updateMark,
   removeMark,
+  toggleMarkWrap,
   linkUrlPasteRule,
   linkBbcodePasteRule
 } from '../commands';
@@ -59,23 +60,25 @@ export default class LinkInline extends Mark {
   }
 
   commands({ type }) {
-    return (_attrs, state) => {
+    return (_, state) => {
       let marks = [];
       const { from, to } = state.selection;
 
       state.doc.nodesBetween(from, to, node => {
         marks = [...marks, ...node.marks];
       });
-
       const mark = marks.find(markItem => markItem.type.name === 'link_inline');
 
-      if (mark && mark.attrs.url) {
-        return removeMark(type);
+      if (mark) { return removeMark(type); }
+
+      const url = prompt(
+        window.I18n.t('frontend.shiki_editor.prompt.link_url')
+      )?.trim();
+
+      if (url) {
+        return toggleMarkWrap(type, { url: fixUrl(url) });
       }
-      const url = prompt(window.I18n.t('frontend.shiki_editor.prompt.link_url'));
-      return url ?
-        updateMark(type, { href: fixUrl(url) }) :
-        () => {};
+      return false;
     };
   }
 

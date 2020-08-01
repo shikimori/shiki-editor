@@ -11,7 +11,7 @@ export default function resolveWord($pos) {
 
   const fromIndex = textBefore?.lastIndexOf(' ');
   const from = nodeBefore ?
-    pos - (fromIndex === -1 ? textBefore.length : textBefore.length - fromIndex) :
+    pos - (fromIndex === -1 ? textBefore.length : textBefore.length - fromIndex - 1) :
     pos;
 
   const toIndex = nodeAfter ? textAfter.indexOf(' ') : pos;

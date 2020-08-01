@@ -1,3 +1,4 @@
+/* eslint no-param-reassign:0  */
 import { toggleMark } from 'prosemirror-commands';
 import { getMarkRange, resolveWord } from '../utils';
 
@@ -18,7 +19,8 @@ export default function toggleMarkWrap(type, attrs) {
 
         if (wordRange) {
           return dispatch(
-            tr.addMark(wordRange.from, wordRange.to, type.create(attrs))
+            tr.addMark(
+              wordRange.from, wordRange.to, type.create(attrs))
           );
         }
       }
@@ -27,4 +29,3 @@ export default function toggleMarkWrap(type, attrs) {
     return toggleMark(type, attrs)(state, dispatch);
   };
 }
-
