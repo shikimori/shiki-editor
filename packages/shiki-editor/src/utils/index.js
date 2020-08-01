@@ -2,6 +2,8 @@ export { default as ExtensionManager } from './extension_manager';
 export { default as ensureDimension } from './ensure_dimension';
 export { default as ensureOnlyStyle } from './ensure_only_style';
 export { default as findPlaceholder } from './find_placeholder';
+export { default as findParentSelectionNode }
+  from './find_parent_selection_node';
 export { default as fixUrl } from './fix_url';
 export { default as getMarkAttrs } from './get_mark_attrs';
 export { default as getMarkRange } from './get_mark_range';

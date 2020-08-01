@@ -11,5 +11,6 @@ export { default as replaceUploadPlaceholder } from './replace_upload_placeholde
 export { default as toggleBlockType } from './toggle_block_type';
 export { default as toggleList } from './toggle_list';
 export { default as toggleMarkWrap } from './toggle_mark_wrap';
+export { default as toggleNodeWrap } from './toggle_node_wrap';
 export { default as toggleWrap } from './toggle_wrap';
 export { default as updateMark } from './update_mark';
