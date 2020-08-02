@@ -32,7 +32,10 @@ export default function tokenHandlers(schema, tokens) {
           if (token.children) {
             state.parseTokens(token.children)
           }
-          state.closeNode();
+          // do not class close because it resets marks
+          // state.closeNode();
+          const info = state.stack.pop();
+          return state.addNode(info.type, info.attrs, info.content);
         } else {
           state.addNode(nodeType, attrs(spec, token))
         }
