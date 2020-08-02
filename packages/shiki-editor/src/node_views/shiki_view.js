@@ -45,7 +45,7 @@ export default class ShikiView extends DOMView {
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
     if (this.isInline) {
-      if (this.node.attrs.text) {
+      if (this.node.attrs.text && !this.node.attrs.isPasted) {
         this.dom.append(this.node.attrs.openBbcode);
         this.dom.appendChild(
           domSerializer.serializeFragment(this.node.content)

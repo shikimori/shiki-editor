@@ -30,7 +30,8 @@ export default class ShikiInline extends Node {
         meta: { default: {} },
         text: { default: null },
         isLoading: { default: true },
-        isError: { default: false }
+        isError: { default: false },
+        isPasted: { default: false }
       },
       inline: true,
       content: 'inline*',
@@ -39,7 +40,10 @@ export default class ShikiInline extends Node {
       selectable: true,
       parseDOM: [{
         tag: '.b-shiki_editor-node',
-        getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
+        getAttrs: node => ({
+          ...JSON.parse(node.getAttribute('data-attrs')),
+          isPasted: true
+        })
       }],
       toDOM: node => {
         if (node.attrs.text) {
