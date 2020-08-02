@@ -104,6 +104,7 @@ export default {
     &.#{$name}:before
       content: $glyph
 
+  &.preview,
   &.source
     width: auto
 
@@ -113,11 +114,19 @@ export default {
       font-weight: bold
       margin-top: -1px
 
-      body[data-locale=ru] &
-        content: '<bbcode>'
+  &.preview:before
+    body[data-locale=ru] &
+      content: '<предпросмотр>'
 
-      body[data-locale=en] &
-        content: '<bbcode>'
+    body[data-locale=en] &
+      content: '<preview>'
+
+  &.source:before
+    body[data-locale=ru] &
+      content: '<ббкоды>'
+
+    body[data-locale=en] &
+      content: '<bbcode>'
 
 input
   display: none
