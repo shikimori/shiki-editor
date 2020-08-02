@@ -60,7 +60,7 @@ export class Image extends Node {
         }
 
         return [
-          'div',
+          'span',
           {
             class: classes.join(' '),
             'data-attrs': serializedAttributes

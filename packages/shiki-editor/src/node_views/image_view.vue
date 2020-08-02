@@ -1,5 +1,5 @@
 <template>
-  <div
+  <span
     class='b-image'
     :class='[customClass, {
       "is-prosemirror-selected": selected,
@@ -22,7 +22,7 @@
       :width='width'
       :height='height'
     >
-  </div>
+  </span>
 </template>
 
 <script>
