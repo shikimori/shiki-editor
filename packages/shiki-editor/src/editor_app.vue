@@ -53,6 +53,7 @@
         v-model='editorContent'
         class='ProseMirror'
       />
+      <!--div v-else-if='isPreview' v-html='previewHtml' /-->
       <EditorContent v-else :editor='editor' />
     </div>
   </div>
@@ -114,7 +115,7 @@ export default {
   }),
   computed: {
     isEnabled() {
-      return !this.isSource;
+      return !this.isSource && !this.isPreview;
     },
     isEnabledMappings() {
       return {
@@ -260,8 +261,9 @@ export default {
       );
     },
     togglePreviewCommand() {
+      this.isPreview = this.isEnabled;
     },
-    toggleSourceCommand() {
+    async toggleSourceCommand() {
       const scrollY = scrollTop();
 
       if (this.isSource) {
@@ -271,22 +273,22 @@ export default {
         this.editorPosition = this.editor.selection.from;
       }
 
-      this.isSource = this.isEnabled;
+      this.isSource = !this.isSource;
 
-      this.$nextTick().then(() => {
-        if (this.isSource) {
-          autosize(this.$refs.textarea);
+      await this.$nextTick();
+
+      if (this.isSource) {
+        autosize(this.$refs.textarea);
+        this.$refs.textarea.focus();
+        window.scrollTo(0, scrollY);
+        if (!withinviewport(this.$refs.menubar, 'top')) {
+          this.$refs.textarea.blur();
           this.$refs.textarea.focus();
-          window.scrollTo(0, scrollY);
-          if (!withinviewport(this.$refs.menubar, 'top')) {
-            this.$refs.textarea.blur();
-            this.$refs.textarea.focus();
-          }
-        } else {
-          this.editor.focus(this.editorPosition);
-          window.scrollTo(0, scrollY);
         }
-      });
+      } else {
+        this.editor.focus(this.editorPosition);
+        window.scrollTo(0, scrollY);
+      }
     }
   }
 };
