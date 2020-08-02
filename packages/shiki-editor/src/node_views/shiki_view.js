@@ -9,14 +9,19 @@ export default class ShikiView extends DOMView {
     super(options);
 
     this.dom = document.createElement(this.elementType);
+    this.dom.classList.add('b-shiki_editor-node');
+
+    this.syncState();
     this.appendLoader();
 
     if (this.node.attrs.isLoading) {
-      this.fetch();
       this.dom.addEventListener('click', this.stop);
-    } else {
-      this.dom.addEventListener('click', this.retry);
+      this.fetch().then(() => {
+        this.dom.removeEventListener('click', this.stop);
+      });
     }
+
+    this.dom.addEventListener('click', this.resetCache);
   }
 
   get type() {
@@ -32,11 +37,6 @@ export default class ShikiView extends DOMView {
   }
 
   appendLoader() {
-    this.dom.classList.add('b-shiki_editor-node');
-    this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
-    this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
-    this.dom.classList.toggle('is-error', this.node.attrs.isError);
-
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
     if (this.isInline) {
@@ -66,8 +66,21 @@ export default class ShikiView extends DOMView {
     }
   }
 
+  syncState() {
+    this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
+    this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
+    this.dom.classList.toggle('is-error', this.node.attrs.isError);
+  }
+
+
   // rerender node view every time on any update
-  update() { return false; }
+  update(node, decorations) {
+    if (this.isInline) {
+      return super.update(node, decorations);
+    }
+
+    return false;
+  }
 
   @bind
   stop() {
@@ -80,17 +93,16 @@ export default class ShikiView extends DOMView {
   }
 
   @bind
-  retry() {
+  resetCache() {
     this.shikiLoader.resetCache(this.node.attrs);
-    this.updateAttrs({
-      isLoading: true,
-      isError: false
-    });
+    this.updateAttrs({ isError: false });
+    this.dom.removeEventListener('click', this.resetCache);
+    this.view.focus();
   }
 
   async fetch() {
     const result = await this.shikiLoader.fetch(this.node.attrs);
-    if (this.isDestroyed) { return; }
+    if (this.isDestroyed || !this.node.attrs.isLoading) { return; }
 
     if (result) {
       this.success(result);
