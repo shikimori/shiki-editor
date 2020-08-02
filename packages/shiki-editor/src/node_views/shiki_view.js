@@ -122,7 +122,7 @@ export default class ShikiView extends DOMView {
         src: result.url,
         isPoster: this.type === 'poster',
         ...this.node.attrs.meta
-      }),
+      }, null, this.node.marks),
       false
     );
   }
@@ -163,7 +163,7 @@ export default class ShikiView extends DOMView {
         type: this.type,
         meta: this.node.attrs.meta,
         nFormat: this.node.attrs.nFormat
-      }, this.node.content)
+      }, this.node.content, this.node.marks)
     );
   }
 
@@ -172,7 +172,7 @@ export default class ShikiView extends DOMView {
       ...result,
       type: this.type,
       meta: this.node.attrs.meta
-    });
+    }, null, this.node.marks);
   }
 
   error() {
