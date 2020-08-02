@@ -22,6 +22,7 @@ export default class ShikiView extends DOMView {
     }
 
     this.dom.addEventListener('click', this.resetCache);
+    this.dom.addEventListener('click', this.focus);
   }
 
   get type() {
@@ -34,6 +35,10 @@ export default class ShikiView extends DOMView {
 
   get isInline() {
     return this.extension.schema.group === 'inline';
+  }
+
+  get shikiLoader() {
+    return getShikiLoader(this.editor);
   }
 
   appendLoader() {
@@ -85,11 +90,6 @@ export default class ShikiView extends DOMView {
   @bind
   stop() {
     this.updateAttrs({ isLoading: false });
-    this.view.focus();
-  }
-
-  get shikiLoader() {
-    return getShikiLoader(this.editor);
   }
 
   @bind
@@ -97,7 +97,6 @@ export default class ShikiView extends DOMView {
     this.shikiLoader.resetCache(this.node.attrs);
     this.updateAttrs({ isError: false });
     this.dom.removeEventListener('click', this.resetCache);
-    this.view.focus();
   }
 
   async fetch() {
