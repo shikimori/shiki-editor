@@ -30,6 +30,7 @@ export default class ShikiInline extends Node {
         meta: { default: {} },
         text: { default: null },
         isLoading: { default: true },
+        isNotFound: { default: false },
         isError: { default: false },
         isPasted: { default: false }
       },

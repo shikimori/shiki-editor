@@ -15,14 +15,10 @@ export default class ShikiView extends DOMView {
     this.appendLoader();
 
     if (this.node.attrs.isLoading) {
-      this.dom.addEventListener('click', this.stop);
-      this.fetch().then(() => {
-        this.dom.removeEventListener('click', this.stop);
-      });
+      this.fetch();
     }
 
-    this.dom.addEventListener('click', this.resetCache);
-    this.dom.addEventListener('click', this.focus);
+    this.dom.addEventListener('click', this.handleClick);
   }
 
   get type() {
@@ -75,8 +71,8 @@ export default class ShikiView extends DOMView {
     this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
     this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
     this.dom.classList.toggle('is-error', this.node.attrs.isError);
+    this.dom.classList.toggle('b-entry-404', this.node.attrs.isNotFound);
   }
-
 
   // rerender node view every time on any update
   update(node, decorations) {
@@ -88,29 +84,36 @@ export default class ShikiView extends DOMView {
   }
 
   @bind
-  stop() {
-    this.updateAttrs({ isLoading: false });
+  handleClick() {
+    if (this.node.attrs.isLoading) {
+      this.updateAttrs({ isLoading: false });
+    } else if (this.node.attrs.isError) {
+      this.updateAttrs({ isLoading: true, isError: false });
+      this.fetch();
+    } else {
+      this.focus();
+    }
   }
 
-  @bind
-  resetCache() {
-    this.shikiLoader.resetCache(this.node.attrs);
-    this.updateAttrs({ isError: false });
-    this.dom.removeEventListener('click', this.resetCache);
-  }
+  // @bind
+  // resetCache() {
+  //   this.shikiLoader.resetCache(this.node.attrs);
+  //   this.updateAttrs({ isError: false });
+  //   this.dom.removeEventListener('click', this.resetCache);
+  // }
 
   async fetch() {
     const result = await this.shikiLoader.fetch(this.node.attrs);
+
     if (this.isDestroyed || !this.node.attrs.isLoading) { return; }
 
     if (result) {
       this.success(result);
     } else if (result === undefined) {
-      // undefined means that results were paginated and we have
-      // to ask the server once again
-      this.fetch();
-    } else {
+      // undefined means that error happened
       this.error();
+    } else {
+      this.notFound();
     }
   }
 
@@ -184,6 +187,13 @@ export default class ShikiView extends DOMView {
       type: this.type,
       meta: this.node.attrs.meta
     }, null, this.node.marks);
+  }
+
+  notFound() {
+    this.updateAttrs({
+      isLoading: false,
+      isNotFound: true
+    });
   }
 
   error() {

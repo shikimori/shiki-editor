@@ -68,10 +68,12 @@ export class ShikiLoader extends Extension {
       .catch(_error => (
         flash.error(window.I18n.t('frontend.lib.please_try_again_later'))
       ))
-      .then(result => this.process(result?.data));
+      .then(result => (
+        result ? this.processSuccess(result.data) : this.processError()
+      ));
   }
 
-  process(results) {
+  processSuccess(results) {
     Object.keys(results).forEach(kind => {
       Object.keys(results[kind]).forEach(id => {
         const result = results[kind][id];
@@ -91,6 +93,22 @@ export class ShikiLoader extends Extension {
 
     if (Object.keys(QUEUE).length) {
       this.sendRequest();
+    }
+  }
+
+  processError() {
+    Object.keys(QUEUE).forEach(kind => {
+      const queueById = QUEUE[kind];
+
+      Object.keys(queueById).forEach(id => {
+        const promises = queueById[id];
+        promises.forEach(promise => promise.resolve(undefined));
+      });
+    });
+
+    const keys = Object.keys(QUEUE);
+    for (let i = 0; i < keys.length; i += 1) {
+      delete QUEUE[keys[i]];
     }
   }
 
@@ -130,6 +148,10 @@ export class ShikiLoader extends Extension {
     if (promises && promises.length) {
       promises.forEach(promise => promise.resolve(result));
     }
+  }
+
+  fail(promises) {
+    promises.forEach(promise => promise.resolve(null));
   }
 }
 
