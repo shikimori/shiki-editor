@@ -359,7 +359,7 @@ export default {
       background: #fcfcfc
       color: #2b8acc
       cursor: pointer
-      font-family: Monaco, Menlo, Consolas, Courier New, monospace;
+      font-family: var(--font-code, Monaco, Menlo, Consolas, Courier New, monospace)
       font-size: 9px
       font-weight: normal
       left: 0
