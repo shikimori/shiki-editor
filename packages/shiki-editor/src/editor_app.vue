@@ -54,7 +54,10 @@
       v-if='editor'
       ref='editor_container'
       class='editor-container'
-      :class='{ "is-loading": isPreviewLoading }'
+      :class='{
+        "is-loading": isPreviewLoading,
+        "is-source": isSource
+      }'
     >
       <div
         v-if='isPreview && previewHTML'
@@ -390,6 +393,9 @@ export default {
       top: 0
       width: 100%
       z-index: 3
+
+  &.is-source
+    line-height: 0
 
   .preview
     padding: 5px 8px 5px
