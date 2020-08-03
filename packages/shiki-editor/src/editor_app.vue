@@ -56,9 +56,13 @@
       class='editor-container'
       :class='{ "is-loading": isPreviewLoading }'
     >
-      <!--div v-else-if='isPreview' v-html='previewHtml' /-->
+      <div
+        v-if='isPreview && previewHTML'
+        class='preview'
+        v-html='previewHTML'
+      />
       <textarea
-        v-if='isSource'
+        v-else-if='isSource'
         ref='textarea'
         v-model='editorContent'
         class='ProseMirror'
@@ -122,7 +126,8 @@ export default {
     fileUploaderExtension: null,
     isMenuBarOffset: false,
     isPreview: false,
-    isPreviewLoading: false
+    isPreviewLoading: false,
+    previewHTML: null
   }),
   computed: {
     isEnabled() {
@@ -277,9 +282,19 @@ export default {
         this.isActive.link || !this.editor.state.selection.empty
       );
     },
-    togglePreview() {
+    async togglePreview() {
       this.isPreview = !this.isPreview;
       this.isPreviewLoading = this.isPreview;
+
+      if (this.isPreview) {
+        const { data } = await this.preview(
+          this.isSource ? this.editorContent : this.editor.exportMarkdown()
+        );
+        this.previewHTML = data;
+        this.isPreviewLoading = false;
+      } else {
+        this.previewHTML = null;
+      }
     },
     async toggleSource() {
       this.isPreview = false;
@@ -375,6 +390,9 @@ export default {
       top: 0
       width: 100%
       z-index: 3
+
+  .preview
+    padding: 5px 8px 5px
 
 /deep/
   span[contenteditable=false]
