@@ -22,17 +22,21 @@
           />
         </div>
         <div class='menu-group offset'>
+          <div
+            v-if='isPreviewLoading'
+            class='icon-loader b-ajax vk-like'
+          />
           <Icon
             v-bind='menuPreviewItem'
             :is-active='isPreview'
-            :is-enabled='isSourceEnabled'
-            @command='() => togglePreviewCommand()'
+            :is-enabled='isPreviewEnabled'
+            @command='() => togglePreview()'
           />
           <Icon
             v-bind='menuSourceItem'
             :is-active='isSource'
             :is-enabled='isSourceEnabled'
-            @command='() => toggleSourceCommand()'
+            @command='() => toggleSource()'
           />
         </div>
       </div>
@@ -46,14 +50,19 @@
       />
     </div>
 
-    <div v-if='editor' ref='editor_container' class='editor-container'>
+    <div
+      v-if='editor'
+      ref='editor_container'
+      class='editor-container'
+      :class='{ "is-loading": isPreviewLoading }'
+    >
+      <!--div v-else-if='isPreview' v-html='previewHtml' /-->
       <textarea
         v-if='isSource'
         ref='textarea'
         v-model='editorContent'
         class='ProseMirror'
       />
-      <!--div v-else-if='isPreview' v-html='previewHtml' /-->
       <EditorContent v-else :editor='editor' />
     </div>
   </div>
@@ -111,7 +120,8 @@ export default {
     isSmiley: false,
     fileUploaderExtension: null,
     isMenuBarOffset: false,
-    isPreview: false
+    isPreview: false,
+    isPreviewLoading: false
   }),
   computed: {
     isEnabled() {
@@ -165,8 +175,14 @@ export default {
 
       return memo;
     },
+    isContentManipulationsPending() {
+      return this.fileUploaderExtension.isUploading;
+    },
+    isPreviewEnabled() {
+      return !this.isContentManipulationsPending;
+    },
     isSourceEnabled() {
-      return !this.fileUploaderExtension.isUploading;
+      return !this.isContentManipulationsPending && !this.isPreview;
     }
   },
   watch: {
@@ -260,10 +276,12 @@ export default {
         this.isActive.link || !this.editor.state.selection.empty
       );
     },
-    togglePreviewCommand() {
-      this.isPreview = this.isEnabled;
+    togglePreview() {
+      this.isPreview = !this.isPreview;
+      this.isPreviewLoading = this.isPreview;
     },
-    async toggleSourceCommand() {
+    async toggleSource() {
+      this.isPreview = false;
       const scrollY = scrollTop();
 
       if (this.isSource) {
@@ -339,6 +357,23 @@ export default {
 
     &:before
       display: none
+
+  .icon-loader
+    width: 55px
+
+.editor-container
+  &.is-loading
+    position: relative
+
+    &:before
+      background: rgba(255, 255, 255, 0.75)
+      content: ''
+      height: 100%
+      left: 0
+      position: absolute
+      top: 0
+      width: 100%
+      z-index: 3
 
 /deep/
   span[contenteditable=false]
