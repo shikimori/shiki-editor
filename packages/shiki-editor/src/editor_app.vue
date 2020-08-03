@@ -56,7 +56,7 @@
       class='editor-container'
       :class='{
         "is-loading": isPreviewLoading,
-        "is-source": isSource
+        "is-source": isSource && !isPreview
       }'
     >
       <div
