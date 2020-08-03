@@ -28,6 +28,7 @@
             :vue='vue'
             :content='text1'
             :base-url='baseUrl'
+            :preview='preview'
             :shiki-uploader='shikiUploader'
             @update='(value) => text1 = value'
           />
@@ -38,6 +39,7 @@
             :vue='vue'
             :content='text2'
             :base-url='baseUrl'
+            :preview='preview'
             :shiki-uploader='shikiUploader'
             @update='(value) => text2 = value'
           />
@@ -48,6 +50,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 // import { ShikiEditorApp } from 'shiki-editor';
 // import { flash } from 'shiki-utils';
 // import { throttle, debounce } from 'shiki-decorators';
@@ -219,6 +222,9 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
     },
     noticeDebouncedThrottled() {
       this.test.debouncedThrottled();
+    },
+    preview(text) {
+      return axios.get(`${this.baseUrl}/api/shiki_editor/preview`, { text });
     }
   }
 };

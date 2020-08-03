@@ -106,6 +106,7 @@ export default {
   props: {
     vue: { type: Function, required: true },
     baseUrl: { type: String, required: true },
+    preview: { type: Function, required: true },
     content: { type: String, required: true },
     shikiUploader: { type: Object, required: true }
   },
