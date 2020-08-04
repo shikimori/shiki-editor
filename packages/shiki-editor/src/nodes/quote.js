@@ -16,11 +16,11 @@ export default class Quote extends Node {
       defining: true,
       draggable: false,
       attrs: {
-        comment_id: { default: null },
-        message_id: { default: null },
-        topic_id: { default: null },
-        user_id: { default: null },
-        nickname: { default: null },
+        comment_id: { default: undefined },
+        message_id: { default: undefined },
+        topic_id: { default: undefined },
+        user_id: { default: undefined },
+        nickname: { default: undefined },
         nFormat: {
           default: {
             nBeforeOpen: true,
@@ -110,16 +110,16 @@ export default class Quote extends Node {
   markdownSerialize(state, node) {
     const attributes = [];
 
-    if (node.attrs.nickname) {
-      if (node.attrs.comment_id) {
+    if (node.attrs.nickname !== undefined) {
+      if (node.attrs.comment_id !== undefined) {
         attributes.push(`c${node.attrs.comment_id}`);
-      } else if (node.attrs.message_id) {
+      } else if (node.attrs.message_id !== undefined) {
         attributes.push(`m${node.attrs.message_id}`);
-      } else if (node.attrs.topic_id) {
+      } else if (node.attrs.topic_id !== undefined) {
         attributes.push(`t${node.attrs.topic_id}`);
       }
 
-      if (node.attrs.user_id) {
+      if (node.attrs.user_id !== undefined) {
         attributes.push(node.attrs.user_id);
       }
       attributes.push(node.attrs.nickname);
@@ -128,7 +128,7 @@ export default class Quote extends Node {
     state.renderBlock(
       node,
       'quote',
-      attributes.length ? attributes.join(';') : '',
+      attributes.length ? '=' + attributes.join(';') : '',
       node.attrs.nFormat
     );
   }
