@@ -7439,20 +7439,68 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-"shiki-decorators@file:packages/shiki-decorators":
+shiki-decorators@^0.8.25:
   version "0.8.27"
+  resolved "https://registry.yarnpkg.com/shiki-decorators/-/shiki-decorators-0.8.27.tgz#abd307b450ec5c7f4546470a2c02801b3aa146ae"
+  integrity sha512-KnvwxWsw2l2n+seIZBTcxAL41qZ/SKCXAELNy1QiFUcE7elVNfKfEnThNlVUJdq78z3uz1qyupfaM2u0eU+mSA==
   dependencies:
     bind-decorator "1.0.11"
 
-"shiki-uploader@file:packages/shiki-uploader":
+"shiki-decorators@file:packages/shiki-decorators":
+  version "0.9.0"
+  dependencies:
+    bind-decorator "1.0.11"
+
+shiki-editor@^0.8.25:
   version "0.8.27"
+  resolved "https://registry.yarnpkg.com/shiki-editor/-/shiki-editor-0.8.27.tgz#48068e8cfd4e1795854255123f29c21513037b43"
+  integrity sha512-FY3aj1gwS4hnU5JR4ZMUkhRQMkZV4lFgeHfRffq7WgKcYftYktEg2Nnw6zaQYg5b2NXcWtjn5cgxxS8vwjB0EQ==
+  dependencies:
+    "@babel/plugin-proposal-logical-assignment-operators" "^7.10.4"
+    "@popperjs/core" "^2.4.4"
+    add "^2.0.6"
+    prosemirror-commands "^1.1.4"
+    prosemirror-dropcursor "^1.3.2"
+    prosemirror-gapcursor "^1.1.5"
+    prosemirror-history "^1.1.3"
+    prosemirror-inputrules "^1.1.2"
+    prosemirror-keymap "^1.1.4"
+    prosemirror-model "^1.10.0"
+    prosemirror-schema-basic "^1.1.2"
+    prosemirror-schema-list "^1.1.2"
+    prosemirror-state "^1.3.3"
+    prosemirror-tables "^1.1.0"
+    prosemirror-utils "^0.9.6"
+    prosemirror-view "1.15.0"
+    vue-keypress "^2.1.1"
+    withinviewport "^2.1.2"
+    yarn "^1.22.4"
+
+shiki-uploader@^0.8.25:
+  version "0.8.27"
+  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-0.8.27.tgz#1440e794781ed6e79fec97fdc7db71e513eef2bc"
+  integrity sha512-C1xgQai0MH3w3Y92MymCA0V9S3xTYRT0+Vuo0OIRsan8XicQwU7n8qR/STBGJNcaZR6FDhqqciBzcBu7FNqe0A==
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
-"shiki-utils@file:packages/shiki-utils":
+"shiki-uploader@file:packages/shiki-uploader":
+  version "0.9.0"
+  dependencies:
+    "@uppy/core" "^1.11.0"
+    "@uppy/xhr-upload" "^1.6.0"
+    is-visible "^2.2.0"
+
+shiki-utils@^0.8.25:
   version "0.8.27"
+  resolved "https://registry.yarnpkg.com/shiki-utils/-/shiki-utils-0.8.27.tgz#d44acb0d7bf6bb4a059cae7030ae41a1dd4699c8"
+  integrity sha512-nem7WKUXyz2Gww/Zm9HV8KyEGmJFXPuVwd4DJRaHDzzIVN1NJPvFekZaxzvOdnfoRn3IycB8ytlaNMiTvB5xUg==
+  dependencies:
+    toastify-js "^1.8.0"
+
+"shiki-utils@file:packages/shiki-utils":
+  version "0.9.0"
   dependencies:
     toastify-js "^1.8.0"
 
