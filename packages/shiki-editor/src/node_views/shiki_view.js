@@ -86,9 +86,9 @@ export default class ShikiView extends DOMView {
   @bind
   handleClick() {
     if (this.node.attrs.isLoading) {
-      this.updateAttrs({ isLoading: false });
+      this.updateAttrs({ isLoading: false }, false);
     } else if (this.node.attrs.isError) {
-      this.updateAttrs({ isLoading: true, isError: false });
+      this.updateAttrs({ isLoading: true, isError: false }, false);
       this.fetch();
     } else {
       this.focus();
@@ -191,16 +191,10 @@ export default class ShikiView extends DOMView {
   }
 
   notFound() {
-    this.updateAttrs({
-      isLoading: false,
-      isNotFound: true
-    });
+    this.updateAttrs({ isLoading: false, isNotFound: true }, false);
   }
 
   error() {
-    this.updateAttrs({
-      isLoading: false,
-      isError: true
-    });
+    this.updateAttrs({ isLoading: false, isError: true }, false);
   }
 }

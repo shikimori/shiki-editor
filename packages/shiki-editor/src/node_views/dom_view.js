@@ -77,6 +77,7 @@ export default class DOMView {
     return this.syncState() !== false;
   }
 
+  // must be overriden in inherited class
   syncState() {
   }
 
@@ -115,7 +116,7 @@ export default class DOMView {
     return this.captureEvents;
   }
 
-  updateAttrs(attrs) {
+  updateAttrs(attrs, isAddToHistory = true) {
     const { state } = this.view;
     const { type } = this.node;
     const pos = this.getPos();
@@ -123,11 +124,15 @@ export default class DOMView {
       ...this.node.attrs,
       ...attrs
     };
-    const transaction = this.isMark ?
-      state.tr
+    let transaction = state.tr.setMeta('addToHistory', isAddToHistory);
+
+    if (this.isMark) {
+      transaction = transaction
         .removeMark(pos.from, pos.to, type)
-        .addMark(pos.from, pos.to, type.create(newAttrs)) :
-      state.tr.setNodeMarkup(pos, null, newAttrs);
+        .addMark(pos.from, pos.to, type.create(newAttrs));
+    } else {
+      transaction = transaction.setNodeMarkup(pos, null, newAttrs);
+    }
 
     this.view.dispatch(transaction);
   }
