@@ -177,7 +177,8 @@ export default class ShikiView extends DOMView {
         type: this.type,
         meta: this.node.attrs.meta,
         nFormat: this.node.attrs.nFormat
-      }, this.node.content, this.node.marks)
+      }, this.node.content, this.node.marks),
+      false
     );
   }
 
