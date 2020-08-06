@@ -13,6 +13,9 @@ export default class ListItem extends Node {
 
   get schema() {
     return {
+      attrs: {
+        bbcode: { default: '- ' }
+      },
       content: 'block*',
       defining: true,
       parseDOM: [{ tag: 'li' }],

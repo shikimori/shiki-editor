@@ -592,7 +592,11 @@ describe('MarkdownTokenizer', () => {
       it('- a', () => {
         expect(MarkdownTokenizer.parse('- a')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '- ']]
+          },
           ...text('a'),
           { type: 'list_item', direction: 'close' },
           { type: 'bullet_list', direction: 'close' }
@@ -602,20 +606,32 @@ describe('MarkdownTokenizer', () => {
       it('- a\\n- b', () => {
         expect(MarkdownTokenizer.parse('- a\n- b')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '- ']]
+          },
           ...text('a'),
           { type: 'list_item', direction: 'close' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '- ']]
+          },
           ...text('b'),
           { type: 'list_item', direction: 'close' },
           { type: 'bullet_list', direction: 'close' }
         ]);
       });
 
-      it('- test\\nn  zxc', () => {
-        expect(MarkdownTokenizer.parse('- test\n  zxc')).to.eql([
+      it('* test\\nn  zxc', () => {
+        expect(MarkdownTokenizer.parse('* test\n  zxc')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '* ']]
+          },
           ...text('test'),
           ...text('zxc'),
           { type: 'list_item', direction: 'close' },
@@ -623,10 +639,14 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      it('- > test', () => {
-        expect(MarkdownTokenizer.parse('- > test')).to.eql([
+      it('+ > test', () => {
+        expect(MarkdownTokenizer.parse('+ > test')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '+ ']]
+          },
           { type: 'blockquote', direction: 'open' },
           ...text('test'),
           { type: 'blockquote', direction: 'close' },
@@ -638,7 +658,11 @@ describe('MarkdownTokenizer', () => {
       it('[*] a', () => {
         expect(MarkdownTokenizer.parse('[*] a')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '[*] ']]
+          },
           ...text('a'),
           { type: 'list_item', direction: 'close' },
           { type: 'bullet_list', direction: 'close' }
@@ -648,12 +672,51 @@ describe('MarkdownTokenizer', () => {
       it('[*]a', () => {
         expect(MarkdownTokenizer.parse('[*]a')).to.eql([
           { type: 'bullet_list', direction: 'open' },
-          { type: 'list_item', direction: 'open' },
+          {
+            type: 'list_item',
+            direction: 'open',
+            attrs: [['bbcode', '[*]']]
+          },
           ...text('a'),
           { type: 'list_item', direction: 'close' },
           { type: 'bullet_list', direction: 'close' }
         ]);
       });
+
+      it(' [*]a', () => {
+        expect(MarkdownTokenizer.parse(' [*]a')).to.eql([
+          ...text(' [*]a')
+        ]);
+      });
+
+      // it('[*]a[*]b', () => {
+      //   expect(MarkdownTokenizer.parse('[*]a[*]b')).to.eql([
+      //     { type: 'bullet_list', direction: 'open' },
+      //     { type: 'list_item', direction: 'open' },
+      //     ...text('a'),
+      //     { type: 'list_item', direction: 'close' },
+      //     { type: 'list_item', direction: 'open' },
+      //     ...text('b'),
+      //     { type: 'list_item', direction: 'close' },
+      //     { type: 'bullet_list', direction: 'close' }
+      //   ]);
+      // });
+
+      // it('[*]a[*]b[*]c', () => {
+      //   expect(MarkdownTokenizer.parse('[*]a[*]b[*]c')).to.eql([
+      //     { type: 'bullet_list', direction: 'open' },
+      //     { type: 'list_item', direction: 'open' },
+      //     ...text('a'),
+      //     { type: 'list_item', direction: 'close' },
+      //     { type: 'list_item', direction: 'open' },
+      //     ...text('b'),
+      //     { type: 'list_item', direction: 'close' },
+      //     { type: 'list_item', direction: 'open' },
+      //     ...text('c'),
+      //     { type: 'list_item', direction: 'close' },
+      //     { type: 'bullet_list', direction: 'close' }
+      //   ]);
+      // });
     });
 
     describe('code_block', () => {

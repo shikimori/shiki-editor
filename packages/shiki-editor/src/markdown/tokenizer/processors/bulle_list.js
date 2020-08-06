@@ -1,4 +1,4 @@
-export default function(state, tagSequence) {
+export default function processBulletList(state, tagSequence) {
   const priorSequence = state.nestedSequence;
 
   state.push(state.tagOpen('bullet_list'));
@@ -6,7 +6,7 @@ export default function(state, tagSequence) {
 
   do {
     state.next(tagSequence.length);
-    state.push(state.tagOpen('list_item'));
+    state.push(state.tagOpen('list_item', { bbcode: tagSequence }));
     processBulletListLines(state, priorSequence, '  ');
     state.push(state.tagClose('list_item'));
   } while (state.isSequenceContinued());
