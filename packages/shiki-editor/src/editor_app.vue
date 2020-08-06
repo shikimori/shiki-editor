@@ -70,7 +70,10 @@
         v-model='editorContent'
         class='ProseMirror'
       />
-      <EditorContent v-else :editor='editor' />
+      <EditorContent
+        v-else
+        :editor='editor'
+      />
     </div>
   </div>
 </template>
