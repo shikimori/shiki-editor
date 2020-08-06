@@ -49,6 +49,6 @@ export default class BulletList extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.renderList(node, '  ', () => (node.attrs.bullet || '-') + ' ');
+    state.renderList(node, '  ');
   }
 }

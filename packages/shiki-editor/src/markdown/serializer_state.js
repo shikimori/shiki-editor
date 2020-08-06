@@ -278,7 +278,7 @@ export default class MarkdownSerializerState {
   // indentation added to all lines except the first in an item,
   // `firstDelim` is a function going from an item index to a
   // delimiter for the first line of the item.
-  renderList(node, delim, firstDelim) {
+  renderList(node, delim) {
     if (this.closed && this.closed.type === node.type) this.flushClose(3);
     else if (this.inTightList) this.flushClose(1);
 
@@ -290,7 +290,12 @@ export default class MarkdownSerializerState {
     this.inTightList = isTight;
     node.forEach((child, _, i) => {
       if (i && isTight) this.flushClose(1);
-      this.wrapBlock(delim, firstDelim(i), node, () => this.render(child, node, i));
+      this.wrapBlock(
+        delim,
+        child.attrs.bbcode,
+        node,
+        () => this.render(child, node, i)
+      );
     });
     this.inTightList = prevTight;
   }
