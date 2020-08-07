@@ -3,6 +3,7 @@ export default function processBulletList(state, tagSequence) {
 
   state.push(state.tagOpen('bullet_list'));
   state.nestedSequence += tagSequence;
+  // console.log(`processBulletList '${state.nestedSequence}'`);
 
   do {
     state.next(tagSequence.length);
@@ -14,12 +15,15 @@ export default function processBulletList(state, tagSequence) {
   state.push(state.tagClose('bullet_list'));
   state.nestedSequence = state.nestedSequence
     .slice(0, state.nestedSequence.length - tagSequence.length);
+  // console.log(`processBulletList '${state.nestedSequence}'`);
 }
 
 function processBulletListLines(state, priorSequence, tagSequence) {
   const nestedSequenceBackup = state.nestedSequence;
 
   state.nestedSequence = priorSequence + tagSequence;
+  // console.log(`processBulletListLines '${state.nestedSequence}'`);
+
   let line = 0;
 
   do {
@@ -32,4 +36,5 @@ function processBulletListLines(state, priorSequence, tagSequence) {
   } while (state.isSequenceContinued());
 
   state.nestedSequence = nestedSequenceBackup;
+  // console.log(`processBulletListLines '${state.nestedSequence}'`);
 }
