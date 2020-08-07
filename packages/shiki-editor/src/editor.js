@@ -353,7 +353,7 @@ export default class ShikiEditor {
   }
 
   exportMarkdown() {
-    return this.markdownSerializer.serialize(this.state.doc);
+    return this.markdownSerializer.serialize(this.state.doc).trim();
   }
 
   registerPlugin(plugin = null, handlePlugins) {

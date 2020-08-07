@@ -520,7 +520,7 @@ describe('MarkdownTokenizer', () => {
         });
       });
     });
-  //
+
     describe('blockquote', () => {
       it('> a', () => {
         expect(MarkdownTokenizer.parse('> a')).to.eql([
