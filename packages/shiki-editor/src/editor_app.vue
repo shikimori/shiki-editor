@@ -61,6 +61,7 @@
     >
       <div
         v-if='isPreview && previewHTML'
+        ref='preview'
         class='preview'
         v-html='previewHTML'
       />
@@ -298,6 +299,9 @@ export default {
         );
         this.previewHTML = data;
         this.isPreviewLoading = false;
+
+        await this.$nextTick();
+        this.$emit('preview', this.$refs.preview);
       } else {
         this.previewHTML = null;
       }
