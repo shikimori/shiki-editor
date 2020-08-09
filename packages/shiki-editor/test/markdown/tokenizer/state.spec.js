@@ -443,7 +443,7 @@ describe('MarkdownTokenizer', () => {
               {
                 type: 'link_inline',
                 direction: 'open',
-                attrs: [['url', 'https://ya.ru']]
+                attrs: [['url', 'https://ya.ru'], ['text', 'https://ya.ru']]
               },
               { type: 'text', content: 'https://ya.ru' },
               { type: 'link_inline', direction: 'close' }

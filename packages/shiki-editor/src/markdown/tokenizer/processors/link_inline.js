@@ -1,6 +1,6 @@
-import { hasInlineSequence, extractUntil } from '../helpers';
+import { extractUntil } from '../helpers';
 
-export default function(state, bbcode, attrs) {
+export default function processLinkInline(state, bbcode, attrs) {
   if (attrs) {
     return processLinkStart(state, bbcode, attrs);
   } else {
@@ -9,11 +9,12 @@ export default function(state, bbcode, attrs) {
 }
 
 function processLinkStart(state, bbcode, attrs) {
-  if (!hasInlineSequence(state.text, '[/url]', state.index)) { return false; }
+  const text = extractUntil(state.text, '[/url]', state.index + bbcode.length);
+  if (!text) { return false; }
 
   state.marksStack.push('[url]');
   state.inlineTokens.push(
-    state.tagOpen('link_inline', attrs, bbcode)
+    state.tagOpen('link_inline', { ...attrs, text }, bbcode)
   );
   state.next(bbcode.length);
 
@@ -31,7 +32,7 @@ function processLinkFull(state, openBbcode) {
   if (!url) { return false; }
 
   state.inlineTokens.push(
-    state.tagOpen('link_inline', { url })
+    state.tagOpen('link_inline', { url, text: url })
   );
   state.appendInlineContent(url, false);
   state.inlineTokens.push(

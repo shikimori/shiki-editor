@@ -128,9 +128,13 @@ export default class LinkInline extends Mark {
         return mark.attrs.type && mark.attrs.id && node.text == mark.attrs.text;
       },
       open(_state, mark, _parent, _index) {
-        return mark.attrs.type && mark.attrs.id ?
-          `[${mark.attrs.type}=${mark.attrs.id}]` :
-          `[url=${mark.attrs.url}]`;
+        if (mark.attrs.type && mark.attrs.id) {
+          return `[${mark.attrs.type}=${mark.attrs.id}]`;
+        } else if (mark.attrs.text === mark.attrs.url) {
+          return '[url]';
+        }
+
+        return `[url=${mark.attrs.url}]`;
       },
       close(_state, mark, _parent, _index) {
         return mark.attrs.type && mark.attrs.id ?

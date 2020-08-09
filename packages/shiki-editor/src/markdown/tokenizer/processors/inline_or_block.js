@@ -26,8 +26,23 @@ export function processInlineOrBlock(
     PSEUDO_BLOCK_TEST_REGEXP.test(inlineSequence);
 
   if (inlineSequence && !isBlocksInSequence) {
+    const isLink = type === 'link';
+    let linkMeta;
+
+    if (inlineSequence && meta.url === inlineSequence) {
+      linkMeta = { ...meta, text: inlineSequence };
+    }
+
+    const isProcessed = processMarkOpen(
+      state,
+      `${type}_inline`,
+      openBbcode,
+      closeBbcode,
+      isLink ? linkMeta : meta
+    );
+
     // process as inline
-    if (processMarkOpen(state, `${type}_inline`, openBbcode, closeBbcode, meta)) {
+    if (isProcessed) {
       return false;
     }
   } else {
