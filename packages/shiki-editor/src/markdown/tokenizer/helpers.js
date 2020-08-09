@@ -29,7 +29,7 @@ export function extractUntil(
   sequence,
   startIndex,
   maxIndex = startIndex + 1000,
-  isIgnoreNewLine
+  isIgnoreNewLine = false
 ) {
   for (let i = startIndex; i <= (maxIndex || text.length); i++) {
     const char = text[i];
