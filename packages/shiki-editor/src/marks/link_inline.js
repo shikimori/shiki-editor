@@ -87,7 +87,7 @@ export default class LinkInline extends Mark {
       linkUrlPasteRule(
         /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g, // eslint-disable-line
         type,
-        url => ({ url })
+        url => ({ url, text: url })
       ),
       linkBbcodePasteRule(type)
     ];
