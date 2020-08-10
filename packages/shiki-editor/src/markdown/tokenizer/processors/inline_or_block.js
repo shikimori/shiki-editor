@@ -29,7 +29,7 @@ export function processInlineOrBlock(
     const isLink = type === 'link';
     let linkMeta;
 
-    if (inlineSequence && meta.url === inlineSequence) {
+    if (inlineSequence && meta && meta.url === inlineSequence) {
       linkMeta = { ...meta, text: inlineSequence };
     }
 
