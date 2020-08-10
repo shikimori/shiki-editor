@@ -404,7 +404,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'link_inline',
                 direction: 'open',
                 bbcode: '[url=https://ya.ru]',
-                attrs: [['url', 'https://ya.ru']]
+                attrs: [['url', 'https://ya.ru'], ['text', 'zxc']]
               },
               { type: 'text', content: 'zxc' },
               { type: 'link_inline', direction: 'close', bbcode: '[/url]' }
@@ -424,7 +424,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'link_inline',
                 direction: 'open',
                 bbcode: '[url=ya.ru]',
-                attrs: [['url', '//ya.ru']]
+                attrs: [['url', '//ya.ru'], ['text', 'zxc']]
               },
               { type: 'text', content: 'zxc' },
               { type: 'link_inline', direction: 'close', bbcode: '[/url]' }

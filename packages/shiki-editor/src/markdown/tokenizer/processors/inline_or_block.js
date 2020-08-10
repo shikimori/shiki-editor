@@ -27,24 +27,18 @@ export function processInlineOrBlock(
 
   if (inlineSequence && !isBlocksInSequence) {
     const isLink = type === 'link';
-    let linkMeta;
-
-    if (inlineSequence && meta && meta.url === inlineSequence) {
-      linkMeta = { ...meta, text: inlineSequence };
-    }
+    if (isLink) { return null; } // inline links are processed in other place
 
     const isProcessed = processMarkOpen(
       state,
       `${type}_inline`,
       openBbcode,
       closeBbcode,
-      isLink ? linkMeta : meta
+      meta
     );
 
     // process as inline
-    if (isProcessed) {
-      return false;
-    }
+    if (isProcessed) { return false; }
   } else {
     return processBlock(
       state,

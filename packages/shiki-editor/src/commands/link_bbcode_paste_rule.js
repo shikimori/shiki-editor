@@ -4,7 +4,7 @@ import { Slice, Fragment } from 'prosemirror-model';
 
 const URL_REGEXP = /(\[url(?:=([^\]]+))?\])([^\]]+)(\[\/url\])/;
 
-export default function(type) {
+export default function linkBbcodePasteRule(type) {
   const handler = fragment => {
     const nodes = [];
 
