@@ -82,9 +82,9 @@ export default class LinkInline extends Mark {
     };
   }
 
-  pasteRules({ type }) {
+  pasteRules({ type, schema }) {
     return [
-      linkUrlPasteRule(type, url => ({ url, text: url })),
+      linkUrlPasteRule(type, schema, url => ({ url, text: url })),
       linkBbcodePasteRule(type)
     ];
   }
