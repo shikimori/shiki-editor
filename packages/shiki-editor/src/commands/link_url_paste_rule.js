@@ -2,7 +2,9 @@
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 
-export default function(regexp, type, getAttrs) {
+const URL_REGEXP = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g; // eslint-disable-line
+
+export default function linkUrlPasteRule(type, getAttrs) {
   const handler = fragment => {
     const nodes = [];
 
@@ -13,7 +15,7 @@ export default function(regexp, type, getAttrs) {
         let match;
 
         do {
-          match = regexp.exec(text);
+          match = URL_REGEXP.exec(text);
           if (match) {
             const start = match.index;
             const end = start + match[0].length;
@@ -23,10 +25,15 @@ export default function(regexp, type, getAttrs) {
               nodes.push(child.cut(pos, start));
             }
 
-            nodes.push(child
-              .cut(start, end)
-              .mark(type.create(attrs)
-                .addToSet(child.marks)));
+            nodes.push(
+              child
+                .cut(start, end)
+                .mark(
+                  type
+                    .create(attrs)
+                    .addToSet(child.marks)
+                )
+            );
 
             pos = end;
           }
