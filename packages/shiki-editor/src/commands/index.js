@@ -1,3 +1,4 @@
+export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as linkBbcodePasteRule } from './link_bbcode_paste_rule';
 export { default as linkUrlPasteRule } from './link_url_paste_rule';
@@ -7,6 +8,7 @@ export { default as nodeInputRule } from './node_input_rule';
 export { default as pasteRule } from './paste_rule';
 export { default as removeMark } from './remove_mark';
 export { default as removeUploadPlaceholder } from './remove_upload_placeholder';
+export { default as replaceText } from './replace_text';
 export { default as replaceUploadPlaceholder } from './replace_upload_placeholder';
 export { default as toggleBlockType } from './toggle_block_type';
 export { default as toggleList } from './toggle_list';
