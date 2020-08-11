@@ -76,6 +76,27 @@
         :editor='editor'
       />
     </div>
+
+    <div
+      v-show='showSuggestions'
+      ref='suggestions'
+      class='suggestion-list'
+    >
+      <template v-if='hasResults'>
+        <div
+          v-for='(user, index) in filteredUsers'
+          :key='user.id'
+          class='suggestion-list__item'
+          :class='{ "is-selected": navigatedUserIndex === index }'
+          @click='selectUser(user)'
+        >
+          {{ user.name }}
+        </div>
+      </template>
+      <div v-else class='suggestion-list__item is-empty'>
+        No users found
+      </div>
+    </div>
   </div>
 </template>
 
@@ -140,13 +161,12 @@ export default {
     isPreview: false,
     isPreviewLoading: false,
     previewHTML: null,
-
-
-    query: null,
-    suggestionRange: null,
+    // mentions
     filteredUsers: [],
+    insertMention: () => {},
     navigatedUserIndex: 0,
-    insertMention: () => {}
+    query: null,
+    suggestionRange: null
   }),
   computed: {
     isEnabled() {
@@ -208,6 +228,13 @@ export default {
     },
     isSourceEnabled() {
       return !this.isContentManipulationsPending && !this.isPreview;
+    },
+    // mentions
+    hasResults() {
+      return this.filteredUsers.length;
+    },
+    showSuggestions() {
+      return this.query || this.hasResults;
     }
   },
   watch: {
@@ -429,6 +456,37 @@ export default {
         this.editor.focus(this.editorPosition);
         window.scrollTo(0, scrollY);
       }
+    },
+    // mentions
+    // navigate to the previous item
+    // if it's the first item, navigate to the last one
+    upHandler() {
+      this.navigatedUserIndex = (
+        (this.navigatedUserIndex + this.filteredUsers.length) - 1
+      ) % this.filteredUsers.length;
+    },
+    // navigate to the next item
+    // if it's the last item, navigate to the first one
+    downHandler() {
+      this.navigatedUserIndex = (this.navigatedUserIndex + 1) % this.filteredUsers.length;
+    },
+    enterHandler() {
+      const user = this.filteredUsers[this.navigatedUserIndex];
+      if (user) {
+        this.selectUser(user);
+      }
+    },
+    // we have to replace our suggestion text with a mention
+    // so it's important to pass also the position of your suggestion text
+    selectUser(user) {
+      this.insertMention({
+        range: this.suggestionRange,
+        attrs: {
+          id: user.id,
+          label: user.name
+        }
+      });
+      this.editor.focus();
     },
     // renders a popup with suggestions
     // tiptap provides a virtualNode object for using popper.js (or tippy.js) for popups

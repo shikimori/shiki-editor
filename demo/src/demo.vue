@@ -72,7 +72,7 @@ export default {
     uploadHeaders: () => ({}),
     isColumn1: false,
     isColumn2: true,
-    text2: 'test',
+    text2: '',
     text1: `# Shiki BbCodes
 [div fc-2][div f-column]
 [anime=1] text after [anime=1]Anime name[/anime]
