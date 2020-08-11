@@ -13,4 +13,5 @@ export { default as minMax } from './min_max';
 export { default as nodeEqualsType } from './node_equals_type';
 export { default as rgbToHex } from './rgb_to_hex';
 export { default as resolveWord } from './resolve_word';
+export { default as triggerCharacter } from './trigger_character';
 export { default as scrollTop } from './scroll_top';

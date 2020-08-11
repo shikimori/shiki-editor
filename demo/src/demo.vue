@@ -70,8 +70,8 @@ export default {
   },
   data: () => ({
     uploadHeaders: () => ({}),
-    isColumn1: true,
-    isColumn2: false,
+    isColumn1: false,
+    isColumn2: true,
     text2: 'test',
     text1: `# Shiki BbCodes
 [div fc-2][div f-column]

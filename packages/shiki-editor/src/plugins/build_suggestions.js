@@ -2,73 +2,9 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../commands';
+import { triggerCharacter } from '../utils';
 
-// Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
-function triggerCharacter({
-  char = '@',
-  allowSpaces = false,
-  startOfLine = false
-}) {
-
-  return $position => {
-    // cancel if top level node
-    if ($position.depth <= 0) {
-      return false;
-    }
-
-    // Matching expressions used for later
-    const escapedChar = `\\${char}`;
-    const suffix = new RegExp(`\\s${escapedChar}$`);
-    const prefix = startOfLine ? '^' : '';
-    const regexp = allowSpaces ?
-      new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm') :
-      new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
-
-    // Lookup the boundaries of the current node
-    const textFrom = $position.before();
-    const textTo = $position.end();
-    const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
-
-    let match = regexp.exec(text);
-    let position;
-    while (match !== null) {
-      // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
-      // or the line beginning
-      const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
-
-      if (/^[\s\0]?$/.test(matchPrefix)) {
-        // The absolute position of the match in the document
-        const from = match.index + $position.start();
-        let to = from + match[0].length;
-
-        // Edge case handling; if spaces are allowed and we're directly in between
-        // two triggers
-        if (allowSpaces && suffix.test(text.slice(to - 1, to + 1))) {
-          match[0] += ' ';
-          to += 1;
-        }
-
-        // If the $position is located within the matched substring, return that range
-        if (from < $position.pos && to >= $position.pos) {
-          position = {
-            range: {
-              from,
-              to
-            },
-            query: match[0].slice(char.length),
-            text: match[0]
-          };
-        }
-      }
-
-      match = regexp.exec(text);
-    }
-
-    return position;
-  };
-}
-
-export default function SuggestionsPlugin({
+export default function buildSuggestions({
   matcher = {
     char: '@',
     allowSpaces: false,
@@ -87,8 +23,9 @@ export default function SuggestionsPlugin({
       return searchItems;
     }
 
-    return searchItems
-      .filter(item => JSON.stringify(item).toLowerCase().includes(query.toLowerCase()));
+    return searchItems.filter(item => (
+      JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
+    ));
   }
 }) {
   return new Plugin({
@@ -101,7 +38,8 @@ export default function SuggestionsPlugin({
           const next = this.key.getState(view.state);
 
           // See how the state changed
-          const moved = prev.active && next.active && prev.range.from !== next.range.from;
+          const moved = prev.active && next.active &&
+            prev.range.from !== next.range.from;
           const started = !prev.active && next.active;
           const stopped = prev.active && !next.active;
           const changed = !started && !stopped && prev.query !== next.query;
@@ -115,7 +53,9 @@ export default function SuggestionsPlugin({
           }
 
           const state = handleExit ? prev : next;
-          const decorationNode = document.querySelector(`[data-decoration-id="${state.decorationId}"]`);
+          const decorationNode = document.querySelector(
+            `[data-decoration-id="${state.decorationId}"]`
+          );
 
           // build a virtual node for popper.js or tippy.js
           // this can be used for building popups without a DOM node
@@ -167,7 +107,6 @@ export default function SuggestionsPlugin({
     },
 
     state: {
-
       // Initialize the plugin's internal state.
       init() {
         return {
@@ -198,7 +137,9 @@ export default function SuggestionsPlugin({
           // If we found a match, update the current state to show it
           if (match) {
             next.active = true;
-            next.decorationId = prev.decorationId ? prev.decorationId : decorationId;
+            next.decorationId = prev.decorationId ?
+              prev.decorationId :
+              decorationId;
             next.range = match.range;
             next.query = match.query;
             next.text = match.text;

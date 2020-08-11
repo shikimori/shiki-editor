@@ -32,6 +32,7 @@ export default class ShikiEditor {
     content: '',
     dropCursor: {},
     extensions: [],
+    plugins: [],
     editorProps: {}
   }
   focused = false
@@ -161,6 +162,7 @@ export default class ShikiEditor {
   createPlugins() {
     return [
       ...this.extensionsManager.plugins,
+      ...this.options.plugins,
       history(),
       inputRules({ rules: this.inputRules }),
       ...this.pasteRules,
