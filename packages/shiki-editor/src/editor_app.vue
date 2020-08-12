@@ -103,7 +103,14 @@
 <script>
 import Fuse from 'fuse.js';
 import autosize from 'autosize';
-import tippy, { sticky } from 'tippy.js';
+
+import { createPopper } from '@popperjs/core/lib/popper-lite';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import flip from '@popperjs/core/lib/modifiers/flip';
+import offset from '@popperjs/core/lib/modifiers/offset';
+import arrow from '@popperjs/core/lib/modifiers/arrow';
+
+
 import withinviewport from 'withinviewport';
 import delay from 'delay';
 
@@ -491,22 +498,52 @@ export default {
     // renders a popup with suggestions
     // tiptap provides a virtualNode object for using popper.js (or tippy.js) for popups
     renderPopup(node) {
+      console.log(
+        node,
+        this.$refs.suggestions
+      );
       if (this.popup) { return; }
+
+      /* createPopper({                                       */
+      /*   getBoundingClientRect: node.getBoundingClientRect, */
+      /* }, this.$refs.suggestions);                          */
+
+      this.popup = createPopper(
+        {
+          getBoundingClientRect: node.getBoundingClientRect
+        },
+        this.$refs.suggestions,
+        {
+          placement: 'right-start',
+          modifiers: [preventOverflow, offset, flip, arrow, {
+            name: 'preventOverflow',
+            options: { padding: 10 }
+          }, {
+            name: 'offset',
+            options: { offset: [0, 8] }
+          }
+          //   name: 'arrow',
+          //   options: { element: this.$refs.arrow }
+          ]
+        }
+      );
+
+
       // ref: https://atomiks.github.io/tippyjs/v6/all-props/
-      this.popup = tippy('.page', {
-        getReferenceClientRect: node.getBoundingClientRect,
-        appendTo: () => document.body,
-        interactive: true,
-        sticky: true, // make sure position of tippy is updated when content changes
-        plugins: [sticky],
-        content: this.$refs.suggestions,
-        trigger: 'mouseenter', // manual
-        showOnCreate: true,
-        theme: 'dark',
-        placement: 'top-start',
-        inertia: true,
-        duration: [400, 200]
-      });
+      // this.popup = tippy('.page', {
+      //   getReferenceClientRect: node.getBoundingClientRect,
+      //   appendTo: () => document.body,
+      //   interactive: true,
+      //   sticky: true, // make sure position of tippy is updated when content changes
+      //   plugins: [sticky],
+      //   content: this.$refs.suggestions,
+      //   trigger: 'mouseenter', // manual
+      //   showOnCreate: true,
+      //   theme: 'dark',
+      //   placement: 'top-start',
+      //   inertia: true,
+      //   duration: [400, 200]
+      // });
     },
     destroyPopup() {
       if (!this.popup) { return; }
