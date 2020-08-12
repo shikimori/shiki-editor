@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Keypress key-event='keyup' :key-code='27' @success='close' />
+    <Keypress
+      v-if='isEnabled'
+      key-event='keyup'
+      :key-code='27'
+      @success='close'
+    />
     <div ref='container' class='smileys'>
       <div ref='arrow' class='arrow' />
       <div
