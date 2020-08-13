@@ -16,7 +16,7 @@
             :key='item.constructor === Object ? item.type : item'
             :ref='item.type'
             v-bind='item'
-            :is-active='isActive[item.type]'
+            :is-active='nodesState[item.type]'
             :is-enabled='item.isEnabled ? item.isEnabled() : isEnabled'
             @command='args => command(item.type, args)'
           />
@@ -174,7 +174,7 @@ export default {
         title: window.I18n.t('frontend.shiki_editor.source')
       };
     },
-    isActive() {
+    nodesState() {
       const memo = {};
 
       MENU_ITEMS.forEach(items => items.forEach(item => (
@@ -295,7 +295,7 @@ export default {
     },
     linkIsEnabled() {
       return this.isEnabled && (
-        this.isActive.link || !this.editor.state.selection.empty
+        this.nodesState.link || !this.editor.state.selection.empty
       );
     },
     async togglePreview() {
