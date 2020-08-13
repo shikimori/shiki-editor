@@ -63,6 +63,10 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.cleanup();
+    this?.editor?.unregisterPlugin(this.plugin.key);
+  },
   mounted() {
     this.plugin = this.createPlugin();
     this.editor.registerPlugin(this.plugin);
