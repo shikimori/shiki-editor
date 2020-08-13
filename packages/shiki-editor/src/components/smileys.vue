@@ -50,7 +50,7 @@ export default {
       if (this.isEnabled) {
         this.show();
       } else {
-        this.hide();
+        this.cleanup();
       }
     }
   },
@@ -61,6 +61,9 @@ export default {
     if (this.isEnabled) {
       this.show();
     }
+  },
+  beforeDestroy() {
+    this.cleanup();
   },
   methods: {
     show() {
@@ -82,7 +85,7 @@ export default {
         this.fetch();
       }
     },
-    hide() {
+    cleanup() {
       this.popup.destroy();
       this.popup = null;
     },
