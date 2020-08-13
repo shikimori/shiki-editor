@@ -81,6 +81,7 @@
       :insert-mention='insertMention'
       :editor='editor'
       :filtered-users='filteredUsers'
+      :query='query'
     />
   </div>
 </template>
@@ -222,13 +223,6 @@ export default {
     isSourceEnabled() {
       return !this.isContentManipulationsPending && !this.isPreview;
     },
-    // mentions
-    hasResults() {
-      return this.filteredUsers.length;
-    },
-    showSuggestions() {
-      return this.query || this.hasResults;
-    }
   },
   watch: {
     isSource() {
