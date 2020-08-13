@@ -6,7 +6,7 @@
       :key-code='27'
       @success='close'
     />
-    <div ref='container' class='smileys'>
+    <div ref='container' class='b-tip b-tip--large b-tip--no_border smileys'>
       <div ref='arrow' class='arrow' />
       <div
         v-if='smileysHTML'
@@ -114,6 +114,7 @@ $padding-horizontal: 10px
 $padding-vertical: 8px
 
 .smileys
+  padding: 0
   background: #fff
   font-size: 13px
   position: relative
@@ -150,32 +151,10 @@ $padding-vertical: 8px
     +lte_ipad
       max-height: calc(100vh - 98px)
 
-  &[data-popper-placement^='top'] > .arrow
-    bottom: -4px
-  &[data-popper-placement^='bottom'] > .arrow
-    top: -4px
-  &[data-popper-placement^='left'] > .arrow
-    right: -4px
-  &[data-popper-placement^='right'] > .arrow
-    left: -4px
-
 .b-ajax
   width: calc(100% - #{$padding-horizontal * 2})
   height: calc(100% - #{$padding-horizontal * 2})
   position: absolute
-
-.arrow
-  height: 8px
-  width: 8px
-
-  &::before
-    background: #fff
-    content: ''
-    height: 100%
-    transform: rotate(45deg)
-    width: 100%
-    position: absolute
-    z-index: -1
 
 .shade
   background: rgba(#061b42, 0.35)
