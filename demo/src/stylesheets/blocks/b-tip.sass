@@ -12,18 +12,17 @@
 
 .b-tip
   background: #fff
-  border: 1px solid #999
+  color: #123
   padding: 4px 8px
 
-  $size: 8px
+  $size: 7px
   +arrow_position($size)
 
   & > [data-popper-arrow]
-    border: 1px solid #999
     height: $size
     width: $size
 
-    &::before
+    &:before
       background: #fff
       content: ''
       height: 100%
@@ -32,16 +31,17 @@
       position: absolute
       z-index: -1
 
-  $size: 12px
   &--large
+    $size: 12px
     +arrow_position($size)
 
     [data-popper-arrow]
       height: $size
       width: $size
 
-  &--no_border
-    border: none
+  &--dark
+    background: #456
+    color: #fff
 
-    & > [data-popper-arrow]
-      border: none
+    & > [data-popper-arrow]:before
+      background: #456
