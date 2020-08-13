@@ -77,26 +77,11 @@
       />
     </div>
 
-    <div
-      v-show='showSuggestions'
-      ref='suggestions'
-      class='suggestion-list'
-    >
-      <template v-if='hasResults'>
-        <div
-          v-for='(user, index) in filteredUsers'
-          :key='user.id'
-          class='suggestion-list__item'
-          :class='{ "is-selected": navigatedUserIndex === index }'
-          @click='selectUser(user)'
-        >
-          {{ user.name }}
-        </div>
-      </template>
-      <div v-else class='suggestion-list__item is-empty'>
-        No users found
-      </div>
-    </div>
+    <Suggestions
+      :insert-mention='insertMention'
+      :editor='editor'
+      :filtered-users='filteredUsers'
+    />
   </div>
 </template>
 
@@ -110,7 +95,6 @@ import flip from '@popperjs/core/lib/modifiers/flip';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
-
 import withinviewport from 'withinviewport';
 import delay from 'delay';
 
@@ -123,6 +107,7 @@ import { FileUploader } from './extensions';
 import { buildSuggestions } from './plugins';
 
 import Icon from './components/icon';
+import Suggestions from './components/suggestions';
 import Smileys from './components/smileys';
 
 const MENU_ITEMS = [
@@ -145,7 +130,8 @@ export default {
   components: {
     EditorContent,
     Icon,
-    Smileys
+    Smileys,
+    Suggestions
   },
   props: {
     vue: { type: Function, required: true },
@@ -483,18 +469,6 @@ export default {
         this.selectUser(user);
       }
     },
-    // we have to replace our suggestion text with a mention
-    // so it's important to pass also the position of your suggestion text
-    selectUser(user) {
-      this.insertMention({
-        range: this.suggestionRange,
-        attrs: {
-          id: user.id,
-          label: user.name
-        }
-      });
-      this.editor.focus();
-    },
     // renders a popup with suggestions
     // tiptap provides a virtualNode object for using popper.js (or tippy.js) for popups
     renderPopup(node) {
@@ -675,7 +649,6 @@ export default {
     &:hover:before
       content: attr(data-div)
 
-
 .mention
   background: rgba(#000, 0.1)
   color: rgba(#000, 0.6)
@@ -687,36 +660,4 @@ export default {
 
 .mention-suggestion
   color: rgba(#000, 0.6)
-
-.suggestion-list
-  padding: 0.2rem
-  border: 2px solid rgba(#000, 0.1)
-  font-size: 0.8rem
-  font-weight: bold
-  &__no-results
-    padding: 0.2rem 0.5rem
-
-  &__item
-    border-radius: 5px
-    padding: 0.2rem 0.5rem
-    margin-bottom: 0.2rem
-    cursor: pointer
-
-    &:last-child
-      margin-bottom: 0
-
-    &.is-selected,
-    &:hover
-      background-color: rgba(#fff, 0.2)
-
-    &.is-empty
-      opacity: 0.5
-
-.tippy-box[data-theme~=dark]
-  background-color: #000
-  padding: 0
-  font-size: 1rem
-  text-align: inherit
-  color: #fff
-  border-radius: 5px
 </style>
