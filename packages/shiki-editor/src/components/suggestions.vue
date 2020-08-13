@@ -22,14 +22,30 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js';
+import delay from 'delay';
+import { createPopper } from '@popperjs/core/lib/popper-lite';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import offset from '@popperjs/core/lib/modifiers/offset';
+import flip from '@popperjs/core/lib/modifiers/flip';
+// import arrow from '@popperjs/core/lib/modifiers/arrow';
+
+import { buildSuggestions } from '../plugins';
+
 export default {
   name: 'Suggestions',
   props: {
-    insertMention: { type: Function, required: true },
-    editor: { type: Object, required: true },
-    filteredUsers: { type: Array, required: true },
-    query: { type: String, required: false, default: undefined }
+    editor: { type: Object, required: true }
   },
+  data: () => ({
+    plugin: null,
+    popup: null,
+    filteredUsers: [],
+    insertMention: () => {},
+    navigatedUserIndex: 0,
+    query: null,
+    suggestionRange: null
+  }),
   computed: {
     hasResults() {
       return this.filteredUsers.length;
@@ -38,7 +54,112 @@ export default {
       return this.query || this.hasResults;
     }
   },
+  mounted() {
+    this.plugin = this.createPlugin();
+    this.editor.registerPlugin(this.plugin);
+  },
   methods: {
+    createPlugin() {
+      return buildSuggestions({
+        // a list of all suggested items
+        items: async() => {
+          await new Promise(resolve => {
+            setTimeout(resolve, 500);
+          });
+          return [
+            { id: 1, name: 'Sven Adlung' },
+            { id: 2, name: 'Patrick Baber' },
+            { id: 3, name: 'Nick Hirche' },
+            { id: 4, name: 'Philip Isik' },
+            { id: 5, name: 'Timo Isik' },
+            { id: 6, name: 'Philipp Kühn' },
+            { id: 7, name: 'Hans Pagel' },
+            { id: 8, name: 'Sebastian Schrama' }
+          ];
+        },
+        // is called when a suggestion starts
+        onEnter: ({
+          items, query, range, command, virtualNode
+        }) => {
+          this.query = query;
+          this.filteredUsers = items;
+          this.suggestionRange = range;
+          this.renderPopup(virtualNode);
+          // we save the command for inserting a selected mention
+          // this allows us to call it inside of our custom popup
+          // via keyboard navigation and on click
+          this.insertMention = command;
+        },
+        // is called when a suggestion has changed
+        onChange: ({
+          items, query, range, virtualNode
+        }) => {
+          this.query = query;
+          this.filteredUsers = items;
+          this.suggestionRange = range;
+          this.navigatedUserIndex = 0;
+          this.renderPopup(virtualNode);
+        },
+        // is called when a suggestion is cancelled
+        onExit: () => {
+          // reset all saved values
+          this.query = null;
+          this.filteredUsers = [];
+          this.suggestionRange = null;
+          this.navigatedUserIndex = 0;
+          this.destroyPopup();
+        },
+        // is called on every keyDown event while a suggestion is active
+        onKeyDown: ({ event }) => {
+          if (event.key === 'ArrowUp') {
+            this.upHandler();
+            return true;
+          }
+          if (event.key === 'ArrowDown') {
+            this.downHandler();
+            return true;
+          }
+          if (event.key === 'Enter') {
+            this.enterHandler();
+            return true;
+          }
+          return false;
+        },
+        // is called when a suggestion has changed
+        // this function is optional because there is basic filtering built-in
+        // you can overwrite it if you prefer your own filtering
+        // in this example we use fuse.js with support for fuzzy search
+        onFilter: async(items, query) => {
+          if (!query) {
+            return items;
+          }
+          await delay(500);
+          const fuse = new Fuse(items, {
+            threshold: 0.2,
+            keys: ['name']
+          });
+          return fuse.search(query).map(item => item.item);
+        }
+      });
+    },
+    // navigate to the previous item
+    // if it's the first item, navigate to the last one
+    upHandler() {
+      this.navigatedUserIndex = (
+        (this.navigatedUserIndex + this.filteredUsers.length) - 1
+      ) % this.filteredUsers.length;
+    },
+    // navigate to the next item
+    // if it's the last item, navigate to the first one
+    downHandler() {
+      this.navigatedUserIndex = (this.navigatedUserIndex + 1) % this.filteredUsers.length;
+    },
+    enterHandler() {
+      const user = this.filteredUsers[this.navigatedUserIndex];
+      if (user) {
+        this.selectUser(user);
+      }
+    },
     // we have to replace our suggestion text with a mention
     // so it's important to pass also the position of your suggestion text
     selectUser(user) {
@@ -50,6 +171,49 @@ export default {
         }
       });
       this.editor.focus();
+    },
+    // renders a popup with suggestions
+    // tiptap provides a virtualNode object for using popper.js (or tippy.js) for popups
+    renderPopup(node) {
+      if (this.popup) { return; }
+      // ref: https://atomiks.github.io/tippyjs/v6/all-props/
+      // this.popup = tippy('.page', {
+      //   getReferenceClientRect: node.getBoundingClientRect,
+      //   appendTo: () => document.body,
+      //   interactive: true,
+      //   sticky: true, // make sure position of tippy is updated when content changes
+      //   plugins: [sticky],
+      //   content: this.$refs.suggestions,
+      //   trigger: 'mouseenter', // manual
+      //   showOnCreate: true,
+      //   theme: 'dark',
+      //   placement: 'top-start',
+      //   inertia: true,
+      //   duration: [400, 200]
+      // });
+      this.popup = createPopper(
+        { getBoundingClientRect: node.getBoundingClientRect },
+        this.$refs.suggestions,
+        {
+          placement: 'right-start',
+          modifiers: [preventOverflow, offset, flip, /*arrow, */{
+            name: 'preventOverflow',
+            options: { padding: 10 }
+          }, {
+            name: 'offset',
+            options: { offset: [0, 8] }
+          }/*, {
+            name: 'arrow',
+            options: { element: this.$refs.arrow }
+          }*/]
+        }
+      );
+    },
+    destroyPopup() {
+      if (!this.popup) { return; }
+
+      this.popup.destroy();
+      this.popup = null;
     }
   }
 };
@@ -61,6 +225,7 @@ export default {
   border: 2px solid rgba(#000, 0.1)
   font-size: 0.8rem
   font-weight: bold
+
   &__no-results
     padding: 0.2rem 0.5rem
 

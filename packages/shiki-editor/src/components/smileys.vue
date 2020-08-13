@@ -42,7 +42,7 @@ export default {
     targetRef: { type: String, required: true }
   },
   data: () => ({
-    popper: null,
+    popup: null,
     smileysHTML: null
   }),
   watch: {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     show() {
-      this.popper = createPopper(
+      this.popup = createPopper(
         this.$parent.$refs[this.targetRef][0].$el,
         this.$refs.container,
         {
@@ -86,14 +86,14 @@ export default {
       }
     },
     hide() {
-      this.popper.destroy();
-      this.popper = null;
+      this.popup.destroy();
+      this.popup = null;
     },
     async fetch() {
       const { data } = await axios.get(`${this.baseUrl}/${SMILEYS_PATH}`);
       this.smileysHTML = data.replace(/src="\//g, `src="${this.baseUrl}/`);
       await this.$nextTick();
-      this.popper.update();
+      this.popup.update();
     },
     close() {
       this.$emit('toggle');
