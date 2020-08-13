@@ -52,7 +52,7 @@
       }'
     >
       <div
-        v-if='isPreview && previewHTML'
+        v-if='isPreview && previewHTML != null'
         ref='preview'
         class='preview'
         v-html='previewHTML'
