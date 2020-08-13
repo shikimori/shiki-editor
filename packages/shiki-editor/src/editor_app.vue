@@ -5,6 +5,7 @@
       class='menubar'
       :class='{ "is-offset": isMenuBarOffset }'
     >
+      <button @click="() => command('mention', { id: 1, label: 'Philipp Kühn' })">zzzz</button>
       <div v-if='editor' class='icons'>
         <div
           v-for='(items, index) in menuItems'

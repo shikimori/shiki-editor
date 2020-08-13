@@ -12,6 +12,7 @@ export { Image } from './image';
 export { default as ItalicBlock } from './italic_block';
 export { default as LinkBlock } from './link_block';
 export { default as ListItem } from './list_item';
+export { default as Mention } from './mention';
 export { default as Paragraph } from './paragraph';
 export { default as Quote } from './quote';
 export { default as Right } from './right';

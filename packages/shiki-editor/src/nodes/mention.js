@@ -1,10 +1,9 @@
 // based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Mention.js
-import { Node } from 'tiptap';
+import { Node } from '../base';
 import { replaceText } from '../commands';
-import SuggestionsPlugin from '../plugins/Suggestions';
+import { buildSuggestionsPlugin } from '../plugins';
 
 export default class Mention extends Node {
-
   get name() {
     return 'mention';
   }
@@ -58,7 +57,7 @@ export default class Mention extends Node {
 
   get plugins() {
     return [
-      SuggestionsPlugin({
+      buildSuggestionsPlugin({
         command: ({ range, attrs, schema }) => replaceText(range, schema.nodes[this.name], attrs),
         appendText: ' ',
         matcher: this.options.matcher,

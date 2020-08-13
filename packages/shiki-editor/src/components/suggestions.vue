@@ -31,7 +31,7 @@ import offset from '@popperjs/core/lib/modifiers/offset';
 import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
-import { buildSuggestions } from '../plugins';
+import { buildSuggestionsPlugin } from '../plugins';
 
 export default {
   name: 'Suggestions',
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     createPlugin() {
-      return buildSuggestions({
+      return buildSuggestionsPlugin({
         // a list of all suggested items
         items: async() => {
           await new Promise(resolve => {

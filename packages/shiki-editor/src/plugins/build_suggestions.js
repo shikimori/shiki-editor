@@ -4,7 +4,7 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../commands';
 import { triggerCharacter } from '../utils';
 
-export default function buildSuggestions({
+export default function buildSuggestionsPlugin({
   matcher = {
     char: '@',
     allowSpaces: false,
@@ -78,11 +78,10 @@ export default function buildSuggestions({
               await onFilter(Array.isArray(items) ? items : await items(), state.query) :
               [],
             command: ({ range, attrs }) => {
-              command({
-                range,
-                attrs,
-                schema: view.state.schema
-              })(view.state, view.dispatch, view);
+              const { state, dispatch } = view;
+              const { schema } = state;
+
+              command({ range, attrs, schema })(state, dispatch, view);
 
               if (appendText) {
                 insertText(appendText)(view.state, view.dispatch, view);
