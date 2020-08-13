@@ -1,6 +1,6 @@
 <template>
   <div
-    v-show='showSuggestions'
+    v-show='isSuggestions'
     ref='suggestions'
     class='b-tip b-tip--dark suggestions'
   >
@@ -36,7 +36,8 @@ import { buildSuggestions } from '../plugins';
 export default {
   name: 'Suggestions',
   props: {
-    editor: { type: Object, required: true }
+    editor: { type: Object, required: true },
+    isAvailable: { type: Boolean, required: true }
   },
   data: () => ({
     plugin: null,
@@ -51,8 +52,8 @@ export default {
     hasResults() {
       return this.filteredUsers.length;
     },
-    showSuggestions() {
-      return this.query || this.hasResults;
+    isSuggestions() {
+      return this.isAvailable && (this.query || this.hasResults);
     }
   },
   mounted() {

@@ -78,6 +78,7 @@
       @toggle='smileyCommand'
     />
     <Suggestions
+      :is-available='!isPreview'
       :editor='editor'
     />
   </div>
