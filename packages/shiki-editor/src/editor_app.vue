@@ -237,7 +237,6 @@ export default {
   },
   beforeDestroy() {
     this.editor.destroy();
-    this.destroyPopup();
   },
   methods: {
     command(type, args) {
