@@ -56,6 +56,13 @@ export default {
       return this.isAvailable && (this.query || this.hasResults);
     }
   },
+  watch: {
+    isAvailable() {
+      if (!this.isAvailable && this.popup) {
+        this.destroyPopup();
+      }
+    }
+  },
   mounted() {
     this.plugin = this.createPlugin();
     this.editor.registerPlugin(this.plugin);
