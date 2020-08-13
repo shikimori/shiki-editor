@@ -17,7 +17,7 @@
             :ref='item.type'
             v-bind='item'
             :is-active='nodesState[item.type]'
-            :is-enabled='item.isEnabled ? item.isEnabled() : isEnabled'
+            :is-enabled='item.isEditingEnabled ? item.isEditingEnabled() : isEditingEnabled'
             @command='args => command(item.type, args)'
           />
         </div>
@@ -70,7 +70,7 @@
     </div>
 
     <Smileys
-      v-show='isSmiley'
+      v-show='isSmiley && isEditingEnabled'
       ref='smileys'
       :is-enabled='isSmiley'
       target-ref='smiley'
@@ -78,7 +78,7 @@
       @toggle='smileyCommand'
     />
     <Suggestions
-      :is-available='!isPreview'
+      :is-available='isEditingEnabled'
       :editor='editor'
     />
   </div>
@@ -145,10 +145,10 @@ export default {
     previewHTML: null
   }),
   computed: {
-    isEnabled() {
+    isEditingEnabled() {
       return !this.isSource && !this.isPreview;
     },
-    isEnabledMappings() {
+    isEditingEnabledMappings() {
       return {
         undo: this.undoIsEnabled,
         redo: this.redoIsEnabled,
@@ -159,7 +159,7 @@ export default {
       return MENU_ITEMS.map(items => items.map(item => ({
         type: item,
         title: window.I18n.t(`frontend.shiki_editor.${item}`),
-        isEnabled: this.isEnabledMappings[item]
+        isEditingEnabled: this.isEditingEnabledMappings[item]
       })));
     },
     menuPreviewItem() {
@@ -288,13 +288,13 @@ export default {
       this.fileUploaderExtension.addFiles(files);
     },
     undoIsEnabled() {
-      return this.isEnabled && undo(this.editor.state);
+      return this.isEditingEnabled && undo(this.editor.state);
     },
     redoIsEnabled() {
-      return this.isEnabled && redo(this.editor.state);
+      return this.isEditingEnabled && redo(this.editor.state);
     },
     linkIsEnabled() {
-      return this.isEnabled && (
+      return this.isEditingEnabled && (
         this.nodesState.link || !this.editor.state.selection.empty
       );
     },
