@@ -224,7 +224,23 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
       this.test.debouncedThrottled();
     },
     preview(text) {
-      return axios.get(`${this.baseUrl}/api/shiki_editor/preview`, { text });
+      return axios
+        .post(
+          `${this.baseUrl}/api/shiki_editor/preview?test=1`,
+          { text }
+        )
+        .catch(error => {
+          if (process.env.NODE_ENV === 'development') {
+            let devError = error?.response?.data;
+            if (devError) {
+              devError = devError.split('\n').slice(0, 6).join('<br>');
+            }
+            flash.error(devError || error.message);
+          } else {
+            flash.error(I18n.t('frontend.lib.please_try_again_later'));
+          }
+          return { data: null };
+        });
     }
   }
 };

@@ -12,6 +12,7 @@ Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
 const TRANSLATIONS = {
+  'frontend.lib.please_try_again_later': 'Ошибка. Попробуй еще раз позже',
   'frontend.shiki_editor.bold': ' Жирный',
   'frontend.shiki_editor.italic': ' Курсив',
   'frontend.shiki_editor.underline': ' Подчёркнутый',
