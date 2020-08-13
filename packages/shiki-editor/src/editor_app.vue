@@ -306,11 +306,17 @@ export default {
         const { data } = await this.preview(
           this.isSource ? this.editorContent : this.editor.exportMarkdown()
         );
-        this.previewHTML = data;
-        this.isPreviewLoading = false;
 
-        await this.$nextTick();
-        this.$emit('preview', this.$refs.preview);
+        if (data !== null) {
+          this.previewHTML = data;
+          this.isPreviewLoading = false;
+
+          await this.$nextTick();
+          this.$emit('preview', this.$refs.preview);
+        } else {
+          this.isPreview = false;
+          this.isPreviewLoading = false;
+        }
       } else {
         this.previewHTML = null;
       }
