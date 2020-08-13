@@ -59,7 +59,7 @@ export default {
   watch: {
     isAvailable() {
       if (!this.isAvailable && this.popup) {
-        this.destroyPopup();
+        this.cleanup();
       }
     }
   },
@@ -110,7 +110,7 @@ export default {
           this.renderPopup(virtualNode);
         },
         // is called when a suggestion is cancelled
-        onExit: this.destroyPopup,
+        onExit: this.cleanup,
         // is called on every keyDown event while a suggestion is active
         onKeyDown: ({ event }) => {
           if (event.key === 'ArrowUp') {
@@ -162,8 +162,6 @@ export default {
         this.selectUser(user);
       }
     },
-    // we have to replace our suggestion text with a mention
-    // so it's important to pass also the position of your suggestion text
     selectUser(user) {
       this.insertMention({
         range: this.suggestionRange,
@@ -174,25 +172,9 @@ export default {
       });
       this.editor.focus();
     },
-    // renders a popup with suggestions
-    // tiptap provides a virtualNode object for using popper.js (or tippy.js) for popups
     renderPopup(node) {
       if (this.popup) { return; }
-      // ref: https://atomiks.github.io/tippyjs/v6/all-props/
-      // this.popup = tippy('.page', {
-      //   getReferenceClientRect: node.getBoundingClientRect,
-      //   appendTo: () => document.body,
-      //   interactive: true,
-      //   sticky: true, // make sure position of tippy is updated when content changes
-      //   plugins: [sticky],
-      //   content: this.$refs.suggestions,
-      //   trigger: 'mouseenter', // manual
-      //   showOnCreate: true,
-      //   theme: 'dark',
-      //   placement: 'top-start',
-      //   inertia: true,
-      //   duration: [400, 200]
-      // });
+
       this.popup = createPopper(
         { getBoundingClientRect: node.getBoundingClientRect },
         this.$refs.suggestions,
@@ -208,17 +190,16 @@ export default {
         }
       );
     },
-    destroyPopup() {
-      // reset all saved values
+    cleanup() {
       this.query = null;
       this.filteredUsers = [];
       this.suggestionRange = null;
       this.navigatedUserIndex = 0;
 
-      if (!this.popup) { return; }
-
-      this.popup.destroy();
-      this.popup = null;
+      if (this.popup) {
+        this.popup.destroy();
+        this.popup = null;
+      }
     }
   }
 };
