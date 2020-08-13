@@ -2,7 +2,7 @@
   <div
     v-show='showSuggestions'
     ref='suggestions'
-    class='b-tip suggestion-list'
+    class='b-tip b-tip--dark suggestion-list'
   >
     <div data-popper-arrow />
     <template v-if='hasResults'>
@@ -231,7 +231,7 @@ export default {
   color: rgba(#000, 0.6)
 
 .suggestion-list
-  z-index: 40
+  z-index: 35
   /* padding: 0.2rem */
   /* border: 2px solid rgba(#000, 0.1) */
 

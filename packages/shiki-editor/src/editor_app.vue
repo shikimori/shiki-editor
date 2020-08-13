@@ -40,14 +40,6 @@
           />
         </div>
       </div>
-      <Smileys
-        v-show='isSmiley'
-        ref='smileys'
-        :is-enabled='isSmiley'
-        target-ref='smiley'
-        :base-url='baseUrl'
-        @toggle='smileyCommand'
-      />
     </div>
 
     <div
@@ -77,6 +69,14 @@
       />
     </div>
 
+    <Smileys
+      v-show='isSmiley'
+      ref='smileys'
+      :is-enabled='isSmiley'
+      target-ref='smiley'
+      :base-url='baseUrl'
+      @toggle='smileyCommand'
+    />
     <Suggestions
       :editor='editor'
     />

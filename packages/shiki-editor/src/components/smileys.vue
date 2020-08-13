@@ -115,7 +115,7 @@ $padding-vertical: 8px
   background: #fff
   font-size: 13px
   position: relative
-  z-index: 20
+  z-index: 40
 
   +lte_ipad
     width: calc(100vw - #{$padding-horizontal * 2})
@@ -160,5 +160,5 @@ $padding-vertical: 8px
   position: fixed
   top: 0
   width: 100%
-  z-index: 19
+  z-index: 39
 </style>
