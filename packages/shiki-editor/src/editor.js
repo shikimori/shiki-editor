@@ -373,7 +373,7 @@ export default class ShikiEditor {
 
     const newState = this.state.reconfigure({
       plugins: this.state.plugins.filter(plugin => (
-        !plugin.key.startsWith(`${name}$`)
+        plugin.key !== name && !plugin.key.startsWith(`${name}$`)
       ))
     });
     this.view.updateState(newState);
