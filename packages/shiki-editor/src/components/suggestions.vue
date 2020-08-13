@@ -110,14 +110,7 @@ export default {
           this.renderPopup(virtualNode);
         },
         // is called when a suggestion is cancelled
-        onExit: () => {
-          // reset all saved values
-          this.query = null;
-          this.filteredUsers = [];
-          this.suggestionRange = null;
-          this.navigatedUserIndex = 0;
-          this.destroyPopup();
-        },
+        onExit: this.destroyPopup,
         // is called on every keyDown event while a suggestion is active
         onKeyDown: ({ event }) => {
           if (event.key === 'ArrowUp') {
@@ -216,6 +209,12 @@ export default {
       );
     },
     destroyPopup() {
+      // reset all saved values
+      this.query = null;
+      this.filteredUsers = [];
+      this.suggestionRange = null;
+      this.navigatedUserIndex = 0;
+
       if (!this.popup) { return; }
 
       this.popup.destroy();
