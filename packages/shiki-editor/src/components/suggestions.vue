@@ -2,21 +2,21 @@
   <div
     v-show='showSuggestions'
     ref='suggestions'
-    class='b-tip b-tip--dark suggestion-list'
+    class='b-tip b-tip--dark suggestions'
   >
     <div data-popper-arrow />
     <template v-if='hasResults'>
       <div
         v-for='(user, index) in filteredUsers'
         :key='user.id'
-        class='suggestion-list__item'
+        class='item'
         :class='{ "is-selected": navigatedUserIndex === index }'
         @click='selectUser(user)'
       >
         {{ user.name }}
       </div>
     </template>
-    <div v-else class='suggestion-list__item is-empty'>
+    <div v-else class='item is-empty'>
       No users found
     </div>
   </div>
@@ -196,13 +196,13 @@ export default {
         { getBoundingClientRect: node.getBoundingClientRect },
         this.$refs.suggestions,
         {
-          placement: 'right-start',
+          placement: 'top-start',
           modifiers: [preventOverflow, offset, flip, arrow, {
             name: 'preventOverflow',
             options: { padding: 10 }
           }, {
             name: 'offset',
-            options: { offset: [0, 8] }
+            options: { offset: [-8, 8] }
           }]
         }
       );
@@ -230,19 +230,16 @@ export default {
 .mention-suggestion
   color: rgba(#000, 0.6)
 
-.suggestion-list
+.suggestions
   z-index: 35
   /* padding: 0.2rem */
   /* border: 2px solid rgba(#000, 0.1) */
 
-  &__no-results
-    padding: 0.2rem 0.5rem
-
-  &__item
-    border-radius: 5px
-    padding: 0.2rem 0.5rem
-    margin-bottom: 0.2rem
+  .item
+    padding: 3px 16px
+    margin: 0 -8px 3px
     cursor: pointer
+    position: relative // to prevent overlap by arrow
 
     &:last-child
       margin-bottom: 0
