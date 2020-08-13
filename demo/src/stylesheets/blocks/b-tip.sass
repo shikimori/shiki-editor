@@ -1,0 +1,34 @@
+.b-tip
+  background: #fff
+  padding: 4px 8px
+  border: 1px solid #999
+
+  &[data-popper-placement^='top'] > .arrow
+    bottom: -4px
+  &[data-popper-placement^='bottom'] > .arrow
+    top: -4px
+  &[data-popper-placement^='left'] > .arrow
+    right: -4px
+  &[data-popper-placement^='right'] > .arrow
+    left: -4px
+
+  .arrow
+    height: 8px
+    width: 8px
+
+    &::before
+      background: #fff
+      content: ''
+      height: 100%
+      transform: rotate(45deg)
+      width: 100%
+      position: absolute
+      z-index: -1
+
+  &--large
+    .arrow
+      height: 15px
+      width: 15px
+
+  &--no_border
+    border-color: transparent
