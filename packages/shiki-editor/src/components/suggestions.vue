@@ -171,7 +171,7 @@ export default {
         range: this.suggestionRange,
         attrs: {
           id: user.id,
-          label: user.name
+          nickname: user.name
         }
       });
       this.editor.focus();
@@ -210,18 +210,6 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-.mention
-  background: rgba(#000, 0.1)
-  color: rgba(#000, 0.6)
-  font-size: 0.8rem
-  font-weight: bold
-  border-radius: 5px
-  padding: 0.2rem 0.5rem
-  white-space: nowrap
-
-.mention-suggestion
-  color: rgba(#000, 0.6)
-
 .suggestions
   z-index: 35
   /* padding: 0.2rem */

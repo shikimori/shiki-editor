@@ -5,7 +5,11 @@
       class='menubar'
       :class='{ "is-offset": isMenuBarOffset }'
     >
-      <button @click="() => command('mention', { id: 1, label: 'Philipp Kühn' })">zzzz</button>
+      <button
+        @click="() => command('mention', { id: 1, nickname: 'morr' })"
+      >
+        @morr
+      </button>
       <div v-if='editor' class='icons'>
         <div
           v-for='(items, index) in menuItems'
@@ -267,7 +271,7 @@ export default {
           break;
 
         default:
-          this.editor.commands[type]();
+          this.editor.commands[type](args);
       }
     },
     undoCommand() {

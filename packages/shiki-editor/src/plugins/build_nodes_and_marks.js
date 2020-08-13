@@ -51,7 +51,7 @@ export default function(editor) {
     new SizeInline(),
     new Underline(),
     new Strike(),
-    new Mention(),
+    new Mention({ baseUrl: editor.options.baseUrl }),
     new CodeInline(),
     new Center(),
     new Right(),

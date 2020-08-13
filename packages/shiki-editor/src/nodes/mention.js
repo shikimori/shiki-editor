@@ -10,12 +10,12 @@ export default class Mention extends Node {
 
   get defaultOptions() {
     return {
+      baseUrl: null,
       matcher: {
         char: '@',
         allowSpaces: false,
         startOfLine: false
       },
-      mentionClass: 'mention',
       suggestionClass: 'mention-suggestion'
     };
   }
@@ -24,35 +24,37 @@ export default class Mention extends Node {
     return {
       attrs: {
         id: {},
-        label: {}
+        nickname: {}
       },
       group: 'inline',
       inline: true,
       selectable: false,
       atom: true,
       toDOM: node => [
-        'span',
+        'a',
         {
-          class: this.options.mentionClass,
+          class: 'b-mention',
+          href: `${this.options.baseUrl}/${node.attrs.nickname}`,
           'data-mention-id': node.attrs.id
         },
-        `${this.options.matcher.char}${node.attrs.label}`
+        node.attrs.nickname
       ],
       parseDOM: [
         {
-          tag: 'span[data-mention-id]',
+          tag: 'a[data-mention-id]',
           getAttrs: dom => {
             const id = dom.getAttribute('data-mention-id');
-            const label = dom.innerText.split(this.options.matcher.char).join('');
-            return { id, label };
+            const nickname = dom.innerText;
+
+            return { id, nickname };
           }
         }
       ]
     };
   }
 
-  commands({ schema }) {
-    return attrs => replaceText(null, schema.nodes[this.name], attrs);
+  commands({ type, _schema }) {
+    return (attrs, _state) => replaceText(null, type, attrs);
   }
 
   get plugins() {
