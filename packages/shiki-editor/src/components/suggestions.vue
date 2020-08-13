@@ -2,8 +2,9 @@
   <div
     v-show='showSuggestions'
     ref='suggestions'
-    class='suggestion-list'
+    class='b-tip suggestion-list'
   >
+    <div data-popper-arrow />
     <template v-if='hasResults'>
       <div
         v-for='(user, index) in filteredUsers'
@@ -28,7 +29,7 @@ import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import flip from '@popperjs/core/lib/modifiers/flip';
-// import arrow from '@popperjs/core/lib/modifiers/arrow';
+import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 import { buildSuggestions } from '../plugins';
 
@@ -196,16 +197,13 @@ export default {
         this.$refs.suggestions,
         {
           placement: 'right-start',
-          modifiers: [preventOverflow, offset, flip, /*arrow, */{
+          modifiers: [preventOverflow, offset, flip, arrow, {
             name: 'preventOverflow',
             options: { padding: 10 }
           }, {
             name: 'offset',
             options: { offset: [0, 8] }
-          }/*, {
-            name: 'arrow',
-            options: { element: this.$refs.arrow }
-          }*/]
+          }]
         }
       );
     },
@@ -220,11 +218,22 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-.suggestion-list
-  padding: 0.2rem
-  border: 2px solid rgba(#000, 0.1)
+.mention
+  background: rgba(#000, 0.1)
+  color: rgba(#000, 0.6)
   font-size: 0.8rem
   font-weight: bold
+  border-radius: 5px
+  padding: 0.2rem 0.5rem
+  white-space: nowrap
+
+.mention-suggestion
+  color: rgba(#000, 0.6)
+
+.suggestion-list
+  z-index: 40
+  /* padding: 0.2rem */
+  /* border: 2px solid rgba(#000, 0.1) */
 
   &__no-results
     padding: 0.2rem 0.5rem

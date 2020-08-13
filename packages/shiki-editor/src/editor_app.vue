@@ -466,41 +466,4 @@ export default {
     &.is-prosemirror-selected:before,
     &:hover:before
       content: attr(data-div)
-
-
-.mention
-  background: rgba(#000, 0.1)
-  color: rgba(#000, 0.6)
-  font-size: 0.8rem
-  font-weight: bold
-  border-radius: 5px
-  padding: 0.2rem 0.5rem
-  white-space: nowrap
-
-.mention-suggestion
-  color: rgba(#000, 0.6)
-
-.suggestion-list
-  padding: 0.2rem
-  border: 2px solid rgba(#000, 0.1)
-  font-size: 0.8rem
-  font-weight: bold
-  &__no-results
-    padding: 0.2rem 0.5rem
-
-  &__item
-    border-radius: 5px
-    padding: 0.2rem 0.5rem
-    margin-bottom: 0.2rem
-    cursor: pointer
-
-    &:last-child
-      margin-bottom: 0
-
-    &.is-selected,
-    &:hover
-      background-color: rgba(#fff, 0.2)
-
-    &.is-empty
-      opacity: 0.5
 </style>

@@ -1,20 +1,27 @@
+=arrow_position($size)
+  $px: -$size / 2
+
+  &[data-popper-placement^='top'] > [data-popper-arrow]
+    bottom: $px
+  &[data-popper-placement^='bottom'] > [data-popper-arrow]
+    top: $px
+  &[data-popper-placement^='left'] > [data-popper-arrow]
+    right: $px
+  &[data-popper-placement^='right'] > [data-popper-arrow]
+    left: $px
+
 .b-tip
   background: #fff
-  padding: 4px 8px
   border: 1px solid #999
+  padding: 4px 8px
 
-  &[data-popper-placement^='top'] > .arrow
-    bottom: -4px
-  &[data-popper-placement^='bottom'] > .arrow
-    top: -4px
-  &[data-popper-placement^='left'] > .arrow
-    right: -4px
-  &[data-popper-placement^='right'] > .arrow
-    left: -4px
+  $size: 8px
+  +arrow_position($size)
 
-  .arrow
-    height: 8px
-    width: 8px
+  & > [data-popper-arrow]
+    border: 1px solid #999
+    height: $size
+    width: $size
 
     &::before
       background: #fff
@@ -25,10 +32,16 @@
       position: absolute
       z-index: -1
 
+  $size: 12px
   &--large
-    .arrow
-      height: 15px
-      width: 15px
+    +arrow_position($size)
+
+    [data-popper-arrow]
+      height: $size
+      width: $size
 
   &--no_border
-    border-color: transparent
+    border: none
+
+    & > [data-popper-arrow]
+      border: none

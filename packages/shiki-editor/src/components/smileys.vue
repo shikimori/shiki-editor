@@ -7,7 +7,7 @@
       @success='close'
     />
     <div ref='container' class='b-tip b-tip--large b-tip--no_border smileys'>
-      <div ref='arrow' class='arrow' />
+      <div data-popper-arrow />
       <div
         v-if='smileysHTML'
         class='inner'
@@ -75,9 +75,6 @@ export default {
           }, {
             name: 'offset',
             options: { offset: [0, 8] }
-          }, {
-            name: 'arrow',
-            options: { element: this.$refs.arrow }
           }]
         }
       );
