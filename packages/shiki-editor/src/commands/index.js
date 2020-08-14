@@ -2,6 +2,7 @@ export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as linkBbcodePasteRule } from './link_bbcode_paste_rule';
 export { default as linkUrlPasteRule } from './link_url_paste_rule';
+export { default as insertUserMention } from './insert_user_mention';
 export { default as markInputRule } from './mark_input_rule';
 export { default as markPasteRule } from './mark_paste_rule';
 export { default as nodeInputRule } from './node_input_rule';

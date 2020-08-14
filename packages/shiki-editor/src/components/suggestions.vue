@@ -13,7 +13,7 @@
         :class='{ "is-selected": navigatedUserIndex === index }'
         @click='selectUser(user)'
       >
-        {{ user.name }}
+        {{ user.nickname }}
       </div>
     </template>
     <div v-else class='item is-empty'>
@@ -32,6 +32,7 @@ import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 import { buildSuggestionsPlugin } from '../plugins';
+import { insertUserMention } from '../commands';
 
 export default {
   name: 'Suggestions',
@@ -80,14 +81,10 @@ export default {
             setTimeout(resolve, 500);
           });
           return [
-            { id: 1, name: 'Sven Adlung' },
-            { id: 2, name: 'Patrick Baber' },
-            { id: 3, name: 'Nick Hirche' },
-            { id: 4, name: 'Philip Isik' },
-            { id: 5, name: 'Timo Isik' },
-            { id: 6, name: 'Philipp Kühn' },
-            { id: 7, name: 'Hans Pagel' },
-            { id: 8, name: 'Sebastian Schrama' }
+            { id: 1, nickname: 'morr', url: '/morr' },
+            { id: 2, nickname: 'Patrick Baber', url: '/Patrick Baber/' },
+            { id: 3, nickname: 'Nick Hirche', url: '/Nick Hirche' },
+            { id: 4, nickname: 'Philip Isik', url: '/Philip Isik' }
           ];
         },
         // is called when a suggestion starts
@@ -142,10 +139,11 @@ export default {
           await delay(500);
           const fuse = new Fuse(items, {
             threshold: 0.2,
-            keys: ['name']
+            keys: ['nickname']
           });
           return fuse.search(query).map(item => item.item);
-        }
+        },
+        command: insertUserMention
       });
     },
     // navigate to the previous item
@@ -169,10 +167,7 @@ export default {
     selectUser(user) {
       this.insertMention({
         range: this.suggestionRange,
-        attrs: {
-          id: user.id,
-          nickname: user.name
-        }
+        attrs: user
       });
       this.editor.focus();
     },

@@ -12,7 +12,7 @@ export default function buildSuggestionsPlugin({
   },
   appendText = null,
   suggestionClass = 'mention-suggestion',
-  command = () => false,
+  command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   items = [],
   onEnter = () => false,
   onChange = () => false,
