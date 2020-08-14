@@ -15,8 +15,7 @@ export default class Mention extends Node {
         char: '@',
         allowSpaces: false,
         startOfLine: false
-      },
-      suggestionClass: 'mention-suggestion'
+      }
     };
   }
 
@@ -57,6 +56,10 @@ export default class Mention extends Node {
     return (attrs, _state) => replaceText(null, type, attrs);
   }
 
+  markdownSerialize(state, node) {
+    state.writeInline(`@${node.attrs.nickname}`);
+  }
+
   get plugins() {
     return [
       buildSuggestionsPlugin({
@@ -68,10 +71,8 @@ export default class Mention extends Node {
         onChange: this.options.onChange,
         onExit: this.options.onExit,
         onKeyDown: this.options.onKeyDown,
-        onFilter: this.options.onFilter,
-        suggestionClass: this.options.suggestionClass
+        onFilter: this.options.onFilter
       })
     ];
   }
-
 }

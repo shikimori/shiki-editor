@@ -11,7 +11,7 @@ export default function buildSuggestionsPlugin({
     startOfLine: false
   },
   appendText = null,
-  suggestionClass = 'suggestion',
+  suggestionClass = 'mention-suggestion',
   command = () => false,
   items = [],
   onEnter = () => false,

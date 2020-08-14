@@ -1598,7 +1598,8 @@ describe('MarkdownTokenizer', () => {
         'comment',
         'topic',
         'entry',
-        'message'
+        'message',
+        'user'
       ].forEach(kind => {
         it(`[${kind}=1]`, () => {
           expect(MarkdownTokenizer.parse(`[${kind}=1]`)).to.eql([
