@@ -1,7 +1,6 @@
 // based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-extensions/src/plugins/Suggestions.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { insertText } from '../commands';
 import { triggerCharacter } from '../utils';
 
 export default function buildSuggestionsPlugin({
@@ -10,7 +9,6 @@ export default function buildSuggestionsPlugin({
     allowSpaces: false,
     startOfLine: false
   },
-  appendText = null,
   suggestionClass = 'mention-suggestion',
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   items = [],
@@ -82,10 +80,6 @@ export default function buildSuggestionsPlugin({
               const { schema } = state;
 
               command({ range, attrs, schema })(state, dispatch, view);
-
-              if (appendText) {
-                insertText(appendText)(view.state, view.dispatch, view);
-              }
             }
           };
 

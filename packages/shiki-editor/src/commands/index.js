@@ -1,4 +1,3 @@
-export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as linkBbcodePasteRule } from './link_bbcode_paste_rule';
 export { default as linkUrlPasteRule } from './link_url_paste_rule';
