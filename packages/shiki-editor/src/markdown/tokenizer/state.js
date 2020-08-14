@@ -304,6 +304,7 @@ export default class MarkdownTokenizer {
           case '[topi':
           case '[entr':
           case '[mess':
+          case '[user':
             match = bbcode.match(this.SINGLE_SHIKI_BBCODE_LINK_REGEXP);
             if (!match) { break; }
             meta = parseShikiBasicMeta(bbcode, match[1], match[2]);

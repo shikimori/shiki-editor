@@ -57,7 +57,7 @@ export default class Mention extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.writeInline(`@${node.attrs.nickname}`);
+    state.writeInline(`[user=${node.attrs.id}]`);
   }
 
   get plugins() {

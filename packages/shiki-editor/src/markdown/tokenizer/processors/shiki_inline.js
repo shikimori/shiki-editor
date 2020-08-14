@@ -5,7 +5,7 @@ import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 export const SHIKI_BBCODE_LINK_REGEXP =
   /\[(anime|manga|ranobe|character|person|comment|topic|entry|message|user)=(\d+)\]/;
 export const SHIKI_BBCODE_LINK_FULL_REGEXP =
-  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message)=(\d+)\]([^[]+)\[\/(?:\1)\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message|user)=(\d+)\]([^[]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
 export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
@@ -15,8 +15,6 @@ export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
   if (isImage(meta)) {
     return processShikiImage(state, openBbcode, meta);
-  } else if (isUser(meta)) {
-    return processShikiLink(state, openBbcode, null, meta);
   } else {
     return processShikiLink(state, openBbcode, closeBbcode, meta);
   }
@@ -112,8 +110,4 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
 
 function isImage(meta) {
   return meta.type === 'image' || meta.type === 'poster';
-}
-
-function isUser(meta) {
-  return meta.type === 'user';
 }

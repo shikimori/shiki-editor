@@ -7,7 +7,12 @@ module.exports = {
     //   errors: true
     // }
   },
-  transpileDependencies: ['shiki-utils', 'shiki-editor', 'shiki-uploader'],
+  transpileDependencies: [
+    'shiki-utils',
+    'shiki-editor',
+    'shiki-uploader',
+    'shiki-decorators'
+  ],
   pluginOptions: {
   }
 };
