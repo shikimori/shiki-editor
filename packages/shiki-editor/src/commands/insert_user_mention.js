@@ -1,6 +1,7 @@
-export default function insertUserMention({ range, attrs, schema }) {
+import { getShikiLoader } from '../utils';
+
+export default function insertUserMention({ range, attrs, schema, editor }) {
   return (state, dispatch, _view) => {
-    console.log(range, attrs, schema);
     const replacement = schema.text(
       attrs.nickname,
       [
@@ -8,10 +9,8 @@ export default function insertUserMention({ range, attrs, schema }) {
       ]
     );
 
-    dispatch(
-      state.tr
-        .replaceWith(range.from, range.to, replacement)
-    );
+    dispatch(state.tr.replaceWith(range.from, range.to, replacement));
+    getShikiLoader(editor).addToCache('user', attrs.id, attrs);
   };
 }
 

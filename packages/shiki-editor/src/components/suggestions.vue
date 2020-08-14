@@ -143,7 +143,9 @@ export default {
           });
           return fuse.search(query).map(item => item.item);
         },
-        command: insertUserMention
+        command: ({ range, attrs, schema }) => (
+          insertUserMention({ range, attrs, schema, editor: this.editor })
+        )
       });
     },
     // navigate to the previous item

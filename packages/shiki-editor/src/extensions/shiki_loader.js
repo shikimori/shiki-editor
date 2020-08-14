@@ -35,6 +35,11 @@ export class ShikiLoader extends Extension {
     return deferred.promise;
   }
 
+  addToCache(kind, id, data) {
+    CACHE[kind] ||= {};
+    CACHE[kind][id] ||= data;
+  }
+
   resetCache({ id, type }) {
     const kind = convertToShikiType(type);
 
@@ -83,9 +88,7 @@ export class ShikiLoader extends Extension {
             result.url = fixUrl(result.url, this.options.baseUrl);
           }
 
-          CACHE[kind] ||= {};
-          CACHE[kind][id] ||= result;
-
+          this.addToCache(kind, id, result);
           this.resolve(QUEUE[kind]?.[id], result, kind, id);
         }
       });
