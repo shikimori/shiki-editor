@@ -73,7 +73,6 @@ export default {
     isColumn1: false,
     isColumn2: true,
     text2: `
-[user=1]
 `,
     text1: `# Shiki BbCodes
 [div fc-2][div f-column]

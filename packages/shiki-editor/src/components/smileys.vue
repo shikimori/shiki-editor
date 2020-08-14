@@ -86,8 +86,10 @@ export default {
       }
     },
     cleanup() {
-      this.popup.destroy();
-      this.popup = null;
+      if (this.popup) {
+        this.popup.destroy();
+        this.popup = null;
+      }
     },
     async fetch() {
       const { data } = await axios.get(`${this.baseUrl}/${SMILEYS_PATH}`);
