@@ -43,6 +43,7 @@ export default {
   data: () => ({
     plugin: null,
     popup: null,
+    popupNode: null,
     filteredUsers: [],
     insertMention: () => {},
     navigatedUserIndex: 0,
@@ -174,8 +175,14 @@ export default {
       this.editor.focus();
     },
     renderPopup(node) {
+      if (this.isMisplaced(node)) {
+        this.cleanup();
+        return;
+      }
+
       if (this.popup) { return; }
 
+      this.popupNode = node;
       this.popup = createPopper(
         { getBoundingClientRect: node.getBoundingClientRect },
         this.$refs.suggestions,
@@ -190,6 +197,10 @@ export default {
           }]
         }
       );
+    },
+    isMisplaced(node) {
+      return JSON.stringify(node.getBoundingClientRect()) ===
+        JSON.stringify(new DOMRect());
     },
     cleanup() {
       this.query = null;

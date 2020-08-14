@@ -162,7 +162,6 @@ export default function buildSuggestionsPlugin({
     },
 
     props: {
-
       // Call the keydown hook if suggestion is active.
       handleKeyDown(view, event) {
         const { active, range } = this.getState(view.state);
