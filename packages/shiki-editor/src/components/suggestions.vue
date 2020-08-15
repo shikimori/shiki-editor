@@ -124,7 +124,16 @@ export default {
           return false;
         },
         command: ({ range, attrs, schema }) => (
-          insertUserMention({ range, attrs, schema, editor: this.editor })
+          insertUserMention({
+            range,
+            attrs: {
+              id: attrs.id,
+              text: attrs.nickname,
+              url: attrs.url
+            },
+            schema,
+            editor: this.editor
+          })
         )
       });
     },
