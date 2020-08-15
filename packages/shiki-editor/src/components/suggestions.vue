@@ -123,7 +123,7 @@ export default {
             this.enterHandler();
             return true;
           }
-          if (event.key === ',' && this.hasResults) {
+          if ((event.key === ',' || event.key === ' ') && this.hasResults) {
             this.trySelectUser();
             return false;
           }
