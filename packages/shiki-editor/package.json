@@ -76,7 +76,6 @@
     "prosemirror-tables": "^1.1.0",
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.0",
-    "shiki-utils": "^0.9.7",
     "vue-keypress": "^2.1.1",
     "withinviewport": "^2.1.2",
     "yarn": "^1.22.4"
@@ -85,9 +84,9 @@
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
     "imagesloaded": "^4.1.4",
-    "shiki-decorators": "0.8.18",
-    "shiki-uploader": "0.8.18",
-    "shiki-utils": "0.8.18",
+    "shiki-decorators": "^0.10.0",
+    "shiki-uploader": "^0.10.0",
+    "shiki-utils": "^0.10.0",
     "uevent": "^2.0.0"
   }
 }

@@ -35,8 +35,8 @@
   },
   "peerDependencies": {
     "uevent": "^2.0.0",
-    "shiki-utils": "0.8.18",
-    "shiki-decorators": "0.8.18"
+    "shiki-utils": "^0.10.0",
+    "shiki-decorators": "^0.10.0"
   },
   "postcss": {
     "plugins": {
