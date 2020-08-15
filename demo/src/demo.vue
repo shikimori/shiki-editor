@@ -58,6 +58,10 @@ import { flash, ShikiRequest } from '../../packages/shiki-utils';
 import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
+const TEXT_2 = `
+[anime=1]
+`.trim();
+
 export default {
   name: 'App',
   components: {
@@ -70,9 +74,65 @@ export default {
     uploadHeaders: () => ({}),
     isColumn1: false,
     isColumn2: true,
-    text2: `
-`,
-    text1: `# Shiki BbCodes
+    text1: `
+# Заголовки
+[hr]
+# Заголовок уровень 1
+\`\`\`
+# Заголовок уровень 1
+\`\`\`
+
+## Заголовок уровень 2
+\`\`\`
+## Заголовок уровень 2
+\`\`\`
+
+### Заголовок уровень 3
+\`\`\`
+### Заголовок уровень 3
+\`\`\`
+
+#### Спец заголовок 1
+\`\`\`
+#### Спец заголовок 1
+\`\`\`
+
+##### Спец заголовок 2
+\`\`\`
+##### Спец заголовок 2
+\`\`\`
+
+# Черта после заголовка
+[hr]
+# Заголовок уровень 1
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+# Заголовок уровень 1
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+
+## Заголовок уровень 2
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+## Заголовок уровень 2
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+
+### Заголовок уровень 3
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+### Заголовок уровень 3
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+\`\`\`
+
+
+# Shiki BbCodes
 [div fc-2][div f-column]
 [anime=1] text after [anime=1]Anime name[/anime]
 [manga=1]
@@ -92,13 +152,6 @@ export default {
 [message=99999999999]
 [/div][/div]
 
-# Headings
-[hr]
-# Heading level 1: \`# Heading level 1\`
-## Heading level 2: \`## Heading level 2\`
-### Heading level 3: \`### Heading level 3\`
-#### Heading level 4: \`#### Heading level 4\`
-##### Heading level 5: \`##### Heading level 5\`
 
 # Basic styles
 [hr]
@@ -151,7 +204,7 @@ code block
 \`\`\`css
 css code block
 \`\`\`
-- Bulet List
+- Bullet List
 - def
 > - \`quoted\` list
 - > list \`quoted\`
@@ -173,7 +226,9 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
 
 [quote]Old style quote support[/quote]
 [quote=zxc]Old style quote with nickname[/quote]
-[quote=c1246;1945;Silentium°]Old style quote with user[/quote]`,
+[quote=c1246;1945;Silentium°]Old style quote with user[/quote]
+`.trim(),
+    text2: TEXT_2,
     test: new Test()
   }),
   computed: {

@@ -1,7 +1,5 @@
-import axios from 'axios';
 import pDefer from 'p-defer';
 
-import { flash } from 'shiki-utils';
 import { debounce, throttle } from 'shiki-decorators';
 
 import Extension from '../base/extension';
@@ -11,7 +9,6 @@ export const CACHE = {};
 const QUEUE = {};
 
 export class ShikiLoader extends Extension {
-  API_PATH = 'api/shiki_editor'
   IDS_PER_REQUEST = 200
 
   get name() {
@@ -56,23 +53,17 @@ export class ShikiLoader extends Extension {
 
     let idsLimit = this.IDS_PER_REQUEST;
 
-    const idsGetParams = Object.keys(QUEUE)
-      .map(kind => {
-        if (idsLimit <= 0) { return; }
+    const idsParams = Object.keys(QUEUE).reduce((memo, kind) => {
+      if (idsLimit <= 0) { return; }
 
-        const ids = Object.keys(QUEUE[kind]).slice(0, idsLimit);
-        idsLimit -= ids.length;
+      const ids = Object.keys(QUEUE[kind]).slice(0, idsLimit);
+      idsLimit -= ids.length;
 
-        return `${kind}=${ids.join(',')}`;
-      })
-      .filter(v => v)
-      .join('&');
+      memo[kind] = ids.join(',');
+      return memo;
+    }, {});
 
-    axios
-      .get(`${this.options.shikiRequest.origin}/${this.API_PATH}?${idsGetParams}`)
-      .catch(_error => (
-        flash.error(window.I18n.t('frontend.lib.please_try_again_later'))
-      ))
+    this.options.shikiRequest.get('shiki_editor', idsParams)
       .then(result => (
         result ? this.processSuccess(result.data) : this.processError()
       ));
