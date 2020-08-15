@@ -1,10 +1,10 @@
 // based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-extensions/src/plugins/Suggestions.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { insertText } from '../commands';
-import { triggerCharacter } from '../utils';
+import { insertText } from '../../commands';
+import buildDetectSequence from './detect_sequence';
 
-export default function buildSuggestionsPlugin({
+export default function buildSuggestionsPopupPlugin({
   matcher = {
     char: '@',
     allowSpaces: false,
@@ -28,10 +28,10 @@ export default function buildSuggestionsPlugin({
   //   ));
   // }
 }) {
-  const triggerCharacterBuilt = triggerCharacter(matcher);
+  const detectSequence = buildDetectSequence(matcher);
 
   return new Plugin({
-    key: new PluginKey('suggestions'),
+    key: new PluginKey('suggestions_popup'),
 
     view() {
       return {
@@ -139,11 +139,11 @@ export default function buildSuggestionsPlugin({
 
           // Try to match against where our cursor currently is
           const $position = selection.$from;
-          const match = triggerCharacterBuilt($position);
+          const match = detectSequence($position);
           const decorationId = (Math.random() + 1).toString(36).substr(2, 5);
 
           // If we found a match, update the current state to show it
-          if (match) {
+          if (match && match.query) {
             next.active = true;
             next.decorationId = prev.decorationId ?
               prev.decorationId :

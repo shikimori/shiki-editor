@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import Fuse from 'fuse.js';
-import delay from 'delay';
+// import Fuse from 'fuse.js';
+// import delay from 'delay';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
-import { buildSuggestionsPlugin } from '../plugins';
+import { buildSuggestionsPopupPlugin } from '../plugins';
 import { insertUserMention } from '../commands';
 
 export default {
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     createPlugin() {
-      return buildSuggestionsPlugin({
+      return buildSuggestionsPopupPlugin({
         // a list of all suggested items
         // items: async () => {
         //   // await new Promise(resolve => {
@@ -118,7 +118,7 @@ export default {
         // is called when a suggestion is cancelled
         onExit: (args) => {
           console.log('onExit');
-          this.cleanup(args)
+          this.cleanup(args);
         },
         // is called on every keyDown event while a suggestion is active
         onKeyDown: ({ event }) => {
