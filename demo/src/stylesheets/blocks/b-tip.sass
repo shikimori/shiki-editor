@@ -11,9 +11,10 @@
     left: $px
 
 .b-tip
-  background: #fff
+  background-color: #fff
   color: #123
   padding: 4px 8px
+  transition: background-color 0.2s
 
   $size: 8px
   +arrow_position($size)
@@ -23,6 +24,7 @@
     width: $size
 
     &:before
+      transition: background-color 0.2s
       background: #fff
       content: ''
       height: 100%
@@ -46,5 +48,10 @@
     & > [data-popper-arrow]:before
       background: #456
 
-  // &--is-loading
-    color: red
+  &--is-loading
+    &.b-tip--dark
+      background: #789
+      color: #fff
+
+      & > [data-popper-arrow]:before
+        background: #789

@@ -16,7 +16,10 @@
         v-for='(user, index) in filteredUsers'
         :key='user.id'
         class='item'
-        :class='{ "is-selected": navigatedUserIndex === index }'
+        :class='{
+          "is-selected": navigatedUserIndex === index,
+          "is-loading": isLoading
+        }'
         @click='selectUser(user)'
       >
         {{ user.nickname }}
@@ -186,7 +189,7 @@ export default {
 
       if (requestId.isCurrent) {
         this.filteredUsers = data;
-        // this.isLoading = false;
+        this.isLoading = false;
         await this.$nextTick();
         this.popup?.update();
       }
@@ -226,7 +229,7 @@ export default {
     &:last-child
       margin-bottom: 0
 
-    &:not(.is-empty)
+    &:not(.is-empty):not(.is-loading),
       cursor: pointer
 
       &.is-selected,
