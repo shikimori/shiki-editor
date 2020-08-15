@@ -27,8 +27,7 @@
             ref='editor1'
             :vue='vue'
             :content='text1'
-            :base-url='baseUrl'
-            :preview='preview'
+            :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader'
             @update='(value) => text1 = value'
           />
@@ -38,8 +37,7 @@
             ref='editor2'
             :vue='vue'
             :content='text2'
-            :base-url='baseUrl'
-            :preview='preview'
+            :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader'
             @update='(value) => text2 = value'
           />
@@ -56,7 +54,7 @@ import axios from 'axios';
 // import { throttle, debounce } from 'shiki-decorators';
 // import ShikiUploader from 'shiki-uploader';
 import { ShikiEditorApp } from '../../packages/shiki-editor';
-import { flash } from '../../packages/shiki-utils';
+import { flash, ShikiRequest } from '../../packages/shiki-utils';
 import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
@@ -192,6 +190,9 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
         process.env.NODE_ENV === 'development' ? '&test=1' : ''
       );
     },
+    shikiRequest() {
+      return new ShikiRequest(this.baseUrl, axios);
+    },
     shikiUploader() {
       return new ShikiUploader({
         locale: this.locale,
@@ -223,25 +224,6 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
     },
     noticeDebouncedThrottled() {
       this.test.debouncedThrottled();
-    },
-    preview(text) {
-      return axios
-        .post(
-          `${this.baseUrl}/api/shiki_editor/preview?test=1`,
-          { text }
-        )
-        .catch(error => {
-          if (process.env.NODE_ENV === 'development') {
-            let devError = error?.response?.data;
-            if (devError) {
-              devError = devError.split('\n').slice(0, 6).join('<br>');
-            }
-            flash.error(devError || error.message);
-          } else {
-            flash.error(I18n.t('frontend.lib.please_try_again_later'));
-          }
-          return { data: null };
-        });
     }
   }
 };

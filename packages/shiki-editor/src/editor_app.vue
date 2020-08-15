@@ -74,7 +74,7 @@
       ref='smileys'
       :is-enabled='isSmiley'
       target-ref='smiley'
-      :base-url='baseUrl'
+      :base-url='shikiRequest.origin'
       @toggle='smileyCommand'
     />
     <Suggestions
@@ -124,8 +124,7 @@ export default {
   },
   props: {
     vue: { type: Function, required: true },
-    baseUrl: { type: String, required: true },
-    preview: { type: Function, required: true },
+    shikiRequest: { type: Object, required: true },
     content: { type: String, required: true },
     shikiUploader: { type: Object, required: true }
   },
@@ -222,7 +221,7 @@ export default {
 
     this.editor = new ShikiEditor({
       content: this.content,
-      baseUrl: this.baseUrl,
+      baseUrl: this.shikiRequest.origin,
       extensions: [this.fileUploaderExtension],
       plugins: []
     }, this, this.vue);
@@ -303,9 +302,11 @@ export default {
       this.isPreviewLoading = this.isPreview;
 
       if (this.isPreview) {
-        const { data } = await this.preview(
-          this.isSource ? this.editorContent : this.editor.exportMarkdown()
-        );
+        const text = this.isSource ?
+          this.editorContent :
+          this.editor.exportMarkdown();
+
+        const { data } = await this.shikiRequest.post('preview', { text });
 
         if (data !== null) {
           this.previewHTML = data;
