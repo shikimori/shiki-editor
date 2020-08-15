@@ -14,10 +14,10 @@ export default function buildSuggestionsPopupPlugin({
   suggestionClass = 'mention-suggestion',
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   // items = [],
-  onEnter = () => false,
-  onChange = () => false,
-  onExit = () => false,
-  onKeyDown = () => false
+  showed = () => false,
+  updated = () => false,
+  closed = () => false,
+  keyPresed = () => false
   // onFilter = (searchItems, query) => {
   //   if (!query) {
   //     return searchItems;
@@ -42,23 +42,27 @@ export default function buildSuggestionsPopupPlugin({
           // See how the state changed
           const moved = prev.active && next.active &&
             prev.range.from !== next.range.from;
-          const started = !prev.active && next.active;
-          const stopped = prev.active && !next.active;
-          const changed = !started && !stopped && prev.query !== next.query;
-          const handleStart = started || moved;
-          const handleChange = changed && !moved;
-          const handleExit = stopped || moved;
+          const isStarted = !prev.active && next.active;
+          const isStopped = prev.active && !next.active;
+          const isChanged = !isStarted &&
+            !isStopped && prev.query !== next.query;
+
+          const isHandleShow = isStarted || moved;
+          const isHandleUpdate = isChanged; // && !moved;
+          const isHandleClose = isStopped || moved;
+
+          // console.log({ isChanged, isStarted, isStopped, prevQuery: prev.query, nextQuery: next.query });
+          // console.log({ isHandleUpdate });
 
           // Cancel when suggestion isn't active
-          if (!handleStart && !handleChange && !handleExit) {
+          if (!isHandleShow && !isHandleUpdate && !isHandleClose) {
             return;
           }
 
-          const state = handleExit ? prev : next;
+          const state = isHandleClose ? prev : next;
           const decorationNode = document.querySelector(
             `[data-decoration-id="${state.decorationId}"]`
           );
-          console.log('update', state);
 
           // build a virtual node for popper.js or tippy.js
           // this can be used for building popups without a DOM node
@@ -78,14 +82,6 @@ export default function buildSuggestionsPopupPlugin({
             text: state.text,
             decorationNode,
             virtualNode,
-            // items: (handleChange || handleStart) ?
-            //   await onFilter(
-            //     Array.isArray(items) ?
-            //       items :
-            //       await items(),
-            //     state.query
-            //   ) :
-            //   [],
             command: ({ range, attrs }) => {
               const { state, dispatch } = view;
               const { schema } = state;
@@ -98,17 +94,16 @@ export default function buildSuggestionsPopupPlugin({
             }
           };
 
-          // Trigger the hooks when necessary
-          if (handleExit) {
-            onExit(props);
+          if (isHandleClose) {
+            closed(props);
           }
 
-          if (handleChange) {
-            onChange(props);
+          if (isHandleUpdate) {
+            updated(props);
           }
 
-          if (handleStart) {
-            onEnter(props);
+          if (isHandleShow) {
+            showed(props);
           }
         }
       };
@@ -177,7 +172,7 @@ export default function buildSuggestionsPopupPlugin({
 
         if (!active) return false;
 
-        return onKeyDown({ view, event, range });
+        return keyPresed({ view, event, range });
       },
 
       // Setup decorator on the currently active suggestion.

@@ -80,6 +80,7 @@
     <Suggestions
       :is-available='isEditingEnabled'
       :editor='editor'
+      :shiki-request='shikiRequest'
     />
   </div>
 </template>
