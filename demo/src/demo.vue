@@ -1,7 +1,7 @@
 <template>
   <div class='container'>
     <div class='block'>
-      <div class='headline'>shiki-utils</div>
+      <div class='headline'>shiki-utils flash with shiki-decorators</div>
       <div class='samples'>
         <button @click='info'>info</button>
         <button @click='error'>error</button>
