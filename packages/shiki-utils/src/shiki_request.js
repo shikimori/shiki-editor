@@ -1,7 +1,8 @@
 import { flash } from './flash';
 
-const URLS = {
-  preview: '/api/shiki_editor/preview' + (process.env.NODE_ENV === 'development' ? '?test=1' : '')
+const SHIKIMORI_URLS = {
+  preview: '/api/shiki_editor/preview' + (process.env.NODE_ENV === 'development' ? '?test=1' : ''),
+  autocomplete_user: '/api/users'
 };
 
 export default class ShikiRequest {
@@ -14,16 +15,33 @@ export default class ShikiRequest {
     return this._origin;
   }
 
-  // get(action, params) {
-  //   return this.axios
-  //     .get(`${this.origin}${URLS[action]}`, params)
-  //     .catch(this.handleError);
-  // }
+  get(action, params) {
+    return this.axios
+      .get(this.urlFor(action), { params })
+      .catch(this.handleError);
+  }
 
   post(action, params) {
     return this.axios
-      .post(`${this.origin}${URLS[action]}`, params)
+      .post(this.urlFor(action), params)
       .catch(this.handleError);
+  }
+
+  autocomplete(kind, search) {
+    return this.get(
+      `autocomplete_${kind}`,
+      { search, page: 1, limit: 10 }
+    );
+  }
+
+  urlFor(action) {
+    const path = SHIKIMORI_URLS[action];
+
+    if (!path) {
+      throw `unknown action: ${action}`;
+    }
+
+    return `${this.origin}${path}`;
   }
 
   handleError(error) {
