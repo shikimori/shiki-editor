@@ -123,6 +123,10 @@ export default {
             this.enterHandler();
             return true;
           }
+          if (event.key === ',' && this.hasResults) {
+            this.trySelectUser();
+            return false;
+          }
           if (event.key === 'Escape') {
             this.escHandler();
             return true;
@@ -170,6 +174,13 @@ export default {
         attrs: user
       });
       this.editor.focus();
+    },
+    trySelectUser() {
+      const user = this.filteredUsers.find(v => v.nickname === this.query);
+
+      if (user) {
+        this.selectUser(user);
+      }
     },
     renderPopup(node) {
       if (this.isMisplaced(node)) {
