@@ -98,11 +98,12 @@ export default {
           this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
+          const priorQuery = query;
           this.query = query;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
-          this.fetch();
+          this.fetch(priorQuery);
         },
         closed: (args) => {
           this.cleanup(args);
@@ -190,7 +191,12 @@ export default {
       return JSON.stringify(node.getBoundingClientRect()) ===
         JSON.stringify(new DOMRect());
     },
-    async fetch() {
+    async fetch(priorQuery) {
+      if (priorQuery && this.query.includes(priorQuery) &&
+        !this.filteredUsers.length
+      ) {
+        return;
+      }
       const requestId = new RequestId('autocomplete_users');
       this.isLoading = true;
 
