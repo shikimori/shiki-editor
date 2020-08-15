@@ -13,20 +13,10 @@ export default function buildSuggestionsPopupPlugin({
   appendText = null,
   suggestionClass = 'mention-suggestion',
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
-  // items = [],
   showed = () => false,
   updated = () => false,
   closed = () => false,
   keyPresed = () => false
-  // onFilter = (searchItems, query) => {
-  //   if (!query) {
-  //     return searchItems;
-  //   }
-  //
-  //   return searchItems.filter(item => (
-  //     JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
-  //   ));
-  // }
 }) {
   const detectSequence = buildDetectSequence(matcher);
 
@@ -50,9 +40,6 @@ export default function buildSuggestionsPopupPlugin({
           const isHandleShow = isStarted || moved;
           const isHandleUpdate = isChanged; // && !moved;
           const isHandleClose = isStopped || moved;
-
-          // console.log({ isChanged, isStarted, isStopped, prevQuery: prev.query, nextQuery: next.query });
-          // console.log({ isHandleUpdate });
 
           // Cancel when suggestion isn't active
           if (!isHandleShow && !isHandleUpdate && !isHandleClose) {

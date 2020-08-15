@@ -48,7 +48,7 @@ export default {
     filteredUsers: [],
     insertMention: () => {},
     navigatedUserIndex: 0,
-    query: null,
+    _query: null,
     suggestionRange: null
   }),
   computed: {
@@ -57,6 +57,14 @@ export default {
     },
     isSuggestions() {
       return this.isAvailable && (this.query || this.hasResults);
+    },
+    query: {
+      get() {
+        return this._query;
+      },
+      set(value) {
+        return this._query = value;
+      }
     }
   },
   watch: {

@@ -222,7 +222,7 @@ export default {
 
     this.editor = new ShikiEditor({
       content: this.content,
-      origin: this.shikiRequest.origin,
+      shikiRequest: this.shikiRequest,
       extensions: [this.fileUploaderExtension],
       plugins: []
     }, this, this.vue);

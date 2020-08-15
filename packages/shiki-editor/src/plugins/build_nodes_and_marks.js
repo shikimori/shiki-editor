@@ -65,10 +65,10 @@ export default function(editor) {
     new CodeBlock(),
     new Div(),
     new Hr(),
-    new Smiley({ origin: editor.options.origin }),
+    new Smiley({ origin: editor.options.shikiRequest.origin }),
     new Image(),
     new ListItem(),
-    new Quote({ origin: editor.options.origin }),
+    new Quote({ origin: editor.options.shikiRequest.origin }),
     new SpoilerBlock()
   ];
 }

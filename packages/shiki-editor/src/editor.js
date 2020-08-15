@@ -28,7 +28,7 @@ import { buildExtensions } from './extensions';
 export default class ShikiEditor {
   options = {
     autofocus: null,
-    origin: '',
+    shikiRequest: null,
     content: '',
     dropCursor: {},
     extensions: [],
