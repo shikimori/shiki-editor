@@ -14,7 +14,6 @@
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "fuse.js": "^6.4.1",
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
     "tippy.js": "^6.2.6",
