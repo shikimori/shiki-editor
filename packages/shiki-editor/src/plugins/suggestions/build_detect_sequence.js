@@ -1,5 +1,5 @@
 // Create a matcher that matches when a specific character is typed
-export default function detectSequence({
+export default function buildDetectSequence({
   char = '@',
   allowSpaces = false,
   startOfLine = false

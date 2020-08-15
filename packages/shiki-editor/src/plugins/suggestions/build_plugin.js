@@ -2,7 +2,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../../commands';
-import buildDetectSequence from './detect_sequence';
+import buildDetectSequence from './build_detect_sequence';
 
 export default function buildSuggestionsPopupPlugin({
   matcher = {
@@ -11,7 +11,7 @@ export default function buildSuggestionsPopupPlugin({
     startOfLine: false
   },
   appendText = null,
-  suggestionClass = 'mention-suggestion',
+  suggestionClass = 'ProseMirror-suggestion',
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   showed = () => false,
   updated = () => false,
