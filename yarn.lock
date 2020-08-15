@@ -7456,11 +7456,6 @@ shebang-regex@^3.0.0:
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
-"shiki-utils@file:packages/shiki-utils":
-  version "0.9.6"
-  dependencies:
-    toastify-js "^1.8.0"
-
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
