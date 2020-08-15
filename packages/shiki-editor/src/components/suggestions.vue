@@ -22,6 +22,7 @@
         }'
         @click='selectUser(user)'
       >
+        <img :src='user.avatar' class='avatar' />
         {{ user.nickname }}
       </div>
     </template>
@@ -237,9 +238,17 @@ export default {
   /* border: 2px solid rgba(#000, 0.1) */
 
   .item
-    padding: 3px 16px
+    padding: 3px 16px 3px 12px
     margin: 0 -8px 3px
     position: relative // to prevent overlap by arrow
+    display: flex
+    align-items: center
+
+    .avatar
+      width: 20px
+      height: 20px
+      margin-right: 10px
+
 
     &:last-child
       margin-bottom: 0
