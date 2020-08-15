@@ -1,22 +1,24 @@
-// Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
+// Create a matcher that matches when a specific character is typed
 export default function triggerCharacter({
   char = '@',
   allowSpaces = false,
   startOfLine = false
 }) {
+  // Matching expressions used for later
+  const escapedChar = `\\${char}`;
+  const suffix = new RegExp(`\\s${escapedChar}$`);
+  const prefix = startOfLine ? '^' : '';
+  const regexp = allowSpaces ?
+    new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm') :
+    new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
+
+  const MATCH_PREFIX_REGEXP = /^[\s\0]?$/;
+
   return $position => {
     // cancel if top level node
     if ($position.depth <= 0) {
       return false;
     }
-
-    // Matching expressions used for later
-    const escapedChar = `\\${char}`;
-    const suffix = new RegExp(`\\s${escapedChar}$`);
-    const prefix = startOfLine ? '^' : '';
-    const regexp = allowSpaces ?
-      new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm') :
-      new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
 
     // Lookup the boundaries of the current node
     const textFrom = $position.before();
@@ -30,7 +32,7 @@ export default function triggerCharacter({
       // or the line beginning
       const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
 
-      if (/^[\s\0]?$/.test(matchPrefix)) {
+      if (MATCH_PREFIX_REGEXP.test(matchPrefix)) {
         // The absolute position of the match in the document
         const from = match.index + $position.start();
         let to = from + match[0].length;
