@@ -1,7 +1,7 @@
 {
   "name": "shiki-uploader",
   "title": "Shikimori Uploader",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "main": "src/shiki_uploader.js",
   "author": "morr",
   "license": "OSL-3.0",
