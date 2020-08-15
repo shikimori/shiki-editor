@@ -31,6 +31,7 @@ import offset from '@popperjs/core/lib/modifiers/offset';
 import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
+import { RequestId } from 'shiki-utils';
 import { buildSuggestionsPopupPlugin } from '../plugins';
 import { insertUserMention } from '../commands';
 
@@ -48,8 +49,9 @@ export default {
     filteredUsers: [],
     insertMention: () => {},
     navigatedUserIndex: 0,
-    _query: null,
-    suggestionRange: null
+    query: null,
+    suggestionRange: null,
+    isLoading: false
   }),
   computed: {
     hasResults() {
@@ -57,14 +59,6 @@ export default {
     },
     isSuggestions() {
       return this.isAvailable && (this.query || this.hasResults);
-    },
-    query: {
-      get() {
-        return this._query;
-      },
-      set(value) {
-        return this._query = value;
-      }
     }
   },
   watch: {
@@ -91,6 +85,7 @@ export default {
           this.suggestionRange = range;
           this.renderPopup(virtualNode);
           this.insertMention = command;
+          this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
           console.log('updated');
@@ -98,6 +93,7 @@ export default {
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
+          this.fetch();
         },
         closed: (args) => {
           console.log('closed');
@@ -151,10 +147,10 @@ export default {
       this.editor.focus();
     },
     renderPopup(node) {
-      // if (this.isMisplaced(node)) {
-      //   this.cleanup();
-      //   return;
-      // }
+      if (this.isMisplaced(node)) {
+        this.cleanup();
+        return;
+      }
 
       if (this.popup) { return; }
 
@@ -177,6 +173,19 @@ export default {
     isMisplaced(node) {
       return JSON.stringify(node.getBoundingClientRect()) ===
         JSON.stringify(new DOMRect());
+    },
+    async fetch() {
+      const requestId = new RequestId('autocomplete_users');
+      this.isLoading = true;
+
+      const { data } = await this.shikiRequest.autocomplete('user', this.query);
+
+      if (requestId.isCurrent) {
+        this.filteredUsers = data;
+        this.isLoading = false;
+        await this.$nextTick();
+        this.popup.update();
+      }
     },
     cleanup() {
       this.query = null;
