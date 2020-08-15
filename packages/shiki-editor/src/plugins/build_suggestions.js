@@ -13,21 +13,23 @@ export default function buildSuggestionsPlugin({
   appendText = null,
   suggestionClass = 'mention-suggestion',
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
-  items = [],
+  // items = [],
   onEnter = () => false,
   onChange = () => false,
   onExit = () => false,
-  onKeyDown = () => false,
-  onFilter = (searchItems, query) => {
-    if (!query) {
-      return searchItems;
-    }
-
-    return searchItems.filter(item => (
-      JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
-    ));
-  }
+  onKeyDown = () => false
+  // onFilter = (searchItems, query) => {
+  //   if (!query) {
+  //     return searchItems;
+  //   }
+  //
+  //   return searchItems.filter(item => (
+  //     JSON.stringify(item).toLowerCase().includes(query.toLowerCase())
+  //   ));
+  // }
 }) {
+  const triggerCharacterBuilt = triggerCharacter(matcher);
+
   return new Plugin({
     key: new PluginKey('suggestions'),
 
@@ -56,11 +58,13 @@ export default function buildSuggestionsPlugin({
           const decorationNode = document.querySelector(
             `[data-decoration-id="${state.decorationId}"]`
           );
+          console.log('update', state);
 
           // build a virtual node for popper.js or tippy.js
           // this can be used for building popups without a DOM node
           const virtualNode = decorationNode ? {
             getBoundingClientRect() {
+              // console.log(decorationNode.getBoundingClientRect());
               return decorationNode.getBoundingClientRect();
             },
             clientWidth: decorationNode.clientWidth,
@@ -74,9 +78,14 @@ export default function buildSuggestionsPlugin({
             text: state.text,
             decorationNode,
             virtualNode,
-            items: (handleChange || handleStart) ?
-              await onFilter(Array.isArray(items) ? items : await items(), state.query) :
-              [],
+            // items: (handleChange || handleStart) ?
+            //   await onFilter(
+            //     Array.isArray(items) ?
+            //       items :
+            //       await items(),
+            //     state.query
+            //   ) :
+            //   [],
             command: ({ range, attrs }) => {
               const { state, dispatch } = view;
               const { schema } = state;
@@ -130,7 +139,7 @@ export default function buildSuggestionsPlugin({
 
           // Try to match against where our cursor currently is
           const $position = selection.$from;
-          const match = triggerCharacter(matcher)($position);
+          const match = triggerCharacterBuilt($position);
           const decorationId = (Math.random() + 1).toString(36).substr(2, 5);
 
           // If we found a match, update the current state to show it

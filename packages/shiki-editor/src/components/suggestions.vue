@@ -77,23 +77,25 @@ export default {
     createPlugin() {
       return buildSuggestionsPlugin({
         // a list of all suggested items
-        items: async() => {
-          await new Promise(resolve => {
-            setTimeout(resolve, 500);
-          });
-          return [
-            { id: 1, nickname: 'morr', url: '/morr' },
-            { id: 2, nickname: 'Patrick Baber', url: '/Patrick Baber/' },
-            { id: 3, nickname: 'Nick Hirche', url: '/Nick Hirche' },
-            { id: 4, nickname: 'Philip Isik', url: '/Philip Isik' }
-          ];
-        },
+        // items: async () => {
+        //   // await new Promise(resolve => {
+        //   //   setTimeout(resolve, 500);
+        //   // });
+        //   return [
+        //     // { id: 1, nickname: 'morr', url: '/morr' },
+        //     // { id: 2, nickname: 'Patrick Baber', url: '/Patrick Baber/' },
+        //     // { id: 3, nickname: 'Nick Hirche', url: '/Nick Hirche' },
+        //     // { id: 4, nickname: 'Philip Isik', url: '/Philip Isik' }
+        //   ];
+        // },
         // is called when a suggestion starts
         onEnter: ({
-          items, query, range, command, virtualNode
+          // items,
+          query, range, command, virtualNode
         }) => {
+          console.log('onEnter');
           this.query = query;
-          this.filteredUsers = items;
+          // this.filteredUsers = items;
           this.suggestionRange = range;
           this.renderPopup(virtualNode);
           // we save the command for inserting a selected mention
@@ -103,18 +105,24 @@ export default {
         },
         // is called when a suggestion has changed
         onChange: ({
-          items, query, range, virtualNode
+          // items,
+          query, range, virtualNode
         }) => {
+          console.log('onEnter');
           this.query = query;
-          this.filteredUsers = items;
+          // this.filteredUsers = items;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
         },
         // is called when a suggestion is cancelled
-        onExit: this.cleanup,
+        onExit: (args) => {
+          console.log('onExit');
+          this.cleanup(args)
+        },
         // is called on every keyDown event while a suggestion is active
         onKeyDown: ({ event }) => {
+          console.log('onKeyDown');
           if (event.key === 'ArrowUp') {
             this.upHandler();
             return true;
@@ -123,7 +131,7 @@ export default {
             this.downHandler();
             return true;
           }
-          if (event.key === 'Enter') {
+          if (event.key === 'Enter' && this.hasResults) {
             this.enterHandler();
             return true;
           }
@@ -133,17 +141,17 @@ export default {
         // this function is optional because there is basic filtering built-in
         // you can overwrite it if you prefer your own filtering
         // in this example we use fuse.js with support for fuzzy search
-        onFilter: async(items, query) => {
-          if (!query) {
-            return items;
-          }
-          await delay(500);
-          const fuse = new Fuse(items, {
-            threshold: 0.2,
-            keys: ['nickname']
-          });
-          return fuse.search(query).map(item => item.item);
-        },
+        // onFilter: async(items, query) => {
+        //   if (!query) {
+        //     return items;
+        //   }
+        //   await delay(500);
+        //   const fuse = new Fuse(items, {
+        //     threshold: 0.2,
+        //     keys: ['nickname']
+        //   });
+        //   return fuse.search(query).map(item => item.item);
+        // },
         command: ({ range, attrs, schema }) => (
           insertUserMention({ range, attrs, schema, editor: this.editor })
         )
