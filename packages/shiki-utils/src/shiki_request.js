@@ -6,6 +6,12 @@ const SHIKIMORI_URLS = {
   autocomplete_user: '/api/users'
 };
 
+const CACHE_ACTIONS = ['autocomplete_user'];
+const CACHE = CACHE_ACTIONS.reduce((memo, v) => {
+  memo[v] = {};
+  return memo;
+}, {});
+
 export default class ShikiRequest {
   constructor(origin, axios) {
     this._origin = origin;
@@ -17,15 +23,19 @@ export default class ShikiRequest {
   }
 
   get(action, params) {
-    return this.axios
-      .get(this.urlFor(action), { params })
-      .catch(this.handleError);
+    return this.withCache(action, params, () => (
+      this.axios
+        .get(this.urlFor(action), { params })
+        .catch(this.handleError)
+    ));
   }
 
   post(action, params) {
-    return this.axios
-      .post(this.urlFor(action), params)
-      .catch(this.handleError);
+    return this.withCache(action, params, () => (
+      this.axios
+        .post(this.urlFor(action), params)
+        .catch(this.handleError)
+    ));
   }
 
   autocomplete(kind, search, limit = 5) {
@@ -33,6 +43,23 @@ export default class ShikiRequest {
       `autocomplete_${kind}`,
       { search, page: 1, limit }
     );
+  }
+
+  async withCache(action, params, request) {
+    if (CACHE_ACTIONS.includes(action)) {
+      const key = JSON.stringify(params);
+
+      if (CACHE[action][key]) {
+        return Promise.resolve(CACHE[action][key]);
+      } else {
+        const response = await request();
+        CACHE[action][key] = response;
+        return Promise.resolve(response);
+      }
+
+    } else {
+      return request();
+    }
   }
 
   urlFor(action) {
