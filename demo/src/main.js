@@ -25,6 +25,8 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.spoiler': 'Спойлер',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Исходный код',
+  'frontend.lib.is_loading': 'Загрузка...',
+  'frontend.lib.nothing_found': 'Ничего не найдено',
   'frontend.lib.file_uploader.uploading_file': 'загрузка файла %{filename} (%{filesize} KB)',
   'frontend.lib.file_uploader.uploading_files': 'загрузка файлов %{uploadedCount} из %{totalCount} (%{kbUploaded} / %{kbTotal} KB)', // eslint-disable-line
   'frontend.lib.file_uploader.drop_pictures_here': 'Перетаскивай сюда картинки',

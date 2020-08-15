@@ -55,7 +55,6 @@ export default function buildSuggestionsPopupPlugin({
           // this can be used for building popups without a DOM node
           const virtualNode = decorationNode ? {
             getBoundingClientRect() {
-              // console.log(decorationNode.getBoundingClientRect());
               return decorationNode.getBoundingClientRect();
             },
             clientWidth: decorationNode.clientWidth,

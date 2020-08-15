@@ -28,10 +28,10 @@ export default class ShikiRequest {
       .catch(this.handleError);
   }
 
-  autocomplete(kind, search) {
+  autocomplete(kind, search, limit = 5) {
     return this.get(
       `autocomplete_${kind}`,
-      { search, page: 1, limit: 10 }
+      { search, page: 1, limit }
     );
   }
 

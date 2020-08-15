@@ -3,9 +3,15 @@
     v-show='isSuggestions'
     ref='suggestions'
     class='b-tip b-tip--dark suggestions'
+    :class='{
+      "b-tip--is-loading": isLoading
+    }'
   >
     <div data-popper-arrow />
-    <template v-if='hasResults'>
+    <div v-if='isLoading && !hasResults' class='item is-empty'>
+      {{ t('frontend.lib.is_loading') }}
+    </div>
+    <template v-else-if='hasResults'>
       <div
         v-for='(user, index) in filteredUsers'
         :key='user.id'
@@ -17,7 +23,7 @@
       </div>
     </template>
     <div v-else class='item is-empty'>
-      No users found
+      {{ t('frontend.lib.nothing_found') }}
     </div>
   </div>
 </template>
@@ -51,14 +57,16 @@ export default {
     navigatedUserIndex: 0,
     query: null,
     suggestionRange: null,
-    isLoading: false
+    isLoading: true
   }),
   computed: {
     hasResults() {
       return this.filteredUsers.length;
     },
     isSuggestions() {
-      return this.isAvailable && (this.query || this.hasResults);
+      return this.isAvailable &&
+        (this.query || this.hasResults) &&
+        this.popup;
     }
   },
   watch: {
@@ -80,7 +88,6 @@ export default {
     createPlugin() {
       return buildSuggestionsPopupPlugin({
         showed: ({ query, range, command, virtualNode }) => {
-          console.log('showed');
           this.query = query;
           this.suggestionRange = range;
           this.renderPopup(virtualNode);
@@ -88,7 +95,6 @@ export default {
           this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
-          console.log('updated');
           this.query = query;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
@@ -96,12 +102,10 @@ export default {
           this.fetch();
         },
         closed: (args) => {
-          console.log('closed');
           this.cleanup(args);
         },
         // is called on every keyDown event while a suggestion is active
         keyPresed: ({ event }) => {
-          // console.log('keyPresed');
           if (event.key === 'ArrowUp') {
             this.upHandler();
             return true;
@@ -159,7 +163,7 @@ export default {
         { getBoundingClientRect: node.getBoundingClientRect },
         this.$refs.suggestions,
         {
-          placement: 'top-start',
+          placement: 'bottom-start',
           modifiers: [preventOverflow, offset, flip, arrow, {
             name: 'preventOverflow',
             options: { padding: 10 }
@@ -182,9 +186,9 @@ export default {
 
       if (requestId.isCurrent) {
         this.filteredUsers = data;
-        this.isLoading = false;
+        // this.isLoading = false;
         await this.$nextTick();
-        this.popup.update();
+        this.popup?.update();
       }
     },
     cleanup() {
@@ -197,12 +201,18 @@ export default {
         this.popup.destroy();
         this.popup = null;
       }
+    },
+    t(key) {
+      return I18n.t(key);
     }
   }
 };
 </script>
 
 <style scoped lang='sass'>
+.b-tip
+  min-width: 120px
+
 .suggestions
   z-index: 35
   /* padding: 0.2rem */
@@ -211,16 +221,18 @@ export default {
   .item
     padding: 3px 16px
     margin: 0 -8px 3px
-    cursor: pointer
     position: relative // to prevent overlap by arrow
 
     &:last-child
       margin-bottom: 0
 
-    &.is-selected,
-    &:hover
-      background-color: rgba(#fff, 0.2)
+    &:not(.is-empty)
+      cursor: pointer
+
+      &.is-selected,
+      &:hover
+        background-color: rgba(#fff, 0.2)
 
     &.is-empty
-      opacity: 0.5
+      opacity: 0.7
 </style>
