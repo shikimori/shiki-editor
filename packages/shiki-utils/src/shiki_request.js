@@ -1,4 +1,4 @@
-import { flash } from './flash';
+import flash from './flash';
 
 const SHIKIMORI_URLS = {
   preview: '/api/shiki_editor/preview' + (process.env.NODE_ENV === 'development' ? '?test=1' : ''),

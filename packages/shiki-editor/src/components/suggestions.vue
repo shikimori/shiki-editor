@@ -22,7 +22,7 @@
         }'
         @click='selectUser(user)'
       >
-        <img :src='user.avatar' class='avatar' />
+        <img :src='user.avatar' class='avatar' :title='user.nickname'>
         {{ user.nickname }}
       </div>
     </template>

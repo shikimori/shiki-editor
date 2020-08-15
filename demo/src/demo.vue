@@ -48,6 +48,7 @@
 </template>
 
 <script>
+/* eslint max-len: 0 */
 import axios from 'axios';
 // import { ShikiEditorApp } from 'shiki-editor';
 // import { flash } from 'shiki-utils';
