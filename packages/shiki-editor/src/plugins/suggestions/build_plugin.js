@@ -100,6 +100,7 @@ export default function buildSuggestionsPopupPlugin({
       init() {
         return {
           active: false,
+          disable: false,
           range: {},
           query: null,
           text: null
@@ -112,7 +113,7 @@ export default function buildSuggestionsPopupPlugin({
         const next = { ...prev };
 
         // We can only be suggesting if there is no selection
-        if (selection.from === selection.to) {
+        if (next.disable !== true && selection.from === selection.to) {
           // Reset active state if we just left the previous suggestion range
           if (selection.from < prev.range.from || selection.from > prev.range.to) {
             next.active = false;
@@ -158,11 +159,16 @@ export default function buildSuggestionsPopupPlugin({
 
         if (!active) return false;
 
+        // if (event.key === 'Escape') {
+        //   this.spec.state.apply(view.state.tr, { ...state, disable: true });
+        // }
+
         return keyPresed({ view, event, range });
       },
 
       // Setup decorator on the currently active suggestion.
       decorations(editorState) {
+        // console.log({ ...this.getState(editorState) });
         const { active, range, decorationId } = this.getState(editorState);
 
         if (!active) return null;

@@ -123,6 +123,10 @@ export default {
             this.enterHandler();
             return true;
           }
+          if (event.key === 'Escape') {
+            this.escHandler();
+            return true;
+          }
           return false;
         },
         command: ({ range, attrs, schema }) => (
@@ -156,6 +160,9 @@ export default {
       if (user) {
         this.selectUser(user);
       }
+    },
+    escHandler() {
+      this.closePopup();
     },
     selectUser(user) {
       this.insertMention({
@@ -216,10 +223,13 @@ export default {
       this.suggestionRange = null;
       this.navigatedUserIndex = 0;
 
-      if (this.popup) {
-        this.popup.destroy();
-        this.popup = null;
-      }
+      this.closePopup();
+    },
+    closePopup() {
+      if (!this.popup) { return; }
+
+      this.popup.destroy();
+      this.popup = null;
     },
     t(key) {
       return I18n.t(key);
