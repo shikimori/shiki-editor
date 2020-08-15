@@ -10,7 +10,7 @@ export default class Mention extends Node {
 
   get defaultOptions() {
     return {
-      baseUrl: null,
+      origin: null,
       matcher: {
         char: '@',
         allowSpaces: false,
@@ -33,7 +33,7 @@ export default class Mention extends Node {
         'a',
         {
           class: 'b-mention',
-          href: `${this.options.baseUrl}/${node.attrs.nickname}`,
+          href: `${this.options.origin}/${node.attrs.nickname}`,
           'data-mention-id': node.attrs.id
         },
         node.attrs.nickname

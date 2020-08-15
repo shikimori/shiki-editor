@@ -6,7 +6,7 @@ export default class Quote extends Node {
   }
 
   get defaultOptions() {
-    return { baseUrl: null };
+    return { origin: null };
   }
 
   get schema() {

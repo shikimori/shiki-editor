@@ -20,7 +20,7 @@ export class ShikiLoader extends Extension {
 
   get defaultOptions() {
     return {
-      baseUrl: undefined
+      origin: undefined
     };
   }
 
@@ -69,7 +69,7 @@ export class ShikiLoader extends Extension {
       .join('&');
 
     axios
-      .get(`${this.options.baseUrl}/${this.API_PATH}?${idsGetParams}`)
+      .get(`${this.options.origin}/${this.API_PATH}?${idsGetParams}`)
       .catch(_error => (
         flash.error(window.I18n.t('frontend.lib.please_try_again_later'))
       ))
@@ -85,7 +85,7 @@ export class ShikiLoader extends Extension {
 
         if (result !== undefined) {
           if (result?.url) {
-            result.url = fixUrl(result.url, this.options.baseUrl);
+            result.url = fixUrl(result.url, this.options.origin);
           }
 
           this.addToCache(kind, id, result);

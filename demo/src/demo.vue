@@ -180,18 +180,18 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
     locale() {
       return window.I18n.locale;
     },
-    baseUrl() {
+    origin() {
       return process.env.VUE_APP_USER === 'morr' ?
         'http://shikimori.local' :
         'https://shikimori.one';
     },
     uploadEndpoint() {
-      return `${this.baseUrl}/api/user_images?linked_type=Comment` + (
+      return `${this.origin}/api/user_images?linked_type=Comment` + (
         process.env.NODE_ENV === 'development' ? '&test=1' : ''
       );
     },
     shikiRequest() {
-      return new ShikiRequest(this.baseUrl, axios);
+      return new ShikiRequest(this.origin, axios);
     },
     shikiUploader() {
       return new ShikiUploader({

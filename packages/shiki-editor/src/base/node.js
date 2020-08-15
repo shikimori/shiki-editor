@@ -42,6 +42,6 @@ export default class Node extends Extension {
   }
 
   prependBaseUrl(url) {
-    return `${this.options.baseUrl}${url}`;
+    return `${this.options.origin}${url}`;
   }
 }

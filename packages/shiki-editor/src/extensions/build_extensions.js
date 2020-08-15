@@ -4,6 +4,6 @@ import TrailingNode from './trailing_node';
 export default function(editor) {
   return [
     new TrailingNode(),
-    new ShikiLoader({ baseUrl: editor.options.baseUrl })
+    new ShikiLoader({ origin: editor.options.origin })
   ];
 }

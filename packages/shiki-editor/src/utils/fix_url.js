@@ -1,9 +1,9 @@
-export default function fixUrl(url, baseUrl) {
-  if ((!baseUrl && url[0] === '/') || url.startsWith('http')) {
+export default function fixUrl(url, origin) {
+  if ((!origin && url[0] === '/') || url.startsWith('http')) {
     return url;
   }
-  if (baseUrl && url[0] === '/' && url[1] !== '/') {
-    return `${baseUrl}${url}`;
+  if (origin && url[0] === '/' && url[1] !== '/') {
+    return `${origin}${url}`;
   }
 
   return `//${url}`;

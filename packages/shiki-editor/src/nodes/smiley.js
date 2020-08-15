@@ -6,7 +6,7 @@ export default class Smiley extends Node {
   }
 
   get defaultOptions() {
-    return { baseUrl: undefined };
+    return { origin: undefined };
   }
 
   get schema() {

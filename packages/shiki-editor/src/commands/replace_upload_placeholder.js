@@ -5,7 +5,7 @@ export default function(editor, { uploadId, response }) {
   const { state } = editor;
   const { dispatch } = editor.view;
   const pos = findPlaceholder(state, uploadId);
-  const url = editor.options.baseUrl + response.url;
+  const url = editor.options.origin + response.url;
 
   if (pos != null) {
     dispatch(

@@ -37,7 +37,7 @@ export default {
   name: 'Smileys',
   components: { Keypress },
   props: {
-    baseUrl: { type: String, required: true },
+    origin: { type: String, required: true },
     isEnabled: { type: Boolean, required: true },
     targetRef: { type: String, required: true }
   },
@@ -92,8 +92,8 @@ export default {
       }
     },
     async fetch() {
-      const { data } = await axios.get(`${this.baseUrl}/${SMILEYS_PATH}`);
-      this.smileysHTML = data.replace(/src="\//g, `src="${this.baseUrl}/`);
+      const { data } = await axios.get(`${this.origin}/${SMILEYS_PATH}`);
+      this.smileysHTML = data.replace(/src="\//g, `src="${this.origin}/`);
       await this.$nextTick();
       this.popup.update();
     },
