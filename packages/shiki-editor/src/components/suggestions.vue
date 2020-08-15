@@ -99,7 +99,7 @@ export default {
           this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
-          const priorQuery = query;
+          const priorQuery = this.query;
           this.query = query;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;

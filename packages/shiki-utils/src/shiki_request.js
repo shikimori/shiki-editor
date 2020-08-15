@@ -6,7 +6,9 @@ const SHIKIMORI_URLS = {
   autocomplete_user: '/api/users'
 };
 
-const CACHE_ACTIONS = ['autocomplete_user'];
+const CACHE_ACTIONS = [
+  'autocomplete_user'
+];
 const CACHE = CACHE_ACTIONS.reduce((memo, v) => {
   memo[v] = {};
   return memo;
