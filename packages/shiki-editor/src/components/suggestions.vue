@@ -176,7 +176,10 @@ export default {
       this.editor.focus();
     },
     trySelectUser() {
-      const user = this.filteredUsers.find(v => v.nickname === this.query);
+      const lowerQuery = this.query.toLowerCase();
+      const user = this.filteredUsers.find(v => (
+        v.nickname.toLowerCase() === lowerQuery
+      ));
 
       if (user) {
         this.selectUser(user);
