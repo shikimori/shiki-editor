@@ -83,9 +83,9 @@
     "autosize": "^4.0.2",
     "axios": "^0.19.2",
     "imagesloaded": "^4.1.4",
-    "shiki-decorators": "^0.10.1",
-    "shiki-uploader": "^0.10.1",
-    "shiki-utils": "^0.10.1",
+    "shiki-decorators": "^0.10.2",
+    "shiki-uploader": "^0.10.2",
+    "shiki-utils": "^0.10.2",
     "uevent": "^2.0.0"
   }
 }
