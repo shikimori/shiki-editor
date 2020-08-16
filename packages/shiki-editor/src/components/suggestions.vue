@@ -9,7 +9,7 @@
   >
     <div data-popper-arrow />
     <div v-if='isLoading && !hasResults' class='item is-empty'>
-      {{ t('frontend.lib.is_loading') }}
+      {{ t('frontend.lib.loading') }}
     </div>
     <template v-else-if='hasResults'>
       <div
