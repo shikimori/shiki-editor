@@ -246,7 +246,7 @@ export default {
       this.popup = null;
     },
     t(key) {
-      return I18n.t(key);
+      return window.I18n.t(key);
     }
   }
 };
