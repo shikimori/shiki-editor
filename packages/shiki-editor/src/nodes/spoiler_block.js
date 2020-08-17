@@ -37,7 +37,9 @@ export default class SpoilerBlock extends Node {
         return [
           'div',
           {
-            class: `b-spoiler_block${node.attrs.isOpened ? ' is-opened' : ''}`
+            class: 'b-spoiler_block' + (
+              node.attrs.isOpened ? ' is-opened' : ''
+            )
           },
           ['button', node.attrs.label],
           ['div', 0]
