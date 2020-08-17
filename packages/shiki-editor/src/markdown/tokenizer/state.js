@@ -262,7 +262,10 @@ export default class MarkdownTokenizer {
             if (!match) { break; }
 
             meta = parseSpoilerMeta(match[2]);
-            if (meta?.label?.match(/\[\w+/)) { break; } // ignore spoilers with bbcodes
+            // ignore common spoilers with bbcodes
+            if (match[1] === 'spoiler' && meta?.label?.match(/\[\w+/)) {
+              break;
+            }
 
             isProcessed = processBlock(
               this,

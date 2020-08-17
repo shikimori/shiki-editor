@@ -893,6 +893,20 @@ describe('MarkdownTokenizer', () => {
           { type: 'spoiler_block', direction: 'close' }
         ]);
       });
+
+      it('[spoiler_block=[b]test[/b]]z[/spoiler_block]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[spoiler_block=[b]test[/b]]z[/spoiler_block]'
+        )).to.eql([
+          {
+            type: 'spoiler_block',
+            direction: 'open',
+            attrs: [['label', '[b]test[/b]'], ['nFormat', n()]]
+          },
+          ...text('z'),
+          { type: 'spoiler_block', direction: 'close' }
+        ]);
+      });
     });
 
     describe('spoiler', () => {
