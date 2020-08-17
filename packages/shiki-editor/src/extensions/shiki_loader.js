@@ -54,7 +54,7 @@ export class ShikiLoader extends Extension {
     let idsLimit = this.IDS_PER_REQUEST;
 
     const idsParams = Object.keys(QUEUE).reduce((memo, kind) => {
-      if (idsLimit <= 0) { return; }
+      if (idsLimit <= 0) { return memo; }
 
       const ids = Object.keys(QUEUE[kind]).slice(0, idsLimit);
       idsLimit -= ids.length;
