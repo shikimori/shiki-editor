@@ -881,6 +881,20 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
+    // describe('spoiler_block', () => {
+    //   it('[spoiler_block]z[/spoiler_block]', () => {
+    //     expect(MarkdownTokenizer.parse('[spoiler_block]z[/spoiler_block]')).to.eql([
+    //       {
+    //         type: 'spoiler_block',
+    //         direction: 'open',
+    //         attrs: [['nFormat', n()]]
+    //       },
+    //       ...text('z'),
+    //       { type: 'spoiler_block', direction: 'close' }
+    //     ]);
+    //   });
+    // });
+
     describe('spoiler', () => {
       it('[spoiler]z[/spoiler]', () => {
         expect(MarkdownTokenizer.parse('[spoiler]z[/spoiler]')).to.eql([
@@ -967,8 +981,8 @@ describe('MarkdownTokenizer', () => {
       });
 
       it('[spoiler=[b]test[/b]]\\nz[/spoiler]qwe', () => {
-        expect(MarkdownTokenizer.parse('[spoiler=[b]test[/b]]\nz[/spoiler]qwe')).to.eql([
-          ...text('[spoiler=[b]test[/b]]'),
+        expect(MarkdownTokenizer.parse('[spoiler=[b]test]\nz[/spoiler]qwe')).to.eql([
+          ...text('[spoiler=[b]test]'),
           ...text('z[/spoiler]qwe')
         ]);
       });

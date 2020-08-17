@@ -42,6 +42,7 @@ export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
 
   BLOCK_BBCODE_REGEXP = /^\[(?:quote|spoiler|code)(?:=(.+?))?\]$/
+  // BLOCK_BBCODE_REGEXP = /^\[(?:quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
   COLOR_REGEXP = /^\[color=(#[\da-f]+|\w+)\]$/
   SIZE_REGEXP = /^\[size=(\d+)\]$/
