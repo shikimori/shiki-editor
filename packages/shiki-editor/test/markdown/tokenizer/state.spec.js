@@ -965,6 +965,13 @@ describe('MarkdownTokenizer', () => {
           ...text('qwe')
         ]);
       });
+
+      it('[spoiler=[b]test[/b]]\\nz[/spoiler]qwe', () => {
+        expect(MarkdownTokenizer.parse('[spoiler=[b]test[/b]]\nz[/spoiler]qwe')).to.eql([
+          ...text('[spoiler=[b]test[/b]]'),
+          ...text('z[/spoiler]qwe')
+        ]);
+      });
     });
 
     describe('quote', () => {

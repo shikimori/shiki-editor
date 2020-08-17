@@ -261,9 +261,12 @@ export default class MarkdownTokenizer {
             match = bbcode.match(this.BLOCK_BBCODE_REGEXP);
             if (!match) { break; }
 
+            meta = parseSpoilerMeta(match[1]);
+            if (meta?.label?.match(/\[\w+/)) { break; } // ignore spoilers with bbcodes
+
             isProcessed = processBlock(
               this,
-              'spoiler_block', bbcode, '[/spoiler]', parseSpoilerMeta(match[1]),
+              'spoiler_block', bbcode, '[/spoiler]', meta,
               isStart, isOnlySpacingsBefore
             );
             if (isProcessed) { return; }
