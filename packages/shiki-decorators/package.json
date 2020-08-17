@@ -1,7 +1,7 @@
 {
   "name": "shiki-decorators",
   "title": "Shikimori Decorators",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "main": "index.js",
   "author": "morr",
   "license": "OSL-3.0",
