@@ -424,7 +424,7 @@ export default {
   .preview
     padding: 5px 8px 5px
 
-/deep/
+/deep/ .ProseMirror
   span[contenteditable=false]
     cursor: default
 
