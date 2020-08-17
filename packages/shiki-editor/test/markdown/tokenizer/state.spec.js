@@ -881,19 +881,19 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
-    // describe('spoiler_block', () => {
-    //   it('[spoiler_block]z[/spoiler_block]', () => {
-    //     expect(MarkdownTokenizer.parse('[spoiler_block]z[/spoiler_block]')).to.eql([
-    //       {
-    //         type: 'spoiler_block',
-    //         direction: 'open',
-    //         attrs: [['nFormat', n()]]
-    //       },
-    //       ...text('z'),
-    //       { type: 'spoiler_block', direction: 'close' }
-    //     ]);
-    //   });
-    // });
+    describe('spoiler_block', () => {
+      it('[spoiler_block]z[/spoiler_block]', () => {
+        expect(MarkdownTokenizer.parse('[spoiler_block]z[/spoiler_block]')).to.eql([
+          {
+            type: 'spoiler_block',
+            direction: 'open',
+            attrs: [['nFormat', n()]]
+          },
+          ...text('z'),
+          { type: 'spoiler_block', direction: 'close' }
+        ]);
+      });
+    });
 
     describe('spoiler', () => {
       it('[spoiler]z[/spoiler]', () => {

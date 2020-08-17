@@ -41,8 +41,7 @@ import processShikiBlock from './processors/shiki_block';
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
 
-  BLOCK_BBCODE_REGEXP = /^\[(?:quote|spoiler|code)(?:=(.+?))?\]$/
-  // BLOCK_BBCODE_REGEXP = /^\[(?:quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
+  BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
   COLOR_REGEXP = /^\[color=(#[\da-f]+|\w+)\]$/
   SIZE_REGEXP = /^\[size=(\d+)\]$/
@@ -262,12 +261,12 @@ export default class MarkdownTokenizer {
             match = bbcode.match(this.BLOCK_BBCODE_REGEXP);
             if (!match) { break; }
 
-            meta = parseSpoilerMeta(match[1]);
+            meta = parseSpoilerMeta(match[2]);
             if (meta?.label?.match(/\[\w+/)) { break; } // ignore spoilers with bbcodes
 
             isProcessed = processBlock(
               this,
-              'spoiler_block', bbcode, '[/spoiler]', meta,
+              'spoiler_block', bbcode, `[/${match[1]}]`, meta,
               isStart, isOnlySpacingsBefore
             );
             if (isProcessed) { return; }
@@ -360,11 +359,11 @@ export default class MarkdownTokenizer {
         }
 
         if (seq5 === '[code' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
-          const meta = parseCodeMeta(match[1]);
+          const meta = parseCodeMeta(match[2]);
           if (isStart || meta) {
             isProcessed = processCodeBlock(
               this,
-              bbcode, '[/code]', meta,
+              bbcode, `[/${match[1]}]`, meta,
               isStart, isOnlySpacingsBefore
             );
             if (isProcessed) { return; }
@@ -374,7 +373,7 @@ export default class MarkdownTokenizer {
         if (seq5 === '[quot' && (match = bbcode.match(this.BLOCK_BBCODE_REGEXP))) {
           isProcessed = processBlock(
             this,
-            'quote', bbcode, '[/quote]', parseQuoteMeta(match[1]),
+            'quote', bbcode, `[/${match[1]}]`, parseQuoteMeta(match[2]),
             isStart, isOnlySpacingsBefore
           );
           if (isProcessed) { return; }
