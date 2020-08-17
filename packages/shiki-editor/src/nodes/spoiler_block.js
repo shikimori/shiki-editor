@@ -63,7 +63,7 @@ export default class SpoilerBlock extends Node {
   markdownSerialize(state, node) {
     state.renderBlock(
       node,
-      'spoiler',
+      'spoiler_block',
       node.attrs.label ? `=${node.attrs.label}` : '',
       node.attrs.nFormat
     );
