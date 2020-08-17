@@ -96,6 +96,8 @@ import EditorContent from './components/editor_content';
 import { scrollTop } from './utils';
 import { FileUploader } from './extensions';
 
+import { flash } from 'shiki-utils';
+
 import Icon from './components/icon';
 import Smileys from './components/smileys';
 import Suggestions from './components/suggestions';
@@ -114,6 +116,7 @@ const MENU_ITEMS = [
   ['smiley', 'image', 'upload'],
   ['blockquote', 'spoiler_block', 'code_block', 'bullet_list']
 ];
+const MAXIMUM_CONTENT_SIZE = 100000;
 
 export default {
   name: 'EditorApp',
@@ -142,7 +145,8 @@ export default {
     isMenuBarOffset: false,
     isPreview: false,
     isPreviewLoading: false,
-    previewHTML: null
+    previewHTML: null,
+    isHugeContent: false
   }),
   computed: {
     isEditingEnabled() {
@@ -203,7 +207,8 @@ export default {
       return !this.isContentManipulationsPending;
     },
     isSourceEnabled() {
-      return !this.isContentManipulationsPending && !this.isPreview;
+      return !this.isHugeContent &&
+        !this.isContentManipulationsPending && !this.isPreview;
     }
   },
   watch: {
@@ -215,19 +220,26 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
+    this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
     this.fileUploaderExtension = new FileUploader({
       shikiUploader: this.shikiUploader
     });
 
     this.editor = new ShikiEditor({
-      content: this.content,
+      content: this.isHugeContent ? '' : this.content,
       shikiRequest: this.shikiRequest,
       extensions: [this.fileUploaderExtension],
       plugins: []
     }, this, this.vue);
 
     this.editorContent = this.content;
+
+    if (this.isHugeContent) {
+      this.toggleSource(this.content);
+      await this.$nextTick();
+      flash.info(window.I18n.t('frontend.shiki_editor.too_large_content'));
+    }
   },
   mounted() {
     this.fileUploaderExtension.attachShikiUploader({
@@ -321,16 +333,21 @@ export default {
         }
       } else {
         this.previewHTML = null;
+
+        await this.$nextTick();
+        if (this.isSource) {
+          autosize(this.$refs.textarea);
+        }
       }
     },
-    async toggleSource() {
+    async toggleSource(overrideContent) {
       this.isPreview = false;
       const scrollY = scrollTop();
 
       if (this.isSource) {
         this.editor.setContent(this.editorContent);
       } else {
-        this.editorContent = this.editor.exportMarkdown();
+        this.editorContent = overrideContent || this.editor.exportMarkdown();
         this.editorPosition = this.editor.selection.from;
       }
 

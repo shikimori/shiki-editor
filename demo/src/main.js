@@ -25,6 +25,7 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.spoiler': 'Спойлер',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Исходный код',
+  'frontend.shiki_editor.too_large_content': 'Слишком много контента. Визуальный редактор не справится и поэтому отключён.',
   'frontend.lib.loading': 'Загрузка...',
   'frontend.lib.nothing_found': 'Ничего не найдено',
   'frontend.lib.file_uploader.uploading_file': 'загрузка файла %{filename} (%{filesize} KB)',
