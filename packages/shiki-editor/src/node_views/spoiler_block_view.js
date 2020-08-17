@@ -1,7 +1,13 @@
 import { bind } from 'shiki-decorators';
+import { DOMSerializer } from 'prosemirror-model';
+
 import DOMView from './dom_view';
 
+const ANY_BBCODE_REGEXP = /\[\w+/;
+
 export default class SpoilerBlockView extends DOMView {
+  priorLabel = null
+
   constructor(options) {
     super(options);
 
@@ -32,7 +38,22 @@ export default class SpoilerBlockView extends DOMView {
 
   syncState() {
     this.dom.classList.toggle('is-opened', this.node.attrs.isOpened);
-    this.button.innerText = this.node.attrs.label;
+
+    if (this.node.attrs.label === this.priorLabel) { return; }
+    this.priorLabel = this.node.attrs.label;
+
+    if (this.node.attrs.label.match(ANY_BBCODE_REGEXP)) {
+      const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
+      const nodes = this.editor.markdownParser.parse(this.node.attrs.label);
+      const content = nodes.content?.content?.[0]?.type?.name === 'paragraph' ?
+        nodes.content.content[0].content :
+        nodes.content;
+
+      this.button.innerHTML = '';
+      this.button.appendChild(domSerializer.serializeFragment(content));
+    } else {
+      this.button.innerText = this.node.attrs.label;
+    }
   }
 
   @bind
