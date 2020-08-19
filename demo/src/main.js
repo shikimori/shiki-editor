@@ -33,7 +33,8 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.code_block': 'Блок кода',
   'frontend.shiki_editor.bulle_list': 'Список',
   'frontend.shiki_editor.blockquote': 'Цитата',
-  'frontend.shiki_editor.too_large_content': 'Слишком много контента. Визуальный редактор не справится и поэтому отключён.',
+  'frontend.shiki_editor.too_large_content':
+    'Слишком много контента. Визуальный редактор не справится и поэтому отключён.',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Исходный код',
   'frontend.lib.loading': 'Загрузка...',
