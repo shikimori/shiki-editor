@@ -55,7 +55,7 @@ export default class CodeBlock extends Node {
 
   markdownSerialize(state, node) {
     state.write('```' + (node.attrs.language || '') + '\n');
-    state.text(node.textContent, false);
+    state.text(node.textContent.replace(/`/g, '\\`'), false);
     state.ensureNewLine();
     state.write('```');
     state.closeBlock(node);

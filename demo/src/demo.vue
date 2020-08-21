@@ -60,7 +60,11 @@ import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
-asd ||test|| qwe
+[code]
+\`\`\`
+test
+\`\`\`
+[/code]
 `.trim();
 
 export default {

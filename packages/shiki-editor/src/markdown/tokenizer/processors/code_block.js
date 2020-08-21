@@ -44,7 +44,9 @@ export default function(
   const endIndex = isMarkdown ?
     index :
     state.text[index - 1] === '\n' ? index - 1 : index;
-  const text = state.text.slice(startIndex, endIndex);
+  const text = state.text
+    .slice(startIndex, endIndex)
+    .replace(/\\`/g, '`');
   const languageAttr = language ? [['language', language]] : null;
   index += endSequence.length;
 
