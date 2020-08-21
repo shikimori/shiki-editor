@@ -6,7 +6,7 @@ export default class SpoilerInlineView extends DOMView {
   constructor(options) {
     super(options);
 
-    this.dom = document.createElement('span');
+    this.dom = document.createElement('button');
     this.contentDOM = document.createElement('span');
 
     this.syncState();
