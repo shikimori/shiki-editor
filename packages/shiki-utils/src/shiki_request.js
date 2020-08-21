@@ -82,7 +82,7 @@ export default class ShikiRequest {
       }
       flash.error(devError || error.message);
     } else {
-      flash.error(I18n.t('frontend.lib.please_try_again_later'));
+      flash.error(window.I18n.t('frontend.lib.please_try_again_later'));
     }
     return { data: null };
   }
