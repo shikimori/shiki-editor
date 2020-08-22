@@ -28,17 +28,17 @@ export default class CodeInline extends Mark {
   get markdownSerializerToken() {
     return {
       open(_state, _mark, parent, index) {
-        return backticksFor(parent.child(index), -1);
+        return backticksFor(parent.child(index));
       },
       close(_state, _mark, parent, index) {
-        return backticksFor(parent.child(index - 1), 1);
+        return backticksFor(parent.child(index - 1));
       },
       escape: false
     };
   }
 }
 
-function backticksFor(node, side) {
+function backticksFor(node) {
   const ticks = /`+/g;
   let m;
   let len = 0;
@@ -48,8 +48,7 @@ function backticksFor(node, side) {
       len = Math.max(len, m[0].length);
     }
   }
-  let result = len > 0 && side > 0 ? ' `' : '`';
+  let result = '`';
   for (let i = 0; i < len; i += 1) result += '`';
-  if (len > 0 && side < 0) result += ' ';
   return result;
 }

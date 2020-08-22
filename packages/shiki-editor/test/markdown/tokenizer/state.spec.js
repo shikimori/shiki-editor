@@ -245,6 +245,19 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('`z\\`xc`', () => {
+        expect(MarkdownTokenizer.parse('`z\\`xc`')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              { type: 'code_inline', content: 'z`xc' }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
       it('qwe [code]zxc[/code]', () => {
         expect(MarkdownTokenizer.parse('qwe [code]zxc[/code]')).to.eql([
           { type: 'paragraph', direction: 'open' },
@@ -673,6 +686,12 @@ describe('MarkdownTokenizer', () => {
     });
 
     describe('code_block', () => {
+      it('```\\nzxc\\n```', () => {
+        expect(MarkdownTokenizer.parse('```\nzxc\n```')).to.eql([
+          { type: 'code_block', content: 'zxc' }
+        ]);
+      });
+
       it('```\\nz\\`xc\\n```', () => {
         expect(MarkdownTokenizer.parse('```\nz\\`xc\n```')).to.eql([
           { type: 'code_block', content: 'z`xc' }

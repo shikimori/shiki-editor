@@ -31,10 +31,17 @@ export default function(state, startSequence, endSequence) {
   }
 
   const startIndex = state.index + startSequence.length;
-  const code = extractUntil(state.text, endSequence, startIndex);
+  const code = extractUntil(
+    state.text,
+    endSequence,
+    startIndex,
+    undefined,
+    undefined,
+    (text, index) => text[index-1] !== '\\'
+  );
   if (code) {
     state.inlineTokens.push(
-      new Token('code_inline', code)
+      new Token('code_inline', code.replace(/\\`/g, '`'))
     );
     state.next(code.length + startSequence.length + endSequence.length);
     return true;

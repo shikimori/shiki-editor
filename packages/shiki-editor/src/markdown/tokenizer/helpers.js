@@ -29,7 +29,8 @@ export function extractUntil(
   sequence,
   startIndex,
   maxIndex = startIndex + 1000,
-  isIgnoreNewLine = false
+  isIgnoreNewLine = false,
+  verifyResult = null
 ) {
   for (let i = startIndex; i <= (maxIndex || text.length); i++) {
     const char = text[i];
@@ -40,7 +41,9 @@ export function extractUntil(
     if (char === sequence[0] && (
       sequence.length === 1 || text.slice(i, i + sequence.length) === sequence
     )) {
-      return text.slice(startIndex, i);
+      if (!verifyResult || verifyResult(text, i)) {
+        return text.slice(startIndex, i);
+      }
     }
     if (isEnd) { return null; }
   }
