@@ -113,7 +113,7 @@ const MENU_ITEMS = [
     'link'
   ],
   ['undo', 'redo'],
-  ['smiley', 'image', 'upload'],
+  ['smiley', 'image', 'shiki_link', 'upload'],
   ['blockquote', 'spoiler_block', 'code_block', 'bullet_list']
 ];
 const MAXIMUM_CONTENT_SIZE = 100000;
