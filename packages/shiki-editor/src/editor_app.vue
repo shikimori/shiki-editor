@@ -74,7 +74,7 @@
       ref='smileys'
       :is-enabled='isSmiley'
       target-ref='smiley'
-      :origin='shikiRequest.origin'
+      :shiki-request='shikiRequest'
       @toggle='smileyCommand'
     />
     <Suggestions
@@ -94,7 +94,7 @@ import { undo, redo } from 'prosemirror-history';
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
 import { scrollTop } from './utils';
-import { FileUploader } from './extensions';
+import { FileUploader, ShikiSearch } from './extensions';
 
 import { flash } from 'shiki-utils';
 
@@ -130,7 +130,8 @@ export default {
     vue: { type: Function, required: true },
     shikiRequest: { type: Object, required: true },
     content: { type: String, required: true },
-    shikiUploader: { type: Object, required: true }
+    shikiUploader: { type: Object, required: true },
+    globalSearch: { type: Object, required: false, default: undefined }
   },
   data: () => ({
     editor: null,
@@ -226,10 +227,17 @@ export default {
       shikiUploader: this.shikiUploader
     });
 
+    const extensions = [this.fileUploaderExtension];
+    if (this.globalSearch) {
+      extensions.push(new ShikiSearch({
+        globalSearch: this.globalSearch
+      }));
+    }
+
     this.editor = new ShikiEditor({
       content: this.isHugeContent ? '' : this.content,
       shikiRequest: this.shikiRequest,
-      extensions: [this.fileUploaderExtension],
+      extensions,
       plugins: []
     }, this, this.vue);
 
@@ -252,7 +260,13 @@ export default {
   },
   methods: {
     command(type, args) {
-      const method = `${type}Command`;
+      const prefix = type
+        .split('_')
+        .map((word, index) => (
+          index ? `${word[0].toUpperCase()}${word.slice(1)}` : word
+        ))
+        .join('');
+      const method = `${prefix}Command`;
 
       if (this[method] && this[method].constructor === Function) {
         return this[method](args);
@@ -295,6 +309,8 @@ export default {
       if (kind) {
         this.editor.commands.smiley(kind);
       }
+    },
+    shikiLinkCommand() {
     },
     uploadCommand(files) {
       this.fileUploaderExtension.addFiles(files);
