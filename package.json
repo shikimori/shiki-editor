@@ -12,7 +12,6 @@
     "@uppy/core": "^1.11.0",
     "@uppy/xhr-upload": "^1.6.0",
     "autosize": "^4.0.2",
-    "axios": "^0.19.2",
     "bind-decorator": "1.0.11",
     "imagesloaded": "^4.1.4",
     "is-visible": "^2.2.0",

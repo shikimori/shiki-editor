@@ -210,6 +210,13 @@ export default {
     isSourceEnabled() {
       return !this.isHugeContent &&
         !this.isContentManipulationsPending && !this.isPreview;
+    },
+    shikiSearchExtension() {
+      if (!this.globalSearch) { return null; }
+
+      return new ShikiSearch({
+        globalSearch: this.globalSearch
+      });
     }
   },
   watch: {
@@ -228,10 +235,8 @@ export default {
     });
 
     const extensions = [this.fileUploaderExtension];
-    if (this.globalSearch) {
-      extensions.push(new ShikiSearch({
-        globalSearch: this.globalSearch
-      }));
+    if (this.shikiSearchExtension) {
+      extensions.push(this.shikiSearchExtension);
     }
 
     this.editor = new ShikiEditor({
@@ -311,6 +316,10 @@ export default {
       }
     },
     shikiLinkCommand() {
+      if (!this.shikiSearchExtension) {
+        alert('globalSearch prop is missing');
+        return;
+      }
     },
     uploadCommand(files) {
       this.fileUploaderExtension.addFiles(files);
