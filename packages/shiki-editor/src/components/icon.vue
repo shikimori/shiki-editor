@@ -73,11 +73,11 @@ export default {
     width: 32px
 
   +gte_laptop
-    font-size: 15px
-    height: 20px
-    margin: 0 2px
+    font-size: 14px
+    height: 19px
+    margin: 0 1px
     padding: 0 4px
-    width: 28px
+    width: 27px
 
   &:active
     outline: none
