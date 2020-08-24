@@ -1,12 +1,12 @@
 // import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
+import { bind } from 'shiki-decorators';
 
 export default class ShikiSearch extends Extension {
   editor = null
 
   _cancel = null
   _pick = null
-  _isIndexDisabled = null
 
   get name() {
     return 'shiki_search';
@@ -25,32 +25,39 @@ export default class ShikiSearch extends Extension {
   activate(editor) {
     this.editor = editor;
 
-    this.stub(this.globalSearch);
+    this.stub();
     this.globalSearch.focus();
   }
 
-  stub(globalSearch) {
-    this._cancel = globalSearch.cancel;
-    this._pick = globalSearch.pick;
-    this._isIndexDisabled = globalSearch.isIndexDisabled;
+  stub() {
+    this._cancel = this.globalSearch.cancel;
+    this._pick = this.globalSearch.pick;
 
-    globalSearch.isIndexDisabled = true;
-    globalSearch.isStubbedSearchMode = true;
-
-    globalSearch.cancel = this.cancel;
-    globalSearch.pick = this.pick;
+    this.globalSearch.isStubbedSearchMode = true;
+    this.globalSearch.cancel = this.searchCancel;
+    this.globalSearch.pick = this.searchPick;
   }
 
-  cancel() {
-    this.globalSearch.cancel = this._cancel;
-    this.globalSearch.isIndexDisabled = this._isIndexDisabled;
+  unstub() {
     this.globalSearch.isStubbedSearchMode = false;
+    this.globalSearch.cancel = this._cancel;
+    this.globalSearch.pick = this._pick;
+
+    this._cancel = null;
+    this._pick = null;
+    this._isIndexDisabled = null;
+  }
+
+  @bind
+  searchCancel() {
+    this.unstub();
     this.globalSearch.cancel();
 
     this.editor.focus();
   }
 
-  pick(node) {
+  @bind
+  searchPick(node) {
     console.log(node);
   }
 }
