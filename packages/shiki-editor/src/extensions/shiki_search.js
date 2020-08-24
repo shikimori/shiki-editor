@@ -23,7 +23,7 @@ export default class ShikiSearch extends Extension {
     return this.options.globalSearch;
   }
 
-  activate(editor) {
+  searchOpen(editor) {
     this.editor = editor;
 
     this.stub();

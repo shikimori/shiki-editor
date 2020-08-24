@@ -321,7 +321,7 @@ export default {
         alert('globalSearch prop is missing');
         return;
       }
-      this.shikiSearchExtension.activate(this.editor);
+      this.shikiSearchExtension.searchOpen(this.editor);
     },
     uploadCommand(files) {
       this.fileUploaderExtension.addFiles(files);
