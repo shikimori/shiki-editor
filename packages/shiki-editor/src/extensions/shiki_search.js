@@ -59,7 +59,6 @@ export default class ShikiSearch extends Extension {
 
   @bind
   searchPick(domNode) {
-    window.editor = this.editor;
     this.searchClose();
 
     const attrs = {
