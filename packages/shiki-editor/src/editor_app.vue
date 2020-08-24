@@ -142,7 +142,6 @@ export default {
     isBoldBlock: false,
     isLinkBlock: false,
     isSmiley: false,
-    fileUploaderExtension: null,
     isMenuBarOffset: false,
     isPreview: false,
     isPreviewLoading: false,
@@ -211,6 +210,11 @@ export default {
       return !this.isHugeContent &&
         !this.isContentManipulationsPending && !this.isPreview;
     },
+    fileUploaderExtension() {
+      return new FileUploader({
+        shikiUploader: this.shikiUploader
+      });
+    },
     shikiSearchExtension() {
       if (!this.globalSearch) { return null; }
 
@@ -230,9 +234,6 @@ export default {
   },
   async created() {
     this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
-    this.fileUploaderExtension = new FileUploader({
-      shikiUploader: this.shikiUploader
-    });
 
     const extensions = [this.fileUploaderExtension];
     if (this.shikiSearchExtension) {
@@ -320,6 +321,7 @@ export default {
         alert('globalSearch prop is missing');
         return;
       }
+      this.shikiSearchExtension.activate(this.editor);
     },
     uploadCommand(files) {
       this.fileUploaderExtension.addFiles(files);
