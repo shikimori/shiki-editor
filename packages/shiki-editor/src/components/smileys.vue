@@ -28,17 +28,14 @@ import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
-import axios from 'axios';
 // import flip from '@popperjs/core/lib/modifiers/flip';
-
-const SMILEYS_PATH = 'comments/smileys';
 
 export default {
   name: 'Smileys',
   components: { Keypress },
   props: {
-    origin: { type: String, required: true },
     isEnabled: { type: Boolean, required: true },
+    shikiRequest: { type: Object, required: true },
     targetRef: { type: String, required: true }
   },
   data: () => ({
@@ -92,8 +89,8 @@ export default {
       }
     },
     async fetch() {
-      const { data } = await axios.get(`${this.origin}/${SMILEYS_PATH}`);
-      this.smileysHTML = data.replace(/src="\//g, `src="${this.origin}/`);
+      const { data } = await this.shikiRequest.get('smileys');
+      this.smileysHTML = data.replace(/src="\//g, `src="${this.shikiRequest.origin}/`);
       await this.$nextTick();
       this.popup.update();
     },
