@@ -23,16 +23,21 @@ export class ShikiLoader extends Extension {
 
   fetch({ id, type }) {
     const deferred = pDefer();
+    const kind = convertToShikiType(type);
 
-    QUEUE[convertToShikiType(type)] ||= {};
-    (QUEUE[convertToShikiType(type)][id] ||= []).push(deferred);
+    QUEUE[kind] ||= {};
+    (QUEUE[kind][id] ||= []).push(deferred);
 
     this.sendRequest();
 
     return deferred.promise;
   }
 
-  addToCache(kind, id, data) {
+  addToCache(kind, id, data, isType = false) {
+    if (isType) {
+      kind = convertToShikiType(kind); // eslint-disable-line no-param-reassign
+    }
+
     CACHE[kind] ||= {};
     CACHE[kind][id] ||= data;
   }

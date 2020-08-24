@@ -1,6 +1,7 @@
-// import { Plugin, PluginKey } from 'prosemirror-state';
-import { Extension } from '../base';
 import { bind } from 'shiki-decorators';
+
+import { Extension } from '../base';
+import { getShikiLoader } from '../utils';
 
 export default class ShikiSearch extends Extension {
   editor = null
@@ -34,7 +35,7 @@ export default class ShikiSearch extends Extension {
     this._pick = this.globalSearch.pick;
 
     this.globalSearch.isStubbedSearchMode = true;
-    this.globalSearch.cancel = this.searchCancel;
+    this.globalSearch.cancel = this.searchClose;
     this.globalSearch.pick = this.searchPick;
   }
 
@@ -49,7 +50,7 @@ export default class ShikiSearch extends Extension {
   }
 
   @bind
-  searchCancel() {
+  searchClose() {
     this.unstub();
     this.globalSearch.cancel();
 
@@ -57,7 +58,25 @@ export default class ShikiSearch extends Extension {
   }
 
   @bind
-  searchPick(node) {
-    console.log(node);
+  searchPick(domNode) {
+    window.editor = this.editor;
+    this.searchClose();
+
+    const attrs = {
+      id: domNode.getAttribute('data-id'),
+      text: domNode.getAttribute('data-text'),
+      type: domNode.getAttribute('data-type'),
+      url: domNode.getAttribute('data-url')
+    };
+    const { state, schema, selection } = this.editor;
+    const { dispatch } = this.editor.view;
+
+    const editorNode = schema.text(
+      attrs.text,
+      [schema.marks.link_inline.create(attrs, null, [])]
+    );
+
+    dispatch(state.tr.replaceWith(selection.from, selection.to, editorNode));
+    getShikiLoader(this.editor).addToCache(attrs.type, attrs.id, attrs, true);
   }
 }
