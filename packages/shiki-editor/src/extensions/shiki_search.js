@@ -4,6 +4,10 @@ import { Extension } from '../base';
 export default class ShikiSearch extends Extension {
   editor = null
 
+  _cancel = null
+  _pick = null
+  _isIndexDisabled = null
+
   get name() {
     return 'shiki_search';
   }
@@ -26,17 +30,27 @@ export default class ShikiSearch extends Extension {
   }
 
   stub(globalSearch) {
-    const _cancel = globalSearch.cancel;
-    const _isIndexDisabled = globalSearch.isIndexDisabled;
+    this._cancel = globalSearch.cancel;
+    this._pick = globalSearch.pick;
+    this._isIndexDisabled = globalSearch.isIndexDisabled;
 
     globalSearch.isIndexDisabled = true;
+    globalSearch.isStubbedSearchMode = true;
 
-    globalSearch.cancel = () => {
-      globalSearch.cancel = _cancel;
-      globalSearch.isIndexDisabled = _isIndexDisabled;
-      globalSearch.cancel();
+    globalSearch.cancel = this.cancel;
+    globalSearch.pick = this.pick;
+  }
 
-      this.editor.focus();
-    };
+  cancel() {
+    this.globalSearch.cancel = this._cancel;
+    this.globalSearch.isIndexDisabled = this._isIndexDisabled;
+    this.globalSearch.isStubbedSearchMode = false;
+    this.globalSearch.cancel();
+
+    this.editor.focus();
+  }
+
+  pick(node) {
+    console.log(node);
   }
 }
