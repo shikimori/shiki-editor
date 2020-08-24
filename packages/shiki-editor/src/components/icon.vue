@@ -57,16 +57,27 @@ export default {
 </script>
 
 <style scoped lang='sass'>
+@import ../stylesheets/responsive
+
 .icon
   -webkit-appearance: none
   background: transparent
   border-radius: 4px
   border: none
-  font-size: 14px
-  height: 19px
-  margin: 0 1px
-  padding: 0 4px
-  width: 27px
+
+  +lte_ipad
+    font-size: 16px
+    height: 23px
+    margin: 0 1px
+    padding: 0 4px
+    width: 32px
+
+  +gte_laptop
+    font-size: 15px
+    height: 20px
+    margin: 0 2px
+    padding: 0 4px
+    width: 28px
 
   &:active
     outline: none
