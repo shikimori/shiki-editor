@@ -54,12 +54,17 @@ export default class ShikiSearch extends Extension {
     const { state, schema, selection } = this.editor;
     const { dispatch } = this.editor.view;
 
-    const editorNode = schema.text(
-      attrs.text,
-      [schema.marks.link_inline.create(attrs, null, [])]
-    );
+    let tr;
+    const mark = schema.marks.link_inline.create(attrs, null, []);
 
-    dispatch(state.tr.replaceWith(selection.from, selection.to, editorNode));
+    if (selection.from === selection.to) {
+      const editorNode = schema.text(attrs.text, [mark]);
+      tr = state.tr.replaceWith(selection.from, selection.to, editorNode);
+    } else {
+      tr = state.tr.addMark(selection.from, selection.to, mark);
+    }
+
+    dispatch(tr);
     getShikiLoader(this.editor).addToCache(attrs.type, attrs.id, attrs, true);
   }
 
