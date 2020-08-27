@@ -13,15 +13,16 @@ export default class SpoilerInline extends Mark {
         isOpened: { default: true }
       },
       parseDOM: [{
-        tag: 'button.b-spoiler_inline',
+        tag: 'span.b-spoiler_inline',
         getAttrs: node => ({
           isOpened: node.classList.contains('is-opened')
         })
       }],
       toDOM: node => [
-        'button',
+        'span',
         {
-          class: `b-spoiler_inline${node.attrs.isOpened ? ' is-opened' : ''}`
+          class: `b-spoiler_inline${node.attrs.isOpened ? ' is-opened' : ''}`,
+          tabindex: 0
         },
         ['span', 0]
       ]

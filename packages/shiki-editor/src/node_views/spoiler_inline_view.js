@@ -6,12 +6,13 @@ export default class SpoilerInlineView extends DOMView {
   constructor(options) {
     super(options);
 
-    this.dom = document.createElement('button');
+    this.dom = document.createElement('span');
     this.contentDOM = document.createElement('span');
 
     this.syncState();
 
     this.dom.classList.add('b-spoiler_inline');
+    this.dom.setAttribute('tabindex', 0);
     this.dom.addEventListener('click', this.toggle);
     this.dom.appendChild(this.contentDOM);
   }
