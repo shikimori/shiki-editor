@@ -10,6 +10,7 @@
     & > button
       &:after
         transform: rotate(180deg)
+        margin-top: 0px
 
     & > span.edit
       +link_color(#7b8084)
@@ -25,7 +26,7 @@
         +shikimori('\e842')
 
   & > button
-    +shiki_button
+    +shiki_button(#678)
     display: inline-flex
     align-items: center
 
@@ -41,8 +42,8 @@
 
   & > div
     background-color: #f3f5f7
-    border-left: 4px solid #456
-    padding: 3px 6px 3px 14px
+    border-left: 4px solid #678
+    padding: 3px 3px 3px 14px
 
     & > .b-list
       margin-left: 10px
