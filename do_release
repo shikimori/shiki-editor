@@ -17,6 +17,7 @@ done
 git commit . -m "bump version $version"
 git tag $version
 git push
+git push --tags
 
 for file in packages/*; do
   cd $file
