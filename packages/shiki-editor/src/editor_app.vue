@@ -337,6 +337,12 @@ export default {
         this.nodesState.link || !this.editor.state.selection.empty
       );
     },
+    async setContent(content) {
+      if (this.isSource) {
+        await this.toggleSource();
+      }
+      this.editor.setContent(content);
+    },
     async togglePreview() {
       this.isPreview = !this.isPreview;
       this.isPreviewLoading = this.isPreview;
