@@ -43,8 +43,10 @@ export default {
     }
   },
   methods: {
-    execute() {
+    execute(e) {
+      e.preventDefault();
       if (!this.isEnabled) { return; }
+
       this.$refs.icon.blur();
       this.$emit('command');
     },
