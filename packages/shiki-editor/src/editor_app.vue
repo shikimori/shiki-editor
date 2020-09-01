@@ -472,6 +472,7 @@ export default {
     line-height: 0
 
   .preview
+    min-height: 89px
     padding: 5px 8px 5px
 
 /deep/ .ProseMirror
