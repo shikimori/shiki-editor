@@ -12,7 +12,7 @@ export default class ShikiView extends DOMView {
     this.dom.classList.add('b-shiki_editor-node');
 
     this.syncState();
-    this.appendLoader();
+    this.appendContent();
 
     if (this.node.attrs.isLoading) {
       this.fetch();
@@ -33,38 +33,66 @@ export default class ShikiView extends DOMView {
     return this.extension.schema.group === 'inline';
   }
 
+  get isSpan() {
+    return this.node.attrs.type === 'span';
+  }
+
   get shikiLoader() {
     return getShikiLoader(this.editor);
   }
 
-  appendLoader() {
+  appendContent() {
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
-    if (this.isInline) {
-      if (this.node.attrs.text && !this.node.attrs.isPasted) {
-        this.dom.append(this.node.attrs.openBbcode);
-        this.dom.appendChild(
-          domSerializer.serializeFragment(this.node.content)
-        );
-        this.dom.append(this.node.attrs.closeBbcode);
-      } else {
-        this.dom.innerText = this.node.attrs.bbcode;
-      }
+    if (this.isSpan) {
+      this.appendSpanContent(domSerializer);
+    } else if (this.isInline) {
+      this.appendInlineContent(domSerializer);
     } else {
-      const openBbcode = document.createElement('div');
-      const content = document.createElement('div');
-      const closeBbcode = document.createElement('div');
-      openBbcode.innerText = this.node.attrs.openBbcode;
-      closeBbcode.innerText = this.node.attrs.closeBbcode;
+      this.appendBlockContent(domSerializer);
+    }
+  }
 
-      content.appendChild(
+  appendSpanContent(domSerializer) {
+    if (this.node.attrs.text && !this.node.attrs.isPasted) {
+      this.dom.appendChild(
         domSerializer.serializeFragment(this.node.content)
       );
-
-      this.dom.appendChild(openBbcode);
-      this.dom.appendChild(content);
-      this.dom.appendChild(closeBbcode);
+    } else {
+      this.dom.innerText = this.node.attrs.bbcode;
     }
+  }
+
+  appendInlineContent(domSerializer) {
+    if (this.node.attrs.text && !this.node.attrs.isPasted) {
+      if (!this.isSpan) {
+        this.dom.append(this.node.attrs.openBbcode);
+      }
+      this.dom.appendChild(
+        domSerializer.serializeFragment(this.node.content)
+      );
+      if (!this.isSpan) {
+        this.dom.append(this.node.attrs.closeBbcode);
+      }
+    } else {
+      this.dom.innerText = this.node.attrs.bbcode;
+    }
+  }
+
+  appendBlockContent(domSerializer) {
+    const openBbcode = document.createElement('div');
+    const content = document.createElement('div');
+    const closeBbcode = document.createElement('div');
+    openBbcode.innerText = this.node.attrs.openBbcode;
+    closeBbcode.innerText = this.node.attrs.closeBbcode;
+
+    content.appendChild(
+      domSerializer.serializeFragment(this.node.content)
+    );
+
+    this.dom.appendChild(openBbcode);
+    this.dom.appendChild(content);
+    this.dom.appendChild(closeBbcode);
   }
 
   syncState() {
