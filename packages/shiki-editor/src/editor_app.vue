@@ -400,6 +400,9 @@ export default {
         this.editor.focus(this.editorPosition);
         window.scrollTo(0, scrollY);
       }
+    },
+    exportContent() {
+      return this.isSource ? this.editorContent : this.editor.exportMarkdown();
     }
   }
 };
