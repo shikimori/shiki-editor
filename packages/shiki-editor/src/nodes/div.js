@@ -1,7 +1,7 @@
 import { Node } from '../base';
 import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
 
-export class Div extends Node {
+export default class Div extends Node {
   get name() {
     return 'div';
   }
@@ -68,11 +68,11 @@ export class Div extends Node {
   }
 }
 
-export function serializeClassAttr(node) {
+function serializeClassAttr(node) {
   return node.attrs.class ? `=${node.attrs.class}` : '';
 }
 
-export function serializeDataAttr(node) {
+function serializeDataAttr(node) {
   if (!node.attrs.data.length) { return ''; }
 
   const data = node.attrs.data
