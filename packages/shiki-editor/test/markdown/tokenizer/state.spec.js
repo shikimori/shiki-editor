@@ -359,6 +359,26 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[color=#0055AA]zxc[/color]', () => {
+        expect(MarkdownTokenizer.parse('[color=#0055AA]zxc[/color]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'color_inline',
+                direction: 'open',
+                attrs: [['color', '#0055AA']],
+                bbcode: '[color=#0055AA]'
+              },
+              { type: 'text', content: 'zxc' },
+              { type: 'color_inline', direction: 'close', bbcode: '[/color]' }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+
       it('[color=red]z', () => {
         expect(MarkdownTokenizer.parse('[color=red]z')).to.eql([
           ...text('[color=red]z')

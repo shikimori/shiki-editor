@@ -43,7 +43,7 @@ export default class MarkdownTokenizer {
 
   BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
-  COLOR_REGEXP = /^\[color=(#[\da-f]+|\w+)\]$/
+  COLOR_REGEXP = /^\[color=(#[\da-fA-F]+|\w+)\]$/
   SIZE_REGEXP = /^\[size=(\d+)\]$/
   LINK_REGEXP = /^\[url=(.+?)\]$/
   EMPTY_SPACES_REGEXP = /^ +$/
