@@ -7,7 +7,8 @@ import {
   parseQuoteMeta,
   parseSizeMeta,
   parseSpoilerMeta,
-  parseShikiBasicMeta
+  parseShikiBasicMeta,
+  parseShikiSpanMeta
 } from '../../../src/markdown/tokenizer/bbcode_helpers';
 
 describe('tokenizer_helpers', () => {
@@ -103,5 +104,51 @@ describe('tokenizer_helpers', () => {
       type: 'anime',
       id: 1
     });
+  });
+
+  it('parseShikiSpanMeta', () => {
+    expect(parseShikiSpanMeta('[span]', '')).to.eql({
+      openBbcode: '[span]',
+      type: 'span',
+      meta: {}
+    });
+    expect(parseShikiSpanMeta('[span=aa bb cc]', 'aa bb cc')).to.eql({
+      openBbcode: '[span=aa bb cc]',
+      type: 'span',
+      meta: {
+        class: 'aa bb cc'
+      }
+    });
+    expect(parseShikiSpanMeta('[span=a data-b]', 'a data-b')).to.eql({
+      openBbcode: '[span=a data-b]',
+      type: 'span',
+      meta: {
+        class: 'a',
+        data: [['data-b', '']]
+      }
+    });
+
+
+  // it('parseDivMeta', () => {
+  //   expect(parseDivMeta('')).to.eq(null);
+  //   expect(parseDivMeta('aa bb cc')).to.eql({
+  //     class: 'aa bb cc'
+  //   });
+  //   expect(parseDivMeta('data-a data-b')).to.eql({
+  //     data: [['data-a', ''], ['data-b', '']]
+  //   });
+  //   expect(parseDivMeta('a data-b')).to.eql({
+  //     class: 'a',
+  //     data: [['data-b', '']]
+  //   });
+  //   expect(parseDivMeta('a data-b data-c=d')).to.eql({
+  //     class: 'a',
+  //     data: [['data-b', ''], ['data-c', 'd']]
+  //   });
+  // });
+
+
+
+
   });
 });
