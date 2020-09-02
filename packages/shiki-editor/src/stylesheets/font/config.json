@@ -211,20 +211,6 @@
       "search": [
         "upload"
       ]
-    },
-    {
-      "uid": "5635cdccb9ed73475493cec7f6edea03",
-      "css": "upload",
-      "code": 59404,
-      "src": "custom_icons",
-      "selected": false,
-      "svg": {
-        "path": "M0 0L0 135 1000 135 1000 0 0 0ZM88 586L316 586 316 1000 686 1000 686 586 914 586 500 201Z",
-        "width": 1000
-      },
-      "search": [
-        "upload"
-      ]
     }
   ]
 }
