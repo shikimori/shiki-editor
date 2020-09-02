@@ -1401,7 +1401,8 @@ describe('MarkdownTokenizer', () => {
                   ['meta', {}],
                   ['bbcode', '[span]z[/span]'],
                   ['closeBbcode', '[/span]'],
-                  ['text', 'z']
+                  ['text', 'z'],
+                  ['isLoading', false]
                 ],
                 children: [
                   {
@@ -1415,44 +1416,6 @@ describe('MarkdownTokenizer', () => {
           { type: 'paragraph', direction: 'close' }
         ]);
       });
-
-      // it('[span]z[/span]', () => {
-      //   expect(MarkdownTokenizer.parse('[span]z[/span]')).to.eql([
-      //     { type: 'paragraph', direction: 'open' },
-      //     {
-      //       type: 'inline',
-      //       children: [
-      //         {
-      //           type: 'shiki_inline',
-      //           attrs: [
-      //             ['bbcode', '[anime=1]'],
-      //             ['type', 'anime'],
-      //             ['id', 1],
-      //             ['isLoading', true],
-      //             ['isError', false]
-      //           ]
-      //         }
-      //       ]
-      //     },
-      //     { type: 'paragraph', direction: 'close' },
-      //     {
-      //       type: 'shiki_block',
-      //       attrs: [
-      //         ['type', 'anime'],
-      //         ['id', 1],
-      //         ['bbcode', '[anime=1]\nzx[/anime]'],
-      //         ['openBbcode', '[anime=1]'],
-      //         ['closeBbcode', '[/anime]'],
-      //         ['isLoading', true],
-      //         ['isError', false],
-      //         ['nFormat', n(true, true)]
-      //       ],
-      //       children: [
-      //         ...text('zx')
-      //       ]
-      //     }
-      //   ]);
-      // });
     });
 
     describe('hr', () => {

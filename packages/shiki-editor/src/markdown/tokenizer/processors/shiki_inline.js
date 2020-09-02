@@ -125,7 +125,8 @@ function processShikiSpan(state, openBbcode, closeBbcode, meta) {
     bbcode: sequence,
     openBbcode,
     closeBbcode,
-    text
+    text,
+    isLoading: false
   };
 
   const tokens = state.constructor.parse(text);
