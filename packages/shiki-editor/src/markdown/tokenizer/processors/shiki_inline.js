@@ -1,5 +1,4 @@
-import Token from '../token';
-import { extractUntil } from '../helpers';
+import Token from '../token'; import { extractUntil } from '../helpers';
 import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_BBCODE_LINK_REGEXP =
@@ -13,8 +12,10 @@ export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
 export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
-  if (isImage(meta)) {
+  if (meta.type === 'image' || meta.type === 'poster') {
     return processShikiImage(state, openBbcode, meta);
+  } else if (meta.type === 'span') {
+    return processShikiSpan(state, openBbcode, closeBbcode, meta);
   } else {
     return processShikiLink(state, openBbcode, closeBbcode, meta);
   }
@@ -108,6 +109,34 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   return true;
 }
 
-function isImage(meta) {
-  return meta.type === 'image' || meta.type === 'poster';
+function processShikiSpan(state, openBbcode, closeBbcode, meta) {
+  const text = extractUntil(
+    state.text,
+    closeBbcode,
+    state.index + openBbcode.length
+  );
+
+  if (!text) { return false; }
+
+  const sequence = `${openBbcode}${text}${closeBbcode}`;
+
+  const attributes = {
+    ...meta,
+    bbcode: sequence,
+    openBbcode,
+    closeBbcode,
+    text
+  };
+
+  const tokens = state.constructor.parse(text);
+
+  if (tokens.length !== 3 || tokens[1].type !== 'inline') { return; }
+  const children = tokens[1].children;
+
+  state.inlineTokens.push(
+    new Token('shiki_inline', null, children, attributes)
+  );
+  state.next(sequence.length);
+
+  return true;
 }
