@@ -22,7 +22,7 @@ export default class ShikiInline extends Node {
   get schema() {
     return {
       attrs: {
-        id: { default: null },
+        id: {},
         type: {},
         bbcode: {},
         openBbcode: { default: null },
