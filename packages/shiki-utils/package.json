@@ -20,9 +20,9 @@
     "@babel/plugin-proposal-decorators": "^7.10.4",
     "@babel/preset-env": "^7.7.4",
     "babel-eslint": "^10.1.0",
-    "eslint": "7.1.0",
-    "eslint-config-airbnb-base": "14.1.0",
-    "eslint-import-resolver-webpack": "0.12.1",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-import-resolver-webpack": "^0.12.2",
     "eslint-plugin-import": "^2.18.2"
   },
   "postcss": {
