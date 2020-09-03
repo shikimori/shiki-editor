@@ -57,7 +57,7 @@ export default class Span extends Mark {
     return {
       open(_state, mark, _parent, _index) {
         const meta = `${serializeClassAttr(mark)}${serializeDataAttr(mark)}`;
-        return `[span${meta ? `=${meta}` : ''}]`;
+        return `[span${meta}]`;
       },
       close: '[/span]',
       mixable: true,
