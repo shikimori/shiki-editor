@@ -12,7 +12,6 @@ import {
   parseLinkMeta,
   parseQuoteMeta,
   parseShikiBasicMeta,
-  parseShikiSpanMeta,
   parseSizeMeta,
   parseSpoilerMeta,
   LIST_DEPRECATION_TEXT
@@ -58,7 +57,8 @@ export default class MarkdownTokenizer {
   MARK_STACK_MAPPINGS = {
     color_inline: '[color]',
     size_inline: '[size]',
-    link_inline: '[url]'
+    link_inline: '[url]',
+    span: '[span]'
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
@@ -435,18 +435,27 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/url]':
-        if (processMarkClose(this, 'link_inline', '[url]', '[/url]'))
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) {
           return false;
+        }
+        break;
+
+      case '[/span]':
+        if (processMarkClose(this, 'span', '[span]', '[/span]')) {
+          return false;
+        }
         break;
 
       case '[/color]':
-        if (processMarkClose(this, 'color_inline', '[color]', '[/color]'))
+        if (processMarkClose(this, 'color_inline', '[color]', '[/color]')) {
           return false;
+        }
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size_inline', '[size]', '[/size]'))
+        if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) {
           return false;
+        }
         break;
 
       case '[poster]':
@@ -507,9 +516,11 @@ export default class MarkdownTokenizer {
         case '[span':
           match = bbcode.match(this.SPAN_REGEXP);
           if (!match) { break; }
-          meta = parseShikiSpanMeta(bbcode, match[1]);
+          meta = parseDivMeta(match[1]);
 
-          if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) { return false; }
+          if (processMarkOpen(this, 'span', bbcode, '[/span]', meta)) {
+            return false;
+          }
           break;
 
         case '[colo':

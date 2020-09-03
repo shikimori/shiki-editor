@@ -1394,29 +1394,19 @@ describe('MarkdownTokenizer', () => {
             type: 'inline',
             children: [
               {
-                type: 'shiki_inline',
-                attrs: [
-                  ['openBbcode', '[span]'],
-                  ['type', 'span'],
-                  ['meta', {}],
-                  ['bbcode', '[span]z[/span]'],
-                  ['closeBbcode', '[/span]'],
-                  ['text', 'z'],
-                  ['isLoading', false]
-                ],
-                children: [
-                  {
-                    content: 'z',
-                    type: 'text'
-                  }
-                ]
-              }
+                type: 'span',
+                direction: 'open',
+                bbcode: '[span]'
+              },
+              { type: 'text', content: 'z' },
+              { type: 'span', direction: 'close', bbcode: '[/span]' }
             ]
           },
           { type: 'paragraph', direction: 'close' }
         ]);
       });
     });
+
 
     describe('hr', () => {
       it('z\\n[hr]\\nx', () => {
