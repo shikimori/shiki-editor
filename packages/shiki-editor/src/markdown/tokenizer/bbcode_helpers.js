@@ -134,11 +134,3 @@ export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {
 
   return attrs;
 }
-
-export function parseShikiSpanMeta(openBbcode, meta) {
-  return {
-    openBbcode,
-    type: 'span',
-    meta: parseDivMeta(meta) || {}
-  };
-}
