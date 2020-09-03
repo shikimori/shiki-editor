@@ -23,6 +23,13 @@
     "uevent": "^2.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "11.0.0-beta.2",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-import-resolver-webpack": "^0.12.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-vue": "^6.2.2",
     "chai": "^4.2.0",
     "mocha": "^7.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
