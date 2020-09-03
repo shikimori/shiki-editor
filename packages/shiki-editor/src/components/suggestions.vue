@@ -33,8 +33,6 @@
 </template>
 
 <script>
-// import Fuse from 'fuse.js';
-// import delay from 'delay';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
