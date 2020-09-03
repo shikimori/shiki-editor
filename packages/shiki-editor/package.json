@@ -60,7 +60,6 @@
   "dependencies": {
     "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
     "@popperjs/core": "^2.4.4",
-    "add": "^2.0.6",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-dropcursor": "^1.3.2",
     "prosemirror-gapcursor": "^1.1.5",
@@ -75,8 +74,7 @@
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.6",
     "vue-keypress": "^2.1.1",
-    "withinviewport": "^2.1.2",
-    "yarn": "^1.22.4"
+    "withinviewport": "^2.1.2"
   },
   "peerDependencies": {
     "autosize": "^4.0.2",
