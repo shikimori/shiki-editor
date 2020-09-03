@@ -1405,8 +1405,32 @@ describe('MarkdownTokenizer', () => {
           { type: 'paragraph', direction: 'close' }
         ]);
       });
-    });
 
+      it('[span=aaa bb-cd_e data-test data-fofo]z[/span]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[span=aaa bb-cd_e data-test data-fofo]z[/span]'
+        )).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'span',
+                direction: 'open',
+                bbcode: '[span=aaa bb-cd_e data-test data-fofo]',
+                attrs: [
+                  ['class', 'aaa bb-cd_e'],
+                  ['data', [['data-test', ''], ['data-fofo', '']]]
+                ]
+              },
+              { type: 'text', content: 'z' },
+              { type: 'span', direction: 'close', bbcode: '[/span]' }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+    });
 
     describe('hr', () => {
       it('z\\n[hr]\\nx', () => {
