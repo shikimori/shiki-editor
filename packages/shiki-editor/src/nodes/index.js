@@ -4,7 +4,7 @@ export { default as BulltList } from './bullet_list';
 export { default as Center } from './center';
 export { default as CodeBlock } from './code_block';
 export { default as ColorBlock } from './color_block';
-export { default as Div } from './div';
+export { Div } from './div';
 export { default as Doc } from './doc';
 export { default as Heading } from './heading';
 export { default as Hr } from './hr';

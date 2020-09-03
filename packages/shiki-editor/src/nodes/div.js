@@ -1,7 +1,7 @@
 import { Node } from '../base';
 import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
 
-export default class Div extends Node {
+export class Div extends Node {
   get name() {
     return 'div';
   }
@@ -29,8 +29,8 @@ export default class Div extends Node {
           data: node
             .getAttributeNames()
             .filter(name => (
-              name !== 'data-div' && name !== 'data-pm-slice' &&
-                name.startsWith('data-')
+              name !== 'data-div' && name.startsWith('data-')
+                // && name !== 'data-pm-slice'
             ))
             .map(attribute => [attribute, node.getAttribute(attribute)])
         })
@@ -68,11 +68,11 @@ export default class Div extends Node {
   }
 }
 
-function serializeClassAttr(node) {
+export function serializeClassAttr(node) {
   return node.attrs.class ? `=${node.attrs.class}` : '';
 }
 
-function serializeDataAttr(node) {
+export function serializeDataAttr(node) {
   if (!node.attrs.data.length) { return ''; }
 
   const data = node.attrs.data

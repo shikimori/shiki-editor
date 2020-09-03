@@ -13,7 +13,7 @@ export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
 export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
-  if (isImage(meta)) {
+  if (meta.type === 'image' || meta.type === 'poster') {
     return processShikiImage(state, openBbcode, meta);
   } else {
     return processShikiLink(state, openBbcode, closeBbcode, meta);
@@ -106,8 +106,4 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   state.next(sequence.length);
 
   return true;
-}
-
-function isImage(meta) {
-  return meta.type === 'image' || meta.type === 'poster';
 }

@@ -43,6 +43,7 @@ export default class MarkdownTokenizer {
 
   BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
+  SPAN_REGEXP = /^\[span(?:(?:=| )([^\]]+))?\]$/
   COLOR_REGEXP = /^\[color=(#[\da-fA-F]+|\w+)\]$/
   SIZE_REGEXP = /^\[size=(\d+)\]$/
   LINK_REGEXP = /^\[url=(.+?)\]$/
@@ -56,7 +57,8 @@ export default class MarkdownTokenizer {
   MARK_STACK_MAPPINGS = {
     color_inline: '[color]',
     size_inline: '[size]',
-    link_inline: '[url]'
+    link_inline: '[url]',
+    span: '[span]'
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
@@ -433,18 +435,27 @@ export default class MarkdownTokenizer {
         break;
 
       case '[/url]':
-        if (processMarkClose(this, 'link_inline', '[url]', '[/url]'))
+        if (processMarkClose(this, 'link_inline', '[url]', '[/url]')) {
           return false;
+        }
+        break;
+
+      case '[/span]':
+        if (processMarkClose(this, 'span', '[span]', '[/span]')) {
+          return false;
+        }
         break;
 
       case '[/color]':
-        if (processMarkClose(this, 'color_inline', '[color]', '[/color]'))
+        if (processMarkClose(this, 'color_inline', '[color]', '[/color]')) {
           return false;
+        }
         break;
 
       case '[/size]':
-        if (processMarkClose(this, 'size_inline', '[size]', '[/size]'))
+        if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) {
           return false;
+        }
         break;
 
       case '[poster]':
@@ -500,6 +511,16 @@ export default class MarkdownTokenizer {
           meta = parseLinkMeta(match[1]);
 
           if (processLinkInline(this, bbcode, meta)) { return false; }
+          break;
+
+        case '[span':
+          match = bbcode.match(this.SPAN_REGEXP);
+          if (!match) { break; }
+          meta = parseDivMeta(match[1]);
+
+          if (processMarkOpen(this, 'span', bbcode, '[/span]', meta)) {
+            return false;
+          }
           break;
 
         case '[colo':

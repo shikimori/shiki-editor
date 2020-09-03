@@ -1,9 +1,10 @@
 export { default as BoldInline } from './bold_inline';
-export { default as ItalicInline } from './italic_inline';
-export { default as SizeInline } from './size_inline';
-export { default as ColorInline } from './color_inline';
-export { default as Underline } from './underline';
-export { default as Strike } from './strike';
-export { default as SpoilerInline } from './spoiler_inline';
 export { default as CodeInline } from './code_inline';
+export { default as ColorInline } from './color_inline';
+export { default as ItalicInline } from './italic_inline';
 export { default as LinkInline } from './link_inline';
+export { default as SizeInline } from './size_inline';
+export { default as Span } from './span';
+export { default as SpoilerInline } from './spoiler_inline';
+export { default as Strike } from './strike';
+export { default as Underline } from './underline';
