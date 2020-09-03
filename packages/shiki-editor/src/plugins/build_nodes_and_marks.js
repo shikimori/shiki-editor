@@ -31,6 +31,7 @@ import {
   ItalicInline,
   LinkInline,
   SizeInline,
+  Span,
   SpoilerInline,
   Strike,
   Underline
@@ -44,6 +45,7 @@ export default function(editor) {
     new Heading(),
     new SpoilerInline(), // must be above other marks in order to obtain greater priorirty
     new LinkInline(),
+    new Span(),
     new BoldInline(),
     new ItalicInline(),
     new ColorInline(),
