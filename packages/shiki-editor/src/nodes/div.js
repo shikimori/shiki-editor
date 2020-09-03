@@ -29,8 +29,8 @@ export default class Div extends Node {
           data: node
             .getAttributeNames()
             .filter(name => (
-              name !== 'data-div' && name !== 'data-pm-slice' &&
-                name.startsWith('data-')
+              name !== 'data-div' && name.startsWith('data-')
+                // && name !== 'data-pm-slice'
             ))
             .map(attribute => [attribute, node.getAttribute(attribute)])
         })
