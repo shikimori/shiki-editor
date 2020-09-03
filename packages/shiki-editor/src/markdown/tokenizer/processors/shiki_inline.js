@@ -1,4 +1,5 @@
-import Token from '../token'; import { extractUntil } from '../helpers';
+import Token from '../token';
+import { extractUntil } from '../helpers';
 import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_BBCODE_LINK_REGEXP =
