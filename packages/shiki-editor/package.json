@@ -2,7 +2,7 @@
   "name": "shiki-editor",
   "title": "Shikimori text editor",
   "description": "Shikimori text editor",
-  "version": "0.11.5",
+  "version": "0.11.7",
   "main": "src/index",
   "author": "morr",
   "license": "OSL-3.0",
@@ -81,9 +81,9 @@
   "peerDependencies": {
     "autosize": "^4.0.2",
     "imagesloaded": "^4.1.4",
-    "shiki-decorators": "^0.11.5",
-    "shiki-uploader": "^0.11.5",
-    "shiki-utils": "^0.11.5",
+    "shiki-decorators": "^0.11.7",
+    "shiki-uploader": "^0.11.7",
+    "shiki-utils": "^0.11.7",
     "uevent": "^2.0.0"
   }
 }
