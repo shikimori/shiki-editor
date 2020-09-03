@@ -4568,19 +4568,19 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-decorators@file:packages/shiki-decorators":
-  version "0.11.7"
+  version "0.11.8"
   dependencies:
     bind-decorator "1.0.11"
 
 "shiki-uploader@file:packages/shiki-uploader":
-  version "0.11.7"
+  version "0.11.8"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
 "shiki-utils@file:packages/shiki-utils":
-  version "0.11.7"
+  version "0.11.8"
   dependencies:
     toastify-js "^1.8.0"
 
@@ -5225,7 +5225,7 @@ webpack-sources@^1.4.0, webpack-sources@^1.4.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.41.:
+webpack@^4.44.1:
   version "4.44.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.44.1.tgz#17e69fff9f321b8f117d1fda714edfc0b939cc21"
   integrity sha512-4UOGAohv/VGUNQJstzEywwNxqX417FnjZgZJpJQegddzPmTvph37eBIRbRTfdySXzVtJXLJfbMN3mMYhM6GdmQ==
