@@ -14,8 +14,6 @@ export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
   if (meta.type === 'image' || meta.type === 'poster') {
     return processShikiImage(state, openBbcode, meta);
-  } else if (meta.type === 'span') {
-    return processShikiSpan(state, openBbcode, closeBbcode, meta);
   } else {
     return processShikiLink(state, openBbcode, closeBbcode, meta);
   }
@@ -104,39 +102,6 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
       })
     );
   }
-  state.next(sequence.length);
-
-  return true;
-}
-
-function processShikiSpan(state, openBbcode, closeBbcode, meta) {
-  const text = extractUntil(
-    state.text,
-    closeBbcode,
-    state.index + openBbcode.length
-  );
-
-  if (!text) { return false; }
-
-  const sequence = `${openBbcode}${text}${closeBbcode}`;
-
-  const attributes = {
-    ...meta,
-    bbcode: sequence,
-    openBbcode,
-    closeBbcode,
-    text,
-    isLoading: false
-  };
-
-  const tokens = state.constructor.parse(text);
-
-  if (tokens.length !== 3 || tokens[1].type !== 'inline') { return; }
-  const children = tokens[1].children;
-
-  state.inlineTokens.push(
-    new Token('shiki_inline', null, children, attributes)
-  );
   state.next(sequence.length);
 
   return true;

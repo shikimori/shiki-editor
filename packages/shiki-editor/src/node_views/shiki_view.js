@@ -33,10 +33,6 @@ export default class ShikiView extends DOMView {
     return this.extension.schema.group === 'inline';
   }
 
-  get isSpan() {
-    return this.node.attrs.type === 'span';
-  }
-
   get shikiLoader() {
     return getShikiLoader(this.editor);
   }
@@ -44,9 +40,7 @@ export default class ShikiView extends DOMView {
   appendContent() {
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
-    if (this.isSpan) {
-      this.appendSpanContent(domSerializer);
-    } else if (this.isInline) {
+    if (this.isInline) {
       this.appendInlineContent(domSerializer);
     } else {
       this.appendBlockContent(domSerializer);
@@ -65,15 +59,11 @@ export default class ShikiView extends DOMView {
 
   appendInlineContent(domSerializer) {
     if (this.node.attrs.text && !this.node.attrs.isPasted) {
-      if (!this.isSpan) {
-        this.dom.append(this.node.attrs.openBbcode);
-      }
+      this.dom.append(this.node.attrs.openBbcode);
       this.dom.appendChild(
         domSerializer.serializeFragment(this.node.content)
       );
-      if (!this.isSpan) {
-        this.dom.append(this.node.attrs.closeBbcode);
-      }
+      this.dom.append(this.node.attrs.closeBbcode);
     } else {
       this.dom.innerText = this.node.attrs.bbcode;
     }
