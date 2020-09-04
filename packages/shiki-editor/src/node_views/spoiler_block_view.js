@@ -30,7 +30,9 @@ export default class SpoilerBlockView extends DOMView {
   }
 
   @bind
-  toggle() {
+  toggle(e) {
+    e.preventDefault();
+
     this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
     this.syncState();
     this.view.focus();
