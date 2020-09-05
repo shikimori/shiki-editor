@@ -1,7 +1,9 @@
 import { Node } from '../base';
 import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
+import { TabsView } from '../node_views';
+import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 
-export class Div extends Node {
+export default class Div extends Node {
   get name() {
     return 'div';
   }
@@ -11,6 +13,7 @@ export class Div extends Node {
       attrs: {
         class: { default: null },
         data: { default: [] },
+        meta: { default: {} },
         nFormat: {
           default: {
             nBeforeOpen: true,
@@ -66,18 +69,4 @@ export class Div extends Node {
       state.renderBlock(node, 'div', meta, node.attrs.nFormat);
     }
   }
-}
-
-export function serializeClassAttr(node) {
-  return node.attrs.class ? `=${node.attrs.class}` : '';
-}
-
-export function serializeDataAttr(node) {
-  if (!node.attrs.data.length) { return ''; }
-
-  const data = node.attrs.data
-    .map(v => (v[1] ? `${v[0]}=${v[1]}` : v[0]))
-    .join(' ');
-
-  return ` ${data}`;
 }

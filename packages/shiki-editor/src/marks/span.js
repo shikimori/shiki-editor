@@ -1,5 +1,5 @@
 import { Mark } from '../base';
-import { serializeClassAttr, serializeDataAttr } from '../nodes/div';
+import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 
 export default class Span extends Mark {
   get name() {
