@@ -497,7 +497,7 @@ export default {
   [data-image].is-prosemirror-selected,
   [data-div].is-prosemirror-selected
     &:before
-      background: #fcfcfc
+      background: rgba(#fcfcfc, 0.75)
       color: #2b8acc
       cursor: pointer
       font-family: var(--font-code, Monaco, Menlo, Consolas, Courier New, monospace)
@@ -506,12 +506,17 @@ export default {
       left: 0
       letter-spacing: 0.8px
       line-height: 1.25
+      max-width: 100%
+      min-width: 300px
       padding: 2px
       pointer-events: none
       position: absolute
       text-shadow: 1px 1px 0px #fff
       top: 0
       z-index: 20
+
+    .no-prosemirror-info &:before
+      display: none
 
   [data-image].is-prosemirror-selected,
   [data-div].is-prosemirror-selected
