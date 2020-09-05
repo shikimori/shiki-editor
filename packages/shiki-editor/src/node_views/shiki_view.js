@@ -166,8 +166,8 @@ export default class ShikiView extends DOMView {
       this.view.state.schema.text(this.node.attrs.text);
     const contentSize = this.node.content.size || content.nodeSize;
 
-    this.view.dispatch(
-      this.view.state.tr
+    this.dispatch(
+      this.tr
         .setMeta('addToHistory', false)
         .replaceWith(
           selection.from,

@@ -10,25 +10,22 @@ export function findParent(node, predicate) {
   return null;
 }
 
-export function findNode(node, predicate) {
-  for (let i = 0; i <= node.childNodes.length; i += 1) {
-    if (predicate(node.childNodes[i])) {
-      return node.childNodes[i];
+// export function findChildNode(node, predicate) {
+//   for (let i = 0; i <= node.childNodes.length; i += 1) {
+//     if (predicate(node.childNodes[i])) {
+//       return node.childNodes[i];
+//     }
+//   }
+// 
+//   return null;
+// }
+
+export function findIndex(nodes, predicate) {
+  for (let i = 0; i <= nodes.length; i += 1) {
+    if (predicate(nodes[i])) {
+      return i;
     }
   }
 
   return null;
-}
-
-export function findIndex(node) {
-  let index;
-
-  for (let i = 0; i <= node.parentNode.childNodes.length; i += 1) {
-    if (node.parentNode.childNodes[i] === node) {
-      index = i;
-      break;
-    }
-  }
-
-  return index;
 }

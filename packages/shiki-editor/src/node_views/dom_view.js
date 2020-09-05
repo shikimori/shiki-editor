@@ -35,7 +35,7 @@ export default class DOMView {
   }
 
   get nodeSelection() {
-    return new NodeSelection(this.view.state.tr.doc.resolve(this.getPos()));
+    return new NodeSelection(this.tr.doc.resolve(this.getPos()));
   }
 
   @bind

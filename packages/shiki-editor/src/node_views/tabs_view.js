@@ -1,8 +1,9 @@
 import { bind } from 'shiki-decorators';
+import { findChildren } from 'prosemirror-utils';
 import DOMView from './dom_view';
 
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
-import { findNode, findParent, findIndex } from '../utils/dom_helpers';
+import { findParent, findIndex } from '../utils/dom_helpers';
 
 export default class TabsView extends DOMView {
   constructor(options) {
@@ -32,25 +33,42 @@ export default class TabsView extends DOMView {
       e.target,
       node => node.getAttribute('data-tab-switch') != null
     );
+    const tabNodes = this.dom.querySelectorAll('[data-tab-switch]');
 
     if (tabNode) {
       e.stopImmediatePropagation();
       const currentTabIndex = findIndex(
-        findNode(
-          tabNode.parentNode,
-          node => node.getAttribute('data-tab-switch') != null &&
-            node.classList.contains('active')
-        )
+        tabNodes,
+        node => node.classList.contains('active')
       ) || 0;
-      const newTabIndex = findIndex(tabNode);
+      const newTabIndex = findIndex(tabNodes, node => node === tabNode);
 
-      if (newTabIndex) {
+      if (newTabIndex !== currentTabIndex) {
         this.switchTab(newTabIndex, currentTabIndex);
       }
     }
   }
 
   switchTab(newTabIndex, currentTabIndex) {
-    console.log(newTabIndex, currentTabIndex, this.node.content.content);
+    const switchNodes = findChildren(this.node, node => (
+      node.type.name === 'div' &&
+        node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
+    ));
+
+    const tabNodes = findChildren(this.node, node => (
+      node.type.name === 'div' &&
+        node.attrs?.data?.some(([name, _]) => name === 'data-tab')
+    ));
+
+    // this.dispatch(
+    //   this.tr
+    // switchNodes[newTabIndex]
+
+    // this.dispatch(
+      // this.tr
+
+
+    console.log({ newTabIndex, currentTabIndex, switchNodes, tabNodes });
+
   }
 }
