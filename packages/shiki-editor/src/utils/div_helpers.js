@@ -11,3 +11,17 @@ export function serializeDataAttr(node) {
 
   return ` ${data}`;
 }
+
+export function addClass(classes, add) {
+  return classes
+    .split(' ')
+    .filter(v => v !== add)
+    .join(' ') + ` ${add}`;
+}
+
+export function removeClass(classes, add) {
+  return classes
+    .split(' ')
+    .filter(v => v !== add)
+    .join(' ');
+}

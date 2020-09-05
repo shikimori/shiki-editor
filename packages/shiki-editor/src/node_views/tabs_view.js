@@ -2,7 +2,12 @@ import { bind } from 'shiki-decorators';
 import { findChildren } from 'prosemirror-utils';
 import DOMView from './dom_view';
 
-import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
+import {
+  serializeClassAttr,
+  serializeDataAttr,
+  addClass,
+  removeClass
+} from '../utils/div_helpers';
 import { findParent, findIndex } from '../utils/dom_helpers';
 
 export default class TabsView extends DOMView {
@@ -37,19 +42,20 @@ export default class TabsView extends DOMView {
 
     if (tabNode) {
       e.stopImmediatePropagation();
-      const currentTabIndex = findIndex(
+
+      const currentIndex = findIndex(
         tabNodes,
         node => node.classList.contains('active')
       ) || 0;
-      const newTabIndex = findIndex(tabNodes, node => node === tabNode);
+      const newIndex = findIndex(tabNodes, node => node === tabNode);
 
-      if (newTabIndex !== currentTabIndex) {
-        this.switchTab(newTabIndex, currentTabIndex);
+      if (newIndex !== currentIndex) {
+        this.switchTab(newIndex, currentIndex);
       }
     }
   }
 
-  switchTab(newTabIndex, currentTabIndex) {
+  switchTab(newIndex, currentIndex) {
     const switchNodes = findChildren(this.node, node => (
       node.type.name === 'div' &&
         node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
@@ -60,15 +66,56 @@ export default class TabsView extends DOMView {
         node.attrs?.data?.some(([name, _]) => name === 'data-tab')
     ));
 
-    // this.dispatch(
-    //   this.tr
-    // switchNodes[newTabIndex]
+    const newSwitchNode = switchNodes[newIndex];
+    const currentSwitchNode = switchNodes[currentIndex];
 
-    // this.dispatch(
-      // this.tr
+    // const switchNodes2 = [];
+    // this.node.descendants((node, pos) => {
+    //   // if (node === newSwitchNode) found = {node, pos}
+    //   if (
+    //     node.type.name === 'div' &&
+    //       node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
+    //   ) switchNodes2.push({ node, pos });
+    // });
+    // debugger
 
+    // console.log({
+    //   getPos: this.getPos(),
+    //   currentSwitchNode: currentSwitchNode.pos,
+    //   newSwitchNode: newSwitchNode.pos
+    // });
+    // console.log({
+    //   node: this.node,
+    //   newIndex,
+    //   currentIndex,
+    //   switchNodes,
+    //   tabNodes,
+    //   newSwitchNode,
+    //   currentSwitchNode,
+    //   getPos: this.getPos()
+    // });
+    // debugger
 
-    console.log({ newTabIndex, currentTabIndex, switchNodes, tabNodes });
+    this.dispatch(
+      this.tr
+        .setMeta('addToHistory', false)
+        .setNodeMarkup(
+          this.getPos() + currentSwitchNode.pos + 1,
 
+          null,
+          {
+            ...currentSwitchNode.node.attrs,
+            class: removeClass(currentSwitchNode.node.attrs.class, 'active')
+          }
+        )
+        .setNodeMarkup(
+          this.getPos() + newSwitchNode.pos + 1,
+          null,
+          {
+            ...newSwitchNode.node.attrs,
+            class: addClass(newSwitchNode.node.attrs.class, 'active')
+          }
+        )
+    );
   }
 }

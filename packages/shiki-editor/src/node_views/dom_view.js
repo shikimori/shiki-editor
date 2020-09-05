@@ -117,14 +117,14 @@ export default class DOMView {
   }
 
   updateAttrs(attrs, isAddToHistory = true) {
-    const { state } = this.view;
     const { type } = this.node;
     const pos = this.getPos();
+
     const newAttrs = {
       ...this.node.attrs,
       ...attrs
     };
-    let transaction = state.tr.setMeta('addToHistory', isAddToHistory);
+    let transaction = this.tr.setMeta('addToHistory', isAddToHistory);
 
     if (this.isMark) {
       transaction = transaction
@@ -134,7 +134,7 @@ export default class DOMView {
       transaction = transaction.setNodeMarkup(pos, null, newAttrs);
     }
 
-    this.view.dispatch(transaction);
+    this.dispatch(transaction);
   }
 
   getMarkPos() {
