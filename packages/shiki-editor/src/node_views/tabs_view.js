@@ -2,6 +2,7 @@ import { bind } from 'shiki-decorators';
 import DOMView from './dom_view';
 
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
+import { findNode, findParent, findIndex } from '../utils/dom_helpers';
 
 export default class TabsView extends DOMView {
   constructor(options) {
@@ -34,21 +35,22 @@ export default class TabsView extends DOMView {
 
     if (tabNode) {
       e.stopImmediatePropagation();
-      console.log(
-        this.node.content
-      )
+      const currentTabIndex = findIndex(
+        findNode(
+          tabNode.parentNode,
+          node => node.getAttribute('data-tab-switch') != null &&
+            node.classList.contains('active')
+        )
+      ) || 0;
+      const newTabIndex = findIndex(tabNode);
+
+      if (newTabIndex) {
+        this.switchTab(newTabIndex, currentTabIndex);
+      }
     }
   }
-}
 
-function findParent(node, predicate) {
-  if (predicate(node)) {
-    return node;
+  switchTab(newTabIndex, currentTabIndex) {
+    console.log(newTabIndex, currentTabIndex, this.node.content.content);
   }
-
-  if (node.parentNode && node.parentNode !== document) {
-    return findParent(node.parentNode, predicate);
-  }
-
-  return null;
 }
