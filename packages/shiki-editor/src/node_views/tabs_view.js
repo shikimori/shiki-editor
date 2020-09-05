@@ -69,39 +69,14 @@ export default class TabsView extends DOMView {
     const newSwitchNode = switchNodes[newIndex];
     const currentSwitchNode = switchNodes[currentIndex];
 
-    // const switchNodes2 = [];
-    // this.node.descendants((node, pos) => {
-    //   // if (node === newSwitchNode) found = {node, pos}
-    //   if (
-    //     node.type.name === 'div' &&
-    //       node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
-    //   ) switchNodes2.push({ node, pos });
-    // });
-    // debugger
-
-    // console.log({
-    //   getPos: this.getPos(),
-    //   currentSwitchNode: currentSwitchNode.pos,
-    //   newSwitchNode: newSwitchNode.pos
-    // });
-    // console.log({
-    //   node: this.node,
-    //   newIndex,
-    //   currentIndex,
-    //   switchNodes,
-    //   tabNodes,
-    //   newSwitchNode,
-    //   currentSwitchNode,
-    //   getPos: this.getPos()
-    // });
-    // debugger
+    const newTabNode = tabNodes[newIndex];
+    const currentTabNode = tabNodes[currentIndex];
 
     this.dispatch(
       this.tr
         .setMeta('addToHistory', false)
         .setNodeMarkup(
           this.getPos() + currentSwitchNode.pos + 1,
-
           null,
           {
             ...currentSwitchNode.node.attrs,
@@ -114,6 +89,22 @@ export default class TabsView extends DOMView {
           {
             ...newSwitchNode.node.attrs,
             class: addClass(newSwitchNode.node.attrs.class, 'active')
+          }
+        )
+        .setNodeMarkup(
+          this.getPos() + currentTabNode.pos + 1,
+          null,
+          {
+            ...currentTabNode.node.attrs,
+            class: addClass(currentTabNode.node.attrs.class, 'hidden')
+          }
+        )
+        .setNodeMarkup(
+          this.getPos() + newTabNode.pos + 1,
+          null,
+          {
+            ...newTabNode.node.attrs,
+            class: removeClass(newTabNode.node.attrs.class, 'hidden')
           }
         )
     );
