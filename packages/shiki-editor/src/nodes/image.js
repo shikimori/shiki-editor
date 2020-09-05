@@ -88,7 +88,7 @@ export class Image extends Node {
     return imageUrl => (state, dispatch) => {
       const src = imageUrl ||
         prompt(window.I18n.t('frontend.shiki_editor.prompt.image_url'));
-      if (src == null) { return; }
+      if (src == null) { return null; }
 
       const { selection } = state;
       const position = selection.$cursor ?
@@ -99,6 +99,8 @@ export class Image extends Node {
       const transaction = state.tr.insert(position, node);
 
       dispatch(transaction);
+
+      return src;
     };
   }
 
