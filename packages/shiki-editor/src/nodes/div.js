@@ -60,6 +60,16 @@ export default class Div extends Node {
     };
   }
 
+  view(options) {
+    const isTabs = options.node.attrs.data?.some(([name, value]) => (
+      name === 'data-dynamic' && value === 'tabs'
+    ));
+
+    if (isTabs) {
+      return new TabsView(options);
+    }
+  }
+
   markdownSerialize(state, node) {
     const meta = `${serializeClassAttr(node)}${serializeDataAttr(node)}`;
 
