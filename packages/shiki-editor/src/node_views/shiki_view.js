@@ -161,12 +161,19 @@ export default class ShikiView extends DOMView {
 
   replaceFragment(result) {
     const selection = this.nodeSelection;
-    const contentSize = this.node.content.size;
+    const content = this.node.content.size ? // is 0 when `[anime=477]Ария[/anime]` is pasted
+      this.node.content :
+      this.view.state.schema.text(this.node.attrs.text);
+    const contentSize = this.node.content.size || content.nodeSize;
 
     this.view.dispatch(
       this.view.state.tr
         .setMeta('addToHistory', false)
-        .replaceWith(selection.from, selection.to, this.node.content)
+        .replaceWith(
+          selection.from,
+          selection.to,
+          content
+        )
         .addMark(
           selection.from,
           selection.from + contentSize,
