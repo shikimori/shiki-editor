@@ -512,7 +512,7 @@ export default {
       pointer-events: none
       position: absolute
       text-shadow: 1px 1px 0px #fff
-      top: 0
+      top: -16px
       z-index: 20
 
     .no-prosemirror-info &:before
