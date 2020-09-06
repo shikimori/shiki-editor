@@ -1,4 +1,5 @@
-import { addClass, removeClass } from '../utils/div_helpers';
+// import clone from './clone';
+import { addClass, removeClass } from './div_helpers';
 
 export function attrsAddClass(node, cssClass) {
   // const newAttrs = clone(node.attrs);

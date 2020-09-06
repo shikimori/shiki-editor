@@ -1,5 +1,6 @@
 import { bind } from 'shiki-decorators';
 import DOMView from './dom_view';
+import { findChildren } from 'prosemirror-utils';
 
 import {
   hasClass,
@@ -24,22 +25,23 @@ export default class SwitcherView extends DOMView {
   @bind
   click() {
     const isActive = hasClass(this.node.attrs.class, 'active');
+    const switcherId = this.node.attrs.data
+      .find(([name, _]) => name === 'data-switcher')
+      ?.[1];
 
-    console.log(
-      isActive ?
-        attrsRemoveClass(this.node, 'active') :
-        attrsAddClass(this.node, 'active')
-    );
+    let transaction = this.tr.setMeta('addToHistory', false);
 
-    this.dispatch(
-      this.tr.setNodeMarkup(
-        this.getPos(),
-        null,
-        isActive ?
-          attrsRemoveClass(this.node, 'active') :
-          attrsAddClass(this.node, 'active')
-      )
-    );
+    if (switcherId && !isActive) {
+      const otherNodes =
+        findChildren(this.view.state.doc, isSwitcherIdMatched(switcherId));
+
+      otherNodes.forEach(({ node, pos }) => {
+        transaction = toggleNode(node, false, pos, transaction);
+      });
+    }
+
+    transaction = toggleNode(this.node, !isActive, this.getPos(), transaction);
+    this.dispatch(transaction);
   }
 
   syncState() {
@@ -57,4 +59,24 @@ export default class SwitcherView extends DOMView {
       `[div${serializeClassAttr(this.node)}${serializeDataAttr(this.node)}]`
     );
   }
+}
+
+function toggleNode(node, isActive, pos, transaction) {
+  return transaction.setNodeMarkup(
+    pos,
+    null,
+    isActive ?
+      attrsAddClass(node, 'active') :
+      attrsRemoveClass(node, 'active')
+  );
+}
+
+function isSwitcherIdMatched(switcherId) {
+  return node => (
+    node.attrs.data?.some(([name, value]) => (
+      name === 'data-dynamic' && value === 'switcher'
+    )) && node.attrs.data?.some(([name, value]) => (
+      name === 'data-switcher' && value === switcherId
+    ))
+  );
 }
