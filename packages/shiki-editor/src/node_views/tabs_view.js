@@ -30,7 +30,7 @@ export default class TabsView extends DOMView {
       `[div${serializeClassAttr(this.node)}${serializeDataAttr(this.node)}]`
     );
 
-    this.dom.addEventListener('click', this.click, true);
+    this.dom.addEventListener('click', this.click);
   }
 
   @bind
