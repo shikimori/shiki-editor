@@ -16,7 +16,7 @@ export function findParent(node, predicate) {
 //       return node.childNodes[i];
 //     }
 //   }
-// 
+//
 //   return null;
 // }
 
