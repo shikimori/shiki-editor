@@ -1,5 +1,6 @@
-import { Node } from '../base';
 import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
+import { Node } from '../base';
+import { SwitcherView } from '../node_views';
 import { TabsView } from '../node_views';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 
@@ -64,9 +65,14 @@ export default class Div extends Node {
     const isTabs = options.node.attrs.data?.some(([name, value]) => (
       name === 'data-dynamic' && value === 'tabs'
     ));
+    const isSwitcher = options.node.attrs.data?.some(([name, value]) => (
+      name === 'data-dynamic' && value === 'switcher'
+    ));
 
     if (isTabs) {
       return new TabsView(options);
+    } else if (isSwitcher) {
+      return new SwitcherView(options);
     }
   }
 
