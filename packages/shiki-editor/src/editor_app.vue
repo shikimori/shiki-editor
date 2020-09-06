@@ -506,9 +506,8 @@ export default {
       left: 0
       letter-spacing: 0.8px
       line-height: 1.25
-      max-width: 100%
-      min-width: 300px
-      padding: 2px
+      width: 999999px
+      padding: 2px 0
       pointer-events: none
       position: absolute
       text-shadow: 1px 1px 0px #fff
