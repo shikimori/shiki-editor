@@ -13,10 +13,12 @@ export function serializeDataAttr(node) {
 }
 
 export function addClass(classes, add) {
-  return (classes || '')
-    .split(' ')
-    .filter(v => v !== add)
-    .join(' ') + ` ${add}`;
+  return (
+    (classes || '')
+      .split(' ')
+      .filter(v => v !== add)
+      .join(' ') + ` ${add}`
+  ).trim();
 }
 
 export function removeClass(classes, add) {
