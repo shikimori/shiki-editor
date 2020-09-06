@@ -35,8 +35,21 @@ export default class SwitcherView extends DOMView {
       const otherNodes =
         findChildren(this.view.state.doc, isSwitcherIdMatched(switcherId));
 
+      const otherMarkNodes = findChildren(this.view.state.doc, node => (
+        node.marks.some(isSwitcherIdMatched(switcherId))
+      ));
+
       otherNodes.forEach(({ node, pos }) => {
         transaction = toggleNode(node, false, pos, transaction);
+      });
+      otherMarkNodes.forEach(({ node, pos }) => {
+        transaction = toggleMarkNode(
+          node,
+          node.marks.find(isSwitcherIdMatched(switcherId)),
+          false,
+          pos,
+          transaction
+        );
       });
     }
 
@@ -69,6 +82,26 @@ function toggleNode(node, isActive, pos, transaction) {
       attrsAddClass(node, 'active') :
       attrsRemoveClass(node, 'active')
   );
+}
+
+function toggleMarkNode(node, mark, isActive, pos, transaction) {
+  const markType = mark.type;
+
+  return transaction
+    .removeMark(
+      pos,
+      pos + node.nodeSize,
+      markType
+    )
+    .addMark(
+      pos,
+      pos + node.nodeSize,
+      markType.create(
+        isActive ?
+          attrsAddClass(mark, 'active') :
+          attrsRemoveClass(mark, 'active')
+      )
+    );
 }
 
 function isSwitcherIdMatched(switcherId) {
