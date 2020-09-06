@@ -482,8 +482,8 @@ export default {
   span[contenteditable=false]
     cursor: default
 
-  span[data-span]
-    cursor: text
+  /* span[data-span] */
+  /*   cursor: text  */
 
   [data-image]:hover,
   [data-link]:hover,
