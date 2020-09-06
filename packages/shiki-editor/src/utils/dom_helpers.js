@@ -29,3 +29,9 @@ export function findIndex(nodes, predicate) {
 
   return null;
 }
+
+export function removeAllAttributes(node) {
+  for (var i = node.attributes.length - 1; i >= 0; i -= 1){
+    node.removeAttribute(node.attributes[i].name);
+  }
+}

@@ -3,12 +3,8 @@ import { findChildren } from 'prosemirror-utils';
 
 import DOMView from './dom_view';
 
-import {
-  serializeClassAttr,
-  serializeDataAttr,
-  addClass,
-  removeClass
-} from '../utils/div_helpers';
+import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
+import { attrsAddClass, attrsRemoveClass } from '../utils/node_helpers';
 import { findParent, findIndex } from '../utils/dom_helpers';
 
 export default class TabsView extends DOMView {
@@ -144,28 +140,4 @@ function isDivTabSwitch(node) {
 function isMarkTabSwitch(mark) {
   return mark.type.name === 'span' &&
     mark.attrs?.data?.some(([name, _]) => name === 'data-tab-switch');
-}
-
-function attrsAddClass(node, cssClass) {
-  // const newAttrs = clone(node.attrs);
-  // newAttrs.class = addClass(newAttrs.class, cssClass);
-  //
-  // return newAttrs;
-
-  return {
-    ...node.attrs,
-    class: addClass(node.attrs.class, cssClass)
-  };
-}
-
-function attrsRemoveClass(node, cssClass) {
-  // const newAttrs = clone(node.attrs);
-  // newAttrs.class = removeClass(newAttrs.class, cssClass);
-  //
-  // return newAttrs;
-
-  return {
-    ...node.attrs,
-    class: removeClass(node.attrs.class, cssClass)
-  };
 }

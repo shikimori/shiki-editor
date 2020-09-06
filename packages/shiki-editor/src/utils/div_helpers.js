@@ -12,18 +12,24 @@ export function serializeDataAttr(node) {
   return ` ${data}`;
 }
 
-export function addClass(classes, add) {
+export function addClass(cssClasses, cssClass) {
   return (
-    (classes || '')
+    (cssClasses || '')
       .split(' ')
-      .filter(v => v !== add)
-      .join(' ') + ` ${add}`
+      .filter(v => v !== cssClass)
+      .join(' ') + ` ${cssClass}`
   ).trim();
 }
 
-export function removeClass(classes, add) {
-  return (classes || '')
+export function removeClass(cssClasses, cssClass) {
+  return (cssClasses || '')
     .split(' ')
-    .filter(v => v !== add)
+    .filter(v => v !== cssClass)
     .join(' ');
+}
+
+export function hasClass(cssClasses, cssClass) {
+  return !!(
+    (cssClasses || '').split(' ').find(v => v === cssClass)
+  );
 }
