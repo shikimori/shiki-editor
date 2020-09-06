@@ -1,4 +1,5 @@
 export { default as ExtensionManager } from './extension_manager';
+export { default as clone } from './clone';
 export { default as ensureDimension } from './ensure_dimension';
 export { default as ensureOnlyStyle } from './ensure_only_style';
 export { default as findPlaceholder } from './find_placeholder';
