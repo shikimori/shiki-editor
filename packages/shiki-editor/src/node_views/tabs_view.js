@@ -1,5 +1,6 @@
 import { bind } from 'shiki-decorators';
 import { findChildren } from 'prosemirror-utils';
+
 import DOMView from './dom_view';
 
 import {
@@ -56,18 +57,12 @@ export default class TabsView extends DOMView {
   }
 
   switchTab(newIndex, currentIndex) {
-    let switchNodes = findChildren(this.node, node => (
-      node.type.name === 'div' &&
-        node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
-    ));
+    let switchNodes = findChildren(this.node, isDivTabSwitch);
     let switchMarkNodes;
 
     if (!switchNodes.length) {
       switchMarkNodes = findChildren(this.node, node => (
-        node.isText && node.marks.some(mark => (
-          mark.type.name === 'span' &&
-            mark.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
-        ))
+        node.isText && node.marks.some(isMarkTabSwitch)
       ));
     }
 
@@ -87,30 +82,42 @@ export default class TabsView extends DOMView {
     let transaction = this.tr.setMeta('addToHistory', false);
 
     if (newSwitchNode.node.isText) {
-      // console.log(newSwitchNode)
+      const newSwitchMark = newSwitchNode.node.marks.find(isMarkTabSwitch);
+      const currentSwitchMark = currentSwitchNode.node.marks.find(isMarkTabSwitch);
+      const markType = newSwitchMark.type;
+
       transaction = transaction
         .removeMark(
           this.getPos() + currentSwitchNode.pos + 1,
-          this.getPos() + currentSwitchNode.pos + 1 + newSwitchNode.node.nodeSize,
-          newSwitchNode.node.type
+          this.getPos() + currentSwitchNode.pos + 1 + currentSwitchNode.node.nodeSize,
+          markType
+        )
+        .addMark(
+          this.getPos() + currentSwitchNode.pos + 1,
+          this.getPos() + currentSwitchNode.pos + 1 + currentSwitchNode.node.nodeSize,
+          markType.create(attrsRemoveClass(currentSwitchMark, 'active'))
+        )
+        .removeMark(
+          this.getPos() + newSwitchNode.pos + 1,
+          this.getPos() + newSwitchNode.pos + 1 + newSwitchNode.node.nodeSize,
+          markType
+        )
+        .addMark(
+          this.getPos() + newSwitchNode.pos + 1,
+          this.getPos() + newSwitchNode.pos + 1 + newSwitchNode.node.nodeSize,
+          markType.create(attrsAddClass(newSwitchMark, 'active'))
         );
     } else {
       transaction = transaction
         .setNodeMarkup(
           this.getPos() + currentSwitchNode.pos + 1,
           null,
-          {
-            ...currentSwitchNode.node.attrs,
-            class: removeClass(currentSwitchNode.node.attrs.class, 'active')
-          }
+          attrsRemoveClass(currentSwitchNode.node, 'active')
         )
         .setNodeMarkup(
           this.getPos() + newSwitchNode.pos + 1,
           null,
-          {
-            ...newSwitchNode.node.attrs,
-            class: addClass(newSwitchNode.node.attrs.class, 'active')
-          }
+          attrsAddClass(newSwitchNode.node, 'active')
         );
     }
 
@@ -118,19 +125,47 @@ export default class TabsView extends DOMView {
       .setNodeMarkup(
         this.getPos() + currentTabNode.pos + 1,
         null,
-        {
-          ...currentTabNode.node.attrs,
-          class: addClass(currentTabNode.node.attrs.class, 'hidden')
-        }
+        attrsAddClass(currentTabNode.node, 'hidden')
       )
       .setNodeMarkup(
         this.getPos() + newTabNode.pos + 1,
         null,
-        {
-          ...newTabNode.node.attrs,
-          class: removeClass(newTabNode.node.attrs.class, 'hidden')
-        }
+        attrsRemoveClass(newTabNode.node, 'hidden')
       );
     this.dispatch(transaction);
   }
+}
+
+function isDivTabSwitch(node) {
+  return node.type.name === 'div' &&
+    node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch');
+}
+
+function isMarkTabSwitch(mark) {
+  return mark.type.name === 'span' &&
+    mark.attrs?.data?.some(([name, _]) => name === 'data-tab-switch');
+}
+
+function attrsAddClass(node, cssClass) {
+  // const newAttrs = clone(node.attrs);
+  // newAttrs.class = addClass(newAttrs.class, cssClass);
+  //
+  // return newAttrs;
+
+  return {
+    ...node.attrs,
+    class: addClass(node.attrs.class, cssClass)
+  };
+}
+
+function attrsRemoveClass(node, cssClass) {
+  // const newAttrs = clone(node.attrs);
+  // newAttrs.class = removeClass(newAttrs.class, cssClass);
+  //
+  // return newAttrs;
+
+  return {
+    ...node.attrs,
+    class: removeClass(node.attrs.class, cssClass)
+  };
 }
