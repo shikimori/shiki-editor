@@ -1,6 +1,8 @@
+import { Mark } from 'prosemirror-model';
 import { bind } from 'shiki-decorators';
 import DOMView from './dom_view';
 import { findChildren } from 'prosemirror-utils';
+import { getMarkRange } from '../utils';
 
 import {
   hasClass,
@@ -14,12 +16,20 @@ export default class SwitcherView extends DOMView {
   constructor(options) {
     super(options);
 
-    this.dom = document.createElement('div');
+    this.dom = document.createElement(this.elementType);
     this.contentDOM = this.dom;
 
     this.syncState();
 
     this.dom.addEventListener('click', this.click);
+  }
+
+  get elementType() {
+    return this.isInline ? 'span' : 'div';
+  }
+
+  get isInline() {
+    return this.node.constructor === Mark;
   }
 
   @bind
@@ -53,7 +63,22 @@ export default class SwitcherView extends DOMView {
       });
     }
 
-    transaction = toggleNode(this.node, !isActive, this.getPos(), transaction);
+    if (this.isInline) {
+      const range = getMarkPos(this.node, this.view, this.dom);
+
+      transaction = toggleMarkNode(
+        {
+          nodeSize: range.to - range.from
+        },
+        this.node,
+        !isActive,
+        range.from,
+        transaction
+      );
+    } else {
+      transaction =
+        toggleNode(this.node, !isActive, this.getPos(), transaction);
+    }
     this.dispatch(transaction);
   }
 
@@ -112,4 +137,11 @@ function isSwitcherIdMatched(switcherId) {
       name === 'data-switcher' && value === switcherId
     ))
   );
+}
+
+function getMarkPos(mark, view, dom) {
+  const pos = view.posAtDOM(dom);
+  const resolvedPos = view.state.doc.resolve(pos);
+
+  return getMarkRange(resolvedPos, mark.type);
 }
