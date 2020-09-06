@@ -56,25 +56,46 @@ export default class TabsView extends DOMView {
   }
 
   switchTab(newIndex, currentIndex) {
-    const switchNodes = findChildren(this.node, node => (
+    let switchNodes = findChildren(this.node, node => (
       node.type.name === 'div' &&
         node.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
     ));
+    let switchMarkNodes;
+
+    if (!switchNodes.length) {
+      switchMarkNodes = findChildren(this.node, node => (
+        node.isText && node.marks.some(mark => (
+          mark.type.name === 'span' &&
+            mark.attrs?.data?.some(([name, _]) => name === 'data-tab-switch')
+        ))
+      ));
+    }
 
     const tabNodes = findChildren(this.node, node => (
       node.type.name === 'div' &&
         node.attrs?.data?.some(([name, _]) => name === 'data-tab')
     ));
 
-    const newSwitchNode = switchNodes[newIndex];
-    const currentSwitchNode = switchNodes[currentIndex];
+    const newSwitchNode = switchNodes[newIndex] ||
+      switchMarkNodes[newIndex];
+    const currentSwitchNode = switchNodes[currentIndex] ||
+      switchMarkNodes[currentIndex];
 
     const newTabNode = tabNodes[newIndex];
     const currentTabNode = tabNodes[currentIndex];
 
-    this.dispatch(
-      this.tr
-        .setMeta('addToHistory', false)
+    let transaction = this.tr.setMeta('addToHistory', false);
+
+    if (newSwitchNode.node.isText) {
+      // console.log(newSwitchNode)
+      transaction = transaction
+        .removeMark(
+          this.getPos() + currentSwitchNode.pos + 1,
+          this.getPos() + currentSwitchNode.pos + 1 + newSwitchNode.node.nodeSize,
+          newSwitchNode.node.type
+        );
+    } else {
+      transaction = transaction
         .setNodeMarkup(
           this.getPos() + currentSwitchNode.pos + 1,
           null,
@@ -90,23 +111,26 @@ export default class TabsView extends DOMView {
             ...newSwitchNode.node.attrs,
             class: addClass(newSwitchNode.node.attrs.class, 'active')
           }
-        )
-        .setNodeMarkup(
-          this.getPos() + currentTabNode.pos + 1,
-          null,
-          {
-            ...currentTabNode.node.attrs,
-            class: addClass(currentTabNode.node.attrs.class, 'hidden')
-          }
-        )
-        .setNodeMarkup(
-          this.getPos() + newTabNode.pos + 1,
-          null,
-          {
-            ...newTabNode.node.attrs,
-            class: removeClass(newTabNode.node.attrs.class, 'hidden')
-          }
-        )
-    );
+        );
+    }
+
+    transaction = transaction
+      .setNodeMarkup(
+        this.getPos() + currentTabNode.pos + 1,
+        null,
+        {
+          ...currentTabNode.node.attrs,
+          class: addClass(currentTabNode.node.attrs.class, 'hidden')
+        }
+      )
+      .setNodeMarkup(
+        this.getPos() + newTabNode.pos + 1,
+        null,
+        {
+          ...newTabNode.node.attrs,
+          class: removeClass(newTabNode.node.attrs.class, 'hidden')
+        }
+      );
+    this.dispatch(transaction);
   }
 }
