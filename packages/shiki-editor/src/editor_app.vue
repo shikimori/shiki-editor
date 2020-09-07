@@ -487,15 +487,16 @@ export default {
 
   [data-image]:hover,
   [data-link]:hover,
-  [data-div]:hover
+  [data-div]:hover,
+  [data-span]:hover
     outline: 1px solid #9cf
     position: relative
 
   [data-image]:hover,
   [data-link]:hover,
   [data-div]:hover,
-  [data-image].is-prosemirror-selected,
-  [data-div].is-prosemirror-selected
+  [data-span]:hover,
+  [data-image].is-prosemirror-selected
     &:before
       background: rgba(#fcfcfc, 0.75)
       color: #2b8acc
@@ -517,8 +518,7 @@ export default {
     .no-prosemirror-info &:before
       display: none
 
-  [data-image].is-prosemirror-selected,
-  [data-div].is-prosemirror-selected
+  [data-image].is-prosemirror-selected
     outline: 2px solid #9cf
     position: relative
 
@@ -532,7 +532,10 @@ export default {
       content: attr(data-link)
 
   [data-div]
-    &.is-prosemirror-selected:before,
     &:hover:before
       content: attr(data-div)
+
+  [data-span]
+    &:hover:before
+      content: attr(data-span)
 </style>
