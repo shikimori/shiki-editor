@@ -1748,6 +1748,37 @@ describe('MarkdownTokenizer', () => {
           ]);
         });
 
+        const label = 'Name 1234&^%$#';
+
+        it(`[${kind}=1 ${label}]`, () => {
+          expect(MarkdownTokenizer.parse(
+            `[${kind}=1 ${label}]`
+          )).to.eql([
+            { type: 'paragraph', direction: 'open' },
+            {
+              type: 'inline',
+              children: [
+                {
+                  type: 'shiki_inline',
+                  attrs: [
+                    ['bbcode', `[${kind}=1 ${label}]`],
+                    ['type', kind],
+                    ['id', 1],
+                    ...(
+                      MENTION_TYPES.includes(kind) ?
+                        [['meta', { isMention: true }]] :
+                        []
+                    ),
+                    ['isLoading', true],
+                    ['isError', false]
+                  ]
+                }
+              ]
+            },
+            { type: 'paragraph', direction: 'close' }
+          ]);
+        });
+
         it(`[${kind}=1]zx[/${kind}]`, () => {
           expect(MarkdownTokenizer.parse(`[${kind}=1]zx[/${kind}]`)).to.eql([
             { type: 'paragraph', direction: 'open' },
@@ -1766,6 +1797,39 @@ describe('MarkdownTokenizer', () => {
                         []
                     ),
                     ['openBbcode', `[${kind}=1]`],
+                    ['closeBbcode', `[/${kind}]`],
+                    ['text', 'zx'],
+                    ['isLoading', true],
+                    ['isError', false]
+                  ],
+                  children: [{ type: 'text', content: 'zx' }]
+                }
+              ]
+            },
+            { type: 'paragraph', direction: 'close' }
+          ]);
+        });
+
+        it(`[${kind}=1 ${label}]zx[/${kind}]`, () => {
+          expect(MarkdownTokenizer.parse(
+            `[${kind}=1 ${label}]zx[/${kind}]`
+          )).to.eql([
+            { type: 'paragraph', direction: 'open' },
+            {
+              type: 'inline',
+              children: [
+                {
+                  type: 'shiki_inline',
+                  attrs: [
+                    ['bbcode', `[${kind}=1 ${label}]zx[/${kind}]`],
+                    ['type', kind],
+                    ['id', 1],
+                    ...(
+                      MENTION_TYPES.includes(kind) ?
+                        [['meta', { isMention: true }]] :
+                        []
+                    ),
+                    ['openBbcode', `[${kind}=1 ${label}]`],
                     ['closeBbcode', `[/${kind}]`],
                     ['text', 'zx'],
                     ['isLoading', true],
