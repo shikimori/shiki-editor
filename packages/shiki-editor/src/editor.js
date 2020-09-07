@@ -242,14 +242,17 @@ export default class ShikiEditor {
       }, {});
   }
 
-  setContent(content, emitUpdate = false) {
+  setContent(content, isEmitUpdate = false, isAaddToHistory = true) {
+    console.log(isAaddToHistory);
+
     const { doc, tr } = this.state;
     const document = this.markdownParser.parse(content);
     const selection = TextSelection.create(doc, 0, doc.content.size);
     const transaction = tr
       .setSelection(selection)
       .replaceSelectionWith(document, false)
-      .setMeta('preventUpdate', !emitUpdate);
+      .setMeta('addToHistory', isAaddToHistory)
+      .setMeta('preventUpdate', !isEmitUpdate);
 
     this.view.dispatch(transaction);
   }
@@ -355,7 +358,7 @@ export default class ShikiEditor {
   }
 
   exportMarkdown() {
-    return this.markdownSerializer.serialize(this.state.doc);
+    return this.markdownSerializer.serialize(this.state.doc).trim();
   }
 
   registerPlugin(plugin = null, handlePlugins) {

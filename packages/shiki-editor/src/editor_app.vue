@@ -341,7 +341,12 @@ export default {
       if (this.isSource) {
         await this.toggleSource();
       }
-      this.editor.setContent(content);
+
+      this.editor.setContent(
+        content,
+        false,
+        content !== this.editor.exportMarkdown()
+      );
     },
     async togglePreview() {
       this.isPreview = !this.isPreview;
@@ -377,14 +382,14 @@ export default {
       this.isPreview = false;
       const scrollY = scrollTop();
 
+      this.isSource = !this.isSource;
+
       if (this.isSource) {
-        this.editor.setContent(this.editorContent);
-      } else {
         this.editorContent = overrideContent || this.editor.exportMarkdown();
         this.editorPosition = this.editor.selection.from;
+      } else {
+        this.setContent(this.editorContent);
       }
-
-      this.isSource = !this.isSource;
 
       await this.$nextTick();
 
