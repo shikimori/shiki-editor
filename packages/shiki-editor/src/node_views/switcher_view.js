@@ -93,8 +93,9 @@ export default class SwitcherView extends DOMView {
     ));
 
     this.dom.setAttribute(
-      'data-div',
-      `[div${serializeClassAttr(this.node)}${serializeDataAttr(this.node)}]`
+      `data-${this.elementType}`,
+      `[${this.elementType}` +
+        `${serializeClassAttr(this.node)}${serializeDataAttr(this.node)}]`
     );
   }
 }
