@@ -243,8 +243,6 @@ export default class ShikiEditor {
   }
 
   setContent(content, isEmitUpdate = false, isAaddToHistory = true) {
-    console.log(isAaddToHistory);
-
     const { doc, tr } = this.state;
     const document = this.markdownParser.parse(content);
     const selection = TextSelection.create(doc, 0, doc.content.size);
