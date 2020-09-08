@@ -10,6 +10,11 @@ import {
 } from '../commands';
 import { getMarkAttrs, fixUrl } from '../utils';
 
+import {
+  LABEL_TYPES,
+  textToLabel
+} from '../markdown/tokenizer/processors/shiki_inline';
+
 export default class LinkInline extends Mark {
   get name() {
     return 'link_inline';
@@ -124,8 +129,12 @@ export default class LinkInline extends Mark {
         return mark.attrs.type && mark.attrs.id && node.text == mark.attrs.text;
       },
       open(_state, mark, _parent, _index) {
+        const label = LABEL_TYPES.includes(mark.attrs.type) ?
+          ` ${textToLabel(mark.attrs.text)}`:
+          '';
+
         if (mark.attrs.type && mark.attrs.id) {
-          return `[${mark.attrs.type}=${mark.attrs.id}]`;
+          return `[${mark.attrs.type}=${mark.attrs.id}${label}]`;
         } else if (mark.attrs.text === mark.attrs.url) {
           return '[url]';
         }

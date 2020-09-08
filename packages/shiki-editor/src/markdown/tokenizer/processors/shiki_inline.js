@@ -10,6 +10,7 @@ export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]
 
 export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
 
+export const LABEL_TYPES = ['anime', 'manga', 'ranobe', 'character', 'person'];
 export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
@@ -106,4 +107,8 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   state.next(sequence.length);
 
   return true;
+}
+
+export function textToLabel(text) {
+  return text.toLowerCase().replace(/ +/g, '-').replace(/[[\]]/g, '');
 }

@@ -3,6 +3,11 @@ import { fixUrl } from '../utils';
 import { nodeIsActive } from '../checks';
 import { toggleNodeWrap } from '../commands';
 
+import {
+  LABEL_TYPES,
+  textToLabel
+} from '../markdown/tokenizer/processors/shiki_inline';
+
 // NOTE: this node cannot be generated in WYSIWYG mode
 export default class LinkBlock extends Node {
   get name() {
@@ -68,10 +73,14 @@ export default class LinkBlock extends Node {
 
   markdownSerialize(state, node) {
     if (node.attrs.type && node.attrs.id) {
+      const label = LABEL_TYPES.includes(node.attrs.type) ?
+        ` ${textToLabel(node.attrs.text)}`:
+        '';
+
       state.renderBlock(
         node,
         node.attrs.type,
-        `=${node.attrs.id}`,
+        `=${node.attrs.id}${label}`,
         node.attrs.nFormat
       );
     } else {
