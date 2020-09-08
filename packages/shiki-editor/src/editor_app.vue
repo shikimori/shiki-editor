@@ -337,7 +337,10 @@ export default {
         this.nodesState.link || !this.editor.state.selection.empty
       );
     },
-    async setContent(content) {
+    async setContent(
+      content,
+      isAaddToHistory = content !== this.editor.exportMarkdown()
+    ) {
       if (this.isSource) {
         await this.toggleSource();
       }
@@ -345,7 +348,7 @@ export default {
       this.editor.setContent(
         content,
         false,
-        content !== this.editor.exportMarkdown()
+        isAaddToHistory
       );
     },
     async togglePreview() {
