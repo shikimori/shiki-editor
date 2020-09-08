@@ -109,6 +109,15 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
   return true;
 }
 
-export function textToLabel(text) {
-  return text.toLowerCase().replace(/ +/g, '-').replace(/[[\]]/g, '');
+export function bbcodeLabel(attrs) {
+  if (!LABEL_TYPES.includes(attrs.type) || !attrs.text) {
+    return '';
+  }
+
+  const label = attrs.text
+    .toLowerCase()
+    .replace(/ +/g, '-')
+    .replace(/[[\]]/g, '');
+
+  return ` ${label}`;
 }
