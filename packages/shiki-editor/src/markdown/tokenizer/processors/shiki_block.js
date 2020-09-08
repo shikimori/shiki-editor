@@ -39,6 +39,7 @@ export default function(state, openBbcode, closeBbcode, meta) {
   if (cache) {
     const attributes = {
       url: cache.url,
+      text: cache.text,
       id: meta.id,
       type: meta.type,
       nFormat
