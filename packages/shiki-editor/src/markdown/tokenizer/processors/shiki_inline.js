@@ -114,10 +114,11 @@ export function bbcodeLabel(attrs) {
     return '';
   }
 
-  const label = attrs.text
+  let label = attrs.text
     .toLowerCase()
     .replace(/ +/g, '-')
-    .replace(/[[\]]/g, '');
+    .replace(/[[\]]/g, '')
+    .slice(0, 75);
 
   return ` ${label}`;
 }
