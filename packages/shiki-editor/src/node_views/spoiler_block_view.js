@@ -17,25 +17,20 @@ export default class SpoilerBlockView extends DOMView {
     this.dom.classList.add('b-spoiler_block');
     this.trigger = document.createElement('span');
     this.trigger.addEventListener('click', this.toggle);
+    this.trigger.addEventListener('keypress', this.triggerKeypress);
+    this.trigger.setAttribute('tabindex', 0);
 
     const edit = document.createElement('i');
     edit.classList.add('edit');
     edit.addEventListener('click', this.changeLabel);
+    edit.addEventListener('keypress', this.editKeypress);
+    edit.setAttribute('tabindex', 0);
 
     this.syncState();
 
     this.dom.appendChild(this.trigger);
     this.dom.appendChild(edit);
     this.dom.appendChild(this.contentDOM);
-  }
-
-  @bind
-  toggle(e) {
-    e.preventDefault();
-
-    this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
-    this.syncState();
-    this.view.focus();
   }
 
   syncState() {
@@ -59,6 +54,15 @@ export default class SpoilerBlockView extends DOMView {
   }
 
   @bind
+  toggle(e) {
+    e.preventDefault();
+
+    this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
+    this.syncState();
+    this.view.focus();
+  }
+
+  @bind
   changeLabel() {
     const label = prompt(
       window.I18n.t('frontend.shiki_editor.prompt.spoiler_label'),
@@ -68,5 +72,23 @@ export default class SpoilerBlockView extends DOMView {
 
     this.updateAttrs({ label });
     this.view.focus();
+  }
+
+  @bind
+  editKeypress(e) {
+    switch (e.keyCode) {
+      case 32: // space
+      case 13: // enter
+        this.changeLabel();
+    }
+  }
+
+  @bind
+  triggerKeypress(e) {
+    switch (e.keyCode) {
+      case 32: // space
+      case 13: // enter
+        this.toggle(e);
+    }
   }
 }
