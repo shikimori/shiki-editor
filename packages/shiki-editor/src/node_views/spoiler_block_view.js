@@ -15,16 +15,16 @@ export default class SpoilerBlockView extends DOMView {
     this.contentDOM = document.createElement('div');
 
     this.dom.classList.add('b-spoiler_block');
-    this.button = document.createElement('button');
-    this.button.addEventListener('click', this.toggle);
+    this.trigger = document.createElement('span');
+    this.trigger.addEventListener('click', this.toggle);
 
-    const edit = document.createElement('span');
+    const edit = document.createElement('i');
     edit.classList.add('edit');
     edit.addEventListener('click', this.changeLabel);
 
     this.syncState();
 
-    this.dom.appendChild(this.button);
+    this.dom.appendChild(this.trigger);
     this.dom.appendChild(edit);
     this.dom.appendChild(this.contentDOM);
   }
@@ -51,10 +51,10 @@ export default class SpoilerBlockView extends DOMView {
         nodes.content.content[0].content :
         nodes.content;
 
-      this.button.innerHTML = '';
-      this.button.appendChild(domSerializer.serializeFragment(content));
+      this.trigger.innerHTML = '';
+      this.trigger.appendChild(domSerializer.serializeFragment(content));
     } else {
-      this.button.innerText = this.node.attrs.label;
+      this.trigger.innerText = this.node.attrs.label;
     }
   }
 

@@ -7,12 +7,16 @@
       display: none
 
   &.is-opened
-    & > button
+    &.is-closing
+      & > span
+        &:after
+          transform: rotate(0deg)
+
+    & > span
       &:after
         transform: rotate(180deg)
-        margin-top: 0px
 
-    & > span.edit
+    & > i.edit
       +link_color(#7b8084)
       align-items: center
       cursor: pointer
@@ -25,7 +29,7 @@
       &:before
         +shikimori('\e842')
 
-  & > button
+  & > span
     +shiki_button(#678)
     display: inline-flex
     align-items: center
@@ -37,6 +41,7 @@
       +shikimori('\e847')
       font-size: 17px
       font-weight: bold
+      font-style: normal
       margin-left: 8px
       transition: transform .25s, margin .25s
 
@@ -47,6 +52,12 @@
 
     & > .b-list
       margin-left: 10px
+
+    center &
+      padding-right: 14px // compensates 14px padding at the left
+
+      center
+        padding-right: 0
 
     center
       padding-right: 14px // compensates 14px padding at the left
