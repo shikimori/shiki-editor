@@ -41,6 +41,7 @@ import processShikiBlock from './processors/shiki_block';
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
 
+  SPOILER_BBCODE_REGEXP = /^\[(spoiler|spoiler_block)(?:=(.+?))?( fullwidth)?\]$/
   BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
   SPAN_REGEXP = /^\[span(?:(?:=| )([^\]]+))?\]$/
@@ -260,10 +261,10 @@ export default class MarkdownTokenizer {
 
         switch (seq5) {
           case '[spoi':
-            match = bbcode.match(this.BLOCK_BBCODE_REGEXP);
+            match = bbcode.match(this.SPOILER_BBCODE_REGEXP);
             if (!match) { break; }
 
-            meta = parseSpoilerMeta(match[2]);
+            meta = parseSpoilerMeta(match[2], match[3]);
             // ignore common spoilers with bbcodes
             if (match[1] === 'spoiler' && meta?.label?.match(/\[\w+/)) {
               break;

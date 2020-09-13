@@ -946,6 +946,39 @@ describe('MarkdownTokenizer', () => {
           { type: 'spoiler_block', direction: 'close' }
         ]);
       });
+
+      describe('fullwidth', () => {
+        it('[spoiler_block fullwidth]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse('[spoiler_block fullwidth]z[/spoiler_block]')).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [['isFullwidth', true], ['nFormat', n()]]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
+
+        it('[spoiler_block=[b]test[/b] fullwidth]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse(
+            '[spoiler_block=[b]test[/b] fullwidth]z[/spoiler_block]'
+          )).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [
+                ['label', '[b]test[/b]'],
+                ['isFullwidth', true],
+                ['nFormat', n()]
+              ]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
+
+      });
     });
 
     describe('spoiler', () => {
