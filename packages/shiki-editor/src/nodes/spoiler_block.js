@@ -17,6 +17,7 @@ export default class SpoilerBlock extends Node {
       attrs: {
         label: { default: window.I18n.t('frontend.shiki_editor.spoiler') },
         isOpened: { default: true },
+        isFullwidth: { default: false },
         nFormat: {
           default: {
             nBeforeOpen: true,
