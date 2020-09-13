@@ -4568,19 +4568,19 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-decorators@file:packages/shiki-decorators":
-  version "0.12.0"
+  version "0.12.2"
   dependencies:
     bind-decorator "1.0.11"
 
 "shiki-uploader@file:packages/shiki-uploader":
-  version "0.12.0"
+  version "0.12.2"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
 "shiki-utils@file:packages/shiki-utils":
-  version "0.12.0"
+  version "0.12.2"
   dependencies:
     toastify-js "^1.8.0"
 
