@@ -62,10 +62,15 @@ export default class SpoilerBlock extends Node {
   }
 
   markdownSerialize(state, node) {
+    let meta = node.attrs.label ? `=${node.attrs.label}` : '';
+    if (node.attrs.isFullwidth) {
+      meta += ' fullwidth';
+    }
+
     state.renderBlock(
       node,
       'spoiler_block',
-      node.attrs.label ? `=${node.attrs.label}` : '',
+      meta,
       node.attrs.nFormat
     );
   }
