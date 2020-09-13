@@ -1,3 +1,5 @@
+import { bind } from 'shiki-decorators'
+
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleWrap } from '../commands';
@@ -15,7 +17,7 @@ export default class SpoilerBlock extends Node {
       defining: true,
       draggable: false,
       attrs: {
-        label: { default: window.I18n.t('frontend.shiki_editor.spoiler') },
+        label: { default: this.defaultLabel },
         isOpened: { default: true },
         isFullwidth: { default: false },
         nFormat: {
@@ -49,6 +51,10 @@ export default class SpoilerBlock extends Node {
     };
   }
 
+  get defaultLabel() {
+    return window.I18n.t('frontend.shiki_editor.spoiler');
+  }
+
   view(options) {
     return new SpoilerBlockView(options);
   }
@@ -61,8 +67,11 @@ export default class SpoilerBlock extends Node {
     return nodeIsActive(type, state);
   }
 
+  @bind
   markdownSerialize(state, node) {
-    let meta = node.attrs.label ? `=${node.attrs.label}` : '';
+    let meta = node.attrs.label && node.attrs.label !== this.defaultLabel ?
+      `=${node.attrs.label}` :
+      '';
     if (node.attrs.isFullwidth) {
       meta += ' fullwidth';
     }
