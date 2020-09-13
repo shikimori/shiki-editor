@@ -111,12 +111,18 @@ export function parseSizeMeta(meta) {
   };
 }
 
-export function parseSpoilerMeta(meta) {
-  if (!meta) { return null; }
+export function parseSpoilerMeta(label, fullwidth) {
+  const meta = {};
 
-  return {
-    label: meta
-  };
+  if (label) {
+    meta.label = label;
+  }
+
+  if (fullwidth) {
+    meta.isFullwidth = true;
+  }
+
+  return !label && !fullwidth ? null : meta;
 }
 
 export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {

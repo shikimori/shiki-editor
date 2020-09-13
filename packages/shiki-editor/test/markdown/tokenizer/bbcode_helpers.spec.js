@@ -93,8 +93,12 @@ describe('tokenizer_helpers', () => {
   });
 
   it('parseSpoilerMeta', () => {
-    expect(parseSpoilerMeta('')).to.eq(null);
-    expect(parseSpoilerMeta('qwe')).to.eql({ label: 'qwe' });
+    expect(parseSpoilerMeta('', null)).to.eq(null);
+    expect(parseSpoilerMeta('qwe', null)).to.eql({ label: 'qwe' });
+    expect(parseSpoilerMeta('qwe', 'fullwidth')).to.eql({
+      label: 'qwe',
+      isFullwidth: true
+    });
   });
 
   it('parseShikiBasicMeta', () => {
