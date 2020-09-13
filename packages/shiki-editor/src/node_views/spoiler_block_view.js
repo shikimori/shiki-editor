@@ -35,6 +35,7 @@ export default class SpoilerBlockView extends DOMView {
 
   syncState() {
     this.dom.classList.toggle('is-opened', this.node.attrs.isOpened);
+    this.dom.classList.toggle('is-fullwidth', this.node.attrs.isFullwidth);
 
     if (this.node.attrs.label === this.priorLabel) { return; }
     this.priorLabel = this.node.attrs.label;
