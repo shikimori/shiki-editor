@@ -1,6 +1,12 @@
 import { hasInlineSequence } from '../helpers';
 
-export default function(state, type, openBbcode, closeBbcode, attributes) {
+export default function processMarkClose(
+  state,
+  type,
+  openBbcode,
+  closeBbcode,
+  attributes
+) {
   const isCloseBbcode =
     hasInlineSequence(state.text, closeBbcode, state.index + openBbcode.length);
   if (!isCloseBbcode) { return; }

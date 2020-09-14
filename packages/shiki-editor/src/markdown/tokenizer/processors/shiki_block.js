@@ -4,7 +4,12 @@ import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 import { SHIKI_BBCODE_LINK_REGEXP, URL_REGEXP } from './shiki_inline';
 import { PSEUDO_BLOCK_TEST_REGEXP } from './inline_or_block';
 
-export default function(state, openBbcode, closeBbcode, meta) {
+export default function processShikiBlock(
+  state,
+  openBbcode,
+  closeBbcode,
+  meta
+) {
   const inlineText = extractUntil(
     state.text,
     closeBbcode,

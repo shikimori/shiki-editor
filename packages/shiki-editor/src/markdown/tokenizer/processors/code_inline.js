@@ -1,7 +1,7 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
 
-export default function(state, startSequence, endSequence) {
+export default function processCodeInline(state, startSequence, endSequence) {
   if (!endSequence) {
     let index = state.index + 1;
     let tag = startSequence;

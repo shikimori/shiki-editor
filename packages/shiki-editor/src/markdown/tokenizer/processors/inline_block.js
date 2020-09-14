@@ -1,6 +1,6 @@
 import { isMatchedToken } from '../helpers';
 
-export default function(state, startSequence, exitSequence) {
+export default function processInlineBlock(state, startSequence, exitSequence) {
   const tokenizer = new state.constructor(
     state.text,
     state.index + startSequence.length,

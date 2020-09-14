@@ -1,7 +1,7 @@
 import Token from '../token';
 import { extractMarkdownLanguage } from '../helpers';
 
-export default function(
+export default function processCodeBlock(
   state,
   startSequence,
   endSequence,

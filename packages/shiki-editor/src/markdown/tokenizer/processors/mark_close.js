@@ -1,4 +1,4 @@
-export default function(state, type, openBbcode, closeBbcode) {
+export default function processMarkOpen(state, type, openBbcode, closeBbcode) {
   if (state.lastMark !== openBbcode) { return; }
 
   state.marksStack.pop();

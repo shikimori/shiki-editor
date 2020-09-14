@@ -1,4 +1,4 @@
-import { bind } from 'shiki-decorators'
+import { bind } from 'shiki-decorators';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
