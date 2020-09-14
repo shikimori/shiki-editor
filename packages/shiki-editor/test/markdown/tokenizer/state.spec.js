@@ -507,8 +507,17 @@ describe('MarkdownTokenizer', () => {
         it('# a', () => {
           expect(MarkdownTokenizer.parse('# a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 1]] },
-            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
+            ...text('a'),
             { type: 'heading', direction: 'close' }
+          ]);
+        });
+
+        it('# a\nz', () => {
+          expect(MarkdownTokenizer.parse('# a\nz')).to.eql([
+            { type: 'heading', direction: 'open', attrs: [['level', 1]] },
+            ...text('a'),
+            { type: 'heading', direction: 'close' },
+            ...text('z')
           ]);
         });
       });
@@ -517,7 +526,7 @@ describe('MarkdownTokenizer', () => {
         it('## a', () => {
           expect(MarkdownTokenizer.parse('## a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 2]] },
-            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
+            ...text('a'),
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -527,7 +536,7 @@ describe('MarkdownTokenizer', () => {
         it('### a', () => {
           expect(MarkdownTokenizer.parse('### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 3]] },
-            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
+            ...text('a'),
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -537,7 +546,7 @@ describe('MarkdownTokenizer', () => {
         it('#### a', () => {
           expect(MarkdownTokenizer.parse('#### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 4]] },
-            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
+            ...text('a'),
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -547,7 +556,7 @@ describe('MarkdownTokenizer', () => {
         it('##### a', () => {
           expect(MarkdownTokenizer.parse('##### a')).to.eql([
             { type: 'heading', direction: 'open', attrs: [['level', 5]] },
-            { type: 'inline', children: [{ type: 'text', content: 'a' }] },
+            ...text('a'),
             { type: 'heading', direction: 'close' }
           ]);
         });
@@ -2218,6 +2227,18 @@ describe('MarkdownTokenizer', () => {
         ...text('z'),
         { type: 'spoiler_block', direction: 'close' },
         { type: 'div', direction: 'close' }
+      ]);
+    });
+
+    it('complex content inside heading', () => {
+      expect(MarkdownTokenizer.parse('# - a')).to.eql([
+        { type: 'heading', direction: 'open', attrs: [['level', 1]] },
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        ...text('a'),
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' },
+        { type: 'heading', direction: 'close' }
       ]);
     });
   });

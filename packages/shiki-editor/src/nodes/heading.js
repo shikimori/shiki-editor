@@ -11,7 +11,7 @@ export default class Heading extends Node {
       attrs: {
         level: {}
       },
-      content: 'inline*',
+      content: 'block*',
       group: 'block',
       defining: true,
       draggable: false,

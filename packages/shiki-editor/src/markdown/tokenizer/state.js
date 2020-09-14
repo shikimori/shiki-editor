@@ -164,19 +164,19 @@ export default class MarkdownTokenizer {
         switch (seq5) {
           case '#### ':
             processHeading(this, seq5, 4);
-            break outer;
+            return;
 
           case '#####':
             if (this.text[this.index + 5] === ' ') {
               processHeading(this, seq5 + ' ', 5);
-              break outer;
+              return;
             }
         }
 
         switch (seq4) {
           case '### ':
             processHeading(this, seq4, 3);
-            break outer;
+            return;
         }
 
         switch (seq3) {
@@ -188,7 +188,7 @@ export default class MarkdownTokenizer {
 
           case '## ':
             processHeading(this, seq3, 2);
-            break outer;
+            return;
         }
 
         switch (seq2) {
@@ -204,7 +204,7 @@ export default class MarkdownTokenizer {
 
           case '# ':
             processHeading(this, seq2, 1);
-            break outer;
+            return;
         }
 
         switch (bbcode) {
@@ -585,7 +585,10 @@ export default class MarkdownTokenizer {
     this.index += steps;
     this.char1 = this.text[this.index];
 
-    if (this.exitSequence) {
+    if (this.exitSequence === '\n') {
+      this.isExitSequence = this.char1 === '\n' || this.char1 === undefined;
+
+    } else if (this.exitSequence) {
       this.isExitSequence = this.char1 === this.exitSequence[0] && (
         this.exitSequence.length === 1 ||
         this.text.slice(this.index, this.index + this.exitSequence.length) ===

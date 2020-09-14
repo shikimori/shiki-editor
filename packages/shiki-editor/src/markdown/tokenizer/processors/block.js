@@ -37,7 +37,7 @@ export default function(
     ...metaAttributes, nFormat
   };
 
-  state.push(state.tagOpen(type, attrs), true);
+  state.push(state.tagOpen(type, attrs));
   state.tokens = state.tokens.concat(tokens);
   state.push(state.tagClose(type));
 
