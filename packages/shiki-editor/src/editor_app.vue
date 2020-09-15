@@ -547,6 +547,7 @@ export default {
     &:hover:before
       content: attr(data-span)
 
-  .b-spoiler_block.is-opened > span:after
-    margin-left: 10px
+  .b-spoiler_block
+    &.is-opened > span:after
+      margin-left: 5px
 </style>

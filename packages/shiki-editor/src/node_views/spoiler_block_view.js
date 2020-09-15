@@ -22,16 +22,23 @@ export default class SpoilerBlockView extends DOMView {
 
     const edit = document.createElement('i');
     edit.classList.add('edit');
-    edit.addEventListener('click', this.changeLabel);
+    edit.addEventListener('click', this.editClick);
     edit.addEventListener('keypress', this.editKeypress);
     edit.setAttribute('tabindex', 0);
 
     const separator = document.createElement('span');
     separator.classList.add('separator');
 
+    const expander = document.createElement('i');
+    expander.classList.add('expander');
+    expander.addEventListener('click', this.expanderClick);
+    expander.addEventListener('keypress', this.expanderKeypress);
+    expander.setAttribute('tabindex', 0);
+
     this.syncState();
 
     this.trigger.appendChild(separator);
+    this.trigger.appendChild(expander);
     this.trigger.appendChild(edit);
 
     this.dom.appendChild(this.trigger);
@@ -69,7 +76,7 @@ export default class SpoilerBlockView extends DOMView {
   }
 
   @bind
-  changeLabel(e) {
+  editClick(e) {
     e.stopImmediatePropagation();
 
     const label = prompt(
@@ -87,7 +94,25 @@ export default class SpoilerBlockView extends DOMView {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
-        this.changeLabel();
+        e.preventDefault();
+        this.editClick(e);
+    }
+  }
+
+  @bind
+  expanderClick(e) {
+    e.stopImmediatePropagation();
+
+    this.updateAttrs({ isFullwidth: !this.node.attrs.isFullwidth });
+  }
+
+  @bind
+  expanderKeypress(e) {
+    switch (e.keyCode) {
+      case 32: // space
+      case 13: // enter
+        e.preventDefault();
+        this.expanderClick(e);
     }
   }
 
