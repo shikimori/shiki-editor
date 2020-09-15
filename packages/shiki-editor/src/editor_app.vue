@@ -500,6 +500,9 @@ export default {
     outline: 1px solid #9cf
     position: relative
 
+  & > :first-child:before
+    top: 0 !important
+
   [data-image]:hover,
   [data-link]:hover,
   [data-div]:hover,
