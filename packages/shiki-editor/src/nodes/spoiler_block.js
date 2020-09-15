@@ -74,7 +74,10 @@ export default class SpoilerBlock extends Node {
       `=${node.attrs.label}` :
       '';
     if (node.attrs.isFullwidth) {
-      meta += ' fullwidth';
+      meta += ' is-fullwidth';
+    }
+    if (node.attrs.isCentered) {
+      meta += ' is-centered';
     }
 
     state.renderBlock(
