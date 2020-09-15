@@ -26,10 +26,15 @@ export default class SpoilerBlockView extends DOMView {
     edit.addEventListener('keypress', this.editKeypress);
     edit.setAttribute('tabindex', 0);
 
+    const separator = document.createElement('span');
+    separator.classList.add('separator');
+
     this.syncState();
 
+    this.trigger.appendChild(separator);
+    this.trigger.appendChild(edit);
+
     this.dom.appendChild(this.trigger);
-    this.dom.appendChild(edit);
     this.dom.appendChild(this.contentDOM);
   }
 
@@ -64,7 +69,9 @@ export default class SpoilerBlockView extends DOMView {
   }
 
   @bind
-  changeLabel() {
+  changeLabel(e) {
+    e.stopImmediatePropagation();
+
     const label = prompt(
       window.I18n.t('frontend.shiki_editor.prompt.spoiler_label'),
       this.node.attrs.label
