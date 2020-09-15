@@ -223,6 +223,18 @@
       "css": "align-center",
       "code": 59395,
       "src": "fontawesome"
+    },
+    {
+      "uid": "4815ddddea76d90e367a9694a93b7e24",
+      "css": "resize-full",
+      "code": 59453,
+      "src": "iconic"
+    },
+    {
+      "uid": "b05c5a209b56e7ea6632a31e4bd0b41d",
+      "css": "resize-small",
+      "code": 59444,
+      "src": "iconic"
     }
   ]
 }

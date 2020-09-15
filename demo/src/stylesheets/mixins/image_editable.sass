@@ -36,7 +36,7 @@
       .delete
         display: none
 
-    .move-controls, .mobile-edit
+    .move-controls, .mobile-edit, .drag-handle
       display: none
 
   &.deletable
@@ -56,9 +56,9 @@
     display: none !important
 
   .edit,
+  .delete,
   .expand,
   .collapse,
-  .delete,
   .drag-handle,
   .confirm,
   .cancel,
@@ -84,13 +84,19 @@
     +icon('\e842')
 
   .delete
-    +icon('\2715')
+    +icon('✕')
 
   .expand
     +icon('\e83d')
 
+    &:before
+      font-family: shiki-editor
+
   .collapse
     +icon('\e834')
+
+    &:before
+      font-family: shiki-editor
 
   .drag-handle
     +icon('m')
@@ -106,11 +112,11 @@
     opacity: 0.3
 
   .confirm
-    +icon('\2713')
+    +icon('✓')
     display: none
 
   .cancel
-    +icon('\2715')
+    +icon('✕')
     display: none
 
     &:hover
