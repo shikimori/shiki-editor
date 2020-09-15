@@ -29,16 +29,23 @@ export default class SpoilerBlockView extends DOMView {
     const separator = document.createElement('span');
     separator.classList.add('separator');
 
-    const expander = document.createElement('i');
-    expander.classList.add('expander');
-    expander.addEventListener('click', this.expanderClick);
-    expander.addEventListener('keypress', this.expanderKeypress);
-    expander.setAttribute('tabindex', 0);
+    const expand = document.createElement('i');
+    expand.classList.add('expand');
+    expand.addEventListener('click', this.expandClick);
+    expand.addEventListener('keypress', this.expandKeypress);
+    expand.setAttribute('tabindex', 0);
+
+    const center = document.createElement('i');
+    center.classList.add('center');
+    center.addEventListener('click', this.centerClick);
+    center.addEventListener('keypress', this.centerKeypress);
+    center.setAttribute('tabindex', 0);
 
     this.syncState();
 
     this.trigger.appendChild(separator);
-    this.trigger.appendChild(expander);
+    this.trigger.appendChild(expand);
+    this.trigger.appendChild(center);
     this.trigger.appendChild(edit);
 
     this.dom.appendChild(this.trigger);
@@ -48,6 +55,7 @@ export default class SpoilerBlockView extends DOMView {
   syncState() {
     this.dom.classList.toggle('is-opened', this.node.attrs.isOpened);
     this.dom.classList.toggle('is-fullwidth', this.node.attrs.isFullwidth);
+    this.dom.classList.toggle('is-centered', this.node.attrs.isCentered);
 
     if (this.node.attrs.label === this.priorLabel) { return; }
     this.priorLabel = this.node.attrs.label;
@@ -100,19 +108,36 @@ export default class SpoilerBlockView extends DOMView {
   }
 
   @bind
-  expanderClick(e) {
+  expandClick(e) {
     e.stopImmediatePropagation();
 
     this.updateAttrs({ isFullwidth: !this.node.attrs.isFullwidth });
   }
 
   @bind
-  expanderKeypress(e) {
+  expandKeypress(e) {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
         e.preventDefault();
-        this.expanderClick(e);
+        this.expandClick(e);
+    }
+  }
+
+  @bind
+  centerClick(e) {
+    e.stopImmediatePropagation();
+
+    this.updateAttrs({ isCentered: !this.node.attrs.isCentered });
+  }
+
+  @bind
+  centerKeypress(e) {
+    switch (e.keyCode) {
+      case 32: // space
+      case 13: // enter
+        e.preventDefault();
+        this.centerClick(e);
     }
   }
 
