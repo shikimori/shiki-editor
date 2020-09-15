@@ -515,12 +515,13 @@ export default {
       left: 0
       letter-spacing: 0.8px
       line-height: 1.25
-      width: 999999px
       padding: 2px 0
       pointer-events: none
       position: absolute
+      text-align: left
       text-shadow: 1px 1px 0px #fff
       top: -16px
+      width: 999999px
       z-index: 20
 
     .no-prosemirror-info &:before
