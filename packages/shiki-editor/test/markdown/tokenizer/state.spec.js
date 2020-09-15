@@ -956,9 +956,9 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      describe('fullwidth', () => {
-        it('[spoiler_block fullwidth]z[/spoiler_block]', () => {
-          expect(MarkdownTokenizer.parse('[spoiler_block fullwidth]z[/spoiler_block]')).to.eql([
+      describe('is-fullwidth', () => {
+        it('[spoiler_block is-fullwidth]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse('[spoiler_block is-fullwidth]z[/spoiler_block]')).to.eql([
             {
               type: 'spoiler_block',
               direction: 'open',
@@ -969,9 +969,9 @@ describe('MarkdownTokenizer', () => {
           ]);
         });
 
-        it('[spoiler_block=[b]test[/b] fullwidth]z[/spoiler_block]', () => {
+        it('[spoiler_block=[b]test[/b] is-fullwidth]z[/spoiler_block]', () => {
           expect(MarkdownTokenizer.parse(
-            '[spoiler_block=[b]test[/b] fullwidth]z[/spoiler_block]'
+            '[spoiler_block=[b]test[/b] is-fullwidth]z[/spoiler_block]'
           )).to.eql([
             {
               type: 'spoiler_block',
@@ -986,7 +986,38 @@ describe('MarkdownTokenizer', () => {
             { type: 'spoiler_block', direction: 'close' }
           ]);
         });
+      });
 
+      describe('is-centered', () => {
+        it('[spoiler_block is-centered]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse('[spoiler_block is-centered]z[/spoiler_block]')).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [['isCentered', true], ['nFormat', n()]]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
+
+        it('[spoiler_block=[b]test[/b] is-centered]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse(
+            '[spoiler_block=[b]test[/b] is-centered]z[/spoiler_block]'
+          )).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [
+                ['label', '[b]test[/b]'],
+                ['isCentered', true],
+                ['nFormat', n()]
+              ]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
       });
     });
 

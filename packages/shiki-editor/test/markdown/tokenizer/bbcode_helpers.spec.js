@@ -95,9 +95,23 @@ describe('tokenizer_helpers', () => {
   it('parseSpoilerMeta', () => {
     expect(parseSpoilerMeta('', null)).to.eq(null);
     expect(parseSpoilerMeta('qwe', null)).to.eql({ label: 'qwe' });
-    expect(parseSpoilerMeta('qwe', 'fullwidth')).to.eql({
+    expect(parseSpoilerMeta('qwe', ' is-fullwidth')).to.eql({
       label: 'qwe',
       isFullwidth: true
+    });
+    expect(parseSpoilerMeta('qwe', ' is-centered')).to.eql({
+      label: 'qwe',
+      isCentered: true
+    });
+    expect(parseSpoilerMeta('qwe', ' is-fullwidth is-centered')).to.eql({
+      label: 'qwe',
+      isFullwidth: true,
+      isCentered: true
+    });
+    expect(parseSpoilerMeta('qwe', ' is-centered is-fullwidth')).to.eql({
+      label: 'qwe',
+      isFullwidth: true,
+      isCentered: true
     });
   });
 

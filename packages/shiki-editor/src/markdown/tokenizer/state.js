@@ -41,7 +41,7 @@ import processSmiley from './processors/smiley';
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
 
-  SPOILER_BBCODE_REGEXP = /^\[(spoiler|spoiler_block)(?:=(.+?))?( fullwidth)?\]$/
+  SPOILER_BBCODE_REGEXP = /^\[(spoiler|spoiler_block)(?:=(.+?))?((?: is-fullwidth)|(?: is-centered))*\]$/
   BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
   DIV_REGEXP = /^\[div(?:(?:=| )([^\]]+))?\]$/
   SPAN_REGEXP = /^\[span(?:(?:=| )([^\]]+))?\]$/

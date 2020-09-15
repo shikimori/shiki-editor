@@ -20,6 +20,7 @@ export default class SpoilerBlock extends Node {
         label: { default: this.defaultLabel },
         isOpened: { default: true },
         isFullwidth: { default: false },
+        isCentered: { default: false },
         nFormat: {
           default: {
             nBeforeOpen: true,

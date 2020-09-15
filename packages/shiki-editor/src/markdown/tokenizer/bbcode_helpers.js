@@ -111,18 +111,22 @@ export function parseSizeMeta(meta) {
   };
 }
 
-export function parseSpoilerMeta(label, fullwidth) {
+export function parseSpoilerMeta(label, fullwidth_or_centered) {
   const meta = {};
 
   if (label) {
     meta.label = label;
   }
 
-  if (fullwidth) {
+  if (fullwidth_or_centered?.match(/is-fullwidth/)) {
     meta.isFullwidth = true;
   }
 
-  return !label && !fullwidth ? null : meta;
+  if (fullwidth_or_centered?.match(/is-centered/)) {
+    meta.isCentered = true;
+  }
+
+  return !label && !fullwidth_or_centered ? null : meta;
 }
 
 export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {
