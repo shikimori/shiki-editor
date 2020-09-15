@@ -1,7 +1,7 @@
 {
   "name": "shiki-uploader",
   "title": "Shikimori Uploader",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "main": "src/shiki_uploader.js",
   "author": "morr",
   "license": "OSL-3.0",
@@ -27,7 +27,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.8.1",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-import-resolver-webpack": "^0.12.3",
+    "eslint-import-resolver-webpack": "^0.12.2",
+
     "eslint-plugin-import": "^2.18.2",
     "shiki-decorators": "file:../shiki-decorators",
     "shiki-utils": "file:../shiki-utils",
@@ -35,8 +36,8 @@
   },
   "peerDependencies": {
     "uevent": "^2.0.0",
-    "shiki-utils": "^0.12.3",
-    "shiki-decorators": "^0.12.3"
+    "shiki-utils": "^0.12.4",
+    "shiki-decorators": "^0.12.4"
   },
   "postcss": {
     "plugins": {
