@@ -18,9 +18,8 @@
     ref='icon'
     :tabindex='isEnabled ? undefined : -1'
     :title='title'
+    class='icon'
     :class='{
-      icon: !isButton,
-      "b-button": isButton,
       [type]: true,
       "is-active": isEnabled && isActive,
       "is-disabled": !isEnabled
@@ -28,7 +27,12 @@
     :disabled="!isEnabled"
     @click='execute'
   >
-    <template v-if='isButton'>{{ title }}</template>
+    <!--
+    :class='{
+      icon: !isButton,
+      "b-button": isButton,
+    -->
+    <!--span v-if='isButton'>{{ title }}</span-->
   </button>
 </template>
 
@@ -39,8 +43,8 @@ export default {
     type: { type: String, required: true },
     title: { type: String, required: true },
     isActive: { type: Boolean, required: true },
-    isEnabled: { type: Boolean, required: false, default: true },
-    isButton: { type: Boolean, required: false, default: false }
+    isEnabled: { type: Boolean, required: false, default: true }
+    // isButton: { type: Boolean, required: false, default: false }
   },
   computed: {
     isUpload() {
@@ -108,6 +112,13 @@ export default {
   &.is-active
     background: rgba(#acb1b4, 0.25)
 
+  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809")
+  @each $name, $glyph in $icons
+    &.#{$name}:before
+      content: $glyph
+
+.icon,
+.b-button
   &:before
     // it is a copy of shikimori font mixin
     font-family: shiki-editor
@@ -117,41 +128,49 @@ export default {
     text-transform: none
     letter-spacing: normal
 
-  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b")
-  @each $name, $glyph in $icons
-    &.#{$name}:before
-      content: $glyph
+// .b-button
+//   line-height: 21px
+//
+//   &:not(:last-child)
+//     margin-right: 6px
+//
+//   &.is-active
+//     background-color: var(--link-color, #176093)
+//
+//   $icons: ("preview": "\e806", "source": "\e809")
+//   @each $name, $glyph in $icons
+//     &.#{$name}:before
+//       content: $glyph
+//       +gte_laptop
+//         margin-right: 6px
+//
+//   span
+//     +lte_ipad
+//       display: none
 
-.b-button
-  &:not(:last-child)
-    margin-right: 6px
-
-  &.is-active
-    background-color: var(--link-color, #176093)
-
-  /* &.preview,                                */
-  /* &.source                                  */
-  /*   width: auto                             */
-
-  /*   &:before                                */
-  /*     display: block                        */
-  /*     font-family: Courier New              */
-  /*     font-weight: bold                     */
-  /*     margin-top: -1px                      */
-
-  /* &.preview:before                          */
-  /*   body[data-locale=ru] &                  */
-  /*     content: '<предпросмотр>' */
-
-  /*   body[data-locale=en] &                  */
-  /*     content: '<preview>'                  */
-
-  /* &.source:before                           */
-  /*   body[data-locale=ru] &                  */
-  /*     content: '<ббкоды>'             */
-
-  /*   body[data-locale=en] &                  */
-  /*     content: '<bbcode>'                   */
+//   &.preview,
+//   &.source
+//     width: auto
+//
+//     &:before
+//       display: block
+//       font-family: Courier New
+//       font-weight: bold
+//       margin-top: -1px
+//
+//   &.preview:before
+//     body[data-locale=ru] &
+//       content: '<предпросмотр>'
+//
+//     body[data-locale=en] &
+//       content: '<preview>'
+//
+//   &.source:before
+//     body[data-locale=ru] &
+//       content: '<ббкоды>'
+//
+//     body[data-locale=en] &
+//       content: '<bbcode>'
 
 input
   display: none
