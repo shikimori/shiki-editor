@@ -9,8 +9,8 @@
         <div
           v-for='([group, items], index) in menuItems'
           :key='index'
-          class='menu-group'
-          :class='[group]'
+          class='menu_group'
+          :class='`menu_group-${group}`'
         >
           <Icon
             v-for='item in items'
@@ -22,7 +22,7 @@
             @command='args => command(item.type, args)'
           />
         </div>
-        <div class='menu-group offset'>
+        <div class='menu_group offset'>
           <div
             v-if='isPreviewLoading'
             class='icon-loader b-ajax vk-like'
@@ -454,12 +454,12 @@ export default {
     margin-top: 1px
     margin-bottom: 3px
 
-.menu-group
+.menu_group
   display: flex
   flex-wrap: wrap
   padding: 5px 0
 
-  & + .menu-group:before
+  & + .menu_group:before
     border-right: 1px solid #ddd
     content: ''
     margin: 0 5px 0 3px
