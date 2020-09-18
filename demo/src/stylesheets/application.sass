@@ -28,6 +28,7 @@
   @each $variable, $value in $variables
     #{$variable}: $value
 
+*
   box-sizing: border-box
 
 @font-face
@@ -61,8 +62,11 @@ textarea
   max-width: 1200px
   width: 100%
 
-  +lte_ipad
-    padding: 0 20px 0
+  +iphone
+    padding: 0 7px
+
+  +ipad
+    padding: 0 20px
 
   +gte_laptop
     padding: 40px 20px 0
