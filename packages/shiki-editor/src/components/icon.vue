@@ -121,9 +121,11 @@ export default {
     width: auto
 
     +gte_laptop
+      align-items: center
+      display: inline-flex
       font-size: 13px
-      padding: 0 6px
       margin: 0 3px
+      padding: 0 6px
 
       &:last-child
         margin: 0
