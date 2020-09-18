@@ -7,9 +7,10 @@
     >
       <div v-if='editor' class='icons'>
         <div
-          v-for='(items, index) in menuItems'
+          v-for='([group, items], index) in menuItems'
           :key='index'
           class='menu-group'
+          :class='[group]'
         >
           <Icon
             v-for='item in items'
@@ -161,11 +162,14 @@ export default {
     },
     menuItems() {
       return Object.keys(MENU_ITEMS).map(group => (
-        MENU_ITEMS[group].map(item => ({
-          type: item,
-          title: window.I18n.t(`frontend.shiki_editor.${item}`),
-          isEditingEnabled: this.isEditingEnabledMappings[item]
-        }))
+        [
+          group,
+          MENU_ITEMS[group].map(item => ({
+            type: item,
+            title: window.I18n.t(`frontend.shiki_editor.${item}`),
+            isEditingEnabled: this.isEditingEnabledMappings[item]
+          }))
+        ]
       ));
     },
     menuPreviewItem() {
