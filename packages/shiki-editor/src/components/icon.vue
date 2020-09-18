@@ -20,7 +20,7 @@
     :title='title'
     class='icon'
     :class='{
-      [type]: true,
+      [`icon-${type}`]: true,
       "is-button": isButton,
       "is-active": isEnabled && isActive,
       "is-disabled": isDisabled || !isEnabled
@@ -28,12 +28,7 @@
     :disabled="isDisabled || !isEnabled"
     @click='execute'
   >
-    <!--
-    :class='{
-      icon: !isButton,
-      "b-button": isButton,
-    -->
-    <!--span v-if='isButton'>{{ title }}</span-->
+    <span v-if='isButton'>{{ title }}</span>
   </button>
 </template>
 
@@ -115,13 +110,31 @@ export default {
     background: rgba(#acb1b4, 0.25)
 
     &.is-button
-      font-size: 13px
       color: #fff
       background-color: #1d78b7
 
       &.is-disabled
         color: rgba(#123, 0.5)
         background: rgba(#acb1b4, 0.25)
+
+  &.is-button
+    width: auto
+
+    +gte_laptop
+      font-size: 13px
+      padding: 0 6px
+      margin: 0 3px
+
+      &:last-child
+        margin: 0
+
+    &:before
+      +gte_laptop
+        margin-right: 5px
+
+    span
+      +lte_ipad
+        display: none
 
   &:before
     // it is a copy of shikimori font mixin
@@ -134,8 +147,9 @@ export default {
 
   $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809")
   @each $name, $glyph in $icons
-    &.#{$name}:before
+    &-#{$name}:before
       content: $glyph
+
 
 // .b-button
 //   line-height: 21px
