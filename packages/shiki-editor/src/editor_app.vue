@@ -22,21 +22,24 @@
             @command='args => command(item.type, args)'
           />
         </div>
-        <div class='menu_group offset'>
+        <div class='menu_group menu_group-controls'>
           <div
             v-if='isPreviewLoading'
             class='icon-loader b-ajax vk-like'
           />
           <Icon
             v-bind='menuPreviewItem'
+            is-button
             :is-active='isPreview'
             :is-enabled='isPreviewEnabled'
             @command='() => togglePreview()'
           />
           <Icon
             v-bind='menuSourceItem'
+            is-button
             :is-active='isSource'
             :is-enabled='isSourceEnabled'
+            :is-disabled='isSourceDisabled'
             @command='() => toggleSource()'
           />
         </div>
@@ -216,7 +219,11 @@ export default {
     },
     isSourceEnabled() {
       return !this.isHugeContent &&
-        !this.isContentManipulationsPending && !this.isPreview;
+        !this.isContentManipulationsPending;
+        // !this.isContentManipulationsPending && !this.isPreview;
+    },
+    isSourceDisabled() {
+      return this.isPreview;
     },
     fileUploaderExtension() {
       return new FileUploader({
@@ -464,7 +471,7 @@ export default {
     content: ''
     margin: 0 5px 0 3px
 
-  &.offset
+  &-controls
     margin-left: auto
 
     &:before

@@ -8,7 +8,7 @@
     :class='{
       [type]: true,
       "is-active": isEnabled && isActive,
-      "is-disabled": !isEnabled
+      "is-disabled": isDisabled || !isEnabled
     }'
   >
     <input type='file' multiple @change='upload'>
@@ -21,10 +21,11 @@
     class='icon'
     :class='{
       [type]: true,
+      "is-button": isButton,
       "is-active": isEnabled && isActive,
-      "is-disabled": !isEnabled
+      "is-disabled": isDisabled || !isEnabled
     }'
-    :disabled="!isEnabled"
+    :disabled="isDisabled || !isEnabled"
     @click='execute'
   >
     <!--
@@ -43,8 +44,9 @@ export default {
     type: { type: String, required: true },
     title: { type: String, required: true },
     isActive: { type: Boolean, required: true },
-    isEnabled: { type: Boolean, required: false, default: true }
-    // isButton: { type: Boolean, required: false, default: false }
+    isEnabled: { type: Boolean, required: false, default: true },
+    isDisabled: { type: Boolean, required: false, default: false },
+    isButton: { type: Boolean, required: false, default: false }
   },
   computed: {
     isUpload() {
@@ -112,13 +114,15 @@ export default {
   &.is-active
     background: rgba(#acb1b4, 0.25)
 
-  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809")
-  @each $name, $glyph in $icons
-    &.#{$name}:before
-      content: $glyph
+    &.is-button
+      font-size: 13px
+      color: #fff
+      background-color: #1d78b7
 
-.icon,
-.b-button
+      &.is-disabled
+        color: rgba(#123, 0.5)
+        background: rgba(#acb1b4, 0.25)
+
   &:before
     // it is a copy of shikimori font mixin
     font-family: shiki-editor
@@ -127,6 +131,11 @@ export default {
     font-feature-settings: 'liga'
     text-transform: none
     letter-spacing: normal
+
+  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809")
+  @each $name, $glyph in $icons
+    &.#{$name}:before
+      content: $glyph
 
 // .b-button
 //   line-height: 21px
