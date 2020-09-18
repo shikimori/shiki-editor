@@ -102,8 +102,8 @@ import Icon from './components/icon';
 import Smileys from './components/smileys';
 import Suggestions from './components/suggestions';
 
-const MENU_ITEMS = [
-  [
+const MENU_ITEMS = {
+  inline: [
     'bold',
     'italic',
     'underline',
@@ -112,10 +112,10 @@ const MENU_ITEMS = [
     'code_inline',
     'link'
   ],
-  ['undo', 'redo'],
-  ['smiley', 'image', 'shiki_link', 'upload'],
-  ['blockquote', 'spoiler_block', 'code_block', 'bullet_list']
-];
+  history: ['undo', 'redo'],
+  item: ['smiley', 'image', 'shiki_link', 'upload'],
+  block: ['blockquote', 'spoiler_block', 'code_block', 'bullet_list']
+};
 const MAXIMUM_CONTENT_SIZE = 100000;
 
 export default {
@@ -160,11 +160,13 @@ export default {
       };
     },
     menuItems() {
-      return MENU_ITEMS.map(items => items.map(item => ({
-        type: item,
-        title: window.I18n.t(`frontend.shiki_editor.${item}`),
-        isEditingEnabled: this.isEditingEnabledMappings[item]
-      })));
+      return Object.keys(MENU_ITEMS).map(group => (
+        MENU_ITEMS[group].map(item => ({
+          type: item,
+          title: window.I18n.t(`frontend.shiki_editor.${item}`),
+          isEditingEnabled: this.isEditingEnabledMappings[item]
+        }))
+      ));
     },
     menuPreviewItem() {
       return {
@@ -181,11 +183,13 @@ export default {
     nodesState() {
       const memo = {};
 
-      MENU_ITEMS.forEach(items => items.forEach(item => (
-        memo[item] = this.editor.activeChecks[item] ?
-          this.editor.activeChecks[item]() :
-          false
-      )));
+      Object.keys(MENU_ITEMS).forEach(group => (
+        MENU_ITEMS[group].forEach(item => (
+          memo[item] = this.editor.activeChecks[item] ?
+            this.editor.activeChecks[item]() :
+            false
+        ))
+      ));
 
       this.isBoldBlock = this.editor.activeChecks.bold_block(); // eslint-disable-line
       memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
