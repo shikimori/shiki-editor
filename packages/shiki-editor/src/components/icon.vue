@@ -16,16 +16,20 @@
   <button
     v-else
     ref='icon'
-    class='icon'
     :tabindex='isEnabled ? undefined : -1'
     :title='title'
     :class='{
+      icon: !isButton,
+      "b-button": isButton,
       [type]: true,
       "is-active": isEnabled && isActive,
       "is-disabled": !isEnabled
     }'
+    :disabled="!isEnabled"
     @click='execute'
-  />
+  >
+    <template v-if='isButton'>{{ title }}</template>
+  </button>
 </template>
 
 <script>
@@ -35,7 +39,8 @@ export default {
     type: { type: String, required: true },
     title: { type: String, required: true },
     isActive: { type: Boolean, required: true },
-    isEnabled: { type: Boolean, required: false, default: true }
+    isEnabled: { type: Boolean, required: false, default: true },
+    isButton: { type: Boolean, required: false, default: false }
   },
   computed: {
     isUpload() {
@@ -117,29 +122,36 @@ export default {
     &.#{$name}:before
       content: $glyph
 
-  &.preview,
-  &.source
-    width: auto
+.b-button
+  &:not(:last-child)
+    margin-right: 6px
 
-    &:before
-      display: block
-      font-family: Courier New
-      font-weight: bold
-      margin-top: -1px
+  &.is-active
+    background-color: var(--link-color, #176093)
 
-  &.preview:before
-    body[data-locale=ru] &
-      content: '<предпросмотр>'
+  /* &.preview,                                */
+  /* &.source                                  */
+  /*   width: auto                             */
 
-    body[data-locale=en] &
-      content: '<preview>'
+  /*   &:before                                */
+  /*     display: block                        */
+  /*     font-family: Courier New              */
+  /*     font-weight: bold                     */
+  /*     margin-top: -1px                      */
 
-  &.source:before
-    body[data-locale=ru] &
-      content: '<ббкоды>'
+  /* &.preview:before                          */
+  /*   body[data-locale=ru] &                  */
+  /*     content: '<предпросмотр>' */
 
-    body[data-locale=en] &
-      content: '<bbcode>'
+  /*   body[data-locale=en] &                  */
+  /*     content: '<preview>'                  */
+
+  /* &.source:before                           */
+  /*   body[data-locale=ru] &                  */
+  /*     content: '<ббкоды>'             */
+
+  /*   body[data-locale=en] &                  */
+  /*     content: '<bbcode>'                   */
 
 input
   display: none

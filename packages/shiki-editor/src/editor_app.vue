@@ -30,12 +30,14 @@
             v-bind='menuPreviewItem'
             :is-active='isPreview'
             :is-enabled='isPreviewEnabled'
+            is-button
             @command='() => togglePreview()'
           />
           <Icon
             v-bind='menuSourceItem'
             :is-active='isSource'
             :is-enabled='isSourceEnabled'
+            is-button
             @command='() => toggleSource()'
           />
         </div>
