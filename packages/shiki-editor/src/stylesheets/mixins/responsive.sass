@@ -1,0 +1,25 @@
+=iphone
+  @media screen and (max-width: 767px) and (orientation: portrait)
+    @content
+
+=ipad
+  @media screen and (min-width: 568px) and (max-width: 1023px) and (orientation: landscape)
+    @content
+
+  @media screen and (min-width: 768px) and (max-width: 1023px)
+    @content
+
+=lte_ipad
+  @media screen and (max-width: 1023px)
+    @content
+
+=gte_laptop
+  @media screen and (min-width: 1024px)
+    @content
+
+=gte_ipad
+  +ipad
+    @content
+
+  +gte_laptop
+    @content

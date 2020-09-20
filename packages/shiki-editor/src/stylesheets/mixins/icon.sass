@@ -1,0 +1,81 @@
+@import ./responsive
+
+=icon
+  -webkit-appearance: none
+  background: transparent
+  border-radius: 4px
+  border: none
+
+  +lte_ipad
+    font-size: 16px
+    height: 23px
+    margin: 0 1px
+    padding: 0 4px
+    width: 32px
+
+  +gte_laptop
+    font-size: 14px
+    height: 19px
+    margin: 0 1px
+    padding: 0 4px
+    width: 27px
+
+  &:active
+    outline: none
+
+  &:not(.is-disabled)
+    color: #456
+    cursor: pointer
+
+    @media screen and (min-width: 1024px)
+      &:hover
+        color: var(--link-hover-color, #dd5202)
+
+    &:active
+      color: var(--link-active-color, #ff0202)
+
+  &.is-disabled
+    color: rgba(#123, 0.3)
+    outline: none
+    pointer-events: none
+
+  &.is-active
+    background: rgba(#acb1b4, 0.25)
+
+    &.is-button
+      color: #fff
+      background-color: #1d78b7
+
+      &.is-disabled
+        color: rgba(#123, 0.5)
+        background: rgba(#acb1b4, 0.25)
+
+  &.is-button
+    width: auto
+
+    +gte_laptop
+      align-items: center
+      display: inline-flex
+      font-size: 13px
+      margin: 0 3px
+      padding: 0 6px
+
+      &:last-child
+        margin: 0
+
+    &:before
+      +gte_laptop
+        margin-right: 5px
+
+    span
+      +lte_ipad
+        display: none
+
+  &:before
+    // it is a copy of shikimori font mixin
+    font-family: shiki-editor
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    font-feature-settings: 'liga'
+    text-transform: none
+    letter-spacing: normal

@@ -12,6 +12,10 @@
           class='menu_group'
           :class='`menu_group-${group}`'
         >
+          <button
+            class='mobile_placeholder'
+            :class='`mobile_placeholder-${group}`'
+          />
           <Icon
             v-for='item in items'
             :key='item.constructor === Object ? item.type : item'
@@ -437,7 +441,8 @@ export default {
 </style>
 
 <style scoped lang='sass'>
-@import ./stylesheets/responsive
+@import ./stylesheets/mixins/responsive
+@import ./stylesheets/mixins/icon
 
 .menubar
   background: #fff
@@ -468,7 +473,7 @@ export default {
   flex-wrap: wrap
   padding: 5px 0
 
-  @media screen and (max-width: 767px) and (orientation: portrait)
+  +iphone
     /deep/ .icon
       display: none
 
@@ -479,6 +484,21 @@ export default {
     &.menu_group-history
       /deep/ .icon
         display: block
+
+  .mobile_placeholder
+    +iphone
+      +icon
+
+    +gte_ipad
+      display: none
+
+    &-history
+      display: none
+
+    $icons: ("inline": "\e802", "item": "\e804", "block": "\e807")
+    @each $name, $glyph in $icons
+      &-#{$name}:before
+        content: $glyph
 
   & + .menu_group:before
     border-right: 1px solid #ddd

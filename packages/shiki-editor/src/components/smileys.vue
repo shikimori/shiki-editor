@@ -107,7 +107,7 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-@import ../stylesheets/responsive.sass
+@import ../stylesheets/mixins/responsive.sass
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
