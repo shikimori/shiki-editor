@@ -10,11 +10,19 @@
           v-for='([group, items], index) in menuItems'
           :key='index'
           class='menu_group'
-          :class='`menu_group-${group}`'
+          :class='{
+            [`menu_group-${group}`]: true,
+            "is-active": activeMobileMenuGroup === group,
+            "is-hidden": group === "history" && activeMobileMenuGroup
+          }'
         >
           <button
             class='mobile_placeholder'
-            :class='`mobile_placeholder-${group}`'
+            :class='{
+              [`mobile_placeholder-${group}`]: true,
+              "is-active": activeMobileMenuGroup === group
+            }'
+            @click='(e) => toggleMobileMenuGroup(e, group)'
           />
           <Icon
             v-for='item in items'
@@ -154,7 +162,8 @@ export default {
     isPreview: false,
     isPreviewLoading: false,
     previewHTML: null,
-    isHugeContent: false
+    isHugeContent: false,
+    activeMobileMenuGroup: null
   }),
   computed: {
     isEditingEnabled() {
@@ -428,6 +437,14 @@ export default {
         window.scrollTo(0, scrollY);
       }
     },
+    toggleMobileMenuGroup(e, group) {
+      e.currentTarget.blur();
+      this.activeMobileMenuGroup = this.activeMobileMenuGroup === group ?
+        null :
+        group;
+
+      this.editor.focus();
+    },
     exportContent() {
       return this.isSource ? this.editorContent : this.editor.exportMarkdown();
     }
@@ -480,6 +497,10 @@ export default {
       &.is-active
         display: block
 
+    &.is-hidden
+      display: none
+
+    &.is-active,
     &.menu_group-controls,
     &.menu_group-history
       /deep/ .icon
@@ -495,7 +516,7 @@ export default {
     &-history
       display: none
 
-    $icons: ("inline": "\e802", "item": "\e804", "block": "\e807")
+    $icons: ("inline": "\E80A", "item": "\E80E", "block": "\E80F")
     @each $name, $glyph in $icons
       &-#{$name}:before
         content: $glyph
