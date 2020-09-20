@@ -13,7 +13,7 @@
           :class='{
             [`menu_group-${group}`]: true,
             "is-active": activeMobileMenuGroup === group,
-            "is-hidden": group === "history" && activeMobileMenuGroup
+            "is-hidden": activeMobileMenuGroup && activeMobileMenuGroup !== group
           }'
         >
           <button
@@ -22,7 +22,7 @@
               [`mobile_placeholder-${group}`]: true,
               "is-active": activeMobileMenuGroup === group
             }'
-            @click='(e) => toggleMobileMenuGroup(e, group)'
+            @click='(e) => toggleMobileMenuGroup(group, e)'
           />
           <Icon
             v-for='item in items'
@@ -294,6 +294,8 @@ export default {
   },
   methods: {
     command(type, args) {
+      this.toggleMobileMenuGroup(null);
+
       const prefix = type
         .split('_')
         .map((word, index) => (
@@ -437,13 +439,15 @@ export default {
         window.scrollTo(0, scrollY);
       }
     },
-    toggleMobileMenuGroup(e, group) {
-      e.currentTarget.blur();
+    toggleMobileMenuGroup(group, e) {
       this.activeMobileMenuGroup = this.activeMobileMenuGroup === group ?
         null :
         group;
 
-      this.editor.focus();
+      if (e) {
+        e.currentTarget.blur();
+        this.editor.focus();
+      }
     },
     exportContent() {
       return this.isSource ? this.editorContent : this.editor.exportMarkdown();
@@ -460,6 +464,11 @@ export default {
 <style scoped lang='sass'>
 @import ./stylesheets/mixins/responsive
 @import ./stylesheets/mixins/icon
+
+=group_separator
+  border-right: 1px solid #ddd
+  content: ''
+  margin: 0 5px 0 3px
 
 .menubar
   background: #fff
@@ -500,6 +509,9 @@ export default {
     &.is-hidden
       display: none
 
+    &.is-active:before
+      display: none
+
     &.is-active,
     &.menu_group-controls,
     &.menu_group-history
@@ -516,15 +528,26 @@ export default {
     &-history
       display: none
 
+    &.is-active
+      color: var(--link-active-color, #ff0202)
+      position: relative
+      margin-right: 9px
+      background: transparent
+
+      &:after
+        +group_separator
+        position: absolute
+        top: 0
+        right: -10px
+        height: 100%
+
     $icons: ("inline": "\E80A", "item": "\E80E", "block": "\E80F")
     @each $name, $glyph in $icons
       &-#{$name}:before
         content: $glyph
 
   & + .menu_group:before
-    border-right: 1px solid #ddd
-    content: ''
-    margin: 0 5px 0 3px
+    +group_separator
 
   &-controls
     margin-left: auto
