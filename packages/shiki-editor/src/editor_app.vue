@@ -437,6 +437,8 @@ export default {
 </style>
 
 <style scoped lang='sass'>
+@import ./stylesheets/responsive
+
 .menubar
   background: #fff
   left: 0
@@ -465,6 +467,18 @@ export default {
   display: flex
   flex-wrap: wrap
   padding: 5px 0
+
+  @media screen and (max-width: 767px) and (orientation: portrait)
+    /deep/ .icon
+      display: none
+
+      &.is-active
+        display: block
+
+    &.menu_group-controls,
+    &.menu_group-history
+      /deep/ .icon
+        display: block
 
   & + .menu_group:before
     border-right: 1px solid #ddd
