@@ -20,33 +20,28 @@ export default class SpoilerBlockView extends DOMView {
     this.trigger.addEventListener('keypress', this.triggerKeypress);
     this.trigger.setAttribute('tabindex', 0);
 
-    const edit = document.createElement('i');
-    edit.classList.add('edit');
-    edit.addEventListener('click', this.editClick);
-    edit.addEventListener('keypress', this.editKeypress);
-    edit.setAttribute('tabindex', 0);
+    this.trigger_edit = document.createElement('i');
+    this.trigger_edit.classList.add('edit');
+    this.trigger_edit.addEventListener('click', this.editClick);
+    this.trigger_edit.addEventListener('keypress', this.editKeypress);
+    this.trigger_edit.setAttribute('tabindex', 0);
 
-    const separator = document.createElement('span');
-    separator.classList.add('separator');
+    this.trigger_separator = document.createElement('span');
+    this.trigger_separator.classList.add('separator');
 
-    const expand = document.createElement('i');
-    expand.classList.add('expand');
-    expand.addEventListener('click', this.expandClick);
-    expand.addEventListener('keypress', this.expandKeypress);
-    expand.setAttribute('tabindex', 0);
+    this.trigger_expand = document.createElement('i');
+    this.trigger_expand.classList.add('expand');
+    this.trigger_expand.addEventListener('click', this.expandClick);
+    this.trigger_expand.addEventListener('keypress', this.expandKeypress);
+    this.trigger_expand.setAttribute('tabindex', 0);
 
-    const center = document.createElement('i');
-    center.classList.add('center');
-    center.addEventListener('click', this.centerClick);
-    center.addEventListener('keypress', this.centerKeypress);
-    center.setAttribute('tabindex', 0);
+    this.trigger_center = document.createElement('i');
+    this.trigger_center.classList.add('center');
+    this.trigger_center.addEventListener('click', this.centerClick);
+    this.trigger_center.addEventListener('keypress', this.centerKeypress);
+    this.trigger_center.setAttribute('tabindex', 0);
 
     this.syncState();
-
-    this.trigger.appendChild(separator);
-    this.trigger.appendChild(expand);
-    this.trigger.appendChild(center);
-    this.trigger.appendChild(edit);
 
     this.dom.appendChild(this.trigger);
     this.dom.appendChild(this.contentDOM);
@@ -72,6 +67,11 @@ export default class SpoilerBlockView extends DOMView {
     } else {
       this.trigger.innerText = this.node.attrs.label;
     }
+
+    this.trigger.appendChild(this.trigger_separator);
+    this.trigger.appendChild(this.trigger_expand);
+    this.trigger.appendChild(this.trigger_center);
+    this.trigger.appendChild(this.trigger_edit);
   }
 
   @bind
