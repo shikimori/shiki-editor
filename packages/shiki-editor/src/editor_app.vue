@@ -559,6 +559,7 @@ export default {
   & + .menu_group:before
     +group_separator
 
+  &.is-active,
   &-block
     margin-right: 30px
 
