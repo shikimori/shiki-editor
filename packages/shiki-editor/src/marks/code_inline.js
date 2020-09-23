@@ -13,6 +13,12 @@ export default class CodeInline extends Mark {
     };
   }
 
+  keys({ type }) {
+    return {
+      'Mod-o': (state, dispatch) => this.commands({ type })()(state, dispatch)
+    };
+  }
+
   inputRules({ type }) {
     return [
       markInputRule(/(?:`)([^`]+)(?:`)$/, type)
