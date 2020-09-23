@@ -393,11 +393,13 @@ export default {
         const { data } = await this.shikiRequest.post('preview', { text });
 
         if (data !== null) {
-          this.previewHTML = data;
+          const { html, JS_EXPORTS } = data;
+
+          this.previewHTML = html;
           this.isPreviewLoading = false;
 
           await this.$nextTick();
-          this.$emit('preview', this.$refs.preview);
+          this.$emit('preview', { node: this.$refs.preview, JS_EXPORTS });
         } else {
           this.isPreview = false;
           this.isPreviewLoading = false;
