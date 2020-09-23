@@ -60,8 +60,10 @@ import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
-aaaa ||bbbb|| \`test\` [b]bold[/b]
-[spoiler_block]test[/spoiler_block]
+[spoiler_block]
+> aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]
+test
+[/spoiler_block]
 `.trim();
 
 export default {
