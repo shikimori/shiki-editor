@@ -5,7 +5,11 @@
       class='menubar'
       :class='{ "is-offset": isMenuBarOffset }'
     >
-      <div v-if='editor' class='icons'>
+      <div
+        v-if='editor'
+        v-dragscroll
+        class='icons'
+      >
         <div
           v-for='([group, items], index) in menuItems'
           :key='index'
@@ -104,6 +108,7 @@
 <script>
 import autosize from 'autosize';
 import withinviewport from 'withinviewport';
+import { dragscroll } from 'vue-dragscroll';
 
 import { undo, redo } from 'prosemirror-history';
 
@@ -136,6 +141,9 @@ const MAXIMUM_CONTENT_SIZE = 100000;
 
 export default {
   name: 'EditorApp',
+  directives: {
+    dragscroll
+  },
   components: {
     EditorContent,
     Icon,
@@ -487,10 +495,10 @@ export default {
   .icons
     color: #456
     display: flex
-    flex-wrap: wrap
+    flex-wrap: nowrap
     font-size: 16px
     min-height: 1em
-    overflow: visible
+    overflow: hidden
 
   /deep/ .shiki-file_uploader-upload_progress
     margin-top: 1px
@@ -498,7 +506,7 @@ export default {
 
 .menu_group
   display: flex
-  flex-wrap: wrap
+  flex-wrap: nowrap
   padding: 5px 0
 
   +iphone
@@ -550,6 +558,9 @@ export default {
 
   & + .menu_group:before
     +group_separator
+
+  &-block
+    margin-right: 30px
 
   &-controls
     margin-left: auto
