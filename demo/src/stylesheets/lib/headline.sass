@@ -3,9 +3,13 @@ header.head
 
   h1, h2
     border-bottom: none
-    color: #111
+    color: #123
     display: inline-block
-    font: 26px normal tahoma, verdana, arial, sans-serif
+    +css4
+      font-family: var(--font-alt)
+    font-size: 30px
+    font-weight: normal
+    margin: 0
 
     +iphone
       font-size: 24px
@@ -32,19 +36,23 @@ header.head
         //text-align: center
         //top: -9px
         //width: 35px
+
       body[data-locale=ru] &:after
         margin: -9px 0 0 4px
 
       body[data-locale=en] &:after
         margin: -9px 0 0 7px
 
-      &:hover:after
-        border-bottom: 1px solid $link-border-hover
+      +gte_laptop
+        &:hover:after
+          +css4
+            border-bottom: 1px solid var(--link-border-hover-color)
 
   .misc, a.edit
     color: $gray-2
     display: inline-block
-    font-family: $font-main
+    +css4
+      font-family: var(--font-main)
     font-size: 11px
     line-height: 12px
     padding: 17px 0 0 10px
@@ -73,13 +81,17 @@ header.head
   border-left: 5px solid darken(#dbe0e6, 1%)
   color: #123
   font-size: 18px
-  font-weight: bold
+  font-weight: 700
+  -webkit-font-smoothing: antialiased
+  +css4
+    font-family: var(--font-alt)
+  letter-spacing: 0.13px
   line-height: $line_height
-  margin-bottom: 5px
+  margin-bottom: 10px
   padding: 4px 10px 2px
+  position: relative
   text-transform: uppercase
   transition: color 0.2s ease
-  position: relative
 
   +gte_desktop
     margin-bottom: 10px
@@ -100,56 +112,79 @@ header.head
       position: absolute
       right: 10px
 
-    &:hover
-      //color: $link-hover
-      &:before
-        color: $link-hover
+    +gte_laptop
+      &:hover:before
+        +css4
+          color: var(--link-hover-color)
 
-    &:active
-      //color: $link-active
-      &:before
-        color: $link-active
+    &:active:before
+      +css4
+        color: var(--link-active-color)
 
   &.linkheadline
     & > a
-      text-decoration: underline
+      // text-decoration: underline
       color: inherit
 
       &:before
         color: inherit
 
-      &:hover,
-      &:hover:before
-        color: $link-hover
-
       +gte_laptop
-        &:active,
-        &:active:before
-          color: $link-active
+        &:hover,
+        &:hover:before
+          +css4
+            color: var(--link-hover-color)
 
-.midheadline
-  @extend .headline
-  font-size: 16px
-  margin-bottom: 10px
-  padding-bottom: 2px
-  padding-top: 3px
+      &:active,
+      &:active:before
+        +css4
+          color: var(--link-active-color)
 
+  .misc-links
+    +css4
+      font-family: var(--font-main)
+
+    +gte_ipad
+      padding-left: 10px
+      display: inline
+
+    +iphone
+      display: block
+
+    & > a
+      +link
+      +dash_separated
+      display: inline
+      font-size: 12px
+      font-weight: normal
+      padding-right: 0
+      text-transform: none
+
+      &.selected
+        +css4
+          color: var(--link-hover-color)
+
+        &:hover
+          +css4
+            color: var(--link-active-color)
+
+h1, h2, h3, h4, h5
+  &.headline,
+  &.midheadline,
+  &.subheadline
+    margin-top: 0
+
+
+// midheadline is left here by compatibility reasons. otherwise it could break user styles
+.midheadline,
 .subheadline
   @extend .headline
-  margin-bottom: 5px
+  font-size: 15px
+  line-height: 30px
+  padding: 0 10px
 
-  +gte_laptop
-    font-size: 14px
-    padding: 6px 10px 4px 8px
-    line-height: 14px
-
-  +lte_ipad
-    font-size: 16px
-    padding-top: 3px
-    padding-bottom: 2px
-
-    .b-user16 img
-      margin-top: 5px
+  .b-user16 img
+    margin-top: 7px
 
   .b-link
     display: inline
@@ -161,6 +196,10 @@ header.head
   .b-user16
     text-transform: none
 
+  .count
+    +brackets_surrounded($gray-3)
+    margin-left: 5px
+
 .mischeadline
   font-size: 13px
   font-weight: bold
@@ -169,8 +208,10 @@ header.head
 .subheadline-buttons
   position: absolute
   right: 3px
-  margin-top: 2px
+  margin-top: 5px
+  z-index: 1
 
   +lte_ipad
-    margin-top: 1px
+    margin-top: 0
     right: 8px
+

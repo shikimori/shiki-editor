@@ -1,62 +1,59 @@
 /* цвет, становящийся ссылковым по наведению
-=link_color($color: $link)
+=link_color($color: 'null')
   //transition: color 0.2s ease
-  color: $color
-
-  &:hover
-    color: $link-hover
+  @if $color == 'null'
+    +css4
+      color: var(--link-color)
+  @else
+    color: $color
 
   +gte_laptop
-    &:active
-      color: $link-active
+    &:hover
+      +css4
+        color: var(--link-hover-color)
+
+  &:active
+    +css4
+      color: var(--link-active-color)
 
 /* голубая ссылка без подчёркивания
-=link($color: $link)
+=link($color: 'null')
   +link_color($color)
   cursor: pointer
 
-  &:hover
-    text-decoration: underline
-    border-bottom-color: $link-border-hover
-
   +gte_laptop
-    &:active
-      border-bottom-color: $link-border-active
+    &:hover
+      text-decoration: underline
+      +css4
+        border-bottom-color: var(--link-border-hover-color)
 
-/* голубая ссылка аяксового действия
-//=ajax_link
-  +link_color
-  border-bottom: 1px dotted $link
-  cursor: pointer
-  transition: color 0.2s ease, border-bottom-color 0.2s ease
-
-  //&:hover
-    border-bottom-color: $link-3
-
-  //&:actibe
-    border-bottom-color: $link-2
-
+  &:active
+    +css4
+      border-bottom-color: var(--link-border-active-color)
 
 /* голубая ссылка с подчёркиванием
-=link_underlined($color: $link)
+=link_underlined($color: 'null')
   +link($color)
   text-decoration: underline
 
 =js-link
   +link
-  border-bottom: 1px dotted $link-border
+  +css4
+    border-bottom: 1px dotted var(--link-border-color)
   display: inline-block
   line-height: 1
   user-select: none
 
-  &:hover
-    text-decoration: none !important
-    border-bottom-color: $link-border-hover
-
   +gte_laptop
-    &:active
+    &:hover
+      +css4
+        border-bottom-color: var(--link-border-hover-color)
       text-decoration: none !important
-      border-bottom-color: $link-border-active
+
+  &:active
+    +css4
+      border-bottom-color: var(--link-border-active-color)
+    text-decoration: none !important
 
   &.active
     font-weight: bold
