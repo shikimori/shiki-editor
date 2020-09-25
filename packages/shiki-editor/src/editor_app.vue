@@ -601,6 +601,7 @@ export default {
   /*   cursor: text  */
 
   [data-image]:hover,
+  [data-video]:hover,
   [data-link]:hover,
   [data-div]:hover,
   [data-span]:hover
@@ -611,10 +612,12 @@ export default {
     top: 0 !important
 
   [data-image]:hover,
+  [data-video]:hover,
   [data-link]:hover,
   [data-div]:hover,
   [data-span]:hover,
-  [data-image].is-prosemirror-selected
+  [data-image].is-prosemirror-selected,
+  [data-video].ProseMirror-selectednode
     &:before
       background: rgba(#fcfcfc, 0.75)
       color: #2b8acc
@@ -637,7 +640,8 @@ export default {
     .no-prosemirror-info &:before
       display: none
 
-  [data-image].is-prosemirror-selected
+  [data-image].is-prosemirror-selected,
+  [data-video].ProseMirror-selectednode
     outline: 2px solid #9cf
     position: relative
 
@@ -645,6 +649,11 @@ export default {
     &.is-prosemirror-selected:before,
     &:hover:before
       content: attr(data-image)
+
+  [data-video]
+    &.ProseMirror-selectednode:before,
+    &:hover:before
+      content: attr(data-video)
 
   [data-link]
     &:hover:before
@@ -668,6 +677,7 @@ export default {
     &.is-prosemirror-selected,
     &.ProseMirror-selectednode
       cursor: default
+      overflow: visible
       z-index: 9
 
       &:after
@@ -680,12 +690,17 @@ export default {
         right: 0
         top: 0
 
-      a,
-      img
-        cursor: default
-
       .controls
         display: flex
         top: 1px
         right: 1px
+
+      img
+        opacity: 1
+        cursor: default
+
+      .video-link
+        &:before,
+        &:after
+          display: none
 </style>

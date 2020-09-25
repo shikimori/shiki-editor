@@ -119,10 +119,6 @@ export default {
 
 <style scoped lang='sass'>
 .b-image
-  &:hover,
-  &.is-prosemirror-selected
-    img
-      opacity: 1
   img
     transition: max-width .25s
 </style>

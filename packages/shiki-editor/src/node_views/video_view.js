@@ -34,6 +34,7 @@ export default class VideoView extends DOMView {
       dom.innerText = attrs.bbcode;
     } else {
       dom.innerText = '';
+      dom.setAttribute('data-video', attrs.bbcode);
       dom.classList.add(attrs.hosting);
       dom.classList.add('fixed');
       if (attrs.hosting === 'youtube' || attrs.hosting === 'vk') {
