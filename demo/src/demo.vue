@@ -68,14 +68,14 @@ https://www.youtube.com/watch?v=0d4rPwIpzNw
 
 [anime=2]
 
-[image=1203647]
-
 [video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video]
 
 [spoiler_block]
 > aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]
 test
 [/spoiler_block]
+
+[image=1203647]
 
 `.trim();
 
