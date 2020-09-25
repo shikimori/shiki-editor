@@ -100,7 +100,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
       new Token('shiki_inline', null, children, {
         ...attributes,
         isLoading: cache === undefined,
-        isError: cache === null
+        isNotFound: cache === null
       })
     );
   }
