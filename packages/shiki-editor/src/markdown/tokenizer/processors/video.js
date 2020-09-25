@@ -9,13 +9,13 @@ export default function processVideo(state, tagStart, tagEnd) {
   if (url) {
     const bbcode = `${tagStart}${url}${tagEnd}`;
     const cache = CACHE.video?.[url];
-    const meta = {
-      url,
-      bbcode,
-      poster: cache?.poster,
-      hosting: cache?.hosting,
-      isLoading: !cache
-    };
+    const meta = { url, bbcode };
+
+    if (cache) {
+      meta.poster = cache.poster;
+      meta.hosting = cache.hosting;
+      meta.isLoading = false;
+    }
 
     state.inlineTokens.push(
       new Token('video', null, null, meta)
