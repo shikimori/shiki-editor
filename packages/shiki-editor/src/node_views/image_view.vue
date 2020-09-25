@@ -95,6 +95,7 @@ export default {
           this.getPos() + 1
         )
       );
+      this.editor.focus();
     },
     select() {
       this.view.dispatch(
@@ -119,26 +120,8 @@ export default {
 .b-image
   &:hover,
   &.is-prosemirror-selected
-    z-index: 9
-
-    &:after
-      border: 1px solid rgba(#fff, 0.5)
-      bottom: 0
-      content: ''
-      left: 0
-      pointer-events: none
-      position: absolute
-      right: 0
-      top: 0
-
     img
       opacity: 1
-
-    .controls
-      display: flex
-      top: 1px
-      right: 1px
-
   img
     transition: max-width .25s
 </style>
