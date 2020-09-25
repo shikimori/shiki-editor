@@ -24,54 +24,23 @@ export default class Video extends Node {
       },
       group: 'inline',
       draggable: true,
-      selectable: true
-
-      // parseDOM: [{
-      //   tag: '.b-image',
-      //   getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
-      // }, {
-      //   tag: 'img.b-poster',
-      //   getAttrs: node => ({ src: node.src, isPoster: true })
-      // }],
-      // toDOM: node => {
-      //   return ['div', 0];
-      // }
-      //   const serializedAttributes = JSON.stringify(node.attrs);
-      //   if (node.attrs.isPoster) {
-      //     return [
-      //       'img',
-      //       {
-      //         class: 'b-poster',
-      //         src: node.attrs.src,
-      //         'data-attrs': serializedAttributes
-      //       }
-      //     ];
-      //   }
-      //
-      //   const attrs = { src: node.attrs.src };
-      //   if (node.attrs.width) {
-      //     attrs.width = node.attrs.width;
-      //   }
-      //   if (node.attrs.height) {
-      //     attrs.height = node.attrs.height;
-      //   }
-      //   const classes = ['b-image'];
-      //   if (node.attrs.class) {
-      //     classes.push(node.attrs.class);
-      //   }
-      //   if (node.attrs.isNoZoom) {
-      //     classes.push('no-zoom');
-      //   }
-      //
-      //   return [
-      //     'span',
-      //     {
-      //       class: classes.join(' '),
-      //       'data-attrs': serializedAttributes
-      //     },
-      //     ['img', attrs]
-      //   ];
-      // }
+      selectable: true,
+      parseDOM: [{
+        tag: '.b-video',
+        getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
+      }],
+      // NOTE: simplified markup needed only to make copy-paste work
+      toDOM: node => {
+        const serializedAttributes = JSON.stringify(node.attrs);
+        return [
+          'span',
+          {
+            class: 'b-video',
+            'data-attrs': serializedAttributes
+          },
+          ['a', { href: node.attrs.url }]
+        ];
+      }
     };
   }
 
