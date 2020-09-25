@@ -672,7 +672,7 @@ export default {
       margin-left: 5px
 
   .b-image,
-  .b-video
+  .b-video:not(.b-ajax)
     &:hover,
     &.is-prosemirror-selected,
     &.ProseMirror-selectednode
