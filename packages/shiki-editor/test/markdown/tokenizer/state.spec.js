@@ -861,7 +861,10 @@ describe('MarkdownTokenizer', () => {
             children: [
               {
                 type: 'video',
-                attrs: [['url', 'https://test.com']]
+                attrs: [
+                  ['url', 'https://test.com'],
+                  ['bbcode', '[video]https://test.com[/video]']
+                ]
               }
             ]
           },

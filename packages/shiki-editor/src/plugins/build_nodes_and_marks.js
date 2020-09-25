@@ -20,6 +20,7 @@ import {
   ShikiInline,
   SizeBlock,
   Smiley,
+  Video,
   SpoilerBlock,
   Text
 } from '../nodes';
@@ -69,6 +70,7 @@ export default function(editor) {
     new Hr(),
     new Smiley({ origin: editor.options.shikiRequest.origin }),
     new Image(),
+    new Video(),
     new ListItem(),
     new Quote({ origin: editor.options.shikiRequest.origin }),
     new SpoilerBlock()
