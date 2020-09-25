@@ -10,7 +10,10 @@ export default function(editor, { uploadId, response }) {
   if (pos != null) {
     dispatch(
       state.tr
-        .replaceWith(pos, pos, editor.schema.nodes.image.create({ src: url }))
+        .replaceWith(pos, pos, editor.schema.nodes.image.create({
+          id: response.id,
+          src: url
+        }))
         .setMeta(uploadPlaceholder, { remove: { id: uploadId } })
     );
   } else {
