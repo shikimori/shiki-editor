@@ -9,7 +9,6 @@ export default class VideoView extends DOMView {
     super(options);
 
     this.dom = document.createElement('span');
-    this.dom.classList.add('b-video');
 
     this.syncState();
 
@@ -26,15 +25,24 @@ export default class VideoView extends DOMView {
     const { dom, node } = this;
     const { attrs } = node;
 
+    const isValid = !attrs.isLoading && !attrs.isError && !attrs.isNotFound;
+
+    dom.classList.toggle('b-video', isValid);
+    dom.classList.toggle('b-shiki_editor-node', !isValid);
     dom.classList.toggle('b-ajax', attrs.isLoading);
     dom.classList.toggle('vk-like', attrs.isLoading);
     dom.classList.toggle('is-error', attrs.isError);
+
     dom.classList.toggle('b-entry-404', attrs.isNotFound);
 
+    dom.innerText = '';
+
     if (attrs.isLoading || !attrs.hosting) {
-      dom.innerText = attrs.bbcode;
+      const bbcode = document.createElement('span');
+      bbcode.innerText = attrs.bbcode;
+      bbcode.addEventListener('click', this.linkClick);
+      dom.appendChild(bbcode);
     } else {
-      dom.innerText = '';
       dom.setAttribute('data-video', attrs.bbcode);
       dom.setAttribute('data-attrs', JSON.stringify(attrs));
       dom.classList.add(attrs.hosting);

@@ -80,7 +80,8 @@ import ShikiUploader from '../../packages/shiki-uploader';
 // `.trim();
 
 const TEXT_2 = `
-[video]https://www.youtube.com/watch?v=JyTfsdfsdffsfdsf[/video]
+[anime=2]
+[video]https://www.youtube.com[/video]
 `.trim();
 
 export default {
