@@ -5,7 +5,7 @@ import { ImageView } from '../node_views';
 
 const IMAGE_INPUT_REGEX = /\[img\](.*?)\[\/img\]/;
 
-export class Image extends Node {
+export default class Image extends Node {
   get name() {
     return 'image';
   }

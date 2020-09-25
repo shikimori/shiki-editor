@@ -60,10 +60,16 @@ import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
+https://www.youtube.com/watch?v=0d4rPwIpzNw
+
+[video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video]
+
+
 [spoiler_block]
 > aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]
 test
 [/spoiler_block]
+
 `.trim();
 
 export default {
