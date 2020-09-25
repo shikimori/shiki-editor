@@ -20,7 +20,8 @@ export default class Video extends Node {
         poster: { default: null },
         isLoading: { default: true },
         isNotFound: { default: false },
-        isError: { default: false }
+        isError: { default: false },
+        isBroken: { default: false }
       },
       group: 'inline',
       draggable: true,

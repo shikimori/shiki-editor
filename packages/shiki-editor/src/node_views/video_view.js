@@ -1,3 +1,4 @@
+import imagesloaded from 'imagesloaded';
 import { bind } from 'shiki-decorators';
 
 import DOMView from './dom_view';
@@ -48,7 +49,11 @@ export default class VideoView extends DOMView {
       link.addEventListener('click', this.linkClick);
 
       const img = document.createElement('img');
-      img.src = attrs.poster;
+      img.src = attrs.isBroken ?
+        this.shikiLoader.origin + '/assets/globals/missing_video.png' :
+        attrs.poster;
+
+      imagesloaded(img, this.checkImage);
 
       const marker = document.createElement('span');
       marker.classList.add('marker');
@@ -128,5 +133,18 @@ export default class VideoView extends DOMView {
       )
     );
     this.editor.focus();
+  }
+
+  @bind
+  checkImage(imagesLoaded) {
+    const [img] = imagesLoaded.elements;
+
+    if (img.naturalWidth === 120 && img.naturalHeight === 90) {
+      this.updateAttrs({ isBroken: true }, false);
+    }
+
+    // if (((img.naturalWidth * 1.0) / img.naturalHeight).round(1) === 1.3) {
+    //   $root.addClass('shrinked');
+    // }
   }
 }

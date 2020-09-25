@@ -21,6 +21,10 @@ export class ShikiLoader extends Extension {
     };
   }
 
+  get origin() {
+    return this.options.shikiRequest.origin;
+  }
+
   fetch({ id, type }) {
     const deferred = pDefer();
     const kind = convertToShikiType(type);
