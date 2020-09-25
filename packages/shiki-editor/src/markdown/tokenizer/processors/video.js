@@ -1,5 +1,6 @@
 import Token from '../token';
 import { extractUntil } from '../helpers';
+import { CACHE } from '../../../extensions/shiki_loader';
 
 export default function processVideo(state, tagStart, tagEnd) {
   const index = state.index + tagStart.length;
@@ -7,14 +8,17 @@ export default function processVideo(state, tagStart, tagEnd) {
 
   if (url) {
     const bbcode = `${tagStart}${url}${tagEnd}`;
+    const cache = CACHE.video?.[url];
+    const meta = {
+      url,
+      bbcode,
+      poster: cache?.poster,
+      hosting: cache?.hosting,
+      isLoading: !cache
+    };
 
     state.inlineTokens.push(
-      new Token(
-        'video',
-        null,
-        null,
-        { url, bbcode }
-      )
+      new Token('video', null, null, meta)
     );
     state.next(bbcode.length);
     return true;
