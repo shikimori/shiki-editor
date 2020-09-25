@@ -43,6 +43,7 @@ export default class VideoView extends DOMView {
       const link = document.createElement('a');
       link.classList.add('video-link');
       link.href = attrs.url;
+      link.addEventListener('click', e => e.preventDefault());
 
       const img = document.createElement('img');
       img.src = attrs.poster;
