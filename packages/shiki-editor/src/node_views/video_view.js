@@ -59,7 +59,13 @@ export default class VideoView extends DOMView {
       del.classList.add('delete');
       del.addEventListener('click', this.deleteClick);
 
+      const open = document.createElement('a');
+      open.classList.add('prosemirror-open');
+      open.setAttribute('target', '_blank');
+      open.setAttribute('href', attrs.url);
+
       link.appendChild(img);
+      controls.appendChild(open);
       controls.appendChild(del);
 
       dom.appendChild(controls);

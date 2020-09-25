@@ -12,8 +12,9 @@
     @click='select'
   >
     <div class='controls'>
+      <a class='prosemirror-open' :href='node.attrs.src' target='_blank' />
       <div v-if='isPoster' class='collapse' @click='collapse' />
-      <div v-else-if='isExpandable' class='expand' @click='expand' />
+      <div v-else-if='isExpandable' class='prosemirror-expand' @click='expand' />
       <div class='delete' @click='remove' />
     </div>
     <img
