@@ -63,6 +63,7 @@ const TEXT_2 = `
 https://www.youtube.com/watch?v=0d4rPwIpzNw
 
 [video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video]
+[video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video]
 
 
 [spoiler_block]
