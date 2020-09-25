@@ -850,6 +850,26 @@ describe('MarkdownTokenizer', () => {
       });
     });
 
+    describe('video', () => {
+      it('[video]https://test.com[/img]', () => {
+        expect(MarkdownTokenizer.parse(
+          '[video]https://test.com[/video]'
+        )).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'video',
+                attrs: [['url', 'https://test.com']]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+    });
+
     describe('smiley', () => {
       it(':V:', () => {
         expect(MarkdownTokenizer.parse(

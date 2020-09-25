@@ -25,6 +25,7 @@ import processCodeInline from './processors/code_inline';
 import processHeading from './processors/heading';
 import processHr from './processors/hr';
 import processImage from './processors/image';
+import processVideo from './processors/video';
 import processInlineBlock from './processors/inline_block';
 import processLinkInline from './processors/link_inline';
 import { processInlineOrBlock } from './processors/inline_or_block';
@@ -542,6 +543,10 @@ export default class MarkdownTokenizer {
           if (processMarkOpen(this, 'size_inline', bbcode, '[/size]', meta)) {
             return false;
           }
+          break;
+
+        case '[vide':
+          if (processVideo(this, bbcode, '[/video]')) { return false; }
           break;
 
         case '[anim':
