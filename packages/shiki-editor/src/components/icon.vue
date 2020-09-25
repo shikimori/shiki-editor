@@ -6,7 +6,7 @@
     class='icon'
     :title='title'
     :class='{
-      [type]: true,
+      [`icon-${type}`]: true,
       "is-active": isEnabled && isActive,
       "is-disabled": isDisabled || !isEnabled
     }'
