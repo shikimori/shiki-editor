@@ -39,7 +39,7 @@ export default function processShikiBlock(
 
   const sequence = `${openBbcode}${text}${closeBbcode}`;
   const tokens = state.constructor.parse(text.trim());
-  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
+  const cache = CACHE[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     const attributes = {

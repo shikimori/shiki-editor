@@ -22,7 +22,7 @@ export function processShikiInline(state, openBbcode, closeBbcode, meta) {
 }
 
 function processShikiImage(state, openBbcode, meta) {
-  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
+  const cache = CACHE[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     state.inlineTokens.push(
@@ -77,7 +77,7 @@ function processShikiLink(state, openBbcode, closeBbcode, meta) {
     children = tokens[1].children;
   }
 
-  const cache = CACHE?.[convertToShikiType(meta.type)]?.[meta.id];
+  const cache = CACHE[convertToShikiType(meta.type)]?.[meta.id];
 
   if (cache) {
     state.inlineTokens.push(
