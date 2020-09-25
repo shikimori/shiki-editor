@@ -23,7 +23,9 @@ export default class Video extends Node {
         isError: { default: false }
       },
       group: 'inline',
-      draggable: true
+      draggable: true,
+      selectable: true
+
       // parseDOM: [{
       //   tag: '.b-image',
       //   getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))

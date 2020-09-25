@@ -39,7 +39,11 @@ export default class DOMView {
   }
 
   @bind
-  focus() {
+  focus(isFocusEditor) {
+    if (isFocusEditor) {
+      this.editor.focus();
+    }
+
     const { dispatch, tr } = this;
 
     dispatch(
