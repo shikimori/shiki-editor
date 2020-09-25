@@ -667,6 +667,7 @@ export default {
     &:hover,
     &.is-prosemirror-selected,
     &.ProseMirror-selectednode
+      cursor: default
       z-index: 9
 
       &:after
@@ -678,6 +679,10 @@ export default {
         position: absolute
         right: 0
         top: 0
+
+      a,
+      img
+        cursor: default
 
       .controls
         display: flex
