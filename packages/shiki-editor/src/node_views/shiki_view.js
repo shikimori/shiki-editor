@@ -86,10 +86,13 @@ export default class ShikiView extends DOMView {
   }
 
   syncState() {
-    this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
-    this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
-    this.dom.classList.toggle('is-error', this.node.attrs.isError);
-    this.dom.classList.toggle('b-entry-404', this.node.attrs.isNotFound);
+    const { dom, node } = this;
+    const { attrs } = node;
+
+    dom.classList.toggle('b-ajax', attrs.isLoading);
+    dom.classList.toggle('vk-like', attrs.isLoading);
+    dom.classList.toggle('is-error', attrs.isError);
+    dom.classList.toggle('b-entry-404', attrs.isNotFound);
   }
 
   // rerender node view every time on any update

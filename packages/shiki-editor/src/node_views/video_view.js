@@ -11,7 +11,6 @@ export default class VideoView extends DOMView {
     this.syncState();
 
     if (this.node.attrs.isLoading) {
-      this.appendContent();
       this.fetch();
     }
   }
@@ -21,12 +20,41 @@ export default class VideoView extends DOMView {
   }
 
   syncState() {
-    this.dom.classList.toggle('b-ajax', this.node.attrs.isLoading);
-    this.dom.classList.toggle('vk-like', this.node.attrs.isLoading);
-    this.dom.classList.toggle('is-error', this.node.attrs.isError);
-    this.dom.classList.toggle('b-entry-404', this.node.attrs.isNotFound);
+    const { dom, node } = this;
+    const { attrs } = node;
 
-    console.log('syncState')
+    console.log('syncState', dom);
+
+    dom.classList.toggle('b-ajax', attrs.isLoading);
+    dom.classList.toggle('vk-like', attrs.isLoading);
+    dom.classList.toggle('is-error', attrs.isError);
+    dom.classList.toggle('b-entry-404', attrs.isNotFound);
+
+    if (attrs.isLoading || !attrs.hosting) {
+      dom.innerText = attrs.bbcode;
+    } else {
+      dom.innerText = '';
+      dom.classList.add(attrs.hosting);
+      dom.classList.add('fixed');
+      if (attrs.hosting === 'youtube' || attrs.hosting === 'vk') {
+        dom.classList.add('shrinked');
+      }
+
+      const link = document.createElement('a');
+      link.classList.add('video-link');
+      link.href = attrs.url;
+
+      const img = document.createElement('img');
+      img.src = attrs.poster;
+
+      const marker = document.createElement('span');
+      marker.classList.add('marker');
+      marker.innerText = attrs.hosting;
+
+      link.appendChild(img);
+      dom.appendChild(link);
+      dom.appendChild(marker);
+    }
   }
 
   async fetch() {
@@ -45,10 +73,6 @@ export default class VideoView extends DOMView {
     } else {
       this.notFound();
     }
-  }
-
-  appendContent() {
-    this.dom.innerText = this.node.attrs.bbcode;
   }
 
   success(result) {
