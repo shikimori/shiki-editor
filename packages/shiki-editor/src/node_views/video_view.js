@@ -47,8 +47,8 @@ export default class VideoView extends DOMView {
       dom.classList.add(attrs.hosting);
       dom.classList.add('fixed');
 
-      if (attrs.hosting === 'youtube') {
-        dom.classList.add('shrinked');
+      if (attrs.hosting === 'youtube' && attrs.isBroken) {
+        dom.classList.add('shrinked-1_3');
       }
 
       const link = document.createElement('a');
@@ -159,16 +159,23 @@ export default class VideoView extends DOMView {
   checkImage(imagesLoaded) {
     const [img] = imagesLoaded.elements;
 
-    if (img.naturalWidth === 120 && img.naturalHeight === 90) {
+    if (this.node.attrs.hosting === 'youtube' &&
+      img.naturalWidth === 120 && img.naturalHeight === 90
+    ) {
       this.updateAttrs({ isBroken: true }, false);
+      return;
     }
 
+    const ratio = round((img.naturalWidth * 1.0) / img.naturalHeight, 1);
+
     // http://vk.com/video98023184_165811692
-    if (this.node.attrs.hosting === 'vk' &&
-      !this.dom.classList.contains('shrinked') &&
-      round((img.naturalWidth * 1.0) / img.naturalHeight, 1) === 1.3
-    ) {
-      this.dom.classList.add('shrinked');
+    if (ratio === 1.3) {
+      this.dom.classList.add('shrinked-1_3');
+    }
+
+    // https://video.sibnet.ru/video305613-SouL_Eater__AMW/
+    if (ratio === 1.5) {
+      this.dom.classList.add('shrinked-1_5');
     }
   }
 }
