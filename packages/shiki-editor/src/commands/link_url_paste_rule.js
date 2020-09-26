@@ -23,7 +23,9 @@ const VIDEO_REGEXPES = [
   // https://video.sibnet.ru/video305613-SouL_Eater__AMW/
   /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // https://stormo.xyz/videos/245/stiv-djobs/
-  /(?:https?:)\/\/(?:www\.)?stormo.(?:xyz|tv)\/videos\/[\wА-я_-]+\/[\wА-я_-]+\//
+  /(?:https?:)\/\/(?:www\.)?stormo.(?:xyz|tv)\/videos\/[\wА-я_-]+\/[\wА-я_-]+\//,
+  // https://ok.ru/video/2444260543117
+  /(?:https?:)\/\/(?:www\.)?ok.ru\/(?:videoembed|live|video)\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
 ];
 
 const SHIKI_TYPES = {
