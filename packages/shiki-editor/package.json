@@ -26,6 +26,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-vue": "^6.2.2",
     "imagesloaded": "^4.1.4",
+    "lodash": "^4.17.20",
     "p-defer": "^3.0.0",
     "shiki-decorators": "file:../shiki-decorators",
     "shiki-uploader": "file:../shiki-uploader",

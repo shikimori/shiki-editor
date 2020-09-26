@@ -1,5 +1,6 @@
 import imagesloaded from 'imagesloaded';
 import { bind } from 'shiki-decorators';
+import round from 'lodash/round';
 
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
@@ -45,7 +46,8 @@ export default class VideoView extends DOMView {
       dom.setAttribute('data-attrs', JSON.stringify(attrs));
       dom.classList.add(attrs.hosting);
       dom.classList.add('fixed');
-      if (attrs.hosting === 'youtube' || attrs.hosting === 'vk') {
+
+      if (attrs.hosting === 'youtube') {
         dom.classList.add('shrinked');
       }
 
@@ -161,8 +163,12 @@ export default class VideoView extends DOMView {
       this.updateAttrs({ isBroken: true }, false);
     }
 
-    // if (((img.naturalWidth * 1.0) / img.naturalHeight).round(1) === 1.3) {
-    //   $root.addClass('shrinked');
-    // }
+    // http://vk.com/video98023184_165811692
+    if (this.node.attrs.hosting === 'vk' &&
+      !this.dom.classList.contains('shrinked') &&
+      round((img.naturalWidth * 1.0) / img.naturalHeight, 1) === 1.3
+    ) {
+      this.dom.classList.add('shrinked');
+    }
   }
 }
