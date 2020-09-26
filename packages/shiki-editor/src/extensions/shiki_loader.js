@@ -72,7 +72,7 @@ export class ShikiLoader extends Extension {
       return memo;
     }, {});
 
-    this.options.shikiRequest.get('shiki_editor', idsParams)
+    this.options.shikiRequest.post('shiki_editor', idsParams)
       .then(result => (
         result ? this.processSuccess(result.data) : this.processError()
       ));

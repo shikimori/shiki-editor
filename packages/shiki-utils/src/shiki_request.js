@@ -2,7 +2,7 @@ import flash from './flash';
 
 const SHIKIMORI_URLS = {
   preview: '/api/shiki_editor/preview' + (process.env.NODE_ENV === 'development' ? '?test=1' : ''),
-  shiki_editor: '/api/shiki_editor',
+  shiki_editor: '/api/shiki_editor' + (process.env.NODE_ENV === 'development' ? '?test=1' : ''),
   autocomplete_user: '/api/users',
   smileys: '/comments/smileys'
 };
