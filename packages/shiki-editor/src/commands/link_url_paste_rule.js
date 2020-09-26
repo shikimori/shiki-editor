@@ -16,7 +16,9 @@ const VIDEO_REGEXPES = [
   // http://vk.com/video98023184_165811692
   /(?:https?:)\/\/vk.com\/video-?\d+_\d+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // https://coub.com/view/1itox4
-  /(?:https?:)\/\/(?:www\.)?coub.com\/view\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
+  /(?:https?:)\/\/(?:www\.)?coub.com\/view\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
+  // https://www.myvi.tv/idkixy?v=fega66n5kbdr7yhomjx9jp5oue#watch
+  /(?:https?:)\/\/(?:www\.)?myvi.(?:top|tv)\/id\w+\?v=[\wА-я_-]+(?:(?:\?|\#|&amp;|&)[\w=+%-]+)*/
 ];
 
 const SHIKI_TYPES = {
