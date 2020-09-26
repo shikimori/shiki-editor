@@ -1835,7 +1835,7 @@ describe('MarkdownTokenizer', () => {
                         []
                     ),
                     ['isLoading', true],
-                    ['isError', false]
+                    ['isNotFound', false]
                   ]
                 }
               ]
@@ -1866,7 +1866,7 @@ describe('MarkdownTokenizer', () => {
                         []
                     ),
                     ['isLoading', true],
-                    ['isError', false]
+                    ['isNotFound', false]
                   ]
                 }
               ]
@@ -1896,7 +1896,7 @@ describe('MarkdownTokenizer', () => {
                     ['closeBbcode', `[/${kind}]`],
                     ['text', 'zx'],
                     ['isLoading', true],
-                    ['isError', false]
+                    ['isNotFound', false]
                   ],
                   children: [{ type: 'text', content: 'zx' }]
                 }
@@ -1929,7 +1929,7 @@ describe('MarkdownTokenizer', () => {
                     ['closeBbcode', `[/${kind}]`],
                     ['text', 'zx'],
                     ['isLoading', true],
-                    ['isError', false]
+                    ['isNotFound', false]
                   ],
                   children: [{ type: 'text', content: 'zx' }]
                 }
@@ -1955,7 +1955,7 @@ describe('MarkdownTokenizer', () => {
                   ['type', 'anime'],
                   ['id', 1],
                   ['isLoading', true],
-                  ['isError', false]
+                  ['isNotFound', false]
                 ]
               },
               { type: 'text', content: ' ' },
@@ -1969,7 +1969,7 @@ describe('MarkdownTokenizer', () => {
                   ['closeBbcode', '[/anime]'],
                   ['text', 'x'],
                   ['isLoading', true],
-                  ['isError', false]
+                  ['isNotFound', false]
                 ],
                 children: [{ type: 'text', content: 'x' }]
               }
@@ -1997,7 +1997,7 @@ describe('MarkdownTokenizer', () => {
                   ['closeBbcode', '[/anime]'],
                   ['text', 'z'],
                   ['isLoading', true],
-                  ['isError', false]
+                  ['isNotFound', false]
                 ],
                 children: [{ type: 'text', content: 'z' }]
               },
@@ -2012,7 +2012,7 @@ describe('MarkdownTokenizer', () => {
                   ['closeBbcode', '[/anime]'],
                   ['text', 'x'],
                   ['isLoading', true],
-                  ['isError', false]
+                  ['isNotFound', false]
                 ],
                 children: [{ type: 'text', content: 'x' }]
               }
@@ -2123,7 +2123,7 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false],
+              ['isNotFound', false],
               ['nFormat', n(false, true)]
             ],
             children: [
@@ -2144,7 +2144,7 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false],
+              ['isNotFound', false],
               ['nFormat', n(false, true, true)]
             ],
             children: [
@@ -2167,7 +2167,7 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false],
+              ['isNotFound', false],
               ['nFormat', n(false, true, true)]
             ],
             children: [
@@ -2183,7 +2183,7 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=2]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false],
+              ['isNotFound', false],
               ['nFormat', n(true, true, true)]
             ],
             children: [
@@ -2209,7 +2209,7 @@ describe('MarkdownTokenizer', () => {
                   ['type', 'anime'],
                   ['id', 1],
                   ['isLoading', true],
-                  ['isError', false]
+                  ['isNotFound', false]
                 ]
               }
             ]
@@ -2224,7 +2224,7 @@ describe('MarkdownTokenizer', () => {
               ['openBbcode', '[anime=1]'],
               ['closeBbcode', '[/anime]'],
               ['isLoading', true],
-              ['isError', false],
+              ['isNotFound', false],
               ['nFormat', n(true, true)]
             ],
             children: [
