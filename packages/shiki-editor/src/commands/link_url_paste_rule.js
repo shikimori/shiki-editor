@@ -7,6 +7,9 @@ const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|local)\/(animes|mang
 
 const VIDEO_REGEXPES = [
   /(?:https?:)?\/\/(?:www\.)?vimeo.com\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
+  /(?:https?:)?\/\/(?:www\.)?youtube\.com\/.*?(?:&(?:amp;)?|\?)v=[\w_-]+[^ $#<[\]\r\n]*(?:#(?:t|at)=\d+)?/,
+  /(?:https?:)?\/\/(?:www\.)?youtu.be\/[\w_-]+(?:\?(?:t|at)=\w+)?/,
+  /(?:https?:)?\/\/(?:www\.)?youtube\.com\/(?:embed|v)\/[\w_-]+(?:\?start=\w+)?/
 ];
 
 const SHIKI_TYPES = {
