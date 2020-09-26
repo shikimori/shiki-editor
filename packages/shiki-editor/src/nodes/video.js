@@ -1,9 +1,8 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
-// import { nodeInputRule } from '../commands';
+import { nodeInputRule } from '../commands';
 import { VideoView } from '../node_views';
 
-// const VIDEO_INPUT_REGEX = /\[video\](.*?)\[\/video\]/;
+const VIDEO_INPUT_REGEX = /\[video\](.*?)\[\/video\]/;
 
 export default class Video extends Node {
   get name() {
@@ -48,35 +47,15 @@ export default class Video extends Node {
     return new VideoView(options);
   }
 
-  // inputRules({ type }) {
-  //   return [
-  //     nodeInputRule(IMAGE_INPUT_REGEX, type, match => {
-  //       const [, src] = match;
-  //       return { src };
-  //     })
-  //   ];
-  // }
-  //
-  // commands({ type }) {
-  //   return imageUrl => (state, dispatch) => {
-  //     const src = imageUrl ||
-  //       prompt(window.I18n.t('frontend.shiki_editor.prompt.image_url'));
-  //     if (src == null) { return null; }
-  //
-  //     const { selection } = state;
-  //     const position = selection.$cursor ?
-  //       selection.$cursor.pos :
-  //       selection.$to.pos;
-  //
-  //     const node = type.create({ src });
-  //     const transaction = state.tr.insert(position, node);
-  //
-  //     dispatch(transaction);
-  //
-  //     return src;
-  //   };
-  // }
-  //
+  inputRules({ type }) {
+    return [
+      nodeInputRule(VIDEO_INPUT_REGEX, type, match => {
+        const [, url] = match;
+        return { url, bbcode: `[video]${url}[/video]` };
+      })
+    ];
+  }
+
   get markdownParserToken() {
     return {
       node: this.name,
@@ -88,46 +67,3 @@ export default class Video extends Node {
     state.write(node.attrs.bbcode);
   }
 }
-//
-// export function tagSequence(node) {
-//   const { attrs } = node;
-//   const prefix = tagPrefix(node);
-//   const suffix = serializeImageAttributes(node);
-//
-//   return attrs.id ? `[${prefix}=${attrs.id}${suffix}]` : `[${prefix}${suffix}]`;
-// }
-//
-// function tagPrefix(node) {
-//   const { attrs } = node;
-//
-//   if (attrs.isPoster) {
-//     return 'poster';
-//   } else if (attrs.id) {
-//     return 'image';
-//   }
-//   return 'img';
-// }
-//
-// function serializeImageAttributes(node) {
-//   const { attrs } = node;
-//
-//   const attributes = [];
-//   if (attrs.isNoZoom) {
-//     attributes.push('no-zoom');
-//   }
-//   if (attrs.class) {
-//     attributes.push(`class=${attrs.class}`);
-//   }
-//   if (attrs.width && attrs.height) {
-//     attributes.push(`${attrs.width}x${attrs.height}`);
-//   } else {
-//     if (attrs.width) {
-//       attributes.push(`width=${attrs.width}`);
-//     }
-//     if (attrs.height) {
-//       attributes.push(`height=${attrs.height}`);
-//     }
-//   }
-//
-//   return attributes.length ? ' ' + attributes.join(' ') : '';
-// }
