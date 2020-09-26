@@ -68,6 +68,7 @@ https://www.youtube.com/watch?v=0d4rPwIpzNw
 [anime=2]zxc[/anime]
 
 [video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video] [video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video]
+[video]https://www.youtube.com[/video]
 
 [spoiler_block]
 > aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]

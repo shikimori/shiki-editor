@@ -19,7 +19,6 @@ export default class Video extends Node {
         hosting: { default: null },
         poster: { default: null },
         isLoading: { default: true },
-        isNotFound: { default: false },
         isError: { default: false },
         isBroken: { default: false }
       },

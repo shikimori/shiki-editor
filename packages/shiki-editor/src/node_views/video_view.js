@@ -25,15 +25,13 @@ export default class VideoView extends DOMView {
     const { dom, node } = this;
     const { attrs } = node;
 
-    const isValid = !attrs.isLoading && !attrs.isError && !attrs.isNotFound;
+    const isValid = !attrs.isLoading && !attrs.isError;
 
     dom.classList.toggle('b-video', isValid);
     dom.classList.toggle('b-shiki_editor-node', !isValid);
     dom.classList.toggle('b-ajax', attrs.isLoading);
     dom.classList.toggle('vk-like', attrs.isLoading);
     dom.classList.toggle('is-error', attrs.isError);
-
-    dom.classList.toggle('b-entry-404', attrs.isNotFound);
 
     dom.innerText = '';
 
@@ -116,7 +114,19 @@ export default class VideoView extends DOMView {
   }
 
   notFound() {
-    this.updateAttrs({ isLoading: false, isNotFound: true }, false);
+    this.replaceWith(
+      this.view.state.schema.text(
+        this.node.attrs.url,
+        [
+          ...this.node.marks,
+          this.view.state.schema.marks.link_inline.create({
+            text: this.node.attrs.url,
+            url: this.node.attrs.url
+          }, null, this.node.marks)
+        ]
+      ),
+      false
+    );
   }
 
   error() {
