@@ -6,11 +6,17 @@ const URL_REGEXP = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,
 const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|local)\/(animes|mangas|ranobe|characters|people)\/(\w+)[^/]*$/;
 
 const VIDEO_REGEXPES = [
+  // https://vimeo.com/194659752
   /(?:https?:)?\/\/(?:www\.)?vimeo.com\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
+  // https://youtube.com/watch?v=Z57Tn2F5JD8
   /(?:https?:)?\/\/(?:www\.)?youtube\.com\/.*?(?:&(?:amp;)?|\?)v=[\w_-]+[^ $#<[\]\r\n]*(?:#(?:t|at)=\d+)?/,
   /(?:https?:)?\/\/(?:www\.)?youtu.be\/[\w_-]+(?:\?(?:t|at)=\w+)?/,
   /(?:https?:)?\/\/(?:www\.)?youtube\.com\/(?:embed|v)\/[\w_-]+(?:\?start=\w+)?/,
-  /(?:https?:)\/\/vk.com\/video-?\d+_\d+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
+  // https://vk.com/video-186803452_456239969
+  // http://vk.com/video98023184_165811692
+  /(?:https?:)\/\/vk.com\/video-?\d+_\d+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
+  // https://coub.com/view/1itox4
+  /(?:https?:)\/\/(?:www\.)?coub.com\/view\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
 ];
 
 const SHIKI_TYPES = {
