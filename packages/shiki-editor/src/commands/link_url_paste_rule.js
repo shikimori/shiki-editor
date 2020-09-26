@@ -19,16 +19,9 @@ const VIDEO_REGEXPES = [
   /(?:https?:)\/\/(?:www\.)?coub.com\/view\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // https://www.myvi.tv/idkixy?v=fega66n5kbdr7yhomjx9jp5oue#watch
   /(?:https?:)\/\/(?:www\.)?myvi.(?:top|tv)\/id\w+\?v=[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-
   // http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi
   // https://video.sibnet.ru/video305613-SouL_Eater__AMW/
-  /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-  /(?:https?:)\/\/(?:www\.)?streamable.com\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-  /(?:https?:)\/\/(?:www\.)?video.youmite.ru\/embed\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-  /(?:https?:)\/\/(?:www\.)?viuly.io\/video\/[\wА-я_.-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-  /(?:https?:)\/\/(?:www\.)?stormo.(?:xyz|tv)\/videos\/[\wА-я_-]+\/[\wА-я_-]+\//,
-  /(?:https?:)\/\/(?:www\.)?mediafile.online\/video\/[\wА-я_-]+\/[\wА-я_-]+\//
-
+  /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
 ];
 
 const SHIKI_TYPES = {
