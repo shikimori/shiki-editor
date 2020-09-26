@@ -21,7 +21,9 @@ const VIDEO_REGEXPES = [
   /(?:https?:)\/\/(?:www\.)?myvi.(?:top|tv)\/id\w+\?v=[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi
   // https://video.sibnet.ru/video305613-SouL_Eater__AMW/
-  /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
+  /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
+  // https://stormo.xyz/videos/245/stiv-djobs/
+  /(?:https?:)\/\/(?:www\.)?stormo.(?:xyz|tv)\/videos\/[\wА-я_-]+\/[\wА-я_-]+\//
 ];
 
 const SHIKI_TYPES = {
