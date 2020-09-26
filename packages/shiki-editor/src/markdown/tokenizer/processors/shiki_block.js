@@ -62,7 +62,7 @@ export default function processShikiBlock(
         openBbcode,
         closeBbcode,
         isLoading: cache === undefined,
-        isError: cache === null,
+        isNotFound: cache === null,
         nFormat
       })
     );
