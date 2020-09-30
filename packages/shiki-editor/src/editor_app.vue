@@ -114,8 +114,9 @@ import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
-import { scrollTop } from './utils';
+import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
+import { insertNodes } from './commands';
 
 import { flash } from 'shiki-utils';
 
@@ -374,6 +375,12 @@ export default {
       return this.isEditingEnabled && (
         this.nodesState.link || !this.editor.state.selection.empty
       );
+    },
+    appendContent(content) {
+      insertNodes(
+        contentToNodes(this.editor, content)
+      )(this.editor.state, this.editor.view.dispatch);
+      this.editor.focus();
     },
     async setContent(
       content,
