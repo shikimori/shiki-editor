@@ -2,6 +2,7 @@ import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
 import DOMView from './dom_view';
+import { contentToNodes } from '../utils';
 
 const ANY_BBCODE_REGEXP = /\[\w+/;
 
@@ -57,10 +58,12 @@ export default class SpoilerBlockView extends DOMView {
 
     if (this.node.attrs.label.match(ANY_BBCODE_REGEXP)) {
       const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
-      const nodes = this.editor.markdownParser.parse(this.node.attrs.label);
-      const content = nodes.content?.content?.[0]?.type?.name === 'paragraph' ?
-        nodes.content.content[0].content :
-        nodes.content;
+      // const nodes = this.editor.markdownParser.parse(this.node.attrs.label);
+      // const content = nodes.content?.content?.[0]?.type?.name === 'paragraph' ?
+      //   nodes.content.content[0].content :
+      //   nodes.content;
+
+      const content = contentToNodes(this.editor, this.node.attrs.label);
 
       this.trigger.innerHTML = '';
       this.trigger.appendChild(domSerializer.serializeFragment(content));
