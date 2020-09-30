@@ -377,12 +377,11 @@ export default {
       );
     },
     appendReply(reply) {
-      insertReply(reply)(this.editor.state, this.editor.view.dispatch);
-      // insertText(', ')(this.editor.state, this.editor.view.dispatch);
+      insertReply(reply, this.editor)(this.editor.state, this.editor.view.dispatch);
       this.editor.focus();
     },
     appendText(content) {
-      const fragment = contentToNodes(this.editor, content)
+      const fragment = contentToNodes(this.editor, content);
       insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);
       this.editor.focus();
     },
