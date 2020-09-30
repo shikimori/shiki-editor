@@ -116,7 +116,7 @@ import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
-import { insertNodes } from './commands';
+import { insertReply, insertNodes, insertText } from './commands';
 
 import { flash } from 'shiki-utils';
 
@@ -376,10 +376,14 @@ export default {
         this.nodesState.link || !this.editor.state.selection.empty
       );
     },
-    appendContent(content) {
-      insertNodes(
-        contentToNodes(this.editor, content)
-      )(this.editor.state, this.editor.view.dispatch);
+    appendReply(reply) {
+      insertReply(reply)(this.editor.state, this.editor.view.dispatch);
+      // insertText(', ')(this.editor.state, this.editor.view.dispatch);
+      this.editor.focus();
+    },
+    appendText(content) {
+      const fragment = contentToNodes(this.editor, content)
+      insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);
       this.editor.focus();
     },
     async setContent(
