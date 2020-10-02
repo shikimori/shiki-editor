@@ -29,6 +29,15 @@
     position: relative
     z-index: 2 
 
+  @media screen and (max-width: 767px) and (orientation: portrait)
+    &.toastify-right,
+    &.toastify-left
+      margin-left: auto
+      margin-right: auto
+      left: 0
+      right: 0
+      max-width: calc(100% - 20px)
+
 .toast-close
   opacity: 0
   position: absolute
@@ -59,12 +68,3 @@
   left: 0
   right: 0
   max-width: fit-content
-
-@media only screen and (max-width: 360px)
-  .toastify-right,
-  .toastify-left
-    margin-left: auto
-    margin-right: auto
-    left: 0
-    right: 0
-    max-width: calc(100% - 20px)
