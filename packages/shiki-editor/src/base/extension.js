@@ -40,6 +40,6 @@ export default class Extension {
     return {};
   }
 
-  destroy() {
-  }
+  // destroy() {
+  // }
 }
