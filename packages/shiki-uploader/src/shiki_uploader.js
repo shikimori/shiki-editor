@@ -67,10 +67,10 @@ export default class ShikiUploader {
     return !!this.uploadIDs.length;
   }
 
-  @bind
-  destroy() {
+  detach() {
     this._removeProgressNode();
     this._unbindEvents();
+    this.node = null;
   }
 
   disable() {
