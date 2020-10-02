@@ -8,8 +8,6 @@ import {
 } from '../commands';
 
 export default class FileUploader extends Extension {
-  fileUploader = null;
-
   get name() {
     return 'file_uploader';
   }
@@ -21,7 +19,7 @@ export default class FileUploader extends Extension {
   }
 
   attachShikiUploader({ node, progressContainerNode }) {
-    this.fileUploader = this.options.shikiUploader
+    this.options.shikiUploader
       .attachTo({ node, progressContainerNode })
       .on('upload:file:added', (_e, uppyFile) =>
         insertUploadPlaceholder(
@@ -44,19 +42,23 @@ export default class FileUploader extends Extension {
   }
 
   get isUploading() {
-    return !!(this.fileUploader?.isUploading);
+    return !!(this.shikiUploader?.isUploading);
+  }
+
+  get shikiUploader() {
+    return this.options.shikiUploader;
   }
 
   addFiles(files) {
-    this.fileUploader.addFiles(files);
+    this.shikiUploader.addFiles(files);
   }
 
   enable() {
-    this.fileUploader.enable();
+    this.shikiUploader.enable();
   }
 
   disable() {
-    this.fileUploader.disable();
+    this.shikiUploader.disable();
   }
 
   get plugins() {
@@ -102,6 +104,6 @@ export default class FileUploader extends Extension {
   }
 
   destroy() {
-    this.fileUploader.destroy();
+    this.shikiUploader.detach();
   }
 }
