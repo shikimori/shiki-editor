@@ -35,18 +35,28 @@ export default class ShikiEditor {
     plugins: [],
     editorProps: {}
   }
-  focused = false
-  selection = { from: 0, to: 0 }
 
   constructor(options, vueComponent, Vue) {
     uEvent.mixin(this);
 
+    this.vueComponent = vueComponent;
+    this.Vue = Vue;
+
+    this.init(options);
+  }
+
+  get state() {
+    return this.view ? this.view.state : undefined;
+  }
+
+  init(options = {}) {
     this.options = {
       ...this.options,
       ...options
     };
-    this.vueComponent = vueComponent;
-    this.Vue = Vue;
+
+    this.selection = { from: 0, to: 0 };
+    this.focused = false;
 
     this.extensionsManager = this.createExtensionManager();
     this.element = this.options.element || document.createElement('div');
@@ -77,10 +87,6 @@ export default class ShikiEditor {
 
     // give extension manager access to our view
     this.extensionsManager.view = this.view;
-  }
-
-  get state() {
-    return this.view ? this.view.state : undefined;
   }
 
   createExtensionManager() {
@@ -151,10 +157,10 @@ export default class ShikiEditor {
     });
   }
 
-  createState() {
+  createState(content = this.options.content) {
     return EditorState.create({
       schema: this.schema,
-      doc: this.markdownParser.parse(this.options.content),
+      doc: this.markdownParser.parse(content),
       plugins: []
     });
   }

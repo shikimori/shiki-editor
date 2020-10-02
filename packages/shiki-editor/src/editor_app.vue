@@ -1,15 +1,7 @@
 <template>
   <div>
-    <div
-      ref='menubar'
-      class='menubar'
-      :class='{ "is-offset": isMenuBarOffset }'
-    >
-      <div
-        v-if='editor'
-        v-dragscroll
-        class='icons'
-      >
+    <div ref='menubar' class='menubar'>
+      <div v-if='editor' v-dragscroll class='icons'>
         <div
           v-for='([group, items], index) in menuItems'
           :key='index'
@@ -116,7 +108,7 @@ import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
-import { insertReply, insertNodes, insertText } from './commands';
+import { insertReply, insertNodes } from './commands';
 
 import { flash } from 'shiki-utils';
 
@@ -140,6 +132,19 @@ const MENU_ITEMS = {
 };
 const MAXIMUM_CONTENT_SIZE = 100000;
 
+const DEFAULT_DATA = {
+  isSource: false,
+  isItalicBlock: false,
+  isBoldBlock: false,
+  isLinkBlock: false,
+  isSmiley: false,
+  isPreview: false,
+  isPreviewLoading: false,
+  previewHTML: null,
+  isHugeContent: false,
+  activeMobileMenuGroup: null
+};
+
 export default {
   name: 'EditorApp',
   directives: {
@@ -162,17 +167,7 @@ export default {
     editor: null,
     editorContent: null,
     editorPosition: null,
-    isSource: false,
-    isItalicBlock: false,
-    isBoldBlock: false,
-    isLinkBlock: false,
-    isSmiley: false,
-    isMenuBarOffset: false,
-    isPreview: false,
-    isPreviewLoading: false,
-    previewHTML: null,
-    isHugeContent: false,
-    activeMobileMenuGroup: null
+    ...DEFAULT_DATA
   }),
   computed: {
     isEditingEnabled() {
@@ -270,33 +265,7 @@ export default {
     }
   },
   async created() {
-    this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
-
-    const extensions = [this.fileUploaderExtension];
-    if (this.shikiSearchExtension) {
-      extensions.push(this.shikiSearchExtension);
-    }
-
-    this.editor = new ShikiEditor({
-      content: this.isHugeContent ? '' : this.content,
-      shikiRequest: this.shikiRequest,
-      extensions,
-      plugins: []
-    }, this, this.vue);
-
-    this.editorContent = this.content;
-
-    if (this.isHugeContent) {
-      this.toggleSource(this.content);
-      await this.$nextTick();
-      flash.info(window.I18n.t('frontend.shiki_editor.too_large_content'));
-    }
-  },
-  mounted() {
-    this.fileUploaderExtension.attachShikiUploader({
-      node: this.$refs.editor_container,
-      progressContainerNode: this.$refs.menubar
-    });
+    this.createEditor();
   },
   beforeDestroy() {
     this.editor.destroy();
@@ -399,6 +368,45 @@ export default {
         isAaddToHistory
       );
     },
+    clearContent() {
+      this.editor.destroy();
+
+      Object.keys(DEFAULT_DATA).forEach(key => (
+        this[key] = DEFAULT_DATA[key]
+      ));
+
+      this.createEditor();
+    },
+    async createEditor() {
+      this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
+
+      const extensions = [this.fileUploaderExtension];
+      if (this.shikiSearchExtension) {
+        extensions.push(this.shikiSearchExtension);
+      }
+
+      this.editor = new ShikiEditor({
+        content: this.isHugeContent ? '' : this.content,
+        shikiRequest: this.shikiRequest,
+        extensions,
+        plugins: []
+      }, this, this.vue);
+
+      this.editorContent = this.content;
+
+      if (this.isHugeContent) {
+        this.toggleSource(this.content);
+        await this.$nextTick();
+        flash.info(window.I18n.t('frontend.shiki_editor.too_large_content'));
+      }
+
+      await this.$nextTick();
+
+      this.fileUploaderExtension.attachShikiUploader({
+        node: this.$refs.editor_container,
+        progressContainerNode: this.$refs.menubar
+      });
+    },
     async togglePreview() {
       this.isPreview = !this.isPreview;
       this.isPreviewLoading = this.isPreview;
@@ -498,9 +506,6 @@ export default {
   right: 0
   top: 0
   z-index: 30
-
-  &.is-offset
-    top: 45px
 
   .icons
     color: #456
