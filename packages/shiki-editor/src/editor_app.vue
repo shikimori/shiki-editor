@@ -349,6 +349,9 @@ export default {
       insertReply(reply, this.editor)(this.editor.state, this.editor.view.dispatch);
       this.editor.focus();
     },
+    appendQuote(quote) {
+      console.log(quote);
+    },
     appendText(content) {
       const fragment = contentToNodes(this.editor, content);
       insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);

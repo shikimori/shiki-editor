@@ -8,6 +8,7 @@ export { default as Div } from './div';
 export { default as Doc } from './doc';
 export { default as Heading } from './heading';
 export { default as Hr } from './hr';
+export { default as HardBreak } from './hard_break';
 export { default as Video } from './video';
 export { default as Image } from './image';
 export { default as ItalicBlock } from './italic_block';
