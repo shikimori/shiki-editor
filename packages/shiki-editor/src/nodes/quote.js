@@ -1,5 +1,5 @@
 import { Node } from '../base';
-import { serializeAttrs } from '../utils/quote_helpers';
+import { serializeAttrs, toDOMInnerQuoteable } from '../utils/quote_helpers';
 import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';
 
 export default class Quote extends Node {
@@ -37,49 +37,9 @@ export default class Quote extends Node {
         contentElement: 'div.quote-content'
       }],
       toDOM: node => {
-        if (node.attrs.nickname) {
-          let innerQuoteable;
+        const innerQuoteable = toDOMInnerQuoteable(node.attrs, this);
 
-          if (node.attrs.comment_id || node.attrs.message_id ||
-            node.attrs.topic_id
-          ) {
-            let href;
-
-            if (node.attrs.comment_id) {
-              href = `/comments/${node.attrs.comment_id}`;
-            } else if (node.attrs.message_id) {
-              href = `/messages/${node.attrs.message_id}`;
-            } else {
-              href = `/topics/${node.attrs.topic_id}`;
-            }
-
-            innerQuoteable = [
-              'a',
-              {
-                class: 'b-link b-user16',
-                href: this.prependBaseUrl(href),
-                target: '_blank'
-              },
-              [
-                'img',
-                {
-                  src: this.prependBaseUrl(
-                    `/system/users/x16/${node.attrs.user_id}.png`
-                  ),
-                  srcset: this.prependBaseUrl(
-                    `/system/users/x32/${node.attrs.user_id}.png 2x`
-                  )
-                }
-              ],
-              [
-                'span',
-                node.attrs.nickname
-              ]
-            ];
-          } else {
-            innerQuoteable = node.attrs.nickname;
-          }
-
+        if (innerQuoteable) {
           return [
             'div',
             {

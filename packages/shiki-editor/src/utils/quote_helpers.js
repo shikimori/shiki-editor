@@ -21,3 +21,45 @@ export function serializeAttrs(attrs, isAddEquals = false) {
 
   return isAddEquals ? `=${textAttrs}` : textAttrs;
 }
+
+export function toDOMInnerQuoteable(attrs, schemaNode) {
+  if (!attrs.nickname) { return; }
+
+  if (attrs.comment_id || attrs.message_id || attrs.topic_id) {
+    let href;
+
+    if (attrs.comment_id) {
+      href = `/comments/${attrs.comment_id}`;
+    } else if (attrs.message_id) {
+      href = `/messages/${attrs.message_id}`;
+    } else {
+      href = `/topics/${attrs.topic_id}`;
+    }
+
+    return [
+      'a',
+      {
+        class: 'b-link b-user16',
+        href: schemaNode.prependBaseUrl(href),
+        target: '_blank'
+      },
+      [
+        'img',
+        {
+          src: schemaNode.prependBaseUrl(
+            `/system/users/x16/${attrs.user_id}.png`
+          ),
+          srcset: schemaNode.prependBaseUrl(
+            `/system/users/x32/${attrs.user_id}.png 2x`
+          )
+        }
+      ],
+      [
+        'span',
+        attrs.nickname
+      ]
+    ];
+  } else {
+    return attrs.nickname;
+  }
+}

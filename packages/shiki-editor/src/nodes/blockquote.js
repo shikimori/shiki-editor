@@ -4,7 +4,7 @@ import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleWrap } from '../commands';
 
-import { serializeAttrs } from '../utils/quote_helpers';
+import { serializeAttrs, toDOMInnerQuoteable } from '../utils/quote_helpers';
 import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';
 
 export default class Blockquote extends Node {
@@ -31,16 +31,32 @@ export default class Blockquote extends Node {
       },
       parseDOM: [{
         tag: 'blockquote',
-        getAttrs: node => parseQuoteMeta(node.getAttribute('data-attrs'))
+        getAttrs: node => parseQuoteMeta(node.getAttribute('data-attrs')),
+        contentElement: 'div.quote-content'
       }],
-      toDOM: node => [
-        'blockquote',
-        {
-          class: 'b-quote-v2',
-          'data-attrs': serializeAttrs(node.attrs)
-        },
-        0
-      ]
+      toDOM: node => {
+        const innerQuoteable = toDOMInnerQuoteable(node.attrs, this);
+
+        if (innerQuoteable) {
+          return [
+            'blockquote',
+            {
+              class: 'b-quote-v2',
+              'data-attrs': serializeAttrs(node.attrs)
+            },
+            ['div', { class: 'quoteable' }, innerQuoteable],
+            ['div', { class: 'quote-content' }, 0]
+          ];
+        }
+        return [
+          'blockquote',
+          {
+            class: 'b-quote-v2',
+            'data-attrs': serializeAttrs(node.attrs)
+          },
+          ['div', { class: 'quote-content' }, 0]
+        ];
+      }
     };
   }
 
