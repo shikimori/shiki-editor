@@ -36,4 +36,8 @@ export default class HardBreak extends Node {
       'Shift-Enter': command
     };
   }
+
+  markdownSerialize(state, _node) {
+    state.write('\n');
+  }
 }
