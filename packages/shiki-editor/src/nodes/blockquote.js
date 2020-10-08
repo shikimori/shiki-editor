@@ -15,6 +15,13 @@ export default class Blockquote extends Node {
       group: 'block',
       defining: true,
       draggable: false,
+      attrs: {
+        comment_id: { default: undefined },
+        message_id: { default: undefined },
+        topic_id: { default: undefined },
+        user_id: { default: undefined },
+        nickname: { default: undefined }
+      },
       parseDOM: [{ tag: 'blockquote' }],
       toDOM() { return ['blockquote', { class: 'b-quote-v2' }, 0]; }
     };
