@@ -4,6 +4,9 @@ import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleWrap } from '../commands';
 
+import { serializeAttrs } from '../utils/quote_helpers';
+import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';
+
 export default class Blockquote extends Node {
   get name() {
     return 'blockquote';
@@ -22,8 +25,18 @@ export default class Blockquote extends Node {
         user_id: { default: undefined },
         nickname: { default: undefined }
       },
-      parseDOM: [{ tag: 'blockquote' }],
-      toDOM() { return ['blockquote', { class: 'b-quote-v2' }, 0]; }
+      parseDOM: [{
+        tag: 'blockquote',
+        getAttrs: node => parseQuoteMeta(node.getAttribute('data-attrs'))
+      }],
+      toDOM: node => [
+        'blockquote',
+        {
+          class: 'b-quote-v2',
+          'data-attrs': serializeAttrs(node.attrs)
+        },
+        0
+      ]
     };
   }
 

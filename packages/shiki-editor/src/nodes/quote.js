@@ -1,4 +1,6 @@
 import { Node } from '../base';
+import { serializeAttrs } from '../utils/quote_helpers';
+import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';
 
 export default class Quote extends Node {
   get name() {
@@ -31,13 +33,7 @@ export default class Quote extends Node {
       },
       parseDOM: [{
         tag: 'div.b-quote',
-        getAttrs: node => ({
-          comment_id: node.getAttribute('data-comment_id'),
-          message_id: node.getAttribute('data-message_id'),
-          topic_id: node.getAttribute('data-topic_id'),
-          user_id: node.getAttribute('data-user_id'),
-          nickname: node.getAttribute('data-nickname')
-        }),
+        getAttrs: node => parseQuoteMeta(node.getAttribute('data-attrs')),
         contentElement: 'div.quote-content'
       }],
       toDOM: node => {
@@ -88,11 +84,7 @@ export default class Quote extends Node {
             'div',
             {
               class: 'b-quote',
-              'data-comment_id': node.attrs.comment_id,
-              'data-message_id': node.attrs.message_id,
-              'data-topic_id': node.attrs.topic_id,
-              'data-user_id': node.attrs.user_id,
-              'data-nickname': node.attrs.nickname
+              'data-attrs': serializeAttrs(node.attrs)
             },
             ['div', { class: 'quoteable' }, innerQuoteable],
             ['div', { class: 'quote-content' }, 0]
@@ -100,7 +92,10 @@ export default class Quote extends Node {
         }
         return [
           'div',
-          { class: 'b-quote' },
+          {
+            class: 'b-quote',
+            'data-attrs': serializeAttrs(node.attrs)
+          },
           ['div', { class: 'quote-content' }, 0]
         ];
       }
@@ -108,27 +103,10 @@ export default class Quote extends Node {
   }
 
   markdownSerialize(state, node) {
-    const attributes = [];
-
-    if (node.attrs.nickname !== undefined) {
-      if (node.attrs.comment_id !== undefined) {
-        attributes.push(`c${node.attrs.comment_id}`);
-      } else if (node.attrs.message_id !== undefined) {
-        attributes.push(`m${node.attrs.message_id}`);
-      } else if (node.attrs.topic_id !== undefined) {
-        attributes.push(`t${node.attrs.topic_id}`);
-      }
-
-      if (node.attrs.user_id !== undefined) {
-        attributes.push(node.attrs.user_id);
-      }
-      attributes.push(node.attrs.nickname);
-    }
-
     state.renderBlock(
       node,
       'quote',
-      attributes.length ? '=' + attributes.join(';') : '',
+      serializeAttrs(node.attrs, true),
       node.attrs.nFormat
     );
   }

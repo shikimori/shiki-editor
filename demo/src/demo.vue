@@ -60,6 +60,12 @@ import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
+>?c6419181;669671;雪ノ下雪乃
+> test
+
+[quote=c6419181;669671;雪ノ下雪乃]test[/quote]
+[quote]test[/quote]
+
 [spoiler_block]
 > aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]
 test
