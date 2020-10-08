@@ -645,6 +645,50 @@ describe('MarkdownTokenizer', () => {
             { type: 'blockquote', direction: 'close' }
           ]);
         });
+
+        describe('nested', () => {
+          it('- >?t1;2;x\\n  > a', () => {
+            expect(MarkdownTokenizer.parse('- >?t1;2;x\n  > a')).to.eql([
+              { type: 'bullet_list', direction: 'open' },
+              {
+                type: 'list_item',
+                direction: 'open',
+                attrs: [['bbcode', '- ']]
+              },
+              {
+                type: 'blockquote',
+                direction: 'open',
+                attrs: [
+                  ['topic_id', 1],
+                  ['user_id', 2],
+                  ['nickname', 'x']
+                ]
+              },
+              ...text('a'),
+              { type: 'blockquote', direction: 'close' },
+              { type: 'list_item', direction: 'close' },
+              { type: 'bullet_list', direction: 'close' }
+            ]);
+          });
+
+          it('> >?t1;2;x\\n> > a', () => {
+            expect(MarkdownTokenizer.parse('> >?t1;2;x\n> > a')).to.eql([
+              { type: 'blockquote', direction: 'open' },
+              {
+                type: 'blockquote',
+                direction: 'open',
+                attrs: [
+                  ['topic_id', 1],
+                  ['user_id', 2],
+                  ['nickname', 'x']
+                ]
+              },
+              ...text('a'),
+              { type: 'blockquote', direction: 'close' },
+              { type: 'blockquote', direction: 'close' }
+            ]);
+          });
+        });
       });
     });
 
@@ -1245,7 +1289,7 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
     });
-  //
+
     describe('center', () => {
       it('[center]z[/center]', () => {
         expect(MarkdownTokenizer.parse('[center]z[/center]')).to.eql([
@@ -1265,7 +1309,7 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
     });
-  //
+
     describe('right', () => {
       it('[right]z[/right]', () => {
         expect(MarkdownTokenizer.parse('[right]z[/right]')).to.eql([
@@ -1285,7 +1329,7 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
     });
-  //
+
     describe('list', () => {
       it('[list]z[/list]', () => {
         expect(MarkdownTokenizer.parse('[list]z[/list]')).to.eql([

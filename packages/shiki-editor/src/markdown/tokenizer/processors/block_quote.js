@@ -10,12 +10,16 @@ export default function processBlockQuote(state, tagSequence) {
     );
     const attributes = parseQuoteMeta(metaText);
 
-    const fromIndex = state.index + tagSequence.length + metaText.length + 1;
-    const toIndex = fromIndex + state.nestedSequence.length + 2;
+    const fromIndex = state.index + tagSequence.length +
+      metaText.length + 1 /* new line */ + state.nestedSequence.length;
+    const toIndex = fromIndex + 2;
     const nextTagSequence = state.text.slice(fromIndex, toIndex);
 
     if (nextTagSequence === '> ') {
-      state.next(tagSequence.length + metaText.length, true);
+      state.next(
+        tagSequence.length + metaText.length + 1 + state.nestedSequence.length,
+        true
+      );
       return processBlockQuoteContent(state, nextTagSequence, attributes);
     } else {
       return false;
