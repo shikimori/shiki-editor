@@ -61,6 +61,11 @@ export default class Blockquote extends Node {
   }
 
   markdownSerialize(state, node) {
+    const textAttrs = serializeAttrs(node.attrs);
+
+    if (textAttrs) {
+      state.wrapBlock('>?', null, node, () => state.write(textAttrs));
+    }
     state.wrapBlock('> ', null, node, () => state.renderContent(node));
   }
 }
