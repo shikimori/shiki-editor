@@ -12,7 +12,7 @@ export default function processBlockQuote(state, tagSequence) {
 
     const fromIndex = state.index + tagSequence.length +
       metaText.length + 1 /* new line */ + state.nestedSequence.length;
-    const toIndex = fromIndex + 2;
+    const toIndex = fromIndex + tagSequence.length;
     const nextTagSequence = state.text.slice(fromIndex, toIndex);
 
     if (nextTagSequence === '> ') {
