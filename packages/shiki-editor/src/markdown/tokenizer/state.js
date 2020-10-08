@@ -193,9 +193,12 @@ export default class MarkdownTokenizer {
         }
 
         switch (seq2) {
+          case '>?':
           case '> ':
-            processBlockQuote(this, seq2);
-            break outer;
+            if (processBlockQuote(this, seq2)) {
+              break outer;
+            }
+            break;
 
           case '- ':
           case '+ ':

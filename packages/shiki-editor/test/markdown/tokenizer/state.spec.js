@@ -628,6 +628,24 @@ describe('MarkdownTokenizer', () => {
           { type: 'blockquote', direction: 'close' }
         ]);
       });
+
+      describe('with author', () => {
+        it('>?t1;2;x\\n> a', () => {
+          expect(MarkdownTokenizer.parse('>?t1;2;x\n> a')).to.eql([
+            {
+              type: 'blockquote',
+              direction: 'open',
+              attrs: [
+                ['topic_id', 1],
+                ['user_id', 2],
+                ['nickname', 'x']
+              ]
+            },
+            ...text('a'),
+            { type: 'blockquote', direction: 'close' }
+          ]);
+        });
+      });
     });
 
     describe('bullet_list', () => {
