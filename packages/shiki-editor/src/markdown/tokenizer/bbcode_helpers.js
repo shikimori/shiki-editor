@@ -90,12 +90,17 @@ export function parseQuoteMeta(meta) {
       case 'c':
         attributes.comment_id = parseInt(id);
         break;
+
       case 'm':
         attributes.message_id = parseInt(id);
         break;
+
       case 't':
         attributes.topic_id = parseInt(id);
         break;
+
+      default:
+        return null;
     }
 
     attributes.user_id = parseInt(split[1]);
