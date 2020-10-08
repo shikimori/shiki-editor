@@ -12,6 +12,10 @@ export default class Blockquote extends Node {
     return 'blockquote';
   }
 
+  get defaultOptions() {
+    return { origin: null };
+  }
+
   get schema() {
     return {
       content: 'block*',

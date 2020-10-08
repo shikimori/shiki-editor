@@ -64,7 +64,7 @@ export default function(editor) {
     new SizeBlock(),
     new ColorBlock(),
     new ShikiBlock(),
-    new Blockquote(),
+    new Blockquote({ origin: editor.options.shikiRequest.origin }),
     new BulltList(),
     new CodeBlock(),
     new Div(),
