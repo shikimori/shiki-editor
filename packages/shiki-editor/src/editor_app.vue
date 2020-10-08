@@ -350,7 +350,6 @@ export default {
       this.editor.focus();
     },
     appendQuote(quote) {
-      console.log(quote);
       const fragment = htmlToNodes(this.editor, quote.html);
       insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);
       this.editor.focus();

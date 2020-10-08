@@ -28,7 +28,7 @@
             :vue='vue'
             :content='text1'
             :shiki-request='shikiRequest'
-            :shiki-uploader='shikiUploader'
+            :shiki-uploader='shikiUploader1'
             @update='(value) => text1 = value'
           />
         </div>
@@ -38,7 +38,7 @@
             :vue='vue'
             :content='text2'
             :shiki-request='shikiRequest'
-            :shiki-uploader='shikiUploader'
+            :shiki-uploader='shikiUploader2'
             @update='(value) => text2 = value'
           />
         </div>
@@ -58,7 +58,6 @@ import { ShikiEditorApp } from '../../packages/shiki-editor';
 import { flash, ShikiRequest } from '../../packages/shiki-utils';
 import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
-
 
 const TEXT_2 = `
 [spoiler_block]
@@ -255,7 +254,15 @@ div [div=b-link_button]inline divs are not parsed by editor[/div] div
     shikiRequest() {
       return new ShikiRequest(this.origin, axios);
     },
-    shikiUploader() {
+    shikiUploader1() {
+      return new ShikiUploader({
+        locale: this.locale,
+        xhrEndpoint: this.uploadEndpoint,
+        xhrHeaders: this.uploadHeaders,
+        maxNumberOfFiles: 10
+      });
+    },
+    shikiUploader2() {
       return new ShikiUploader({
         locale: this.locale,
         xhrEndpoint: this.uploadEndpoint,
