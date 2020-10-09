@@ -4,6 +4,10 @@ export default function insertNodes(fragment) {
     const from = $from.pos;
     const to = $to.pos;
 
-    dispatch(state.tr.replaceWith(from, to, fragment));
+    dispatch(
+      state.tr
+        .replaceWith(from, to, fragment)
+        .scrollIntoView()
+    );
   };
 }

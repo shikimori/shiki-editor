@@ -28,6 +28,7 @@ export default function insertReply({ id, type, text, url }, editor) {
           to + textFragment.nodeSize,
           state.schema.text(', ')
         )
+        .scrollIntoView()
     );
   };
 }
