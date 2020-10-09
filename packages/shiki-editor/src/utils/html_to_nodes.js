@@ -1,11 +1,11 @@
 import { __parseFromClipboard } from 'prosemirror-view';
 
-export default function htmlToNodes(editor, html) {
+export default function htmlToNodes(view, html) {
   return __parseFromClipboard(
-    editor.view,
+    view,
     null,
     html,
     null,
-    editor.view.state.selection.$from
+    view.state.selection.$from
   ).content;
 }

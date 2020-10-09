@@ -1,5 +1,6 @@
 export { default as insertNodes } from './insert_nodes';
 export { default as insertReply } from './insert_reply';
+export { default as insertQuote } from './insert_quote';
 export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as insertUserMention } from './insert_user_mention';

@@ -106,9 +106,9 @@ import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
-import { contentToNodes, htmlToNodes, scrollTop } from './utils';
+import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
-import { insertReply, insertNodes } from './commands';
+import { insertReply, insertNodes, insertQuote } from './commands';
 
 import { flash } from 'shiki-utils';
 
@@ -346,13 +346,13 @@ export default {
       );
     },
     appendReply(reply) {
-      insertReply(reply, this.editor)(this.editor.state, this.editor.view.dispatch);
+      const { editor } = this;
+      insertReply(reply, editor)(editor.state, editor.view.dispatch);
       this.editor.focus();
     },
     appendQuote(quote) {
-      console.log(quote);
-      const fragment = htmlToNodes(this.editor, quote.html);
-      insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);
+      const { editor } = this;
+      insertQuote(quote, editor.view)(editor.state, editor.view.dispatch);
       this.editor.focus();
     },
     appendText(content) {
