@@ -17,6 +17,10 @@ export default class Text extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.text(node.text);
+    if (node.marks.length) {
+      state.renderInline(node); // text node has marks when it is parsed from clipboard
+    } else {
+      state.text(node.text);
+    }
   }
 }

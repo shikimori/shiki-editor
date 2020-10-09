@@ -263,14 +263,23 @@ export default class MarkdownSerializerState {
 
           if (isShortcut) {
             active.pop();
+          } else if (node.isText) {
+            this.text(node.text);
           } else {
             this.render(node, parent, index);
           }
         }
       }
     };
-    parent.forEach(progress);
-    progress(null, null, parent.childCount);
+    if (parent.isText) {  // it is a text node with marks when when it is parsed from clipboard
+      progress(parent, null, 0);
+      active.forEach(mark => {
+        this.text(this.markString(mark, false, parent, 0), false);
+      });
+    } else {
+      parent.forEach(progress);
+      progress(null, null, parent.childCount);
+    }
   }
 
   // :: (Node, string, (number) → string)

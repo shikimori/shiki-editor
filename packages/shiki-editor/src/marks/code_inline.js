@@ -34,10 +34,10 @@ export default class CodeInline extends Mark {
   get markdownSerializerToken() {
     return {
       open(_state, _mark, parent, index) {
-        return backticksFor(parent.child(index));
+        return backticksFor(parent.isText ? parent : parent.child(index));
       },
       close(_state, _mark, parent, index) {
-        return backticksFor(parent.child(index - 1));
+        return backticksFor(parent.isText ? parent : parent.child(index - 1));
       },
       escape: false
     };

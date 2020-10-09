@@ -352,7 +352,7 @@ export default {
     },
     appendQuote(quote) {
       const { editor } = this;
-      insertQuote(quote, editor.view)(editor.state, editor.view.dispatch);
+      insertQuote(quote, editor)(editor.state, editor.view.dispatch);
       this.editor.focus();
     },
     appendText(content) {
