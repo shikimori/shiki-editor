@@ -1,4 +1,4 @@
-import insertNodes from './insert_nodes';
+import insertNode from './insert_node';
 import { htmlToNodes } from '../utils';
 
 export default function insertQuote(quote, editor) {
@@ -11,6 +11,6 @@ export default function insertQuote(quote, editor) {
       nickname: quote.nickname
     }, fragment);
 
-    insertNodes(quoteNode)(state, dispatch);
+    insertNode(quoteNode)(state, dispatch);
   };
 }
