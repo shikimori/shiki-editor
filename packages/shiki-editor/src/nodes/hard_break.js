@@ -32,7 +32,6 @@ export default class HardBreak extends Node {
     });
 
     return {
-      'Mod-Enter': command,
       'Shift-Enter': command
     };
   }
