@@ -8,7 +8,9 @@ import fixUrl from '../utils/fix_url';
 export const CACHE = {};
 const QUEUE = {};
 
-window.SHIKI_LOADER_CACHE = CACHE;
+if (process.env.NODE_ENV !== 'test') {
+  window.SHIKI_LOADER_CACHE = CACHE;
+}
 
 export class ShikiLoader extends Extension {
   IDS_PER_REQUEST = 200
