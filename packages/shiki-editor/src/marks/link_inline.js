@@ -48,9 +48,7 @@ export default class LinkInline extends Mark {
             }
           }),
           contentElement: node => (
-            node.classList.contains('b-mention') ?
-              node.querySelector('span') :
-              node
+            (node.classList.contains('b-mention') && node.querySelector('span')) || node
           )
         }
       ],
