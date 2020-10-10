@@ -9,7 +9,7 @@ export default function htmlToNodes(editor, html) {
     editor.view.state.selection.$from
   ).content;
 
-  const markdown = editor.markdownSerializer.serialize(fragment);
+  const markdown = editor.markdownSerializer.serialize(fragment).trim();
   const result = editor.markdownParser.parse(markdown);
 
   return result.content;
