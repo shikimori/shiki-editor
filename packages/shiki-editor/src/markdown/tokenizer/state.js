@@ -391,9 +391,9 @@ export default class MarkdownTokenizer {
       }
 
       switch (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
-        case true: // it means that was parsed as a block
+        case true: // it means that it was parsed as a block
           return;
-        case false: // it means that was parsed as an inline
+        case false: // it means that it was parsed as an inline
           continue;
       }
 
@@ -641,7 +641,9 @@ export default class MarkdownTokenizer {
   }
 
   finalizeParagraph() {
-    if (!this.nestedSequence || this.inlineTokens.length) {
+    if (this.inlineTokens.length || !this.nestedSequence || (
+      this.nestedSequence && this.isSequenceContinued(1)
+    )) {
       if (!this.paragraphToken) {
         this.paragraphToken = this.tagOpen('paragraph');
       }
@@ -658,10 +660,10 @@ export default class MarkdownTokenizer {
     this.paragraphToken = null;
   }
 
-  isSequenceContinued() {
+  isSequenceContinued(offset = 0) {
     const sequenceSlice = this.text.slice(
-      this.index,
-      this.index + this.nestedSequence.length
+      this.index + offset,
+      this.index + offset + this.nestedSequence.length
     );
 
     return sequenceSlice === this.nestedSequence;

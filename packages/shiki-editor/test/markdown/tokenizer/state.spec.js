@@ -10,7 +10,12 @@ import {
 function text(content) {
   return [
     { type: 'paragraph', direction: 'open' },
-    { type: 'inline', children: [{ type: 'text', content }] },
+    {
+      type: 'inline',
+      children: content ?
+        [{ type: 'text', content }] :
+        []
+    },
     { type: 'paragraph', direction: 'close' }
   ];
 }
@@ -577,6 +582,16 @@ describe('MarkdownTokenizer', () => {
           { type: 'blockquote', direction: 'open' },
           ...text('a'),
           ...text('b'),
+          ...text('c'),
+          { type: 'blockquote', direction: 'close' }
+        ]);
+      });
+
+      it('> a\\n> \\n> c', () => {
+        expect(MarkdownTokenizer.parse('> a\n> \n> c')).to.eql([
+          { type: 'blockquote', direction: 'open' },
+          ...text('a'),
+          ...text(''),
           ...text('c'),
           { type: 'blockquote', direction: 'close' }
         ]);
