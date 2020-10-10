@@ -46,7 +46,12 @@ export default class LinkInline extends Mark {
             meta: {
               isMention: node.classList.contains('b-mention')
             }
-          })
+          }),
+          contentElement: node => (
+            node.classList.contains('b-mention') ?
+              node.querySelector('span') :
+              node
+          )
         }
       ],
       toDOM: node => ['a', {
