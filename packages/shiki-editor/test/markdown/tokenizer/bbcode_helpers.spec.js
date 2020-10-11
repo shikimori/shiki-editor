@@ -7,7 +7,8 @@ import {
   parseQuoteMeta,
   parseSizeMeta,
   parseSpoilerMeta,
-  parseShikiBasicMeta
+  parseShikiBasicMeta,
+  parseShikiImageMeta
 } from '../../../src/markdown/tokenizer/bbcode_helpers';
 
 describe('tokenizer_helpers', () => {
@@ -33,22 +34,6 @@ describe('tokenizer_helpers', () => {
     expect(parseDivMeta('a data-b data-c=d')).to.eql({
       class: 'a',
       data: [['data-b', ''], ['data-c', 'd']]
-    });
-  });
-
-  it('parseImageMeta', () => {
-    expect(parseImageMeta('class=qwe')).to.eql({
-      class: 'qwe'
-    });
-
-    expect(parseImageMeta('100x500')).to.eql({
-      width: '100',
-      height: '500'
-    });
-
-    expect(parseImageMeta('width=100 no-zoom')).to.eql({
-      width: '100',
-      isNoZoom: true
     });
   });
 
@@ -113,10 +98,55 @@ describe('tokenizer_helpers', () => {
   });
 
   it('parseShikiBasicMeta', () => {
-    expect(parseShikiBasicMeta('[anime=1]', 'anime', '1')).to.eql({
+    expect(parseShikiBasicMeta('[anime=1]')).to.eql({
       bbcode: '[anime=1]',
       type: 'anime',
       id: 1
+    });
+
+    expect(parseShikiBasicMeta('[anime=1;2]')).to.eql({
+      bbcode: '[anime=1;2]',
+      type: 'anime',
+      id: 1,
+      meta: { user_id: 2 }
+    });
+
+    expect(parseShikiBasicMeta('[comment=1;2]')).to.eql({
+      bbcode: '[comment=1;2]',
+      type: 'comment',
+      id: 1,
+      meta: { user_id: 2, isMention: true }
+    });
+  });
+
+  it('parseImageMeta', () => {
+    expect(parseImageMeta('[image=1 class=qwe]')).to.eql({
+      bbcode: '[image=1 class=qwe]',
+      type: 'image',
+      id: 1,
+      meta: {
+        class: 'qwe'
+      }
+    });
+
+    expect(parseImageMeta('[image=1 100x500]')).to.eql({
+      bbcode: '[image=1 100x500]',
+      type: 'image',
+      id: 1,
+      meta: {
+        width: '100',
+        height: '500'
+      }
+    });
+
+    expect(parseImageMeta('[poster=1 width=100 no-zoom]')).to.eql({
+      bbcode: '[poster=1 width=100 no-zoom]',
+      type: 'poster',
+      id: 1,
+      meta: {
+        width: '100',
+        isNoZoom: true
+      }
     });
   });
 });

@@ -28,6 +28,7 @@ export default class LinkInline extends Mark {
       attrs: {
         url: {},
         id: { default: null },
+        user_id: { default: null },
         type: { default: null },
         text: { default: null },
         meta: {

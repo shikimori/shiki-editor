@@ -1,9 +1,21 @@
 import fixUrl from '../../utils/fix_url';
 
+import { MENTION_TYPES } from './processors/shiki_inline';
+import {
+  SHIKI_BBCODE_LINK_REGEXP,
+  SHIKI_BBCODE_IMAGE_REGEXP
+} from './processors/shiki_inline';
+
+const SINGLE_SHIKI_BBCODE_LINK_REGEXP =
+  new RegExp(`^${SHIKI_BBCODE_LINK_REGEXP.source}$`);
+
+const SINGLE_SHIKI_BBCODE_IMAGE_REGEXP =
+  new RegExp(`^${SHIKI_BBCODE_IMAGE_REGEXP.source}$`);
+
+const IMAGE_META_REGEXP = /(?:c(?:lass)?=(?<css_class>[\w_-]+))|(?:(?<width>\d+)x(?<height>\d+))|(?:w(?:idth)?=(?<width2>\d+))|(?:h(?:eight)?=(?<height2>\d+))|(?<no_zoom>no-zoom)/;
+
 export const LIST_DEPRECATION_TEXT =
   '[list] is deprecated, use [*] without wrapping in [list] tag';
-
-import { MENTION_TYPES } from './processors/shiki_inline';
 
 export function parseCodeMeta(meta) {
   if (!meta) { return null; }
@@ -36,35 +48,6 @@ export function parseDivMeta(meta) {
   if (data.length) {
     attributes.data = data;
   }
-
-  return attributes;
-}
-
-export const IMAGE_META_REGEXP = /(?:c(?:lass)?=(?<css_class>[\w_-]+))|(?:(?<width>\d+)x(?<height>\d+))|(?:w(?:idth)?=(?<width2>\d+))|(?:h(?:eight)?=(?<height2>\d+))|(?<no_zoom>no-zoom)/;
-
-export function parseImageMeta(meta) {
-  if (!meta) { return null; }
-  const attributes = {};
-  const split = meta.split(' ');
-
-  split.forEach(attribute => {
-    const match = attribute.match(IMAGE_META_REGEXP);
-    if (!match) { return; }
-
-    if (match.groups.no_zoom) {
-      attributes.isNoZoom = true;
-    } else if (match.groups.width || match.groups.width2) {
-      attributes.width = match.groups.width || match.groups.width2;
-    } if (match.groups.height || match.groups.height2) {
-      attributes.height = match.groups.height || match.groups.height2;
-    } if (match.groups.css_class) {
-      if (attributes.css_class) {
-        attributes.class += ` ${match.groups.css_class}`;
-      } else {
-        attributes.class = match.groups.css_class;
-      }
-    }
-  });
 
   return attributes;
 }
@@ -134,18 +117,62 @@ export function parseSpoilerMeta(label, fullwidth_or_centered) {
   return !label && !fullwidth_or_centered ? null : meta;
 }
 
-export function parseShikiBasicMeta(bbcode, type, id, tagMeta) {
+export function parseShikiBasicMeta(bbcode) {
+  const match = bbcode.match(SINGLE_SHIKI_BBCODE_LINK_REGEXP);
+  if (!match) { return; }
+
+  const [, type, id, user_id] = match;
+
   const attrs = {
     bbcode,
     type,
     id: parseInt(id)
   };
 
-  if (tagMeta) {
-    attrs.meta = tagMeta;
-  } else if (MENTION_TYPES.includes(attrs.type)) {
-    attrs.meta = { isMention: true };
+  if (user_id) {
+    attrs.meta ||= {}
+    attrs.meta.user_id = parseInt(user_id);
+  }
+  if (MENTION_TYPES.includes(attrs.type)) {
+    attrs.meta ||= {}
+    attrs.meta.isMention = true
   }
 
   return attrs;
+}
+
+export function parseImageMeta(bbcode) {
+  const match = bbcode.match(SINGLE_SHIKI_BBCODE_IMAGE_REGEXP);
+  if (!match) { return null; }
+
+  const [, type, id, meta] = match;
+
+  const attributes = {};
+  const split = meta.split(' ');
+
+  split.forEach(attribute => {
+    const match = attribute.match(IMAGE_META_REGEXP);
+    if (!match) { return; }
+
+    if (match.groups.no_zoom) {
+      attributes.isNoZoom = true;
+    } else if (match.groups.width || match.groups.width2) {
+      attributes.width = match.groups.width || match.groups.width2;
+    } if (match.groups.height || match.groups.height2) {
+      attributes.height = match.groups.height || match.groups.height2;
+    } if (match.groups.css_class) {
+      if (attributes.css_class) {
+        attributes.class += ` ${match.groups.css_class}`;
+      } else {
+        attributes.class = match.groups.css_class;
+      }
+    }
+  });
+
+  return {
+    bbcode,
+    type,
+    id: parseInt(id),
+    meta: attributes
+  };
 }

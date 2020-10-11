@@ -12,6 +12,7 @@ import {
   parseLinkMeta,
   parseQuoteMeta,
   parseShikiBasicMeta,
+  parseShikiImageMeta,
   parseSizeMeta,
   parseSpoilerMeta,
   LIST_DEPRECATION_TEXT
@@ -31,11 +32,7 @@ import processLinkInline from './processors/link_inline';
 import { processInlineOrBlock } from './processors/inline_or_block';
 import processMarkOpen from './processors/mark_open';
 import processMarkClose from './processors/mark_close';
-import {
-  processShikiInline,
-  SHIKI_BBCODE_LINK_REGEXP,
-  SHIKI_BBCODE_IMAGE_REGEXP
-} from './processors/shiki_inline';
+import { processShikiInline } from './processors/shiki_inline';
 import processShikiBlock from './processors/shiki_block';
 import processSmiley from './processors/smiley';
 
@@ -50,11 +47,6 @@ export default class MarkdownTokenizer {
   SIZE_REGEXP = /^\[size=(\d+)\]$/
   LINK_REGEXP = /^\[url=(.+?)\]$/
   EMPTY_SPACES_REGEXP = /^ +$/
-
-  SINGLE_SHIKI_BBCODE_LINK_REGEXP =
-    new RegExp(`^${SHIKI_BBCODE_LINK_REGEXP.source}$`)
-  SINGLE_SHIKI_BBCODE_IMAGE_REGEXP =
-    new RegExp(`^${SHIKI_BBCODE_IMAGE_REGEXP.source}$`)
 
   MARK_STACK_MAPPINGS = {
     color_inline: '[color]',
@@ -318,9 +310,8 @@ export default class MarkdownTokenizer {
           case '[entr':
           case '[mess':
           case '[user':
-            match = bbcode.match(this.SINGLE_SHIKI_BBCODE_LINK_REGEXP);
-            if (!match) { break; }
-            meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
+            meta = parseShikiBasicMeta(bbcode);
+            if (!meta) { break; }
 
             if (processShikiBlock(this, bbcode, `[/${meta.type}]`, meta)) { return; }
             break;
@@ -562,24 +553,16 @@ export default class MarkdownTokenizer {
         case '[entr':
         case '[mess':
         case '[user':
-          match = bbcode.match(this.SINGLE_SHIKI_BBCODE_LINK_REGEXP);
-          if (!match) { break; }
-          meta = parseShikiBasicMeta(bbcode, match[1], match[2]);
+          meta = parseShikiBasicMeta(bbcode);
+          if (!meta) { break; }
 
           if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) { return false; }
           break;
 
         case '[post':
         case '[imag':
-          match = bbcode.match(this.SINGLE_SHIKI_BBCODE_IMAGE_REGEXP);
-          if (!match) { break; }
-
-          let imageMeta; // eslint-disable-line
-          if (match[3]) {
-            imageMeta = parseImageMeta(match[3]);
-            if (!imageMeta) { break; }
-          }
-          meta = parseShikiBasicMeta(bbcode, match[1], match[2], imageMeta);
+          meta = parseShikiImageMeta(bbcode);
+          if (!meta) { break; }
 
           if (processShikiInline(this, bbcode, null, meta)) { return false; }
           break;
