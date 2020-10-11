@@ -1,10 +1,10 @@
 import { getShikiLoader } from '../utils';
 
-export default function insertReply({ id, type, text, url }, editor) {
+export default function insertReply({ id, type, user_id, text, url }, editor) {
   return (state, dispatch) => {
     if (editor) {
       const loader = getShikiLoader(editor);
-      loader.addToCache(type, id, { id, text, url }, true);
+      loader.addToCache(type, id, { id, text, user_id, url }, true);
     }
 
     const { $from, $to } = state.selection;
@@ -14,6 +14,7 @@ export default function insertReply({ id, type, text, url }, editor) {
     const linkInlineMark = state.schema.marks.link_inline.create({
       id,
       type,
+      user_id,
       text,
       url,
       meta: { isMention: true }
