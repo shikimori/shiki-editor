@@ -158,12 +158,11 @@ export function parseShikiBasicMeta(bbcode) {
   };
 
   if (user_id) {
-    attrs.meta ||= {}
-    attrs.meta.user_id = parseInt(user_id);
+    attrs.user_id = parseInt(user_id);
   }
   if (MENTION_TYPES.includes(attrs.type)) {
-    attrs.meta ||= {}
-    attrs.meta.isMention = true
+    attrs.meta ||= {};
+    attrs.meta.isMention = true;
   }
 
   return attrs;

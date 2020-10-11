@@ -124,14 +124,15 @@ describe('tokenizer_helpers', () => {
       bbcode: '[anime=1;2]',
       type: 'anime',
       id: 1,
-      meta: { user_id: 2 }
+      user_id: 2
     });
 
     expect(parseShikiBasicMeta('[comment=1;2]')).to.eql({
       bbcode: '[comment=1;2]',
       type: 'comment',
       id: 1,
-      meta: { user_id: 2, isMention: true }
+      user_id: 2,
+      meta: { isMention: true }
     });
   });
 
