@@ -131,7 +131,8 @@ export default class LinkInline extends Mark {
       },
       open(_state, mark, _parent, _index) {
         if (mark.attrs.type && mark.attrs.id) {
-          return `[${mark.attrs.type}=${mark.attrs.id}` +
+          const userId = mark.attrs.user_id ? `;${mark.attrs.user_id}` : '';
+          return `[${mark.attrs.type}=${mark.attrs.id}${userId}` +
             `${bbcodeLabel(mark.attrs)}]`;
         } else if (mark.attrs.text === mark.attrs.url) {
           return '[url]';
