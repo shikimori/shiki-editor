@@ -8,7 +8,6 @@ import {
 import {
   parseCodeMeta,
   parseDivMeta,
-  parseImageMeta,
   parseLinkMeta,
   parseQuoteMeta,
   parseShikiBasicMeta,

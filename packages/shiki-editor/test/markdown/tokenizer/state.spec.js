@@ -2110,7 +2110,8 @@ describe('MarkdownTokenizer', () => {
                 attrs: [
                   ['bbcode', '[poster=1]'],
                   ['type', 'poster'],
-                  ['id', 1]
+                  ['id', 1],
+                  ['meta', {}]
                 ]
               }
             ]
@@ -2130,7 +2131,8 @@ describe('MarkdownTokenizer', () => {
                 attrs: [
                   ['bbcode', '[image=1]'],
                   ['type', 'image'],
-                  ['id', 1]
+                  ['id', 1],
+                  ['meta', {}]
                 ]
               }
             ]
@@ -2174,7 +2176,8 @@ describe('MarkdownTokenizer', () => {
                 attrs: [
                   ['bbcode', '[image=1]'],
                   ['type', 'image'],
-                  ['id', 1]
+                  ['id', 1],
+                  ['meta', {}]
                 ]
               },
               {

@@ -52,6 +52,34 @@ export function parseDivMeta(meta) {
   return attributes;
 }
 
+export function parseImageMeta(meta) {
+  if (!meta) { return {}; }
+
+  const attributes = {};
+  const split = meta.split(' ');
+
+  split.forEach(attribute => {
+    const match = attribute.match(IMAGE_META_REGEXP);
+    if (!match) { return; }
+
+    if (match.groups.no_zoom) {
+      attributes.isNoZoom = true;
+    } else if (match.groups.width || match.groups.width2) {
+      attributes.width = match.groups.width || match.groups.width2;
+    } if (match.groups.height || match.groups.height2) {
+      attributes.height = match.groups.height || match.groups.height2;
+    } if (match.groups.css_class) {
+      if (attributes.css_class) {
+        attributes.class += ` ${match.groups.css_class}`;
+      } else {
+        attributes.class = match.groups.css_class;
+      }
+    }
+  });
+
+  return attributes;
+}
+
 export function parseLinkMeta(meta) {
   return {
     url: fixUrl(meta)
@@ -141,38 +169,16 @@ export function parseShikiBasicMeta(bbcode) {
   return attrs;
 }
 
-export function parseImageMeta(bbcode) {
+export function parseShikiImageMeta(bbcode) {
   const match = bbcode.match(SINGLE_SHIKI_BBCODE_IMAGE_REGEXP);
   if (!match) { return null; }
 
   const [, type, id, meta] = match;
 
-  const attributes = {};
-  const split = meta.split(' ');
-
-  split.forEach(attribute => {
-    const match = attribute.match(IMAGE_META_REGEXP);
-    if (!match) { return; }
-
-    if (match.groups.no_zoom) {
-      attributes.isNoZoom = true;
-    } else if (match.groups.width || match.groups.width2) {
-      attributes.width = match.groups.width || match.groups.width2;
-    } if (match.groups.height || match.groups.height2) {
-      attributes.height = match.groups.height || match.groups.height2;
-    } if (match.groups.css_class) {
-      if (attributes.css_class) {
-        attributes.class += ` ${match.groups.css_class}`;
-      } else {
-        attributes.class = match.groups.css_class;
-      }
-    }
-  });
-
   return {
     bbcode,
     type,
     id: parseInt(id),
-    meta: attributes
+    meta: parseImageMeta(meta)
   };
 }

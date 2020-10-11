@@ -37,6 +37,22 @@ describe('tokenizer_helpers', () => {
     });
   });
 
+  it('parseImageMeta', () => {
+    expect(parseImageMeta('class=qwe')).to.eql({
+      class: 'qwe'
+    });
+
+    expect(parseImageMeta('100x500')).to.eql({
+      width: '100',
+      height: '500'
+    });
+
+    expect(parseImageMeta('width=100 no-zoom')).to.eql({
+      width: '100',
+      isNoZoom: true
+    });
+  });
+
   it('parseLinkMeta', () => {
     expect(parseLinkMeta('qwe')).to.eql({ url: '//qwe' });
     expect(parseLinkMeta('https://ya.ru')).to.eql({ url: 'https://ya.ru' });
@@ -119,8 +135,15 @@ describe('tokenizer_helpers', () => {
     });
   });
 
-  it('parseImageMeta', () => {
-    expect(parseImageMeta('[image=1 class=qwe]')).to.eql({
+  it('parseShikiImageMeta', () => {
+    expect(parseShikiImageMeta('[image=1]')).to.eql({
+      bbcode: '[image=1]',
+      type: 'image',
+      id: 1,
+      meta: {}
+    });
+
+    expect(parseShikiImageMeta('[image=1 class=qwe]')).to.eql({
       bbcode: '[image=1 class=qwe]',
       type: 'image',
       id: 1,
@@ -129,7 +152,7 @@ describe('tokenizer_helpers', () => {
       }
     });
 
-    expect(parseImageMeta('[image=1 100x500]')).to.eql({
+    expect(parseShikiImageMeta('[image=1 100x500]')).to.eql({
       bbcode: '[image=1 100x500]',
       type: 'image',
       id: 1,
@@ -139,7 +162,7 @@ describe('tokenizer_helpers', () => {
       }
     });
 
-    expect(parseImageMeta('[poster=1 width=100 no-zoom]')).to.eql({
+    expect(parseShikiImageMeta('[poster=1 width=100 no-zoom]')).to.eql({
       bbcode: '[poster=1 width=100 no-zoom]',
       type: 'poster',
       id: 1,
