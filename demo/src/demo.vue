@@ -61,28 +61,26 @@ import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 1
-a [comment=9999999999] b
-2
-a [comment=9999999999;1] b
-3
-a [comment=6324359;1] b
-4
-a [comment=6324359;1]zxc[/comment] b
-5
-a [url]https://lenta.ru/[/url] b
-6
 
-1
-[comment=9999999999]
+> test
+
 2
-[comment=9999999999;1]
+
+[quote]test[/quote]
+
 3
-[comment=6324359;1]
+
+>?c6324378;1;morr
+> test
+
 4
-[comment=6324359;1]zxc[/comment]
+
+[quote=c6324378;1;morr]test[/quote]
+
 5
-[url]https://lenta.ru/[/url]
-6
+
+
+
 `.trim();
 
 export default {
