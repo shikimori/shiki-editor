@@ -56,14 +56,14 @@ export default class ShikiInline extends Node {
             isPasted: true
           };
 
+          const userId = attrs.user_id ? `;${attrs.user_id}` : '';
+          attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;
+
           if (node.classList.contains('b-entry-404')) {
-            attrs.bbcode = node.querySelector('del').innerText,
             attrs.isNotFound = true;
             attrs.isLoading = false;
-            attrs.shikiData = null
+            attrs.shikiData = null;
           } else {
-            const userId = attrs.user_id ? `;${attrs.user_id}` : '';
-            attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;
             attrs.shikiData = {
               id: attrs.id,
               user_id: attrs.user_id,
