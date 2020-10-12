@@ -34,7 +34,7 @@ export default class ShikiInline extends Node {
         isNotFound: { default: false },
         isError: { default: false },
         isPasted: { default: false },
-        shikiData: { default: null }
+        shikiData: { default: undefined }
       },
       inline: true,
       content: 'inline*',
@@ -60,6 +60,7 @@ export default class ShikiInline extends Node {
             attrs.bbcode = node.querySelector('del').innerText,
             attrs.isNotFound = true;
             attrs.isLoading = false;
+            attrs.shikiData = null
           } else {
             const userId = attrs.user_id ? `;${attrs.user_id}` : '';
             attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;

@@ -15,7 +15,7 @@ export default class ShikiView extends DOMView {
     this.syncState();
     this.appendContent();
 
-    if (this.node.attrs.shikiData) {
+    if (this.node.attrs.shikiData !== undefined) {
       this.cacheInShikiLoader();
     }
 

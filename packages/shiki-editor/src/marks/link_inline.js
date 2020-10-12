@@ -43,7 +43,7 @@ export default class LinkInline extends Mark {
             url: node.href,
             ...JSON.parse(node.getAttribute('data-attrs')),
             isPasted: true
-          }),
+          })
           // contentElement: node => {
           //   return (node.classList.contains('b-mention') && node.querySelector('span')) || node;
           // }
