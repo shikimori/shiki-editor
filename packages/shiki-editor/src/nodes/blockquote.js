@@ -1,4 +1,5 @@
 import { wrappingInputRule } from 'prosemirror-inputrules';
+import { Plugin } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
@@ -77,6 +78,24 @@ export default class Blockquote extends Node {
   inputRules({ type }) {
     return [
       wrappingInputRule(/^\s*>\s$/, type)
+    ];
+  }
+
+  // hack to prevent getting extra new line before tag
+  get plugins() {
+    return [
+      new Plugin({
+        props: {
+          transformPastedHTML(html) {
+            if (html.includes('data-pm-slice')) { return html; }
+
+            return html.replace(
+              /<br[^>]*><br[^>]*><blockquote/g,
+              '<br><blockquote'
+            );
+          }
+        }
+      })
     ];
   }
 
