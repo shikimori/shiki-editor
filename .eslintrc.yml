@@ -47,8 +47,9 @@ rules:
   arrow-parens:
     - 0
     - as-needed
-  no-console: 0
-  no-alert: 0
+  no-console: 1
+  no-alert: 1
+  no-debugger: 1
   no-trailing-spaces:
     - error
   no-return-assign: 0
@@ -63,7 +64,6 @@ rules:
   no-use-before-define: 0
   no-mixed-operators: 0
   no-new: 0
-  no-debugger: 0
   function-paren-newline: 0
   comma-dangle:
     - warn
