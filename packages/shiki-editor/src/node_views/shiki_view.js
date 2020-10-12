@@ -10,9 +10,14 @@ export default class ShikiView extends DOMView {
 
     this.dom = document.createElement(this.elementType);
     this.dom.classList.add('b-shiki_editor-node');
+    this.dom.setAttribute('data-attrs', JSON.stringify(this.node.attrs));
 
     this.syncState();
     this.appendContent();
+
+    if (this.node.attrs.shikiData) {
+      this.cacheInShikiLoader();
+    }
 
     if (this.node.attrs.isLoading) {
       this.fetch();
@@ -37,7 +42,7 @@ export default class ShikiView extends DOMView {
     return getShikiLoader(this.editor);
   }
 
-  appendContent() {
+  async appendContent() {
     const domSerializer = DOMSerializer.fromSchema(this.editor.schema);
 
     if (this.isInline) {
@@ -224,5 +229,14 @@ export default class ShikiView extends DOMView {
 
   error() {
     this.updateAttrs({ isLoading: false, isError: true }, false);
+  }
+
+  cacheInShikiLoader() {
+    this.shikiLoader.addToCache(
+      this.type,
+      this.node.attrs.id,
+      this.node.attrs.shikiData,
+      true
+    );
   }
 }

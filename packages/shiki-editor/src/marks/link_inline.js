@@ -38,28 +38,32 @@ export default class LinkInline extends Mark {
       inclusive: false,
       parseDOM: [
         {
-          tag: 'a[href]:not(.prosemirror-block)',
+          tag: 'a[href]:not(.prosemirror-block):not(.b-mention):not(.b-entry-404)',
           getAttrs: node => ({
-            url: node.getAttribute('href'),
-            id: node.getAttribute('data-id'),
-            type: node.getAttribute('data-type'),
-            user_id: node.getAttribute('data-user_id'),
-            text: node.getAttribute('data-text'),
-            meta: {
-              isMention: node.classList.contains('b-mention')
-            }
+            url: node.href,
+            ...JSON.parse(node.getAttribute('data-attrs')),
+            isPasted: true
           }),
-          contentElement: node => (
-            (node.classList.contains('b-mention') && node.querySelector('span')) || node
-          )
+          // contentElement: node => {
+          //   return (node.classList.contains('b-mention') && node.querySelector('span')) || node;
+          // }
+          // contentElement: node => (
+          //   (node.classList.contains('b-mention') && node.querySelector('span')) || node
+          // )
+          // contentElement: node => {
+          //   if (node.classList.contains('b-entry-404')) {
+          //     return node.querySelector('del') || node;
+          //   } else if (node.classList.contains('b-mention')) {
+          //     return node.querySelector('span') || node;
+          //   } else {
+          //     return node;
+          //   }
+          // }
         }
       ],
       toDOM: node => ['a', {
         href: fixUrl(node.attrs.url),
-        'data-id': node.attrs.id,
-        'data-type': node.attrs.type,
-        'data-user_id': node.attrs.user_id,
-        'data-text': node.attrs.text,
+        'data-attrs': JSON.stringify(node.attrs),
         class: node.attrs.meta.isMention ? 'b-mention' : 'b-link',
         // rel: 'noopener noreferrer nofollow',
         target: '_blank'

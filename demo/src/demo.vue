@@ -60,28 +60,29 @@ import { throttle, debounce } from '../../packages/shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
->?c6419181;669671;雪ノ下雪乃
-> test
+1
+a [comment=9999999999] b
+2
+a [comment=9999999999;1] b
+3
+a [comment=6324359;1] b
+4
+a [comment=6324359;1]zxc[/comment] b
+5
+a [url]https://lenta.ru/[/url] b
+6
 
->?morr
-> test
-
-> >?c6419181;669671;雪ノ下雪乃
-> > test
-
-- >?c6419181;669671;雪ノ下雪乃
-  > test
-
-[quote=c6419181;669671;雪ノ下雪乃]test[/quote]
-[quote]test[/quote]
-[quote=zxc]test[/quote]
-
-[spoiler_block]
-> aaaa ||bbbb|| \`test\` [b][u][s]b[i]ol[/i]d[/s][/u][/b]
-test
-[/spoiler_block]
-
-[image=1203647]
+1
+[comment=9999999999]
+2
+[comment=9999999999;1]
+3
+[comment=6324359;1]
+4
+[comment=6324359;1]zxc[/comment]
+5
+[url]https://lenta.ru/[/url]
+6
 `.trim();
 
 export default {

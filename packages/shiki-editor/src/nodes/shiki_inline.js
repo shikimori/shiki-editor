@@ -24,7 +24,8 @@ export default class ShikiInline extends Node {
       attrs: {
         id: {},
         type: {},
-        bbcode: {},
+        user_id: { default: null },
+        bbcode: { default: null }, // it is missing in clipboard pasted content
         openBbcode: { default: null },
         closeBbcode: { default: null },
         meta: { default: {} },
@@ -32,7 +33,8 @@ export default class ShikiInline extends Node {
         isLoading: { default: true },
         isNotFound: { default: false },
         isError: { default: false },
-        isPasted: { default: false }
+        isPasted: { default: false },
+        shikiData: { default: null }
       },
       inline: true,
       content: 'inline*',
@@ -45,6 +47,35 @@ export default class ShikiInline extends Node {
           ...JSON.parse(node.getAttribute('data-attrs')),
           isPasted: true
         })
+      }, {
+        tag: 'a.b-mention',
+        getAttrs: node => {
+          const attrs = {
+            ...JSON.parse(node.getAttribute('data-attrs')),
+            meta: { isMention: true },
+            isPasted: true
+          };
+
+          if (node.classList.contains('b-entry-404')) {
+            attrs.bbcode = node.querySelector('del').innerText,
+            attrs.isNotFound = true;
+            attrs.isLoading = false;
+          } else {
+            const userId = attrs.user_id ? `;${attrs.user_id}` : '';
+            attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;
+            attrs.shikiData = {
+              id: attrs.id,
+              user_id: attrs.user_id,
+              text: attrs.text,
+              url: node.href
+            };
+          }
+
+          return attrs;
+        },
+        contentElement: node => (
+          node.querySelector('span') || node.querySelector('del') || node
+        )
       }],
       toDOM: node => {
         if (node.attrs.text) {

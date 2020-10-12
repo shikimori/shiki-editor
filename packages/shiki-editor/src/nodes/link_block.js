@@ -32,19 +32,19 @@ export default class LinkBlock extends Node {
       content: 'block*',
       group: 'block',
       draggable: false,
-      parseDOM: [
-        {
-          tag: 'a[href]',
-          getAttrs: node => ({
-            url: node.getAttribute('href'),
-            id: node.getAttribute('data-id'),
-            type: node.getAttribute('data-type')
-            // meta: {
-            //   isMention: node.classList.contains('b-mention')
-            // }
-          })
-        }
-      ],
+      // parseDOM: [
+      //   {
+      //     tag: 'a[href]',
+      //     getAttrs: node => ({
+      //       url: node.getAttribute('href'),
+      //       id: node.getAttribute('data-id'),
+      //       type: node.getAttribute('data-type')
+      //       // meta: {
+      //       //   isMention: node.classList.contains('b-mention')
+      //       // }
+      //     })
+      //   }
+      // ],
       toDOM: node => [
         'a',
         {
