@@ -21,7 +21,6 @@ export default class Image extends Node {
         height: { default: null },
         isNoZoom: { default: false },
         class: { default: null },
-        shikiData: { default: undefined }
       },
       group: 'inline',
       draggable: true,
@@ -34,7 +33,7 @@ export default class Image extends Node {
             node.querySelector('img').src;
 
           if (attrs.id) {
-            attrs.shikiData = {
+            const shikiData = {
               id: attrs.id,
               url: attrs.src
             };

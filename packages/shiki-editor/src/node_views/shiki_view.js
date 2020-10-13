@@ -15,10 +15,6 @@ export default class ShikiView extends DOMView {
     this.syncState();
     this.appendContent();
 
-    if (this.node.attrs.shikiData !== undefined) {
-      this.cacheInShikiLoader();
-    }
-
     if (this.node.attrs.isLoading) {
       this.fetch();
     }
@@ -229,14 +225,5 @@ export default class ShikiView extends DOMView {
 
   error() {
     this.updateAttrs({ isLoading: false, isError: true }, false);
-  }
-
-  cacheInShikiLoader() {
-    this.shikiLoader.addToCache(
-      this.type,
-      this.node.attrs.id,
-      this.node.attrs.shikiData,
-      true
-    );
   }
 }

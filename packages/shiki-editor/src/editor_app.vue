@@ -347,7 +347,7 @@ export default {
     },
     appendReply(reply) {
       const { editor } = this;
-      insertReply(reply, editor)(editor.state, editor.view.dispatch);
+      insertReply(reply)(editor.state, editor.view.dispatch);
       this.editor.focus();
     },
     appendQuote(quote) {

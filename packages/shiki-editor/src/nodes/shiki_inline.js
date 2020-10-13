@@ -33,8 +33,7 @@ export default class ShikiInline extends Node {
         isLoading: { default: true },
         isNotFound: { default: false },
         isError: { default: false },
-        isPasted: { default: false },
-        shikiData: { default: undefined }
+        isPasted: { default: false }
       },
       inline: true,
       content: 'inline*',
@@ -62,9 +61,8 @@ export default class ShikiInline extends Node {
           if (node.classList.contains('b-entry-404')) {
             attrs.isNotFound = true;
             attrs.isLoading = false;
-            attrs.shikiData = null;
           } else {
-            attrs.shikiData = {
+            const shikiData = {
               id: attrs.id,
               userId: attrs.userId,
               text: attrs.text,

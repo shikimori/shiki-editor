@@ -14,7 +14,6 @@ if (process.env.NODE_ENV !== 'test') {
 
 export class ShikiLoader extends Extension {
   IDS_PER_REQUEST = 200
-
   get name() {
     return 'shiki_loader';
   }
@@ -39,15 +38,6 @@ export class ShikiLoader extends Extension {
     this.sendRequest();
 
     return deferred.promise;
-  }
-
-  addToCache(kind, id, data, isType = false) {
-    if (isType) {
-      kind = convertToShikiType(kind); // eslint-disable-line no-param-reassign
-    }
-
-    CACHE[kind] ||= {};
-    CACHE[kind][id] ||= data;
   }
 
   resetCache({ id, type }) {
@@ -92,7 +82,7 @@ export class ShikiLoader extends Extension {
             result.url = fixUrl(result.url, this.options.shikiRequest.origin);
           }
 
-          this.addToCache(kind, id, result);
+          addToCache(kind, id, result);
           this.resolve(QUEUE[kind]?.[id], result, kind, id);
         }
       });
@@ -183,3 +173,12 @@ export function convertToShikiType(type) {
       return type;
   }
 }
+
+export function addToCache(kind, id, data, isType = false) {
+  if (isType) {
+    kind = convertToShikiType(kind); // eslint-disable-line no-param-reassign
+  }
+
+  CACHE[kind] ||= {};
+  CACHE[kind][id] ||= data;
+};

@@ -1,11 +1,8 @@
-import { getShikiLoader } from '../utils';
+import { addToCache } from '../extensions';
 
-export default function insertReply({ id, type, userId, text, url }, editor) {
+export default function insertReply({ id, type, userId, text, url }) {
   return (state, dispatch) => {
-    if (editor) {
-      const loader = getShikiLoader(editor);
-      loader.addToCache(type, id, { id, text, userId, url }, true);
-    }
+    addToCache(type, id, { id, text, userId, url }, true);
 
     const { $from, $to } = state.selection;
     const from = $from.pos;

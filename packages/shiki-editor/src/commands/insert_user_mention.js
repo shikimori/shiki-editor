@@ -1,6 +1,6 @@
-import { getShikiLoader } from '../utils';
+import { addToCache } from '../extensions';
 
-export default function insertUserMention({ range, attrs, schema, editor }) {
+export default function insertUserMention({ range, attrs, schema }) {
   return (state, dispatch, _view) => {
     const replacement = schema.text(
       attrs.text,
@@ -10,7 +10,7 @@ export default function insertUserMention({ range, attrs, schema, editor }) {
     );
 
     dispatch(state.tr.replaceWith(range.from, range.to, replacement));
-    getShikiLoader(editor).addToCache('user', attrs.id, attrs);
+    addToCache('user', attrs.id, attrs);
   };
 }
 
