@@ -16,7 +16,7 @@ export default class Image extends Node {
       attrs: {
         id: { default: null },
         src: {},
-        isPoster: { default: false },
+        is_poster: { default: false },
         width: { default: null },
         height: { default: null },
         is_no_zoom: { default: false },
@@ -44,11 +44,11 @@ export default class Image extends Node {
         }
       }, {
         tag: 'img.b-poster',
-        getAttrs: node => ({ src: node.src, isPoster: true })
+        getAttrs: node => ({ src: node.src, is_poster: true })
       }],
       toDOM: node => {
         const serializedAttributes = JSON.stringify(node.attrs);
-        if (node.attrs.isPoster) {
+        if (node.attrs.is_poster) {
           return [
             'img',
             {
@@ -149,7 +149,7 @@ export function tagSequence(node) {
 function tagPrefix(node) {
   const { attrs } = node;
 
-  if (attrs.isPoster) {
+  if (attrs.is_poster) {
     return 'poster';
   } else if (attrs.id) {
     return 'image';

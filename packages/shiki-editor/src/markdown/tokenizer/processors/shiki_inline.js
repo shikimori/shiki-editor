@@ -29,7 +29,7 @@ function processShikiImage(state, openBbcode, meta) {
       new Token('image', null, null, {
         id: meta.id,
         src: cache.url,
-        isPoster: meta.type === 'poster',
+        is_poster: meta.type === 'poster',
         ...meta.meta
       })
     );

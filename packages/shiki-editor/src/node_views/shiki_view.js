@@ -160,7 +160,7 @@ export default class ShikiView extends DOMView {
       this.view.state.schema.nodes.image.create({
         id: result.id,
         src: result.url,
-        isPoster: this.type === 'poster',
+        is_poster: this.type === 'poster',
         ...this.node.attrs.meta
       }, null, this.node.marks),
       false

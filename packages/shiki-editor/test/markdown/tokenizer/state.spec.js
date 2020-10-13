@@ -864,7 +864,7 @@ describe('MarkdownTokenizer', () => {
             children: [
               {
                 type: 'image',
-                attrs: [['src', 'https://test.com'], ['isPoster', false]]
+                attrs: [['src', 'https://test.com'], ['is_poster', false]]
               }
             ]
           },
@@ -884,7 +884,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'image',
                 attrs: [
                   ['src', 'https://test.com'],
-                  ['isPoster', false],
+                  ['is_poster', false],
                   ['class', 'zxc'],
                   ['width', '400'],
                   ['height', '500']
@@ -906,7 +906,7 @@ describe('MarkdownTokenizer', () => {
             children: [
               {
                 type: 'image',
-                attrs: [['src', 'https://test.com'], ['isPoster', true]]
+                attrs: [['src', 'https://test.com'], ['is_poster', true]]
               }
             ]
           },

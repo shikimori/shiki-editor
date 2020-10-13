@@ -53,7 +53,7 @@ export default {
         !this.node.attrs.height;
     },
     isPoster() {
-      return this.node.attrs.isPoster;
+      return this.node.attrs.is_poster;
     },
     customClass() {
       return this.node.attrs.class;
