@@ -1,4 +1,4 @@
-import { addToCache } from '../extensions';
+import { addToShikiCache } from '../extensions';
 
 export default function insertUserMention({ range, attrs, schema }) {
   return (state, dispatch, _view) => {
@@ -10,7 +10,7 @@ export default function insertUserMention({ range, attrs, schema }) {
     );
 
     dispatch(state.tr.replaceWith(range.from, range.to, replacement));
-    addToCache('user', attrs.id, attrs);
+    addToShikiCache('user', attrs.id, attrs);
   };
 }
 

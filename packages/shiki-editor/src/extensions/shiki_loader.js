@@ -82,7 +82,7 @@ export class ShikiLoader extends Extension {
             result.url = fixUrl(result.url, this.options.shikiRequest.origin);
           }
 
-          addToCache(kind, id, result);
+          addToShikiCache(kind, id, result);
           this.resolve(QUEUE[kind]?.[id], result, kind, id);
         }
       });
@@ -174,7 +174,7 @@ export function convertToShikiType(type) {
   }
 }
 
-export function addToCache(kind, id, data, isType = false) {
+export function addToShikiCache(kind, id, data, isType = false) {
   if (isType) {
     kind = convertToShikiType(kind); // eslint-disable-line no-param-reassign
   }

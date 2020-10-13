@@ -1,8 +1,8 @@
-import { addToCache } from '../extensions';
+import { addToShikiCache } from '../extensions';
 
 export default function insertReply({ id, type, userId, text, url }) {
   return (state, dispatch) => {
-    addToCache(type, id, { id, text, userId, url }, true);
+    addToShikiCache(type, id, { id, text, userId, url }, true);
 
     const { $from, $to } = state.selection;
     const from = $from.pos;

@@ -2,6 +2,7 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ImageView } from '../node_views';
+import { addToShikiCache } from '../extensions';
 
 const IMAGE_INPUT_REGEX = /\[img\](.*?)\[\/img\]/;
 
@@ -20,7 +21,7 @@ export default class Image extends Node {
         width: { default: null },
         height: { default: null },
         isNoZoom: { default: false },
-        class: { default: null },
+        class: { default: null }
       },
       group: 'inline',
       draggable: true,
@@ -33,10 +34,8 @@ export default class Image extends Node {
             node.querySelector('img').src;
 
           if (attrs.id) {
-            const shikiData = {
-              id: attrs.id,
-              url: attrs.src
-            };
+            const shikiData = { id: attrs.id, url: attrs.src };
+            addToShikiCache('image', attrs.id, shikiData);
           }
 
           return attrs;

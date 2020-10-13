@@ -2,7 +2,7 @@ import { bind } from 'shiki-decorators';
 
 import { Extension } from '../base';
 import { scrollTop } from '../utils';
-import { addToCache } from '../extensions';
+import { addToShikiCache } from '../extensions';
 
 export default class ShikiSearch extends Extension {
   editor = null
@@ -66,7 +66,7 @@ export default class ShikiSearch extends Extension {
     }
 
     dispatch(tr);
-    addToCache(attrs.type, attrs.id, attrs, true);
+    addToShikiCache(attrs.type, attrs.id, attrs, true);
   }
 
   _stub() {

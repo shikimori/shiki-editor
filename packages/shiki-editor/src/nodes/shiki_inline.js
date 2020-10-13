@@ -2,6 +2,7 @@ import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ShikiView } from '../node_views';
 import { pasteRule } from '../commands';
+import { addToShikiCache } from '../extensions';
 
 import {
   SHIKI_BBCODE_LINK_REGEXP,
@@ -58,17 +59,21 @@ export default class ShikiInline extends Node {
           const userId = attrs.userId ? `;${attrs.userId}` : '';
           attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;
 
+          let shikiData;
+
           if (node.classList.contains('b-entry-404')) {
             attrs.isNotFound = true;
             attrs.isLoading = false;
+            shikiData = null;
           } else {
-            const shikiData = {
+            shikiData = {
               id: attrs.id,
               userId: attrs.userId,
               text: attrs.text,
               url: node.href
             };
           }
+          addToShikiCache(attrs.type, attrs.id, shikiData);
 
           return attrs;
         },
