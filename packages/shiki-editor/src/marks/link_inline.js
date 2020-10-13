@@ -12,6 +12,14 @@ import { getMarkAttrs, fixUrl } from '../utils';
 
 import { bbcodeLabel } from '../markdown/tokenizer/processors/shiki_inline';
 
+const NOT_LINKS = [
+  '.prosemirror-block',
+  '.b-mention',
+  '.b-entry-404',
+  '.b-image',
+  '.b-video'
+];
+
 export default class LinkInline extends Mark {
   get name() {
     return 'link_inline';
@@ -38,7 +46,7 @@ export default class LinkInline extends Mark {
       inclusive: false,
       parseDOM: [
         {
-          tag: 'a[href]:not(.prosemirror-block):not(.b-mention):not(.b-entry-404)',
+          tag: 'a[href]' + NOT_LINKS.map(v => `:not(${v})`).join(''),
           getAttrs: node => ({
             url: node.href,
             ...JSON.parse(node.getAttribute('data-attrs')),
