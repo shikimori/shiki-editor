@@ -49,7 +49,7 @@ describe('tokenizer_helpers', () => {
 
     expect(parseImageMeta('width=100 no-zoom')).to.eql({
       width: '100',
-      isNoZoom: true
+      is_no_zoom: true
     });
   });
 
@@ -169,7 +169,7 @@ describe('tokenizer_helpers', () => {
       id: 1,
       meta: {
         width: '100',
-        isNoZoom: true
+        is_no_zoom: true
       }
     });
   });

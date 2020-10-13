@@ -5,7 +5,7 @@
       "is-prosemirror-selected": selected,
       "b-poster": isPoster,
       "check-width": isCheckWidth,
-      "no-zoom": node.attrs.isNoZoom || isPoster,
+      "no-zoom": node.attrs.is_no_zoom || isPoster,
     }]'
     :data-attrs='serializedAttributes'
     :data-image='tagPreview'

@@ -63,7 +63,7 @@ export function parseImageMeta(meta) {
     if (!match) { return; }
 
     if (match.groups.no_zoom) {
-      attributes.isNoZoom = true;
+      attributes.is_no_zoom = true;
     } else if (match.groups.width || match.groups.width2) {
       attributes.width = match.groups.width || match.groups.width2;
     } if (match.groups.height || match.groups.height2) {

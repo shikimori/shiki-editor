@@ -19,7 +19,7 @@ export default class Image extends Node {
         isPoster: { default: false },
         width: { default: null },
         height: { default: null },
-        isNoZoom: { default: false },
+        is_no_zoom: { default: false },
         class: { default: null },
         shikiData: { default: undefined }
       },
@@ -70,7 +70,7 @@ export default class Image extends Node {
         if (node.attrs.class) {
           classes.push(node.attrs.class);
         }
-        if (node.attrs.isNoZoom) {
+        if (node.attrs.is_no_zoom) {
           classes.push('no-zoom');
         }
 
@@ -161,7 +161,7 @@ function serializeImageAttributes(node) {
   const { attrs } = node;
 
   const attributes = [];
-  if (attrs.isNoZoom) {
+  if (attrs.is_no_zoom) {
     attributes.push('no-zoom');
   }
   if (attrs.class) {
