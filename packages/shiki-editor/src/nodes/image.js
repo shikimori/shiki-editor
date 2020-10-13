@@ -16,10 +16,10 @@ export default class Image extends Node {
       attrs: {
         id: { default: null },
         src: {},
-        is_poster: { default: false },
+        isPoster: { default: false },
         width: { default: null },
         height: { default: null },
-        is_no_zoom: { default: false },
+        isNoZoom: { default: false },
         class: { default: null },
         shikiData: { default: undefined }
       },
@@ -44,11 +44,11 @@ export default class Image extends Node {
         }
       }, {
         tag: 'img.b-poster',
-        getAttrs: node => ({ src: node.src, is_poster: true })
+        getAttrs: node => ({ src: node.src, isPoster: true })
       }],
       toDOM: node => {
         const serializedAttributes = JSON.stringify(node.attrs);
-        if (node.attrs.is_poster) {
+        if (node.attrs.isPoster) {
           return [
             'img',
             {
@@ -70,7 +70,7 @@ export default class Image extends Node {
         if (node.attrs.class) {
           classes.push(node.attrs.class);
         }
-        if (node.attrs.is_no_zoom) {
+        if (node.attrs.isNoZoom) {
           classes.push('no-zoom');
         }
 
@@ -149,7 +149,7 @@ export function tagSequence(node) {
 function tagPrefix(node) {
   const { attrs } = node;
 
-  if (attrs.is_poster) {
+  if (attrs.isPoster) {
     return 'poster';
   } else if (attrs.id) {
     return 'image';
@@ -161,7 +161,7 @@ function serializeImageAttributes(node) {
   const { attrs } = node;
 
   const attributes = [];
-  if (attrs.is_no_zoom) {
+  if (attrs.isNoZoom) {
     attributes.push('no-zoom');
   }
   if (attrs.class) {

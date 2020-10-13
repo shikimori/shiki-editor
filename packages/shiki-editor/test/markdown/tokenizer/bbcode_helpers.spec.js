@@ -49,7 +49,7 @@ describe('tokenizer_helpers', () => {
 
     expect(parseImageMeta('width=100 no-zoom')).to.eql({
       width: '100',
-      is_no_zoom: true
+      isNoZoom: true
     });
   });
 
@@ -67,19 +67,19 @@ describe('tokenizer_helpers', () => {
 
     expect(parseQuoteMeta('c1;1;qwe')).to.eql({
       comment_id: 1,
-      user_id: 1,
+      userId: 1,
       nickname: 'qwe'
     });
 
     expect(parseQuoteMeta('m1;1;qwe')).to.eql({
       message_id: 1,
-      user_id: 1,
+      userId: 1,
       nickname: 'qwe'
     });
 
     expect(parseQuoteMeta('t1;1;qwe')).to.eql({
       topic_id: 1,
-      user_id: 1,
+      userId: 1,
       nickname: 'qwe'
     });
 
@@ -124,14 +124,14 @@ describe('tokenizer_helpers', () => {
       bbcode: '[anime=1;2]',
       type: 'anime',
       id: 1,
-      user_id: 2
+      userId: 2
     });
 
     expect(parseShikiBasicMeta('[comment=1;2]')).to.eql({
       bbcode: '[comment=1;2]',
       type: 'comment',
       id: 1,
-      user_id: 2,
+      userId: 2,
       meta: { isMention: true }
     });
   });
@@ -169,7 +169,7 @@ describe('tokenizer_helpers', () => {
       id: 1,
       meta: {
         width: '100',
-        is_no_zoom: true
+        isNoZoom: true
       }
     });
   });

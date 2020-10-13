@@ -63,7 +63,7 @@ export function parseImageMeta(meta) {
     if (!match) { return; }
 
     if (match.groups.no_zoom) {
-      attributes.is_no_zoom = true;
+      attributes.isNoZoom = true;
     } else if (match.groups.width || match.groups.width2) {
       attributes.width = match.groups.width || match.groups.width2;
     } if (match.groups.height || match.groups.height2) {
@@ -114,7 +114,7 @@ export function parseQuoteMeta(meta) {
         return null;
     }
 
-    attributes.user_id = parseInt(split[1]);
+    attributes.userId = parseInt(split[1]);
     attributes.nickname = split[2];
   }
 
@@ -149,7 +149,7 @@ export function parseShikiBasicMeta(bbcode) {
   const match = bbcode.match(SINGLE_SHIKI_BBCODE_LINK_REGEXP);
   if (!match) { return; }
 
-  const [, type, id, user_id] = match;
+  const [, type, id, userId] = match;
 
   const attrs = {
     bbcode,
@@ -157,8 +157,8 @@ export function parseShikiBasicMeta(bbcode) {
     id: parseInt(id)
   };
 
-  if (user_id) {
-    attrs.user_id = parseInt(user_id);
+  if (userId) {
+    attrs.userId = parseInt(userId);
   }
   if (MENTION_TYPES.includes(attrs.type)) {
     attrs.meta ||= {};

@@ -652,7 +652,7 @@ describe('MarkdownTokenizer', () => {
               direction: 'open',
               attrs: [
                 ['topic_id', 1],
-                ['user_id', 2],
+                ['userId', 2],
                 ['nickname', 'x']
               ]
             },
@@ -675,7 +675,7 @@ describe('MarkdownTokenizer', () => {
                 direction: 'open',
                 attrs: [
                   ['topic_id', 1],
-                  ['user_id', 2],
+                  ['userId', 2],
                   ['nickname', 'x']
                 ]
               },
@@ -694,7 +694,7 @@ describe('MarkdownTokenizer', () => {
                 direction: 'open',
                 attrs: [
                   ['topic_id', 1],
-                  ['user_id', 2],
+                  ['userId', 2],
                   ['nickname', 'x']
                 ]
               },
@@ -864,7 +864,7 @@ describe('MarkdownTokenizer', () => {
             children: [
               {
                 type: 'image',
-                attrs: [['src', 'https://test.com'], ['is_poster', false]]
+                attrs: [['src', 'https://test.com'], ['isPoster', false]]
               }
             ]
           },
@@ -884,7 +884,7 @@ describe('MarkdownTokenizer', () => {
                 type: 'image',
                 attrs: [
                   ['src', 'https://test.com'],
-                  ['is_poster', false],
+                  ['isPoster', false],
                   ['class', 'zxc'],
                   ['width', '400'],
                   ['height', '500']
@@ -906,7 +906,7 @@ describe('MarkdownTokenizer', () => {
             children: [
               {
                 type: 'image',
-                attrs: [['src', 'https://test.com'], ['is_poster', true]]
+                attrs: [['src', 'https://test.com'], ['isPoster', true]]
               }
             ]
           },
@@ -1273,7 +1273,7 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [
               ['topic_id', 1],
-              ['user_id', 2],
+              ['userId', 2],
               ['nickname', 'x'],
               ['nFormat', n()]
             ]
@@ -1292,7 +1292,7 @@ describe('MarkdownTokenizer', () => {
             direction: 'open',
             attrs: [
               ['message_id', 1],
-              ['user_id', 2],
+              ['userId', 2],
               ['nickname', 'x'],
               ['nFormat', n()]
             ]

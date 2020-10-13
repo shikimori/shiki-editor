@@ -7,7 +7,7 @@ export default function insertQuote(quote, editor) {
 
     const quoteNode = state.schema.nodes.blockquote.create({
       [`${quote.type}_id`]: quote.id,
-      user_id: quote.user_id,
+      userId: quote.userId,
       nickname: quote.nickname
     }, fragment);
 

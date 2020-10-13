@@ -5,7 +5,7 @@
       "is-prosemirror-selected": selected,
       "b-poster": isPoster,
       "check-width": isCheckWidth,
-      "no-zoom": node.attrs.is_no_zoom || isPoster,
+      "no-zoom": node.attrs.isNoZoom || isPoster,
     }]'
     :data-attrs='serializedAttributes'
     :data-image='tagPreview'
@@ -53,7 +53,7 @@ export default {
         !this.node.attrs.height;
     },
     isPoster() {
-      return this.node.attrs.is_poster;
+      return this.node.attrs.isPoster;
     },
     customClass() {
       return this.node.attrs.class;

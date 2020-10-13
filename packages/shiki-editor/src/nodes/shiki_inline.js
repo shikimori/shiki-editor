@@ -24,7 +24,7 @@ export default class ShikiInline extends Node {
       attrs: {
         id: {},
         type: {},
-        user_id: { default: null },
+        userId: { default: null },
         bbcode: { default: null }, // it is missing in clipboard pasted content
         openBbcode: { default: null },
         closeBbcode: { default: null },
@@ -56,7 +56,7 @@ export default class ShikiInline extends Node {
             isPasted: true
           };
 
-          const userId = attrs.user_id ? `;${attrs.user_id}` : '';
+          const userId = attrs.userId ? `;${attrs.userId}` : '';
           attrs.bbcode = `[${attrs.type}=${attrs.id}${userId}]`;
 
           if (node.classList.contains('b-entry-404')) {
@@ -66,7 +66,7 @@ export default class ShikiInline extends Node {
           } else {
             attrs.shikiData = {
               id: attrs.id,
-              user_id: attrs.user_id,
+              userId: attrs.userId,
               text: attrs.text,
               url: node.href
             };

@@ -36,7 +36,7 @@ export default class LinkInline extends Mark {
       attrs: {
         url: {},
         id: { default: null },
-        user_id: { default: null },
+        userId: { default: null },
         type: { default: null },
         text: { default: null },
         meta: {
@@ -145,7 +145,7 @@ export default class LinkInline extends Mark {
       },
       open(_state, mark, _parent, _index) {
         if (mark.attrs.type && mark.attrs.id) {
-          const userId = mark.attrs.user_id ? `;${mark.attrs.user_id}` : '';
+          const userId = mark.attrs.userId ? `;${mark.attrs.userId}` : '';
           return `[${mark.attrs.type}=${mark.attrs.id}${userId}` +
             `${bbcodeLabel(mark.attrs)}]`;
         } else if (mark.attrs.text === mark.attrs.url) {

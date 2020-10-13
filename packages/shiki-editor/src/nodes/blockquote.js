@@ -27,7 +27,7 @@ export default class Blockquote extends Node {
         comment_id: { default: undefined },
         message_id: { default: undefined },
         topic_id: { default: undefined },
-        user_id: { default: undefined },
+        userId: { default: undefined },
         nickname: { default: undefined }
       },
       parseDOM: [{

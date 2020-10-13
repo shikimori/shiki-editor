@@ -10,8 +10,8 @@ export function serializeAttrs(attrs, isAddEquals = false) {
       attributes.push(`t${attrs.topic_id}`);
     }
 
-    if (attrs.user_id !== undefined) {
-      attributes.push(attrs.user_id);
+    if (attrs.userId !== undefined) {
+      attributes.push(attrs.userId);
     }
     attributes.push(attrs.nickname);
   }
@@ -47,10 +47,10 @@ export function toDOMInnerQuoteable(attrs, schemaNode) {
         'img',
         {
           src: schemaNode.prependBaseUrl(
-            `/system/users/x16/${attrs.user_id}.png`
+            `/system/users/x16/${attrs.userId}.png`
           ),
           srcset: schemaNode.prependBaseUrl(
-            `/system/users/x32/${attrs.user_id}.png 2x`
+            `/system/users/x32/${attrs.userId}.png 2x`
           )
         }
       ],
