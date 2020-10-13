@@ -20,13 +20,28 @@ export default class Image extends Node {
         width: { default: null },
         height: { default: null },
         isNoZoom: { default: false },
-        class: { default: null }
+        class: { default: null },
+        shikiData: { default: undefined }
       },
       group: 'inline',
       draggable: true,
       parseDOM: [{
         tag: '.b-image',
-        getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
+        getAttrs: node => {
+          const attrs = JSON.parse(node.getAttribute('data-attrs'));
+          attrs.src ||= node.tagName === 'A' ?
+            node.href :
+            node.querySelector('img').src;
+
+          if (attrs.id) {
+            attrs.shikiData = {
+              id: attrs.id,
+              url: attrs.src
+            };
+          }
+
+          return attrs;
+        }
       }, {
         tag: 'img.b-poster',
         getAttrs: node => ({ src: node.src, isPoster: true })
