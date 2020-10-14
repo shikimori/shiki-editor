@@ -29,9 +29,11 @@ export default class Image extends Node {
         tag: '.b-image',
         getAttrs: node => {
           const attrs = JSON.parse(node.getAttribute('data-attrs')) || {};
+
           attrs.src ||= node.tagName === 'A' ?
             node.href :
             node.querySelector('img').src;
+          attrs.isPoster = node.classList.contains('b-poster');
 
           if (attrs.id) {
             const shikiData = { id: attrs.id, url: attrs.src };
