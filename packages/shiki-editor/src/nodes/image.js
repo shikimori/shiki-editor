@@ -37,7 +37,7 @@ export default class Image extends Node {
 
           if (attrs.id) {
             const shikiData = { id: attrs.id, url: attrs.src };
-            addToShikiCache('image', attrs.id, shikiData);
+            addToShikiCache('image', shikiData.id, shikiData);
           }
 
           return attrs;

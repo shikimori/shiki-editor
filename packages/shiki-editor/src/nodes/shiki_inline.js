@@ -52,8 +52,7 @@ export default class ShikiInline extends Node {
         getAttrs: node => {
           const attrs = {
             ...JSON.parse(node.getAttribute('data-attrs')),
-            meta: { isMention: true },
-            isPasted: true
+            meta: { isMention: true }
           };
 
           const userId = attrs.userId ? `;${attrs.userId}` : '';

@@ -47,11 +47,15 @@ export default class LinkInline extends Mark {
       parseDOM: [
         {
           tag: 'a[href]' + NOT_LINKS.map(v => `:not(${v})`).join(''),
-          getAttrs: node => ({
-            url: node.href,
-            ...JSON.parse(node.getAttribute('data-attrs')),
-            isPasted: true
-          })
+          getAttrs: node => {
+            const attrs = {
+              url: node.href,
+              ...JSON.parse(node.getAttribute('data-attrs')),
+              isPasted: true
+            };
+
+            return attrs;
+          }
           // contentElement: node => {
           //   return (node.classList.contains('b-mention') && node.querySelector('span')) || node;
           // }
