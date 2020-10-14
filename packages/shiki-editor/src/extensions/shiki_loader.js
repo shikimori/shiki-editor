@@ -185,11 +185,9 @@ export function convertToShikiType(type) {
   }
 }
 
-export function addToShikiCache(kind, id, data, isType = false) {
-  if (isType) {
-    kind = convertToShikiType(kind); // eslint-disable-line no-param-reassign
-  }
+export function addToShikiCache(type, id, data) {
+  const kind = convertToShikiType(type); // eslint-disable-line no-param-reassign
 
   CACHE[kind] ||= {};
   CACHE[kind][id] ||= data;
-};
+}

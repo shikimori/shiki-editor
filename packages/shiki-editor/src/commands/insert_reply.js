@@ -2,7 +2,7 @@ import { addToShikiCache } from '../extensions';
 
 export default function insertReply({ id, type, userId, text, url }) {
   return (state, dispatch) => {
-    addToShikiCache(type, id, { id, text, userId, url }, true);
+    addToShikiCache(type, id, { id, text, userId, url });
 
     const { $from, $to } = state.selection;
     const from = $from.pos;

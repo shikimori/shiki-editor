@@ -66,7 +66,7 @@ export default class ShikiSearch extends Extension {
     }
 
     dispatch(tr);
-    addToShikiCache(attrs.type, attrs.id, attrs, true);
+    addToShikiCache(attrs.type, attrs.id, attrs);
   }
 
   _stub() {
