@@ -9,6 +9,7 @@ import {
   linkBbcodePasteRule
 } from '../commands';
 import { getMarkAttrs, fixUrl } from '../utils';
+import { addToShikiCache } from '../extensions';
 
 import { bbcodeLabel } from '../markdown/tokenizer/processors/shiki_inline';
 
@@ -27,7 +28,8 @@ export default class LinkInline extends Mark {
 
   get defaultOptions() {
     return {
-      openOnClick: true
+      openOnClick: true,
+      localizationField: 'name'
     };
   }
 
@@ -48,11 +50,27 @@ export default class LinkInline extends Mark {
         {
           tag: 'a[href]' + NOT_LINKS.map(v => `:not(${v})`).join(''),
           getAttrs: node => {
-            const attrs = {
-              url: node.href,
-              ...JSON.parse(node.getAttribute('data-attrs')),
-              isPasted: true
-            };
+            let attrs = JSON.parse(node.getAttribute('data-attrs'));
+            const url = node.href;
+
+            if (!attrs) { // pasted common link
+              attrs = { url };
+            }
+
+            if (attrs.russian) { // pasted from html
+              const shikiData = {
+                id: attrs.id,
+                text: attrs[this.options.localizationField],
+                url
+              };
+              attrs = {
+                id: shikiData.id,
+                type: attrs.type,
+                text: shikiData.text,
+                url
+              };
+              addToShikiCache(attrs.type, shikiData.id, shikiData);
+            }
 
             return attrs;
           }

@@ -404,6 +404,7 @@ export default {
       this.editor = new ShikiEditor({
         content: this.isHugeContent ? '' : this.content,
         shikiRequest: this.shikiRequest,
+        localizationField: this.localizationField,
         extensions,
         plugins: []
       }, this, this.vue);

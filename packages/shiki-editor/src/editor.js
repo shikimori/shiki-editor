@@ -29,6 +29,7 @@ export default class ShikiEditor {
   options = {
     autofocus: null,
     shikiRequest: null,
+    localizationField: 'name',
     content: '',
     dropCursor: {},
     extensions: [],

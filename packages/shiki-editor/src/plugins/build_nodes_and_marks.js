@@ -46,7 +46,7 @@ export default function(editor) {
     new Paragraph(),
     new Heading(),
     new SpoilerInline(), // must be above other marks in order to obtain greater priorirty
-    new LinkInline(),
+    new LinkInline({ localizationField: editor.options.localizationField }),
     new Span(),
     new BoldInline(),
     new ItalicInline(),

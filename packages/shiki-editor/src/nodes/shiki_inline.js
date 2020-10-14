@@ -20,6 +20,12 @@ export default class ShikiInline extends Node {
     return 'shiki_inline';
   }
 
+  // get defaultOptions() {
+  //   return {
+  //     localizationField: 'name'
+  //   };
+  // }
+
   get schema() {
     return {
       attrs: {
@@ -72,7 +78,7 @@ export default class ShikiInline extends Node {
               url: node.href
             };
           }
-          addToShikiCache(attrs.type, attrs.id, shikiData);
+          addToShikiCache(attrs.type, shikiData.id, shikiData);
 
           return attrs;
         },
