@@ -161,7 +161,17 @@ export default {
     shikiRequest: { type: Object, required: true },
     content: { type: String, required: true },
     shikiUploader: { type: Object, required: true },
-    globalSearch: { type: Object, required: false, default: undefined }
+    globalSearch: { type: Object, required: false, default: undefined },
+    localizationField: {
+      type: String,
+      required: true,
+      validator: (value) => (
+        [
+          'name',
+          'russian'
+        ].indexOf(value) !== -1
+      )
+    }
   },
   data: () => ({
     editor: null,

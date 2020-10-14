@@ -137,8 +137,6 @@ export default class ShikiView extends DOMView {
     const result = await this.shikiLoader.readCache(this.node.attrs) ||
       await this.shikiLoader.fetch(this.node.attrs);
 
-    console.log(result);
-
     if (this.isDestroyed || !this.node.attrs.isLoading) { return; }
 
     if (result) {
