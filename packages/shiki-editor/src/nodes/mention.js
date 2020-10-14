@@ -19,46 +19,47 @@ export default class Mention extends Node {
     };
   }
 
-  get schema() {
-    return {
-      attrs: {
-        id: {},
-        nickname: {}
-      },
-      group: 'inline',
-      inline: true,
-      selectable: false,
-      atom: true,
-      toDOM: node => [
-        'a',
-        {
-          class: 'b-mention',
-          href: `${this.options.origin}/${node.attrs.nickname}`,
-          'data-mention-id': node.attrs.id
-        },
-        node.attrs.nickname
-      ],
-      parseDOM: [
-        {
-          tag: 'a[data-mention-id]',
-          getAttrs: dom => {
-            const id = dom.getAttribute('data-mention-id');
-            const nickname = dom.innerText;
-
-            return { id, nickname };
-          }
-        }
-      ]
-    };
-  }
-
-  commands({ type, _schema }) {
-    return (attrs, _state) => replaceText(null, type, attrs);
-  }
-
-  markdownSerialize(state, node) {
-    state.writeInline(`[user=${node.attrs.id}]`);
-  }
+  // NOTE: node is implemented via link_inline + shiki_inline
+  // get schema() {
+  //   return {
+  //     attrs: {
+  //       id: {},
+  //       nickname: {}
+  //     },
+  //     group: 'inline',
+  //     inline: true,
+  //     selectable: false,
+  //     atom: true,
+  //     toDOM: node => [
+  //       'a',
+  //       {
+  //         class: 'b-mention',
+  //         href: `${this.options.origin}/${node.attrs.nickname}`,
+  //         'data-mention-id': node.attrs.id
+  //       },
+  //       node.attrs.nickname
+  //     ],
+  //     parseDOM: [
+  //       {
+  //         tag: 'a[data-mention-id]',
+  //         getAttrs: dom => {
+  //           const id = dom.getAttribute('data-mention-id');
+  //           const nickname = dom.innerText;
+  //
+  //           return { id, nickname };
+  //         }
+  //       j
+  //     ]
+  //   };
+  // }
+  //
+  // commands({ type, _schema }) {
+  //   return (attrs, _state) => replaceText(null, type, attrs);
+  // }
+  //
+  // markdownSerialize(state, node) {
+  //   state.writeInline(`[user=${node.attrs.id}]`);
+  // }
 
   get plugins() {
     return [
