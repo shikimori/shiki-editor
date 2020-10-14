@@ -1,6 +1,7 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { VideoView } from '../node_views';
+import { addToShikiCache } from '../extensions';
 
 const VIDEO_INPUT_REGEX = /\[video\](.*?)\[\/video\]/;
 
@@ -26,7 +27,29 @@ export default class Video extends Node {
       selectable: true,
       parseDOM: [{
         tag: '.b-video',
-        getAttrs: node => JSON.parse(node.getAttribute('data-attrs'))
+        getAttrs: node => {
+          let attrs = JSON.parse(node.getAttribute('data-attrs'));
+          if (attrs) { return attrs; }
+
+          const url = node.querySelector('a').href;
+          attrs = {
+            url,
+            bbcode: `[video]${url}[/video]`,
+            poster: node.querySelector('img').src,
+            hosting: node.className
+              .replace(/c-video|b-video|fixed|shrinked-[\d_]+/g, '').trim(),
+            isLoading: false
+          };
+
+          const shikiData = {
+            id: attrs.url,
+            hosting: attrs.hosting,
+            poster: attrs.poster
+          };
+          addToShikiCache('video', shikiData.id, shikiData);
+
+          return attrs;
+        }
       }],
       // NOTE: simplified markup needed only to make copy-paste work
       toDOM: node => {
