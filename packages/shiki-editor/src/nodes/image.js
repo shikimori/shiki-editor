@@ -28,7 +28,7 @@ export default class Image extends Node {
       parseDOM: [{
         tag: '.b-image',
         getAttrs: node => {
-          const attrs = JSON.parse(node.getAttribute('data-attrs'));
+          const attrs = JSON.parse(node.getAttribute('data-attrs')) || {};
           attrs.src ||= node.tagName === 'A' ?
             node.href :
             node.querySelector('img').src;
