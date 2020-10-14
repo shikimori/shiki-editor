@@ -60,30 +60,39 @@ export default class ShikiView extends DOMView {
 
   appendInlineContent(domSerializer) {
     if (this.node.attrs.text && !this.node.attrs.isPasted) {
-      this.dom.append(this.node.attrs.openBbcode);
+      if (this.node.attrs.openBbcode) {
+        this.dom.append(this.node.attrs.openBbcode);
+      }
       this.dom.appendChild(
         domSerializer.serializeFragment(this.node.content)
       );
-      this.dom.append(this.node.attrs.closeBbcode);
+      if (this.node.attrs.closeBbcode) {
+        this.dom.append(this.node.attrs.closeBbcode);
+      }
     } else {
       this.dom.innerText = this.node.attrs.bbcode;
     }
   }
 
   appendBlockContent(domSerializer) {
-    const openBbcode = document.createElement('div');
     const content = document.createElement('div');
-    const closeBbcode = document.createElement('div');
-    openBbcode.innerText = this.node.attrs.openBbcode;
-    closeBbcode.innerText = this.node.attrs.closeBbcode;
 
     content.appendChild(
       domSerializer.serializeFragment(this.node.content)
     );
 
-    this.dom.appendChild(openBbcode);
-    this.dom.appendChild(content);
-    this.dom.appendChild(closeBbcode);
+    if (this.node.attrs.openBbcode) {
+      const openBbcode = document.createElement('div');
+      const closeBbcode = document.createElement('div');
+      openBbcode.innerText = this.node.attrs.openBbcode;
+      closeBbcode.innerText = this.node.attrs.closeBbcode;
+
+      this.dom.appendChild(openBbcode);
+      this.dom.appendChild(content);
+      this.dom.appendChild(closeBbcode);
+    } else {
+      this.dom.appendChild(content);
+    }
   }
 
   syncState() {
