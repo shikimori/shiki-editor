@@ -28,6 +28,17 @@ export class ShikiLoader extends Extension {
     return this.options.shikiRequest.origin;
   }
 
+  readCache({ id, type }) {
+    const deferred = pDefer();
+    const kind = convertToShikiType(type);
+
+    setTimeout(() => {
+      deferred.resolve(CACHE[kind]?.[id]);
+    });
+
+    return deferred.promise;
+  }
+
   fetch({ id, type }) {
     const deferred = pDefer();
     const kind = convertToShikiType(type);
