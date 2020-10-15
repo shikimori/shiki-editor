@@ -490,6 +490,7 @@ export default {
         group;
 
       if (e) {
+        e.preventDefault();
         e.currentTarget.blur();
         this.editor.focus();
       }
