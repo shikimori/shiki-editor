@@ -15,6 +15,8 @@ const CACHE = CACHE_ACTIONS.reduce((memo, v) => {
   return memo;
 }, {});
 
+const AUTOCOMPLETE_LIMIT = 7;
+
 export default class ShikiRequest {
   constructor(origin, axios) {
     this._origin = origin;
@@ -41,18 +43,28 @@ export default class ShikiRequest {
     ));
   }
 
-  autocomplete(kind, search, limit = 5) {
+  autocomplete(kind, search) {
     return this.get(
       `autocomplete_${kind}`,
-      { search, page: 1, limit }
+      { search, page: 1, limit: AUTOCOMPLETE_LIMIT }
     );
+  }
+
+  autocompleteNull(kind, search) {
+    const action = `autocomplete_${kind}`;
+    const params = { search, page: 1, limit: AUTOCOMPLETE_LIMIT };
+
+    if (CACHE_ACTIONS.includes(action)) {
+      const key = JSON.stringify(params);
+      CACHE[action][key] = { data: [] };
+    }
   }
 
   async withCache(action, params, request) {
     if (CACHE_ACTIONS.includes(action)) {
       const key = JSON.stringify(params);
 
-      if (CACHE[action][key]) {
+      if (CACHE[action][key] !== undefined) {
         return Promise.resolve(CACHE[action][key]);
       } else {
         const response = await request();

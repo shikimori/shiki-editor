@@ -216,6 +216,7 @@ export default {
       if (priorQuery && this.query.includes(priorQuery) &&
         !this.filteredUsers.length && this.wasLoadedSomething
       ) {
+        this.shikiRequest.autocompleteNull('user', this.query);
         return;
       }
       const requestId = new RequestId('autocomplete_users');
