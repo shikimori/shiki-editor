@@ -59,7 +59,8 @@ export default {
     navigatedUserIndex: 0,
     query: null,
     suggestionRange: null,
-    isLoading: true
+    isLoading: true,
+    wasLoadedSomething: false
   }),
   computed: {
     hasResults() {
@@ -94,6 +95,7 @@ export default {
           this.suggestionRange = range;
           this.renderPopup(virtualNode);
           this.insertMention = command;
+          this.wasLoadedSomething = false;
           this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
@@ -212,7 +214,7 @@ export default {
     },
     async fetch(priorQuery) {
       if (priorQuery && this.query.includes(priorQuery) &&
-        !this.filteredUsers.length
+        !this.filteredUsers.length && this.wasLoadedSomething
       ) {
         return;
       }
@@ -220,6 +222,7 @@ export default {
       this.isLoading = true;
 
       const { data } = await this.shikiRequest.autocomplete('user', this.query);
+      this.wasLoadedSomething ||= !!data.length;
 
       if (requestId.isCurrent) {
         this.filteredUsers = data;
