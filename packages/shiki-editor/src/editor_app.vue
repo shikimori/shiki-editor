@@ -102,6 +102,7 @@ import autosize from 'autosize';
 import withinviewport from 'withinviewport';
 import { dragscroll } from 'vue-dragscroll';
 
+import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
@@ -406,7 +407,9 @@ export default {
         shikiRequest: this.shikiRequest,
         localizationField: this.localizationField,
         extensions,
-        plugins: []
+        plugins: [
+          keymap({ 'Mod-Enter': this.submit })
+        ]
       }, this, this.vue);
 
       this.editorContent = this.content;
@@ -497,6 +500,9 @@ export default {
     },
     exportContent() {
       return this.isSource ? this.editorContent : this.editor.exportMarkdown();
+    },
+    submit() {
+      this.$emit('submit');
     }
   }
 };
