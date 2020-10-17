@@ -74,6 +74,7 @@
         ref='textarea'
         v-model='editorContent'
         class='ProseMirror'
+        @keyup='handleSourceKeypress'
       />
       <EditorContent
         v-else
@@ -508,6 +509,13 @@ export default {
     },
     exportContent() {
       return this.isSource ? this.editorContent : this.editor.exportMarkdown();
+    },
+    handleSourceKeypress(e) {
+      if (e.keyCode === 27) { // esc
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        this.isSource = false;
+      }
     },
     submit() {
       this.$emit('submit');
