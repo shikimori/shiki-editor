@@ -282,6 +282,13 @@ export default {
     this.editor.destroy();
   },
   methods: {
+    focus(editorPosition = undefined) {
+      if (this.isSource) {
+        this.$refs.textarea.focus();
+      } else {
+        this.editor.focus(editorPosition);
+      }
+    },
     command(type, args) {
       this.toggleMobileMenuGroup(null);
 
@@ -322,11 +329,11 @@ export default {
     },
     undoCommand() {
       undo(this.editor.state, this.editor.view.dispatch);
-      this.editor.focus();
+      this.focus();
     },
     redoCommand() {
       redo(this.editor.state, this.editor.view.dispatch);
-      this.editor.focus();
+      this.focus();
     },
     smileyCommand(kind) {
       this.isSmiley = !this.isSmiley;
@@ -359,17 +366,17 @@ export default {
     appendReply(reply) {
       const { editor } = this;
       insertReply(reply)(editor.state, editor.view.dispatch);
-      this.editor.focus();
+      this.focus();
     },
     appendQuote(quote) {
       const { editor } = this;
       insertQuote(quote, editor)(editor.state, editor.view.dispatch);
-      this.editor.focus();
+      this.focus();
     },
     appendText(content) {
       const fragment = contentToNodes(this.editor, content);
       insertNodes(fragment)(this.editor.state, this.editor.view.dispatch);
-      this.editor.focus();
+      this.focus();
     },
     async setContent(
       content,
@@ -476,14 +483,15 @@ export default {
 
       if (this.isSource) {
         autosize(this.$refs.textarea);
-        this.$refs.textarea.focus();
+        this.focus();
         window.scrollTo(0, scrollY);
+
         if (!withinviewport(this.$refs.menubar, 'top')) {
           this.$refs.textarea.blur();
           this.$refs.textarea.focus();
         }
       } else {
-        this.editor.focus(this.editorPosition);
+        this.focus(this.editorPosition);
         window.scrollTo(0, scrollY);
       }
     },
