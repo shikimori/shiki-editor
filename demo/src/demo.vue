@@ -61,26 +61,10 @@ import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 1
-
-> test
-
+[spoiler_block=zxc]
 2
-
-[quote]test[/quote]
-
+[/spoiler_block]
 3
-
->?c6324378;1;morr
-> test
-
-4
-
-[quote=c6324378;1;morr]test[/quote]
-
-5
-
-
-
 `.trim();
 
 export default {

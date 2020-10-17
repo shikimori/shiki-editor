@@ -1,4 +1,5 @@
 import { bind } from 'shiki-decorators';
+import { Plugin } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
@@ -66,6 +67,24 @@ export default class SpoilerBlock extends Node {
 
   activeCheck(type, state) {
     return nodeIsActive(type, state);
+  }
+
+  // hack to prevent getting extra new line before tag
+  get plugins() {
+    return [
+      new Plugin({
+        props: {
+          transformPastedHTML(html) {
+            if (html.includes('data-pm-slice')) { return html; }
+
+            return html.replace(
+              /<br[^>]*><div class=(['"])b-spoiler_block/g,
+              '<div class=$1b-spoiler_block'
+            );
+          }
+        }
+      })
+    ];
   }
 
   @bind
