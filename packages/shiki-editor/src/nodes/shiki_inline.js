@@ -12,7 +12,7 @@ import {
 
 import {
   parseShikiBasicMeta,
-  parseImageMeta
+  parseShikiImageMeta
 } from '../markdown/tokenizer/bbcode_helpers';
 
 export default class ShikiInline extends Node {
@@ -126,8 +126,8 @@ export default class ShikiInline extends Node {
       nodeInputRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
         parseShikiBasicMeta(bbcode, type, id)
       )),
-      nodeInputRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
-        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
+      nodeInputRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, ..._]) => (
+        parseShikiImageMeta(bbcode)
       ))
     ];
   }
@@ -147,8 +147,8 @@ export default class ShikiInline extends Node {
           isPasted: true
         }
       )),
-      pasteRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, type, id, other]) => (
-        parseShikiBasicMeta(bbcode, type, id, parseImageMeta(other))
+      pasteRule(SHIKI_BBCODE_IMAGE_REGEXP, type, ([bbcode, ..._]) => (
+        parseShikiImageMeta(bbcode)
       ))
     ];
   }
