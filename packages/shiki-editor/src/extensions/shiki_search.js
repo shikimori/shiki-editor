@@ -52,6 +52,11 @@ export default class ShikiSearch extends Extension {
       type: domNode.getAttribute('data-type'),
       url: domNode.getAttribute('data-url')
     };
+
+    if (!attrs.id) {
+      return;
+    }
+
     const { state, schema, selection } = this.editor;
     const { dispatch } = this.editor.view;
 
