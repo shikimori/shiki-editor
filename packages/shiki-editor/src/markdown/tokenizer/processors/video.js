@@ -15,6 +15,7 @@ export default function processVideo(state, tagStart, tagEnd) {
       meta.poster = cache.poster;
       meta.hosting = cache.hosting;
       meta.isLoading = false;
+      meta.isBroken = cache.isBroken ?? false;
     }
 
     state.inlineTokens.push(

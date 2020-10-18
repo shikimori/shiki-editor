@@ -52,17 +52,14 @@ export default class Video extends Node {
         }
       }],
       // NOTE: simplified markup needed only to make copy-paste work
-      toDOM: node => {
-        const serializedAttributes = JSON.stringify(node.attrs);
-        return [
-          'span',
-          {
-            class: 'b-video',
-            'data-attrs': serializedAttributes
-          },
-          ['a', { href: node.attrs.url }]
-        ];
-      }
+      toDOM: node => [
+        'span',
+        {
+          class: 'b-video',
+          'data-attrs': JSON.stringify(node.attrs)
+        },
+        ['a', { href: node.attrs.url }]
+      ]
     };
   }
 

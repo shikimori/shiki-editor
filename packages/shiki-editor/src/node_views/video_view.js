@@ -4,6 +4,7 @@ import round from 'lodash/round';
 
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
+import { addToShikiCache } from '../extensions';
 
 export default class VideoView extends DOMView {
   constructor(options) {
@@ -162,7 +163,16 @@ export default class VideoView extends DOMView {
     if (this.node.attrs.hosting === 'youtube' &&
       img.naturalWidth === 120 && img.naturalHeight === 90
     ) {
+      const shikiData = {
+        id: this.node.attrs.url,
+        hosting: this.node.attrs.hosting,
+        poster: this.node.attrs.poster,
+        isBroken: true
+      };
+
+      addToShikiCache('video', this.node.attrs.url, shikiData);
       this.updateAttrs({ isBroken: true }, false);
+
       return;
     }
 
