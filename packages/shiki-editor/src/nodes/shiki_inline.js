@@ -52,7 +52,12 @@ export default class ShikiInline extends Node {
         getAttrs: node => ({
           ...JSON.parse(node.getAttribute('data-attrs')),
           isPasted: true
-        })
+        }),
+        contentElement: node => (
+          node.childElementCount === 3 ?
+            node.children[1] :
+            node
+        )
       }, {
         tag: 'a.b-mention',
         getAttrs: node => {
