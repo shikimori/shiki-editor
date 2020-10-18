@@ -29,6 +29,7 @@
             :content='text1'
             :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader1'
+            localization-field='name'
             @update='(value) => text1 = value'
           />
         </div>
@@ -39,6 +40,7 @@
             :content='text2'
             :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader2'
+            localization-field='name'
             @update='(value) => text2 = value'
           />
         </div>
@@ -61,10 +63,6 @@ import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 1
-[spoiler_block=zxc]
-2
-[/spoiler_block]
-3
 `.trim();
 
 export default {
