@@ -1,7 +1,8 @@
-export { default as insertNode } from './insert_node';
 export { default as insertFragment } from './insert_fragment';
-export { default as insertReply } from './insert_reply';
+export { default as insertNode } from './insert_node';
 export { default as insertQuote } from './insert_quote';
+export { default as insertReply } from './insert_reply';
+export { default as insertSlice } from './insert_slice';
 export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as insertUserMention } from './insert_user_mention';

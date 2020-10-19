@@ -1,4 +1,5 @@
-import insertNode from './insert_node';
+import { Slice, Fragment } from 'prosemirror-model';
+import insertSlice from './insert_slice';
 import { htmlToNodes } from '../utils';
 
 export default function insertQuote(quote, editor) {
@@ -10,7 +11,10 @@ export default function insertQuote(quote, editor) {
       userId: quote.userId,
       nickname: quote.nickname
     }, fragment);
+    const paragraph = state.schema.nodes.paragraph.create();
 
-    insertNode(quoteNode, editor.view)(state, dispatch);
+    const slice = new Slice(Fragment.from([quoteNode, paragraph]), 0, 0);
+
+    insertSlice(slice)(state, dispatch);
   };
 }

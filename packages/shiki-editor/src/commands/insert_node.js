@@ -19,5 +19,9 @@ export default function insertNode(node, view) {
         // .setMeta('paste', true)
         // .setMeta('uiEvent', 'paste')
     );
+
+    // var singleNode = sliceSingleNode(slice);
+    // var tr = singleNode ? view.state.tr.replaceSelectionWith(singleNode, view.shiftKey) : view.state.tr.replaceSelection(slice);
+    // view.dispatch(tr.scrollIntoView().setMeta("paste", true).setMeta("uiEvent", "paste"));
   };
 }

@@ -277,6 +277,7 @@ export default {
     }
   },
   async created() {
+    window.editorApp = this;
     this.createEditor();
   },
   beforeDestroy() {
