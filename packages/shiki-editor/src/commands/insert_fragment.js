@@ -1,4 +1,4 @@
-export default function insertNodes(fragment) {
+export default function insertFragment(fragment) {
   return (state, dispatch) => {
     const { $from, $to } = state.selection;
     const from = $from.pos;

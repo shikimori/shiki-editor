@@ -1,5 +1,5 @@
 export { default as insertNode } from './insert_node';
-export { default as insertNodes } from './insert_nodes';
+export { default as insertFragment } from './insert_fragment';
 export { default as insertReply } from './insert_reply';
 export { default as insertQuote } from './insert_quote';
 export { default as insertText } from './insert_text';
