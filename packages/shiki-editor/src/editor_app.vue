@@ -53,7 +53,9 @@
         </div>
       </div>
     </div>
-
+    <!--
+    {{ editor.selection.$from.pos }} - {{ editor.selection.$to.pos }}
+    -->
     <div
       v-if='editor'
       ref='editor_container'

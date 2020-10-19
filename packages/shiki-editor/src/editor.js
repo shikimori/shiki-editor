@@ -47,7 +47,11 @@ export default class ShikiEditor {
   }
 
   get state() {
-    return this.view ? this.view.state : undefined;
+    return this.view.state;
+  }
+
+  get selection() {
+    return this.state.selection;
   }
 
   init(options = {}) {
@@ -56,7 +60,6 @@ export default class ShikiEditor {
       ...options
     };
 
-    this.selection = { from: 0, to: 0 };
     this.focused = false;
 
     this.extensionsManager = this.createExtensionManager();
@@ -296,11 +299,6 @@ export default class ShikiEditor {
   dispatchTransaction(transaction) {
     const { state } = this.state.applyTransaction(transaction);
     this.view.updateState(state);
-
-    this.selection = {
-      from: this.state.selection.from,
-      to: this.state.selection.to
-    };
 
     if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
       return;
