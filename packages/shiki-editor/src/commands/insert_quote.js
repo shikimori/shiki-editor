@@ -11,6 +11,6 @@ export default function insertQuote(quote, editor) {
       nickname: quote.nickname
     }, fragment);
 
-    insertNode(quoteNode)(state, dispatch);
+    insertNode(quoteNode, editor.view)(state, dispatch);
   };
 }
