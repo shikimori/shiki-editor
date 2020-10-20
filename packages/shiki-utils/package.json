@@ -1,7 +1,7 @@
 {
   "name": "shiki-utils",
   "title": "Shikimori Utils",
-  "version": "0.15.11",
+  "version": "0.15.12",
   "main": "index.js",
   "author": "morr",
   "license": "OSL-3.0",
