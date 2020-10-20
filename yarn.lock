@@ -3156,6 +3156,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+ismobilejs@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ismobilejs/-/ismobilejs-1.1.1.tgz#c56ca0ae8e52b24ca0f22ba5ef3215a2ddbbaa0e"
+  integrity sha512-VaFW53yt8QO61k2WJui0dHf4SlL8lxBofUuUmwBo0ljPk0Drz2TiuDW4jo3wDcv41qy/SxrJ+VAzJ/qYqsmzRw==
+
 isobject@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-2.1.0.tgz#f065561096a3f1da2ef46272f815c840d87e0c89"
@@ -4530,6 +4535,11 @@ schema-utils@^2.6.5:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
+scroll-lock@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/scroll-lock/-/scroll-lock-2.1.4.tgz#2698551a18f6f88fa3e71a52db09adc4060c949e"
+  integrity sha512-v1uK+1UbDj15V+b2PeAVvoh5TDd7Ub1JPQcEdKE8z+dPS/1xytmPGSD3F2A6la1qp8xLXcGfW11Nrs9Ch7pAag==
+
 "semver@2 || 3 || 4 || 5", semver@^5.4.1, semver@^5.5.0, semver@^5.6.0, semver@^5.7.0, semver@^5.7.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
@@ -4610,20 +4620,21 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-decorators@file:packages/shiki-decorators":
-  version "0.14.2"
+  version "0.15.10"
   dependencies:
     bind-decorator "1.0.11"
 
 "shiki-uploader@file:packages/shiki-uploader":
-  version "0.14.2"
+  version "0.15.10"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
 "shiki-utils@file:packages/shiki-utils":
-  version "0.14.2"
+  version "0.15.11"
   dependencies:
+    ismobilejs "^1.1.1"
     toastify-js "^1.8.0"
 
 signal-exit@^3.0.0:
