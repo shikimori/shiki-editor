@@ -11,7 +11,8 @@
       class='smileys'
       :class='containerCssClass'
     >
-      <div v-if='!isMobile' data-popper-arrow />
+      <div v-if='isMobile' class='close' @click='close' />
+      <div v-else data-popper-arrow />
       <div
         v-if='smileysHTML'
         class='inner'
@@ -142,6 +143,7 @@ export default {
 
 <style scoped lang='sass'>
 @import ../stylesheets/mixins/responsive.sass
+@import ../stylesheets/mixins/icon
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
@@ -195,6 +197,23 @@ $padding-vertical: 8px
 
   &:active
     outline: 2px solid var(--link-active-color, #ff0202)
+
+.close
+  +icon
+  height: 30px !important
+  position: absolute
+  display: flex
+  align-items: center
+  justify-content: center
+  right: 5px
+  top: 5px
+  width: 30px !important
+  background: #fff
+  border-radius: 30px
+
+  &:before
+    content: '\e828'
+    font-size: 16px
 
 .b-ajax
   width: calc(100% - #{$padding-horizontal * 2})
