@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div ref='menubar' class='menubar'>
+    <div
+      ref='menubar'
+      class='menubar'
+      :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
+    >
       <div v-if='editor' v-dragscroll class='icons'>
         <div
           v-for='([group, items], index) in menuItems'
@@ -267,6 +271,10 @@ export default {
       return new ShikiSearch({
         globalSearch: this.globalSearch
       });
+    },
+    isStickyMenuOffset() {
+      const topMenuNode = document.querySelector('.l-top_menu-v2');
+      return getComputedStyle(topMenuNode).position === 'sticky';
     }
   },
   watch: {
@@ -561,6 +569,9 @@ export default {
   right: 0
   top: 0
   z-index: 30
+
+  &.is-sticky-menu-offset
+    top: 45px
 
   .icons
     color: #456
