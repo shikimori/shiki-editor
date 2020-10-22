@@ -35,6 +35,7 @@ import { tagSequence } from '../nodes/image';
 export default {
   name: 'ImageView',
   props: {
+    editor: { type: Object, required: true },
     node: { type: Object, required: true },
     getPos: { type: Function, required: true },
     view: { type: Object, required: true },
