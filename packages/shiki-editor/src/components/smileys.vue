@@ -44,7 +44,8 @@ export default {
   props: {
     isEnabled: { type: Boolean, required: true },
     shikiRequest: { type: Object, required: true },
-    targetRef: { type: String, required: true }
+    targetRef: { type: String, required: true },
+    isStickyMenuOffset: { type: Boolean, required: true }
   },
   data: () => ({
     popup: null,
@@ -56,7 +57,7 @@ export default {
     },
     containerCssClass() {
       if (this.isMobile) {
-        return 'fixed';
+        return this.isStickyMenuOffset ? 'is-sticky-menu-offset fixed' : 'fixed';
       } else {
         return 'b-tip b-tip--large b-tip--no_border';
       }
@@ -177,6 +178,10 @@ $padding-vertical: 8px
     position: fixed
     top: 0
     width: 100%
+
+    &.is-sticky-menu-offset
+      .inner
+        padding-top: 62px
 
   .inner
     max-height: 100%

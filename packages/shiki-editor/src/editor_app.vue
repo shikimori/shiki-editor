@@ -94,6 +94,7 @@
       :is-enabled='isSmiley'
       target-ref='smiley'
       :shiki-request='shikiRequest'
+      :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
     />
     <Suggestions
