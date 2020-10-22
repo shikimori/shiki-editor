@@ -31,7 +31,6 @@
     "shiki-decorators": "file:../shiki-decorators",
     "shiki-uploader": "file:../shiki-uploader",
     "shiki-utils": "file:../shiki-utils",
-    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "uevent": "^2.0.0"
   },
   "dependencies": {
@@ -53,6 +52,7 @@
     "scroll-lock": "^2.1.4",
     "vue-dragscroll": "^2.1.0",
     "vue-keypress": "^2.1.1",
+    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "withinviewport": "^2.1.2"
   },
   "peerDependencies": {
