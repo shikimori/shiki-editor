@@ -275,6 +275,8 @@ export default {
     },
     isStickyMenuOffset() {
       const topMenuNode = document.querySelector('.l-top_menu-v2');
+      if (!topMenuNode) { return false; }
+
       return getComputedStyle(topMenuNode).position === 'sticky';
     }
   },

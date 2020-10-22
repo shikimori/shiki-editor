@@ -7,11 +7,11 @@
       @success='close'
     />
     <div
-      ref='container'
-      class='smileys'
-      :class='containerCssClass'
+      v-if='isMobile'
+      class='smileys fixed'
+      :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
     >
-      <div v-if='isMobile' class='outer'>
+      <div class='outer'>
         <div class='close' @click='close' />
         <vue-custom-scrollbar
           v-if='smileysHTML'
@@ -25,16 +25,20 @@
         </vue-custom-scrollbar>
         <div v-else class='b-ajax' />
       </div>
-      <div v-else>
-        <div data-popper-arrow />
-        <div
-          v-if='smileysHTML'
-          class='inner'
-          @click='select'
-          v-html='smileysHTML'
-        />
-        <div v-else class='b-ajax' />
-      </div>
+    </div>
+    <div
+      v-else
+      ref='container'
+      class='smileys b-tip b-tip--large b-tip--no_border'
+    >
+      <div data-popper-arrow />
+      <div
+        v-if='smileysHTML'
+        class='inner'
+        @click='select'
+        v-html='smileysHTML'
+      />
+      <div v-else class='b-ajax' />
     </div>
     <div v-if='!isMobile' class='shade' @click='close' />
   </div>
@@ -70,13 +74,6 @@ export default {
   computed: {
     isMobile() {
       return isMobile();
-    },
-    containerCssClass() {
-      if (this.isMobile) {
-        return this.isStickyMenuOffset ? 'is-sticky-menu-offset fixed' : 'fixed';
-      } else {
-        return 'b-tip b-tip--large b-tip--no_border';
-      }
     }
   },
   watch: {
@@ -243,6 +240,7 @@ $padding-vertical: 8px
   width: 30px !important
   background: #fff
   border-radius: 30px
+  z-index: 2
 
   &:before
     content: '\e828'

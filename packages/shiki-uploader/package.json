@@ -28,7 +28,7 @@
     "eslint": "^7.8.1",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-webpack": "^0.12.2",
-
+    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "eslint-plugin-import": "^2.18.2",
     "shiki-decorators": "file:../shiki-decorators",
     "shiki-utils": "file:../shiki-utils",
