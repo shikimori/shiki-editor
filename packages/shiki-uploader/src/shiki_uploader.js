@@ -217,8 +217,6 @@ export default class ShikiUploader {
   }
 
   _addProgressNode() {
-    if (this.progressNode || !isVisible(this.node)) { return; }
-
     this.progressNode = document.createElement('div');
     this.progressNodeBar = document.createElement('div');
 
