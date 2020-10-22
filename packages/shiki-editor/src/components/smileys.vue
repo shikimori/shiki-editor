@@ -11,15 +11,30 @@
       class='smileys'
       :class='containerCssClass'
     >
-      <div v-if='isMobile' class='close' @click='close' />
-      <div v-else data-popper-arrow />
-      <div
-        v-if='smileysHTML'
-        class='inner'
-        @click='select'
-        v-html='smileysHTML'
-      />
-      <div v-else class='b-ajax' />
+      <div v-if='isMobile' class='outer'>
+        <div class='close' @click='close' />
+        <vue-custom-scrollbar
+          v-if='smileysHTML'
+          ref='scrollbar'
+          :settings='{ wheelPropagation: false }'
+        >
+          <div
+            @click='select'
+            v-html='smileysHTML'
+          />
+        </vue-custom-scrollbar>
+        <div v-else class='b-ajax' />
+      </div>
+      <div v-else>
+        <div data-popper-arrow />
+        <div
+          v-if='smileysHTML'
+          class='inner'
+          @click='select'
+          v-html='smileysHTML'
+        />
+        <div v-else class='b-ajax' />
+      </div>
     </div>
     <div v-if='!isMobile' class='shade' @click='close' />
   </div>
@@ -29,6 +44,7 @@
 import Keypress from 'vue-keypress';
 import { isMobile } from 'shiki-utils';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
+import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 // import { createPopper } from '@popperjs/core';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
@@ -40,7 +56,7 @@ import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 export default {
   name: 'Smileys',
-  components: { Keypress },
+  components: { Keypress, vueCustomScrollbar },
   props: {
     isEnabled: { type: Boolean, required: true },
     shikiRequest: { type: Object, required: true },
@@ -179,15 +195,27 @@ $padding-vertical: 8px
     top: 0
     width: 100%
 
-    &.is-sticky-menu-offset
-      .inner
-        padding-top: 62px
+    +lte_ipad
+      display: flex
+      flex-direction: column
+      padding: 16px 0 16px 16px
 
-  .inner
-    max-height: 100%
-    overflow-y: auto
-    overscroll-behavior: none
-    padding: 16px
+      &.is-sticky-menu-offset
+        top: var(--top-menu-height, 0px)
+        height: calc(100% - var(--top-menu-height, 0px))
+
+      .outer
+        display: flex
+        flex-direction: column
+        height: 100%
+
+        .ps
+          padding-right: 16px
+
+  +gte_laptop
+    .inner
+      overflow-y: auto
+      max-height: 100%
 
 /deep/ .smiley
   cursor: pointer

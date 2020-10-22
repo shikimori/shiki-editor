@@ -4620,19 +4620,19 @@ shebang-regex@^3.0.0:
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
 "shiki-decorators@file:packages/shiki-decorators":
-  version "0.15.10"
+  version "0.15.13"
   dependencies:
     bind-decorator "1.0.11"
 
 "shiki-uploader@file:packages/shiki-uploader":
-  version "0.15.10"
+  version "0.15.13"
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
 "shiki-utils@file:packages/shiki-utils":
-  version "0.15.11"
+  version "0.15.13"
   dependencies:
     ismobilejs "^1.1.1"
     toastify-js "^1.8.0"
@@ -5229,6 +5229,10 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-custom-scrollbar@morr/vue-custom-scrollbar#1.1.5:
+  version "1.1.5"
+  resolved "https://codeload.github.com/morr/vue-custom-scrollbar/tar.gz/d50510e6d63c59b3f29c94e106b5b6972e3081d0"
 
 vue-dragscroll@^2.1.0:
   version "2.1.0"

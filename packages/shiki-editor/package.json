@@ -31,6 +31,7 @@
     "shiki-decorators": "file:../shiki-decorators",
     "shiki-uploader": "file:../shiki-uploader",
     "shiki-utils": "file:../shiki-utils",
+    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "uevent": "^2.0.0"
   },
   "dependencies": {
