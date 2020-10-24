@@ -4,10 +4,7 @@ export default function insertReply({ id, type, userId, text, url }) {
   return (state, dispatch) => {
     addToShikiCache(type, id, { id, text, userId, url });
 
-    const { $from, $to } = state.selection;
-    const from = $from.pos;
-    const to = $to.pos;
-
+    const { from, to } = state.selection;
     const linkInlineMark = state.schema.marks.link_inline.create({
       id,
       type,
@@ -15,8 +12,8 @@ export default function insertReply({ id, type, userId, text, url }) {
       text,
       url,
       meta: { isMention: true }
-    }, null, []);
-    const textFragment = state.schema.text(text, linkInlineMark);
+    });
+    const textFragment = state.schema.text(text, [linkInlineMark]);
 
     dispatch(
       state.tr

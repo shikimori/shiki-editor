@@ -4,6 +4,7 @@ import { Mark } from '../base';
 import {
   // updateMark,
   removeMark,
+  insertLink,
   toggleMarkWrap,
   linkUrlPasteRule,
   linkBbcodePasteRule
@@ -117,10 +118,14 @@ export default class LinkInline extends Mark {
         window.I18n.t('frontend.shiki_editor.prompt.link_url')
       )?.trim();
 
-      if (url) {
-        return toggleMarkWrap(type, { url: fixUrl(url) });
+      if (!url) { return false; }
+      const fixedUrl = fixUrl(url);
+
+      if (from !== to) {
+        return toggleMarkWrap(type, { url: fixedUrl });
+      } else {
+        return insertLink(type, { text: fixedUrl, url: fixedUrl });
       }
-      return false;
     };
   }
 
