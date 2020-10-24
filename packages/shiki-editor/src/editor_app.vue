@@ -195,8 +195,8 @@ export default {
     isEditingEnabledMappings() {
       return {
         undo: this.undoIsEnabled,
-        redo: this.redoIsEnabled,
-        link: this.linkIsEnabled
+        redo: this.redoIsEnabled
+        // link: this.linkIsEnabled
       };
     },
     menuItems() {
@@ -373,11 +373,11 @@ export default {
     redoIsEnabled() {
       return this.isEditingEnabled && redo(this.editor.state);
     },
-    linkIsEnabled() {
-      return this.isEditingEnabled && (
-        this.nodesState.link || !this.editor.state.selection.empty
-      );
-    },
+    // linkIsEnabled() {
+    //   return this.isEditingEnabled && (
+    //     this.nodesState.link || !this.editor.state.selection.empty
+    //   );
+    // },
     appendReply(reply) {
       const { editor } = this;
       insertReply(reply)(editor.state, editor.view.dispatch);
