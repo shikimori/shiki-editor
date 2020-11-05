@@ -127,6 +127,13 @@ export default {
         },
         // is called on every keyDown event while a suggestion is active
         keyPresed: ({ event }) => {
+          if (event.key === 'Escape') {
+            this.escHandler();
+            return true;
+          }
+          if (!this.popup) { return false; }
+
+
           if (event.key === 'ArrowUp') {
             this.upHandler();
             return true;
@@ -142,10 +149,6 @@ export default {
           if (event.key === ',' && this.hasResults) {
             this.trySelectUser(this.query);
             return false;
-          }
-          if (event.key === 'Escape') {
-            this.escHandler();
-            return true;
           }
           return false;
         },

@@ -109,8 +109,15 @@ export default function buildSuggestionsPopupPlugin({
 
       // Apply changes to the plugin state from a view transaction.
       apply(tr, prev) {
+        // if (prev.disable === true) { debugger }
+        // if (prev.query) { debugger }
+
         const { selection } = tr;
         const next = { ...prev };
+
+        // if (tr.meta.suggestions_popup?.disable) {
+        //   next.active = true;
+        // }
 
         // We can only be suggesting if there is no selection
         if (next.disable !== true && selection.from === selection.to) {
@@ -155,12 +162,21 @@ export default function buildSuggestionsPopupPlugin({
     props: {
       // Call the keydown hook if suggestion is active.
       handleKeyDown(view, event) {
-        const { active, range } = this.getState(view.state);
+        const state = this.getState(view.state);
+        const { active, range } = state;
 
         if (!active) return false;
 
         // if (event.key === 'Escape') {
-        //   this.spec.state.apply(view.state.tr, { ...state, disable: true });
+        //   // state.disabled = true;
+        //   //
+        //   // view.dispatch(
+        //   //   view.state.tr.setMeta(
+        //   //     'suggestions_popup',
+        //   //     { fromPos: range.from, toPos: range.to, disable: true }
+        //   //   )
+        //   // );
+        //   return;
         // }
 
         return keyPresed({ view, event, range });
