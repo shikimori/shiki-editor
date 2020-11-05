@@ -120,11 +120,7 @@ export default {
 
           await this.fetch(priorQuery);
 
-          if (query[query.length - 1] === ' ') {
-            if (!this.matchUser(query, 'startsWith')) {
-              this.trySelectUser(priorQuery, priorFilteredUsers);
-            }
-          }
+          this.possiblySelectPrior(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
           this.cleanup(args);
@@ -186,6 +182,17 @@ export default {
     },
     escHandler() {
       this.closePopup();
+    },
+    possiblySelectPrior(query, priorQuery, priorUsers) {
+      if (query[query.length - 1] !== ' ') { return; }
+      if (this.matchUser(query, 'startsWith')) { return; }
+
+      const user = this.matchUser(priorQuery, 'equals', priorUsers);
+
+      if (user) {
+        this.suggestionRange.to -= 1;
+        this.selectUser(user);
+      }
     },
     selectUser(user) {
       this.insertMention({
