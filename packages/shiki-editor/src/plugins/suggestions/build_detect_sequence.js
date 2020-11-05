@@ -25,8 +25,9 @@ export default function buildDetectSequence({
     const textTo = $position.end();
     const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
 
-    let match = regexp.exec(text);
+    let match = text.endsWith('  ') ? null : regexp.exec(text);
     let position;
+
     while (match !== null) {
       // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
       // or the line beginning
