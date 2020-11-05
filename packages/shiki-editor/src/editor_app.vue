@@ -181,7 +181,7 @@ export default {
         ].indexOf(value) !== -1
       )
     },
-    previewParams: { type: Object, required: false, default: new Object }
+    previewParams: { type: Object, required: false, default: undefined }
   },
   data: () => ({
     editor: null,
@@ -461,7 +461,7 @@ export default {
 
         const { data } = await this.shikiRequest.post(
           'preview',
-          { ...this.previewParams, text }
+          this.previewParams ? { ...this.previewParams, text } : { text }
         );
 
         if (data !== null) {
