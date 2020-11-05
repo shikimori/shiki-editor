@@ -43,6 +43,17 @@ import { RequestId } from 'shiki-utils';
 import { buildSuggestionsPopupPlugin } from '../plugins';
 import { insertUserMention } from '../commands';
 
+const QUERY_MATCHERS = {
+  equals: (query) => {
+    const lowerQuery = query.toLowerCase();
+    return v => v.nickname.toLowerCase() === lowerQuery;
+  },
+  startsWith: (query) => {
+    const lowerQuery = query.toLowerCase();
+    return v => v.nickname.toLowerCase().startsWith(lowerQuery);
+  }
+};
+
 export default {
   name: 'Suggestions',
   props: {
@@ -98,13 +109,22 @@ export default {
           this.wasLoadedSomething = false;
           this.fetch();
         },
-        updated: ({ query, range, virtualNode }) => {
+        updated: async({ query, range, virtualNode }) => {
           const priorQuery = this.query;
+          const priorFilteredUsers = this.filteredUsers;
+
           this.query = query;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
-          this.fetch(priorQuery);
+
+          await this.fetch(priorQuery);
+
+          if (query[query.length - 1] === ' ') {
+            if (!this.matchUser(query, 'startsWith')) {
+              this.trySelectUser(priorQuery, priorFilteredUsers);
+            }
+          }
         },
         closed: (args) => {
           this.cleanup(args);
@@ -123,8 +143,8 @@ export default {
             this.enterHandler();
             return true;
           }
-          if ((event.key === ',' || event.key === ' ') && this.hasResults) {
-            this.trySelectUser();
+          if (event.key === ',' && this.hasResults) {
+            this.trySelectUser(this.query, this.filteredUsers);
             return false;
           }
           if (event.key === 'Escape') {
@@ -174,15 +194,15 @@ export default {
       });
       this.editor.focus();
     },
-    trySelectUser() {
-      const lowerQuery = this.query.toLowerCase();
-      const user = this.filteredUsers.find(v => (
-        v.nickname.toLowerCase() === lowerQuery
-      ));
+    trySelectUser(query, users = this.filteredUsers) {
+      const user = this.matchUser(query, 'equals', users);
 
       if (user) {
         this.selectUser(user);
       }
+    },
+    matchUser(query, matcher, users = this.filteredUsers) {
+      return users.find(QUERY_MATCHERS[matcher](query));
     },
     renderPopup(node) {
       if (this.isMisplaced(node)) {
