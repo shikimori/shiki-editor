@@ -7,7 +7,7 @@ import buildDetectSequence from './build_detect_sequence';
 export default function buildSuggestionsPopupPlugin({
   matcher = {
     char: '@',
-    allowSpaces: false,
+    allowSpaces: true,
     startOfLine: false
   },
   appendText = null,
