@@ -180,7 +180,8 @@ export default {
           'russian'
         ].indexOf(value) !== -1
       )
-    }
+    },
+    previewParams: { type: Object, required: false, default: new Object }
   },
   data: () => ({
     editor: null,
@@ -458,7 +459,10 @@ export default {
           this.editorContent :
           this.editor.exportMarkdown();
 
-        const { data } = await this.shikiRequest.post('preview', { text });
+        const { data } = await this.shikiRequest.post(
+          'preview',
+          { ...this.previewParams, text }
+        );
 
         if (data !== null) {
           const { html, JS_EXPORTS } = data;
