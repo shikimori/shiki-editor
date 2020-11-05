@@ -120,7 +120,7 @@ export default {
 
           await this.fetch(priorQuery);
 
-          this.possiblySelectPrior(query, priorQuery, priorFilteredUsers);
+          this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
           this.cleanup(args);
@@ -140,7 +140,7 @@ export default {
             return true;
           }
           if (event.key === ',' && this.hasResults) {
-            this.trySelectUser(this.query, this.filteredUsers);
+            this.trySelectUser(this.query);
             return false;
           }
           if (event.key === 'Escape') {
@@ -183,7 +183,7 @@ export default {
     escHandler() {
       this.closePopup();
     },
-    possiblySelectPrior(query, priorQuery, priorUsers) {
+    possiblySelectPriorUser(query, priorQuery, priorUsers) {
       if (query[query.length - 1] !== ' ') { return; }
       if (this.matchUser(query, 'startsWith')) { return; }
 
@@ -201,8 +201,8 @@ export default {
       });
       this.editor.focus();
     },
-    trySelectUser(query, users = this.filteredUsers) {
-      const user = this.matchUser(query, 'equals', users);
+    trySelectUser(query) {
+      const user = this.matchUser(query, 'equals');
 
       if (user) {
         this.selectUser(user);
