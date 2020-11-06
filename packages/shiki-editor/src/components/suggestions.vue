@@ -123,8 +123,15 @@ export default {
           this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
-          if (this.hasResults) {
-            this.trySelectUser(this.query.strip());
+          debugger
+          if (this.hasResults && this.query.length &&
+              this.query[this.query.length - 1] === ' '
+          ) {
+            this.possiblySelectPriorUser(
+              this.query,
+              this.query.slice(0, this.query.length - 1),
+              this.filteredUsers
+            );
           }
           this.cleanup(args);
         },
