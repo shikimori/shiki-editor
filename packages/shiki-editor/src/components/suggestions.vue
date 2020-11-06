@@ -123,6 +123,9 @@ export default {
           this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
+          if (this.hasResults) {
+            this.trySelectUser(this.query.strip());
+          }
           this.cleanup(args);
         },
         // is called on every keyDown event while a suggestion is active
@@ -132,7 +135,6 @@ export default {
             return true;
           }
           if (!this.popup) { return false; }
-
 
           if (event.key === 'ArrowUp') {
             this.upHandler();
