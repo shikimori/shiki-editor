@@ -23,19 +23,19 @@ export default class ItalicInline extends Mark {
     };
   }
 
-  inputRules({ type }) {
-    return [
-      markInputRule(/(?:^|[^_])(_([^_]+)_)$/, type),
-      markInputRule(/(?:^|[^*])(\*([^*]+)\*)$/, type)
-    ];
-  }
-
-  pasteRules({ type }) {
-    return [
-      markPasteRule(/_([^_]+)_/g, type),
-      markPasteRule(/\*([^*]+)\*/g, type)
-    ];
-  }
+  // inputRules({ type }) {
+  //   return [
+  //     markInputRule(/(?:^|[^_])(_([^_]+)_)$/, type),
+  //     markInputRule(/(?:^|[^*])(\*([^*]+)\*)$/, type)
+  //   ];
+  // }
+  //
+  // pasteRules({ type }) {
+  //   return [
+  //     markPasteRule(/_([^_]+)_/g, type),
+  //     markPasteRule(/\*([^*]+)\*/g, type)
+  //   ];
+  // }
 
   get markdownSerializerToken() {
     return {
