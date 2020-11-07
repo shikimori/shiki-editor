@@ -7,7 +7,7 @@ import buildDetectSequence from './build_detect_sequence';
 export default function buildSuggestionsPopupPlugin({
   matcher = {
     char: '@',
-    allowSpaces: false,
+    allowSpaces: true,
     startOfLine: false
   },
   appendText = null,
@@ -15,6 +15,7 @@ export default function buildSuggestionsPopupPlugin({
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   showed = () => false,
   updated = () => false,
+  closedEmpty = () => false,
   closed = () => false,
   keyPresed = () => false
 }) {
@@ -25,7 +26,7 @@ export default function buildSuggestionsPopupPlugin({
 
     view() {
       return {
-        update: async(view, prevState) => {
+        update: (view, prevState) => {
           const prev = this.key.getState(prevState);
           const next = this.key.getState(view.state);
 
@@ -35,7 +36,7 @@ export default function buildSuggestionsPopupPlugin({
           const isStarted = !prev.active && next.active;
           const isStopped = prev.active && !next.active;
           const isChanged = !isStarted &&
-            !isStopped && prev.query !== next.query;
+            !isStopped && prev.query !== next.query && next.active;
 
           const isHandleShow = isStarted || moved;
           const isHandleUpdate = isChanged; // && !moved;
@@ -46,7 +47,8 @@ export default function buildSuggestionsPopupPlugin({
             return;
           }
 
-          const state = isHandleClose ? prev : next;
+          // const state = isHandleClose ? prev : next;
+          const state = next;
           const decorationNode = document.querySelector(
             `[data-decoration-id="${state.decorationId}"]`
           );
@@ -81,7 +83,11 @@ export default function buildSuggestionsPopupPlugin({
           };
 
           if (isHandleClose) {
-            closed(props);
+            if (props.query) {
+              closed(props);
+            } else {
+              closedEmpty(props);
+            }
           }
 
           if (isHandleUpdate) {
@@ -109,8 +115,15 @@ export default function buildSuggestionsPopupPlugin({
 
       // Apply changes to the plugin state from a view transaction.
       apply(tr, prev) {
+        // if (prev.disable === true) { debugger }
+        // if (prev.query) { debugger }
+
         const { selection } = tr;
         const next = { ...prev };
+
+        // if (tr.meta.suggestions_popup?.disable) {
+        //   next.active = true;
+        // }
 
         // We can only be suggesting if there is no selection
         if (next.disable !== true && selection.from === selection.to) {
@@ -148,6 +161,12 @@ export default function buildSuggestionsPopupPlugin({
           next.text = null;
         }
 
+        if (next.active && (
+          next.text.endsWith('  ') || next.text.split(' ').length > 3
+        )) {
+          next.active = false;
+        }
+
         return next;
       }
     },
@@ -155,12 +174,21 @@ export default function buildSuggestionsPopupPlugin({
     props: {
       // Call the keydown hook if suggestion is active.
       handleKeyDown(view, event) {
-        const { active, range } = this.getState(view.state);
+        const state = this.getState(view.state);
+        const { active, range } = state;
 
         if (!active) return false;
 
         // if (event.key === 'Escape') {
-        //   this.spec.state.apply(view.state.tr, { ...state, disable: true });
+        //   // state.disabled = true;
+        //
+        //   view.dispatch(
+        //     view.state.tr.setMeta(
+        //       'suggestions_popup',
+        //       { fromPos: range.from, toPos: range.to, disable: true }
+        //     )
+        //   );
+        //   return;
         // }
 
         return keyPresed({ view, event, range });
@@ -168,7 +196,6 @@ export default function buildSuggestionsPopupPlugin({
 
       // Setup decorator on the currently active suggestion.
       decorations(editorState) {
-        // console.log({ ...this.getState(editorState) });
         const { active, range, decorationId } = this.getState(editorState);
 
         if (!active) return null;

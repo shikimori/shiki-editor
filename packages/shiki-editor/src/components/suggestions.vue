@@ -43,6 +43,17 @@ import { RequestId } from 'shiki-utils';
 import { buildSuggestionsPopupPlugin } from '../plugins';
 import { insertUserMention } from '../commands';
 
+const QUERY_MATCHERS = {
+  equals: (query) => {
+    const lowerQuery = query.toLowerCase();
+    return v => v.nickname.toLowerCase() === lowerQuery;
+  },
+  startsWith: (query) => {
+    const lowerQuery = query.toLowerCase();
+    return v => v.nickname.toLowerCase().startsWith(lowerQuery);
+  }
+};
+
 export default {
   name: 'Suggestions',
   props: {
@@ -60,7 +71,9 @@ export default {
     query: null,
     suggestionRange: null,
     isLoading: true,
-    wasLoadedSomething: false
+    wasLoadedSomething: false,
+    isUserSelected: false,
+    requestId: null
   }),
   computed: {
     hasResults() {
@@ -99,18 +112,42 @@ export default {
           this.fetch();
         },
         updated: ({ query, range, virtualNode }) => {
-          const priorQuery = this.query;
+          // const priorQuery = this.query;
+          // const priorFilteredUsers = this.filteredUsers;
+
           this.query = query;
           this.suggestionRange = range;
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
-          this.fetch(priorQuery);
+
+          this.fetch(query);
+
+          // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
+        },
+        closedEmpty: (args) => {
+          this.cleanup(args);
         },
         closed: (args) => {
+          const { query } = this;
+
+          if (!this.isUserSelected && this.hasResults && query.length > 1) {
+            if (query[query.length - 1] === ' ') {
+              this.trySelectUser(query.slice(0, query.length - 1), 1);
+            } else {
+              this.trySelectUser(query);
+            }
+          }
+
           this.cleanup(args);
         },
         // is called on every keyDown event while a suggestion is active
         keyPresed: ({ event }) => {
+          if (event.key === 'Escape') {
+            this.escHandler();
+            return true;
+          }
+          if (!this.popup) { return false; }
+
           if (event.key === 'ArrowUp') {
             this.upHandler();
             return true;
@@ -123,13 +160,9 @@ export default {
             this.enterHandler();
             return true;
           }
-          if ((event.key === ',' || event.key === ' ') && this.hasResults) {
-            this.trySelectUser();
+          if (event.key === ',' && this.hasResults) {
+            this.trySelectUser(this.query);
             return false;
-          }
-          if (event.key === 'Escape') {
-            this.escHandler();
-            return true;
           }
           return false;
         },
@@ -167,22 +200,37 @@ export default {
     escHandler() {
       this.closePopup();
     },
+    // possiblySelectPriorUser(query, priorQuery, priorUsers) {
+    //   if (query[query.length - 1] !== ' ') { return; }
+    //   if (this.matchUser(query, 'startsWith')) { return; }
+    //
+    //   const user = this.matchUser(priorQuery, 'equals', priorUsers);
+    //
+    //   if (user) {
+    //     this.suggestionRange.to -= 1;
+    //     this.selectUser(user);
+    //   }
+    // },
     selectUser(user) {
+      this.isUserSelected = true;
       this.insertMention({
         range: this.suggestionRange,
         attrs: user
       });
       this.editor.focus();
     },
-    trySelectUser() {
-      const lowerQuery = this.query.toLowerCase();
-      const user = this.filteredUsers.find(v => (
-        v.nickname.toLowerCase() === lowerQuery
-      ));
+    trySelectUser(query, decrementSuggestionRange = 0) {
+      const user = this.matchUser(query, 'equals');
 
       if (user) {
+        if (decrementSuggestionRange) {
+          this.suggestionRange.to -= decrementSuggestionRange;
+        }
         this.selectUser(user);
       }
+    },
+    matchUser(query, matcher, users = this.filteredUsers) {
+      return users.find(QUERY_MATCHERS[matcher](query));
     },
     renderPopup(node) {
       if (this.isMisplaced(node)) {
@@ -212,20 +260,20 @@ export default {
       return JSON.stringify(node.getBoundingClientRect()) ===
         JSON.stringify(new DOMRect());
     },
-    async fetch(priorQuery) {
-      if (priorQuery && this.query.includes(priorQuery) &&
+    async fetch(query) {
+      if (query && this.query.includes(query) &&
         !this.filteredUsers.length && this.wasLoadedSomething
       ) {
         this.shikiRequest.autocompleteNull('user', this.query);
         return;
       }
-      const requestId = new RequestId('autocomplete_users');
+      this.requestId = new RequestId('autocomplete_users');
       this.isLoading = true;
 
       const { data } = await this.shikiRequest.autocomplete('user', this.query);
       this.wasLoadedSomething ||= !!data.length;
 
-      if (requestId.isCurrent) {
+      if (this.requestId.isCurrent) {
         this.filteredUsers = data;
         this.isLoading = false;
         await this.$nextTick();
@@ -236,7 +284,11 @@ export default {
       this.query = null;
       this.filteredUsers = [];
       this.suggestionRange = null;
+
+      this.isLoading = true;
       this.navigatedUserIndex = 0;
+      this.wasLoadedSomething = false;
+      this.isUserSelected = false;
 
       this.closePopup();
     },

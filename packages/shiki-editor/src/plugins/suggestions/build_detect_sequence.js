@@ -1,8 +1,8 @@
 // Create a matcher that matches when a specific character is typed
 export default function buildDetectSequence({
-  char = '@',
-  allowSpaces = false,
-  startOfLine = false
+  char,
+  allowSpaces,
+  startOfLine
 }) {
   // Matching expressions used for later
   const escapedChar = `\\${char}`;
@@ -25,8 +25,13 @@ export default function buildDetectSequence({
     const textTo = $position.end();
     const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
 
+    // let match = text.endsWith('  ') || text.split(' ').length > 3 ?
+    //   null :
+    //   regexp.exec(text);
+
     let match = regexp.exec(text);
     let position;
+
     while (match !== null) {
       // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
       // or the line beginning
