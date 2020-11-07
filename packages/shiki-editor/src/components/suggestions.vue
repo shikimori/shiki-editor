@@ -125,13 +125,16 @@ export default {
           // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
-          if (!this.isUserSelected && this.hasResults) {
-            if (this.query[this.query.length - 1] === ' ') {
-              this.trySelectUser(this.query.slice(0, this.query.length - 1), 1);
+          const { query } = this;
+
+          if (!this.isUserSelected && this.hasResults && query.length > 1) {
+            if (query[query.length - 1] === ' ') {
+              this.trySelectUser(query.slice(0, query.length - 1), 1);
             } else {
-              this.trySelectUser(this.query);
+              this.trySelectUser(query);
             }
           }
+
           this.cleanup(args);
         },
         // is called on every keyDown event while a suggestion is active
