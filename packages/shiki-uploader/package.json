@@ -1,7 +1,7 @@
 {
   "name": "shiki-uploader",
   "title": "Shikimori Uploader",
-  "version": "0.15.23",
+  "version": "0.15.24",
   "main": "src/shiki_uploader.js",
   "author": "morr",
   "license": "OSL-3.0",
@@ -36,8 +36,8 @@
   },
   "peerDependencies": {
     "uevent": "^2.0.0",
-    "shiki-utils": "^0.15.23",
-    "shiki-decorators": "^0.15.23"
+    "shiki-utils": "^0.15.24",
+    "shiki-decorators": "^0.15.24"
   },
   "postcss": {
     "plugins": {

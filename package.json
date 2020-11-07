@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.15.23",
+  "version": "0.15.24",
   "workspaces": [
     "packages/*"
   ],
@@ -15,10 +15,10 @@
     "bind-decorator": "1.0.11",
     "imagesloaded": "^4.1.4",
     "is-visible": "^2.2.0",
-    "shiki-decorators": "^0.15.23",
-    "shiki-editor": "^0.15.23",
-    "shiki-uploader": "^0.15.23",
-    "shiki-utils": "^0.15.23",
+    "shiki-decorators": "^0.15.24",
+    "shiki-editor": "^0.15.24",
+    "shiki-uploader": "^0.15.24",
+    "shiki-utils": "^0.15.24",
     "toastify-js": "^1.8.0",
     "uevent": "^2.0.0"
   },
