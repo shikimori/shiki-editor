@@ -15,6 +15,7 @@ export default function buildSuggestionsPopupPlugin({
   command = ({ attrs, range, schema }) => false, // eslint-disable-line no-unused-vars
   showed = () => false,
   updated = () => false,
+  closedEmpty = () => false,
   closed = () => false,
   keyPresed = () => false
 }) {
@@ -25,7 +26,7 @@ export default function buildSuggestionsPopupPlugin({
 
     view() {
       return {
-        update: async(view, prevState) => {
+        update: (view, prevState) => {
           const prev = this.key.getState(prevState);
           const next = this.key.getState(view.state);
 
@@ -35,7 +36,7 @@ export default function buildSuggestionsPopupPlugin({
           const isStarted = !prev.active && next.active;
           const isStopped = prev.active && !next.active;
           const isChanged = !isStarted &&
-            !isStopped && prev.query !== next.query;
+            !isStopped && prev.query !== next.query && next.active;
 
           const isHandleShow = isStarted || moved;
           const isHandleUpdate = isChanged; // && !moved;
@@ -46,7 +47,8 @@ export default function buildSuggestionsPopupPlugin({
             return;
           }
 
-          const state = isHandleClose ? prev : next;
+          // const state = isHandleClose ? prev : next;
+          const state = next;
           const decorationNode = document.querySelector(
             `[data-decoration-id="${state.decorationId}"]`
           );
@@ -80,8 +82,14 @@ export default function buildSuggestionsPopupPlugin({
             }
           };
 
+          console.log({ ...state }, { query: props.query, isHandleClose, isHandleUpdate, isHandleShow })
+
           if (isHandleClose) {
-            closed(props);
+            if (props.query) {
+              closed(props);
+            } else {
+              closedEmpty(props);
+            }
           }
 
           if (isHandleUpdate) {
@@ -155,6 +163,14 @@ export default function buildSuggestionsPopupPlugin({
           next.text = null;
         }
 
+        if (next.active && (
+          next.text.endsWith('  ') || next.text.split(' ').length > 3
+        )) {
+          next.active = false;
+        }
+
+        console.log('next', next);
+
         return next;
       }
     },
@@ -169,13 +185,13 @@ export default function buildSuggestionsPopupPlugin({
 
         // if (event.key === 'Escape') {
         //   // state.disabled = true;
-        //   //
-        //   // view.dispatch(
-        //   //   view.state.tr.setMeta(
-        //   //     'suggestions_popup',
-        //   //     { fromPos: range.from, toPos: range.to, disable: true }
-        //   //   )
-        //   // );
+        //
+        //   view.dispatch(
+        //     view.state.tr.setMeta(
+        //       'suggestions_popup',
+        //       { fromPos: range.from, toPos: range.to, disable: true }
+        //     )
+        //   );
         //   return;
         // }
 

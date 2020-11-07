@@ -25,11 +25,11 @@ export default function buildDetectSequence({
     const textTo = $position.end();
     const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
 
-    let match = text.endsWith('  ') || text.split(' ').length > 3 ?
-      null :
-      regexp.exec(text);
+    // let match = text.endsWith('  ') || text.split(' ').length > 3 ?
+    //   null :
+    //   regexp.exec(text);
 
-    // let match = regexp.exec(text);
+    let match = regexp.exec(text);
     let position;
 
     while (match !== null) {
