@@ -63,7 +63,9 @@ import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 z
-
+[div=hidden]
+qwe
+[/div]
 x
 `.trim();
 
