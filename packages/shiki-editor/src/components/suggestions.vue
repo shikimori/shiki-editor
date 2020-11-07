@@ -71,7 +71,8 @@ export default {
     query: null,
     suggestionRange: null,
     isLoading: true,
-    wasLoadedSomething: false
+    wasLoadedSomething: false,
+    isUserSelected: false
   }),
   computed: {
     hasResults() {
@@ -111,7 +112,7 @@ export default {
         },
         updated: async({ query, range, virtualNode }) => {
           const priorQuery = this.query;
-          const priorFilteredUsers = this.filteredUsers;
+          // const priorFilteredUsers = this.filteredUsers;
 
           this.query = query;
           this.suggestionRange = range;
@@ -120,18 +121,15 @@ export default {
 
           await this.fetch(priorQuery);
 
-          this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
+          // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closed: (args) => {
-          debugger
-          if (this.hasResults && this.query.length &&
-              this.query[this.query.length - 1] === ' '
-          ) {
-            this.possiblySelectPriorUser(
-              this.query,
-              this.query.slice(0, this.query.length - 1),
-              this.filteredUsers
-            );
+          if (!this.isUserSelected && this.hasResults) {
+            if (this.query[this.query.length - 1] === ' ') {
+              this.trySelectUser(this.query.slice(0, this.query.length - 1), 1);
+            } else {
+              this.trySelectUser(this.query);
+            }
           }
           this.cleanup(args);
         },
@@ -195,28 +193,32 @@ export default {
     escHandler() {
       this.closePopup();
     },
-    possiblySelectPriorUser(query, priorQuery, priorUsers) {
-      if (query[query.length - 1] !== ' ') { return; }
-      if (this.matchUser(query, 'startsWith')) { return; }
-
-      const user = this.matchUser(priorQuery, 'equals', priorUsers);
-
-      if (user) {
-        this.suggestionRange.to -= 1;
-        this.selectUser(user);
-      }
-    },
+    // possiblySelectPriorUser(query, priorQuery, priorUsers) {
+    //   if (query[query.length - 1] !== ' ') { return; }
+    //   if (this.matchUser(query, 'startsWith')) { return; }
+    //
+    //   const user = this.matchUser(priorQuery, 'equals', priorUsers);
+    //
+    //   if (user) {
+    //     this.suggestionRange.to -= 1;
+    //     this.selectUser(user);
+    //   }
+    // },
     selectUser(user) {
+      this.isUserSelected = true;
       this.insertMention({
         range: this.suggestionRange,
         attrs: user
       });
       this.editor.focus();
     },
-    trySelectUser(query) {
+    trySelectUser(query, decrementSuggestionRange = 0) {
       const user = this.matchUser(query, 'equals');
 
       if (user) {
+        if (decrementSuggestionRange) {
+          this.suggestionRange.to -= decrementSuggestionRange;
+        }
         this.selectUser(user);
       }
     },
@@ -275,7 +277,11 @@ export default {
       this.query = null;
       this.filteredUsers = [];
       this.suggestionRange = null;
+
+      this.isLoading = true;
       this.navigatedUserIndex = 0;
+      this.wasLoadedSomething = false;
+      this.isUserSelected = false;
 
       this.closePopup();
     },
