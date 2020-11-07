@@ -125,12 +125,10 @@ export default {
           // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closedEmpty: (args) => {
-          console.log('closedEmpty');
           this.cleanup(args);
         },
         closed: (args) => {
           const { query } = this;
-          console.log('closed');
 
           if (!this.isUserSelected && this.hasResults && query.length > 1) {
             if (query[query.length - 1] === ' ') {

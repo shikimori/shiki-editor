@@ -82,8 +82,6 @@ export default function buildSuggestionsPopupPlugin({
             }
           };
 
-          console.log({ ...state }, { query: props.query, isHandleClose, isHandleUpdate, isHandleShow })
-
           if (isHandleClose) {
             if (props.query) {
               closed(props);
@@ -169,8 +167,6 @@ export default function buildSuggestionsPopupPlugin({
           next.active = false;
         }
 
-        console.log('next', next);
-
         return next;
       }
     },
@@ -200,7 +196,6 @@ export default function buildSuggestionsPopupPlugin({
 
       // Setup decorator on the currently active suggestion.
       decorations(editorState) {
-        // console.log({ ...this.getState(editorState) });
         const { active, range, decorationId } = this.getState(editorState);
 
         if (!active) return null;
