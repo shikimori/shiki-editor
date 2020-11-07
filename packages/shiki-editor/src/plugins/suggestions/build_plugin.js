@@ -7,8 +7,9 @@ import buildDetectSequence from './build_detect_sequence';
 export default function buildSuggestionsPopupPlugin({
   matcher = {
     char: '@',
-    allowSpaces: true,
-    startOfLine: false
+    allowSpaces: false,
+    startOfLine: false,
+    forbiddenParents: []
   },
   appendText = null,
   suggestionClass = 'ProseMirror-suggestion',
@@ -161,7 +162,7 @@ export default function buildSuggestionsPopupPlugin({
           next.text = null;
         }
 
-        if (next.active && (
+        if (next.active && matcher.allowSpaces && (
           next.text.endsWith('  ') || next.text.split(' ').length > 3
         )) {
           next.active = false;
