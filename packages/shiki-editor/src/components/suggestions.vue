@@ -72,7 +72,8 @@ export default {
     suggestionRange: null,
     isLoading: true,
     wasLoadedSomething: false,
-    isUserSelected: false
+    isUserSelected: false,
+    requestId: null
   }),
   computed: {
     hasResults() {
@@ -110,8 +111,8 @@ export default {
           this.wasLoadedSomething = false;
           this.fetch();
         },
-        updated: async({ query, range, virtualNode }) => {
-          const priorQuery = this.query;
+        updated: ({ query, range, virtualNode }) => {
+          // const priorQuery = this.query;
           // const priorFilteredUsers = this.filteredUsers;
 
           this.query = query;
@@ -119,7 +120,7 @@ export default {
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
 
-          await this.fetch(priorQuery);
+          this.fetch(query);
 
           // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
@@ -253,20 +254,20 @@ export default {
       return JSON.stringify(node.getBoundingClientRect()) ===
         JSON.stringify(new DOMRect());
     },
-    async fetch(priorQuery) {
-      if (priorQuery && this.query.includes(priorQuery) &&
+    async fetch(query) {
+      if (query && this.query.includes(query) &&
         !this.filteredUsers.length && this.wasLoadedSomething
       ) {
         this.shikiRequest.autocompleteNull('user', this.query);
         return;
       }
-      const requestId = new RequestId('autocomplete_users');
+      this.requestId = new RequestId('autocomplete_users');
       this.isLoading = true;
 
       const { data } = await this.shikiRequest.autocomplete('user', this.query);
       this.wasLoadedSomething ||= !!data.length;
 
-      if (requestId.isCurrent) {
+      if (this.requestId.isCurrent) {
         this.filteredUsers = data;
         this.isLoading = false;
         await this.$nextTick();
