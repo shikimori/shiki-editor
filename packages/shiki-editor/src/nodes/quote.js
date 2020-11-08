@@ -73,8 +73,8 @@ export default class Quote extends Node {
             if (html.includes('data-pm-slice')) { return html; }
 
             return html.replace(
-              /<br[^>]*><br[^>]*><div class="b-quote/g,
-              '<br><div class="b-quote'
+              /<br[^>]*><div class="b-quote/g,
+              '<div class="b-quote'
             );
           }
         }

@@ -90,8 +90,8 @@ export default class Blockquote extends Node {
             if (html.includes('data-pm-slice')) { return html; }
 
             return html.replace(
-              /<br[^>]*><br[^>]*><blockquote/g,
-              '<br><blockquote'
+              /<br[^>]*><blockquote/g,
+              '<blockquote'
             );
           }
         }
