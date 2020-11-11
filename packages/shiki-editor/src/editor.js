@@ -8,7 +8,7 @@ import { EditorState, TextSelection, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Schema } from 'prosemirror-model';
 import { keymap } from 'prosemirror-keymap';
-import { baseKeymap, joinBackward } from 'prosemirror-commands';
+import { baseKeymap } from 'prosemirror-commands';
 import { inputRules } from 'prosemirror-inputrules';
 import { dropCursor } from 'prosemirror-dropcursor';
 import { gapCursor } from 'prosemirror-gapcursor';
@@ -23,6 +23,7 @@ import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
   from './markdown';
 import { VueView } from './node_views';
 import { trackFocus, buildNodesAndMarks, uploadPlaceholder } from './plugins';
+import { joinBackwardEnhanced } from './commands';
 import { buildExtensions } from './extensions';
 
 export default class ShikiEditor {
@@ -181,7 +182,7 @@ export default class ShikiEditor {
         'Mod-z': undo,
         'Shift-Mod-z': redo,
         'Mod-y': redo,
-        Backspace: joinBackward
+        Backspace: joinBackwardEnhanced
       }),
       keymap(baseKeymap),
       dropCursor(this.options.dropCursor),
