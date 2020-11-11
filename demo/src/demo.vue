@@ -68,9 +68,13 @@ qwe
 z
 \`\`\`
 
-> a
 > 
-> c
+> 
+> 
+> 
+
+
+z
 `.trim();
 
 export default {
