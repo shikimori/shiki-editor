@@ -1,16 +1,18 @@
 import { joinBackward } from 'prosemirror-commands';
 import { Node } from 'prosemirror-model';
+
 import toggleWrap from './toggle_wrap';
+import toggleBlockType from './toggle_block_type';
 
 export default function joinBackwardEnhanced(state, dispatch, view) {
-  if (state.selection.empty && state.selection.$cursor.parentOffset === 0) {
-    if (unwrapEmptyBlockquoteLine(state, dispatch, view)) { return true; }
-  }
-
-  return joinBackward(state, dispatch, view);
+  return unwrapEmptyBlockquoteLine(state, dispatch, view) ||
+    unwrapEmptyCodeBlock(state, dispatch, view) ||
+    joinBackward(state, dispatch, view);
 }
 
 function unwrapEmptyBlockquoteLine(state, dispatch, view) {
+  if (state.selection.$cursor?.parentOffset !== 0) { return false; }
+
   const { blockquote, paragraph } = state.schema.nodes;
 
   const nodes = state.selection.$from.path.filter(v => v.constructor === Node);
@@ -23,6 +25,19 @@ function unwrapEmptyBlockquoteLine(state, dispatch, view) {
     priorNode.type === blockquote
   ) {
     return toggleWrap(blockquote, paragraph)(state, dispatch, view);
+  }
+
+  return false;
+}
+
+function unwrapEmptyCodeBlock(state, dispatch, view) {
+  if (state.selection.$cursor?.parentOffset !== 0) { return false; }
+
+  const { code_block, paragraph } = state.schema.nodes;
+  const parentNode = state.selection.$from.parent;
+
+  if (parentNode.type === code_block && !parentNode.textContent) {
+    return toggleBlockType(code_block, paragraph)(state, dispatch, view);
   }
 
   return false;

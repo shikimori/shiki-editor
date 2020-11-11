@@ -38,7 +38,7 @@ export default class CodeBlock extends Node {
   }
 
   commands({ schema, type }) {
-    return () => toggleBlockType(type, schema.nodes.paragraph, {});
+    return () => toggleBlockType(type, schema.nodes.paragraph);
   }
 
   activeCheck(type, state) {
