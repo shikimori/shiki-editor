@@ -15,8 +15,8 @@ export default class ShikiBlock extends Node {
         openBbcode: {},
         closeBbcode: {},
         meta: { default: {} },
-        isLoading: {},
-        isError: {},
+        isLoading: { default: true },
+        isError: { default: false },
         nFormat: {
           default: {
             nBeforeOpen: true,

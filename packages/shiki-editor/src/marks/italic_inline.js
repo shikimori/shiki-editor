@@ -1,5 +1,5 @@
 import { Mark } from '../base';
-import { markInputRule, markPasteRule } from '../commands';
+// import { markInputRule, markPasteRule } from '../commands';
 
 export default class ItalicInline extends Mark {
   get name() {
