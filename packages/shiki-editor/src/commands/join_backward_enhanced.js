@@ -51,6 +51,8 @@ function removeEmptyBlockquoteRelatedLine(state, dispatch, _view) {
     removeCurrentEmptyLineBeforeBlockquote($cut, state, dispatch);
 }
 
+import { findParentNodeOfType, removeNodeBefore, findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
+
 function removePriorEmptyBlockquoteLine($cut, state, dispatch) {
   const before = $cut.nodeBefore;
   const beforeNodes = before.content.content;
@@ -58,11 +60,16 @@ function removePriorEmptyBlockquoteLine($cut, state, dispatch) {
 
   const lastNode = beforeNodes[beforeNodes.length - 1];
 
-  // check last paragraph is empty
+  // check that last paragraph is empty
   if (lastNode.type === paragraph && !lastNode.textContent) {
-    if (beforeNodes.length === 1) { // the only paragraph in the blockquote
+    if (beforeNodes.length === 1) {
+      return removePriorBlockquote($cut, state, dispatch);
     } else { // multiple paragraphs in the blockquote
-      debugger
+      // debugger
+      // let z = state.tr;
+      // const tr = removeNodeBefore(z)
+      // dispatch(tr);
+      console.log('multiple children');
       // let tr = state.tr.deleteRange($cut.before(), $cut.after());
       // dispatch(tr.scrollIntoView());
       return true;
@@ -76,6 +83,36 @@ function removePriorEmptyBlockquoteLine($cut, state, dispatch) {
   // }
   return false;
 }
+
+function removePriorBlockquote($pos, state, dispatch) {
+  const { blockquote } = state.schema.nodes;
+  const $prior = Selection.findFrom($pos, -1);
+  const pos = findParentNodeOfTypeClosestToPos(
+    state.doc.resolve($prior.from),
+    blockquote
+  );
+
+  if (pos) {
+    let tr = state.tr.deleteRange(pos.pos, pos.pos + pos.node.nodeSize);
+    dispatch(tr.scrollIntoView());
+    return true;
+  }
+
+  return false;
+}
+
+export const findPositionOfNodeBefore = selection => {
+  const { nodeBefore } = selection.$from;
+  const maybeSelection = Selection.findFrom(selection.$from, -1);
+  if (maybeSelection && nodeBefore) {
+    // leaf node
+    const parent = findParentNodeOfType(nodeBefore.type)(maybeSelection);
+    if (parent) {
+      return parent.pos;
+    }
+    return maybeSelection.$from.pos;
+  }
+};
 
 function removeCurrentEmptyLineBeforeBlockquote($cut, state, dispatch) {
   const { $cursor } = state.selection;
