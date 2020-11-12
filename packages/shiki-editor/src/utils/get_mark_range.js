@@ -1,5 +1,5 @@
 //  based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-utils/src/utils/getMarkRange.js
-export default function getMarkRange($pos = null, type = null) {
+export default function getMarkRange($pos, type) {
   if (!$pos || !type) {
     return false;
   }

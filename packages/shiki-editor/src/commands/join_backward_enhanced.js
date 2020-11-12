@@ -12,9 +12,11 @@ export default function joinBackwardEnhanced(state, dispatch, view) {
     (view ? !view.endOfTextblock('backward', state) : $cursor.parentOffset > 0)
   ) { return false; }
 
+
   return unwrapEmptyBlockquoteLine(state, dispatch, view) ||
     removeEmptyBlockquoteRelatedLine(state, dispatch, view) ||
     unwrapEmptyCodeBlock(state, dispatch, view) ||
+    removeAllMarksWhenCursorAtBeginnig(state, dispatch, view) ||
     joinBackward(state, dispatch, view);
 }
 
@@ -96,7 +98,7 @@ function removeCurrentEmptyLineBeforeBlockquote($cut, state, dispatch) {
   ) {
     let tr = state.tr.deleteRange($cursor.before(), $cursor.after());
 
-    tr.setSelection(
+    tr = tr.setSelection(
       textblockAt(before, 'end') ?
         Selection.findFrom(tr.doc.resolve(tr.mapping.map($cut.pos, -1)), -1) :
         NodeSelection.create(tr.doc, $cut.pos - before.nodeSize)
@@ -109,7 +111,6 @@ function removeCurrentEmptyLineBeforeBlockquote($cut, state, dispatch) {
   return false;
 }
 
-
 function unwrapEmptyCodeBlock(state, dispatch, view) {
   if (state.selection.$cursor?.parentOffset !== 0) { return false; }
 
@@ -121,6 +122,19 @@ function unwrapEmptyCodeBlock(state, dispatch, view) {
   }
 
   return false;
+}
+
+function removeAllMarksWhenCursorAtBeginnig(state, dispatch) {
+  let { $cursor } = state.selection;
+
+  if ($cursor.depth !== 1 || $cursor.parentOffset !== 0 || $cursor.pos !== 1) {
+    return false;
+  }
+
+  const tr = state.tr.setStoredMarks([]);
+  dispatch(tr.scrollIntoView());
+
+  return true;
 }
 
 function findCutBefore($pos) {
