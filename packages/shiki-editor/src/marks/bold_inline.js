@@ -8,6 +8,7 @@ export default class BoldInline extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       parseDOM: [{
         tag: 'strong'
       }, {

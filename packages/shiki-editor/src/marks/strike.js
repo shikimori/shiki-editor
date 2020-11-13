@@ -7,6 +7,7 @@ export default class Strike extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       parseDOM: [{
         tag: 'del'
       }, {

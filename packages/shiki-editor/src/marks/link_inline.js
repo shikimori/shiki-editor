@@ -36,6 +36,7 @@ export default class LinkInline extends Mark {
 
   get schema() {
     return {
+      rank: 1,
       attrs: {
         url: {},
         id: { default: null },

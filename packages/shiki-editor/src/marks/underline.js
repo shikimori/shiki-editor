@@ -7,6 +7,7 @@ export default class Underline extends Mark {
 
   get schema() {
     return {
+      rank: 0,
       parseDOM: [{
         tag: 'u'
       },

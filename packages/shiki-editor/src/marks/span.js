@@ -9,6 +9,7 @@ export default class Span extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       attrs: {
         class: { default: null },
         data: { default: [] }

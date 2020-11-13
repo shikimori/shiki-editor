@@ -13,6 +13,7 @@ export default class ColorInline extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       attrs: {
         color: {}
       },

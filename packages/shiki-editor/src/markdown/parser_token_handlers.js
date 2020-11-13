@@ -50,7 +50,9 @@ export default function tokenHandlers(schema, tokens) {
           state.closeMark(markType);
         };
       } else {
-        handlers[type + '_open'] = (state, token) => state.openMark(markType.create(attrs(spec, token)));
+        handlers[type + '_open'] = (state, token) => (
+          state.openMark(markType.create(attrs(spec, token)))
+        );
         handlers[type + '_close'] = state => state.closeMark(markType);
       }
 

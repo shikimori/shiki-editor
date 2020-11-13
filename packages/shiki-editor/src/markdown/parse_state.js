@@ -29,12 +29,16 @@ export default class MarkdownParseState {
   // using the current marks as styling.
   addText(text) {
     if (!text) return;
-    const nodes = this.top().content; const
-      last = nodes[nodes.length - 1];
-    const node = this.schema.text(text, this.marks); let
-      merged;
-    if (last && (merged = maybeMerge(last, node))) nodes[nodes.length - 1] = merged;
-    else nodes.push(node);
+    const nodes = this.top().content;
+    const last = nodes[nodes.length - 1];
+    const node = this.schema.text(text, this.marks);
+    let merged;
+
+    if (last && (merged = maybeMerge(last, node))) {
+      nodes[nodes.length - 1] = merged;
+    } else {
+      nodes.push(node);
+    }
   }
 
   // : (Mark)
@@ -55,7 +59,12 @@ export default class MarkdownParseState {
       const handler = this.tokenHandlers[
         token.direction ? `${token.type}_${token.direction}` : token.type
       ];
-      if (!handler) throw new Error('Token type `' + token.type + '` not supported by Markdown parser');
+      if (!handler) {
+        throw new Error(
+          'Token type `' + token.type + '` not supported by Markdown parser'
+        );
+      }
+
       handler(this, token);
     }
   }
@@ -64,7 +73,8 @@ export default class MarkdownParseState {
   // Add a node at the current position.
   addNode(type, attrs, content) {
     const node = type.createAndFill(attrs, content, this.marks);
-    if (!node) return null;
+    if (!node) { return null; }
+
     this.push(node);
     return node;
   }
@@ -78,7 +88,9 @@ export default class MarkdownParseState {
   // : () → ?Node
   // Close and return the node that is currently on top of the stack.
   closeNode() {
-    if (this.marks.length) this.marks = Mark.none;
+    if (this.marks.length) {
+      this.marks = Mark.none;
+    }
     const info = this.stack.pop();
     return this.addNode(info.type, info.attrs, info.content);
   }

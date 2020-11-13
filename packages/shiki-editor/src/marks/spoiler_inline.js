@@ -9,6 +9,7 @@ export default class SpoilerInline extends Mark {
 
   get schema() {
     return {
+      rank: 0,
       attrs: {
         isOpened: { default: true }
       },

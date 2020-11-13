@@ -111,11 +111,19 @@ export default class ShikiEditor {
   }
 
   createSchema() {
-    return new Schema({
+    const schema = new Schema({
       topNode: 'doc',
       nodes: this.nodes,
       marks: this.marks
     });
+
+    Object.keys(this.marks).forEach(name => {
+      if (this.marks[name].rank) {
+        schema.marks[name].rank = this.marks[name].rank;
+      }
+    });
+
+    return schema;
   }
 
   createMarkdownParser() {

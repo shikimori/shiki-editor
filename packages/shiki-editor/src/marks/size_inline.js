@@ -12,6 +12,7 @@ export default class SizeInline extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       attrs: {
         size: {}
       },

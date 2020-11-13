@@ -8,6 +8,7 @@ export default class ItalicInline extends Mark {
 
   get schema() {
     return {
+      rank: 5,
       parseDOM: [
         { tag: 'i' },
         { tag: 'em' }
