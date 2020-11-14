@@ -1,19 +1,46 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { Slice, Fragment } from 'prosemirror-model';
+import { Slice, Fragment, DOMParser } from 'prosemirror-model';
 
-export default new Plugin({
-  key: new PluginKey('prevent_transform_pasted_inside_code_mark'),
-  props: {
-    // when pasted into node with code mark, create new slice of text with
-    // code mark so in transformPasted this slice could be ignored
-    clipboardTextParser: (text, $context, _plainText) => {
-      const node = $context.nodeBefore || $context.nodeAfter;
+export default function preventTransformPastedInsideCodeMark(editor) {
+  return new Plugin({
+    key: new PluginKey('prevent_transform_pasted_inside_code_mark'),
+    props: {
+      // when pasted `text` into node with code mark,
+      // create new slice of text with code mark,
+      // so in transformPasted this slice could be ignored
+      clipboardTextParser: (text, $context, _plainText) => {
+        const node = $context.nodeBefore || $context.nodeAfter;
 
-      if (!node || !node.isText) { return; }
-      if (!node.marks.some(mark => mark.type.spec.code)) { return; }
+        return isCodeMarkedNode(node) ?
+          textCodeMarkedSlice(node, editor.schema, text) :
+          null;
+      },
+      // when pasted `html` into node with code mark,
+      // create new slice of text with code mark,
+      // otherwise parse content as regular html similar to prosemirror does in
+      // https://github.com/ProseMirror/prosemirror-view/blob/master/src/clipboard.js#L38
+      clipboardParser: {
+        parseSlice(dom, { context, preserveWhitespace }) {
+          const node = context.nodeBefore || context.nodeAfter;
 
-      const fragment = Fragment.from(node.type.schema.text(text, node.marks));
-      return new Slice(fragment, 0, 0);
+          return isCodeMarkedNode(node) ?
+            textCodeMarkedSlice(node, editor.schema, dom.innerText) :
+            DOMParser
+              .fromSchema(editor.schema)
+              .parseSlice(dom, { context, preserveWhitespace });
+
+        }
+      }
     }
-  }
-});
+  });
+}
+
+function isCodeMarkedNode(node) {
+  return node && node.isText &&
+    node.marks.some(mark => mark.type.spec.code);
+}
+
+function textCodeMarkedSlice(node, schema, text) {
+  const fragment = Fragment.from(schema.text(text, node.marks));
+  return new Slice(fragment, 0, 0);
+}

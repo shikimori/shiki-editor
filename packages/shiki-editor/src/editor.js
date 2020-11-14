@@ -201,7 +201,7 @@ export default class ShikiEditor {
       dropCursor(this.options.dropCursor),
       gapCursor(),
       trackFocus(this),
-      preventTransformPastedInsideCodeMark,
+      preventTransformPastedInsideCodeMark(this),
       uploadPlaceholder,
       new Plugin({
         props: this.options.editorProps
