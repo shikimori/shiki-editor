@@ -5,6 +5,7 @@ import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
 
 import toggleWrap from './toggle_wrap';
 import toggleBlockType from './toggle_block_type';
+import { findCutBefore } from '../utils';
 
 export default function joinBackwardEnhanced(state, dispatch, view) {
   let { $cursor } = state.selection;
@@ -135,16 +136,6 @@ function removeAllMarksWhenCursorAtBeginnig(state, dispatch) {
   dispatch(tr.scrollIntoView());
 
   return true;
-}
-
-function findCutBefore($pos) {
-  if (!$pos.parent.type.spec.isolating) {
-    for (let i = $pos.depth - 1; i >= 0; i--) {
-      if ($pos.index(i) > 0) { return $pos.doc.resolve($pos.before(i + 1)); }
-      if ($pos.node(i).type.spec.isolating) { break; }
-    }
-  }
-  return null;
 }
 
 function textblockAt(node, side) {
