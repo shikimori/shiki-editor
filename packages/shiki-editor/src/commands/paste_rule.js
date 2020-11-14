@@ -1,12 +1,15 @@
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
+import { isContainsCodeMark } from '../utils';
 
 export default function pasteRule(regexp, type, getAttrs) {
   const handler = fragment => {
     const nodes = [];
 
     fragment.forEach(child => {
-      if (child.isText) {
+      if (child.type.spec.code || isContainsCodeMark(child)) {
+        nodes.push(child);
+      } else if (child.isText) {
         const { text } = child;
         let pos = 0;
         let match;
@@ -44,16 +47,9 @@ export default function pasteRule(regexp, type, getAttrs) {
 
   return new Plugin({
     props: {
-      transformPasted: slice => {
-        const node = slice.content.content[0];
-        // prevent transformation of pasted nodes containing code mark
-        if (node?.marks?.some(mark => mark.type.spec.code)) {
-          return slice;
-        }
-
-        const parsedFragment = handler(slice.content);
-        return new Slice(parsedFragment, slice.openStart, slice.openEnd);
-      }
+      transformPasted: slice => (
+        new Slice(handler(slice.content), slice.openStart, slice.openEnd)
+      )
     }
   });
 }

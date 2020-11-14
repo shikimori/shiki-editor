@@ -1,6 +1,7 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/pasteRule.js
 import { Plugin } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
+import { isContainsCodeMark } from '../utils';
 
 const URL_REGEXP = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g; // eslint-disable-line
 const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|local)\/(animes|mangas|ranobe|characters|people)\/(\w+)[^/]*$/;
@@ -41,7 +42,9 @@ export default function linkUrlPasteRule(type, schema, getAttrs) {
     const nodes = [];
 
     fragment.forEach(child => {
-      if (child.isText) {
+      if (child.type.spec.code || isContainsCodeMark(child)) {
+        nodes.push(child);
+      } else if (child.isText) {
         const { text } = child;
         let pos = 0;
         let match;
@@ -111,16 +114,9 @@ export default function linkUrlPasteRule(type, schema, getAttrs) {
 
   return new Plugin({
     props: {
-      transformPasted: slice => {
-        const node = slice.content.content[0];
-        // prevent transformation of pasted nodes containing code mark
-        if (node?.marks?.some(mark => mark.type.spec.code)) {
-          return slice;
-        }
-
-        const parsedFragment = handler(slice.content);
-        return new Slice(parsedFragment, slice.openStart, slice.openEnd);
-      }
+      transformPasted: slice => (
+        new Slice(handler(slice.content), slice.openStart, slice.openEnd)
+      )
     }
   });
 }
