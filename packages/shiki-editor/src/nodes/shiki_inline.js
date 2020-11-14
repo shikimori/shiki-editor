@@ -134,16 +134,14 @@ export default class ShikiInline extends Node {
 
   pasteRules({ type }) {
     return [
-      pasteRule(SHIKI_BBCODE_LINK_FULL_REGEXP, type, ([bbcode, type, id, text]) => (
+      pasteRule(SHIKI_BBCODE_LINK_FULL_REGEXP, type, ([bbcode, _type, _id, _userId, text]) => ({
+        ...parseShikiBasicMeta(bbcode.match(/\[.*?\]/)?.[0]),
+        text,
+        isPasted: true
+      })),
+      pasteRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, ..._]) => (
         {
-          ...parseShikiBasicMeta(bbcode, type, id),
-          text,
-          isPasted: true
-        }
-      )),
-      pasteRule(SHIKI_BBCODE_LINK_REGEXP, type, ([bbcode, type, id]) => (
-        {
-          ...parseShikiBasicMeta(bbcode, type, id),
+          ...parseShikiBasicMeta(bbcode),
           isPasted: true
         }
       )),
