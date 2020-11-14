@@ -2,8 +2,7 @@
 export default function buildDetectSequence({
   char,
   allowSpaces,
-  startOfLine,
-  forbiddenParents
+  startOfLine
 }) {
   // Matching expressions used for later
   const escapedChar = `\\${char}`;
@@ -18,7 +17,7 @@ export default function buildDetectSequence({
   return $position => {
     // cancel if top level node
     if ($position.depth <= 0) { return false; }
-    if (forbiddenParents.includes($position.parent.type.name)) { return false; }
+    if ($position.parent.type.spec.code) { return false; }
 
     // Lookup the boundaries of the current node
     const textFrom = $position.before();

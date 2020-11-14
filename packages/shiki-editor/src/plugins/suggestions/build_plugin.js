@@ -8,8 +8,7 @@ export default function buildSuggestionsPopupPlugin({
   matcher = {
     char: '@',
     allowSpaces: false,
-    startOfLine: false,
-    forbiddenParents: []
+    startOfLine: false
   },
   appendText = null,
   suggestionClass = 'ProseMirror-suggestion',

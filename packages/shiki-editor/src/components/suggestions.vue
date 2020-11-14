@@ -106,8 +106,7 @@ export default {
         matcher: {
           char: '@',
           allowSpaces: true,
-          startOfLine: false,
-          forbiddenParents: ['code_block', 'code_inline']
+          startOfLine: false
         },
         showed: ({ query, range, command, virtualNode }) => {
           this.query = query;

@@ -28,7 +28,6 @@ export default function preventTransformPastedInsideCodeMark(editor) {
             DOMParser
               .fromSchema(editor.schema)
               .parseSlice(dom, { context, preserveWhitespace });
-
         }
       }
     }
