@@ -64,7 +64,9 @@ import ShikiUploader from '../../packages/shiki-uploader';
 const TEXT_2 = `
 z
 
-\`test test\`
+\` [user=1] \`
+
+\`test    test\`
 
 b
 `.trim();

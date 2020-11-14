@@ -44,7 +44,27 @@ export default function(regexp, type, getAttrs) {
 
   return new Plugin({
     props: {
-      transformPasted: slice => new Slice(handler(slice.content), slice.openStart, slice.openEnd)
+      // when pasted into node with code mark, create new slice of text with
+      // code mark so in transformPasted this slice could be ignored
+      clipboardTextParser: (text, $context, _plainText) => {
+        const node = $context.nodeBefore || $context.nodeAfter;
+
+        if (!node || !node.isText) { return; }
+        if (!node.marks.some(mark => mark.type.spec.code)) { return; }
+
+        const fragment = Fragment.from(node.type.schema.text(text, node.marks));
+        return new Slice(fragment, 0, 0);
+      },
+      transformPasted: slice => {
+        const node = slice.content.content[0];
+        // prevent transformation of pasted nodes containing code mark
+        if (node?.marks?.some(mark => mark.type.spec.code)) {
+          return slice;
+        }
+
+        const parsedFragment = handler(slice.content);
+        return new Slice(parsedFragment, slice.openStart, slice.openEnd);
+      }
     }
   });
 }
