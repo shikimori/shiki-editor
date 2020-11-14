@@ -1,3 +1,5 @@
+import { isContainsCodeMark } from '../../utils';
+
 // Create a matcher that matches when a specific character is typed
 export default function buildDetectSequence({
   char,
@@ -17,7 +19,10 @@ export default function buildDetectSequence({
   return $position => {
     // cancel if top level node
     if ($position.depth <= 0) { return false; }
-    if ($position.parent.type.spec.code) { return false; }
+    // cancel if inside code
+    if ($position.parent.type.spec.code ||
+      isContainsCodeMark($position.nodeBefore || $position.nodeAfter)
+    ) { return false; }
 
     // Lookup the boundaries of the current node
     const textFrom = $position.before();
