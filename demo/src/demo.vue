@@ -63,8 +63,8 @@ import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 z
-\`[anime=1]zxc[/anime]\`
-[div=hidden]zxc[/div]
+
+\`test test\`
 
 b
 `.trim();
