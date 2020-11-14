@@ -52,7 +52,16 @@ export default function(regexp, type, getAttrs) {
 
   return new Plugin({
     props: {
-      transformPasted: slice => new Slice(handler(slice.content), slice.openStart, slice.openEnd)
+      transformPasted: slice => {
+        const node = slice.content.content[0];
+        // prevent transformation of pasted nodes containing code mark
+        if (node?.marks?.some(mark => mark.type.spec.code)) {
+          return slice;
+        }
+
+        const parsedFragment = handler(slice.content);
+        return new Slice(parsedFragment, slice.openStart, slice.openEnd);
+      }
     }
   });
 }

@@ -22,7 +22,12 @@ import {
 import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
   from './markdown';
 import { VueView } from './node_views';
-import { trackFocus, buildNodesAndMarks, uploadPlaceholder } from './plugins';
+import {
+  buildNodesAndMarks,
+  preventTransformPastedInsideCodeMark,
+  trackFocus,
+  uploadPlaceholder
+} from './plugins';
 import { joinBackwardEnhanced } from './commands';
 import { buildExtensions } from './extensions';
 
@@ -196,6 +201,7 @@ export default class ShikiEditor {
       dropCursor(this.options.dropCursor),
       gapCursor(),
       trackFocus(this),
+      preventTransformPastedInsideCodeMark,
       uploadPlaceholder,
       new Plugin({
         props: this.options.editorProps
