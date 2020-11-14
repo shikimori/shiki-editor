@@ -1,5 +1,6 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment, DOMParser } from 'prosemirror-model';
+import { isContainsCodeMark } from '../utils';
 
 export default function preventTransformPastedInsideCodeMark(editor) {
   return new Plugin({
@@ -11,7 +12,7 @@ export default function preventTransformPastedInsideCodeMark(editor) {
       clipboardTextParser: (text, $context, _plainText) => {
         const node = $context.nodeBefore || $context.nodeAfter;
 
-        return isCodeMarkedNode(node) ?
+        return isContainsCodeMark(node) ?
           textCodeMarkedSlice(node, editor.schema, text) :
           null;
       },
@@ -23,7 +24,7 @@ export default function preventTransformPastedInsideCodeMark(editor) {
         parseSlice(dom, { context, preserveWhitespace }) {
           const node = context.nodeBefore || context.nodeAfter;
 
-          return isCodeMarkedNode(node) ?
+          return isContainsCodeMark(node) ?
             textCodeMarkedSlice(node, editor.schema, dom.innerText) :
             DOMParser
               .fromSchema(editor.schema)
@@ -32,11 +33,6 @@ export default function preventTransformPastedInsideCodeMark(editor) {
       }
     }
   });
-}
-
-function isCodeMarkedNode(node) {
-  return node && node.isText &&
-    node.marks.some(mark => mark.type.spec.code);
 }
 
 function textCodeMarkedSlice(node, schema, text) {
