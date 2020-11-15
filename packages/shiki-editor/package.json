@@ -28,7 +28,7 @@
     "imagesloaded": "^4.1.4",
     "lodash": "^4.17.20",
     "p-defer": "^3.0.0",
-    "shiki-decorators": "file:../shiki-decorators",
+    "shiki-decorators": "^1.0.0",
     "shiki-uploader": "file:../shiki-uploader",
     "shiki-utils": "file:../shiki-utils",
     "uevent": "^2.0.0"

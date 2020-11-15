@@ -58,7 +58,7 @@ import axios from 'axios';
 // import ShikiUploader from 'shiki-uploader';
 import { ShikiEditorApp } from '../../packages/shiki-editor';
 import { flash, ShikiRequest } from '../../packages/shiki-utils';
-import { throttle, debounce } from '../../packages/shiki-decorators';
+import { throttle, debounce } from 'shiki-decorators';
 import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
