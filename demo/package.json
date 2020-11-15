@@ -35,9 +35,9 @@
     "raw-loader": "^4.0.1",
     "sass-loader": "^8.0.2",
     "shiki-decorators": "^1.0.0",
-    "shiki-editor": "^0.15.32",
-    "shiki-uploader": "^0.15.32",
-    "shiki-utils": "^0.15.32",
+    "shiki-editor": "^0.15.33",
+    "shiki-uploader": "^0.15.33",
+    "shiki-utils": "^0.15.33",
     "style-loader": "^1.0.1",
     "vue-template-compiler": "^2.6.11"
   },
