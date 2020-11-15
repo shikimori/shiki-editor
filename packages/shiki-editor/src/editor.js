@@ -202,7 +202,7 @@ export default class ShikiEditor {
       gapCursor(),
       trackFocus(this),
       preventTransformPastedInsideCodeMark(this),
-      uploadPlaceholder(this),
+      uploadPlaceholder,
       new Plugin({
         props: this.options.editorProps
       })
