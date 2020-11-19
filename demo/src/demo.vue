@@ -54,12 +54,12 @@
 import axios from 'axios';
 // import { ShikiEditorApp } from 'shiki-editor';
 // import { flash } from 'shiki-utils';
-// import { throttle, debounce } from 'shiki-decorators';
-// import ShikiUploader from 'shiki-uploader';
+import { throttle, debounce } from 'shiki-decorators';
+import ShikiUploader from 'shiki-uploader';
 import { ShikiEditorApp } from '../../packages/shiki-editor';
 import { flash, ShikiRequest } from '../../packages/shiki-utils';
-import { throttle, debounce } from 'shiki-decorators';
-import ShikiUploader from '../../packages/shiki-uploader';
+// import { throttle, debounce } from '../../packages/shiki-decorators';
+// import ShikiUploader from '../../packages/shiki-uploader';
 
 const TEXT_2 = `
 z
