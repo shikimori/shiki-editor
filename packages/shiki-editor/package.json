@@ -29,7 +29,7 @@
     "lodash": "^4.17.20",
     "p-defer": "^3.0.0",
     "shiki-decorators": "^1.0.0",
-    "shiki-uploader": "file:../shiki-uploader",
+    "shiki-uploader": "^1.0.0",
     "shiki-utils": "file:../shiki-utils",
     "uevent": "^2.0.0"
   },
@@ -60,7 +60,7 @@
     "imagesloaded": "^4.1.4",
     "p-defer": "^3.0.0",
     "shiki-decorators": "^0.15.33",
-    "shiki-uploader": "^0.15.33",
+    "shiki-uploader": "^1.0.0",
     "shiki-utils": "^0.15.33",
     "uevent": "^2.0.0"
   }
