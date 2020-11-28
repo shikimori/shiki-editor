@@ -272,13 +272,13 @@ export default {
         this.shikiRequest.autocompleteNull('user', this.query);
         return;
       }
-      this.requestId = new RequestId('autocomplete_users');
+      const requestId = new RequestId('autocomplete_users');
       this.isLoading = true;
 
       const { data } = await this.shikiRequest.autocomplete('user', this.query);
       this.wasLoadedSomething ||= !!data.length;
 
-      if (this.requestId.isCurrent) {
+      if (requestId.isCurrent) {
         this.filteredUsers = data;
         this.isLoading = false;
         await this.$nextTick();
