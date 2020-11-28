@@ -4612,22 +4612,13 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shiki-decorators@^0.15.33, shiki-decorators@^1.0.0:
+shiki-decorators@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shiki-decorators/-/shiki-decorators-1.0.0.tgz#6fbb7107928fa8394bd511d3f5f40149e297da85"
   integrity sha512-RtBBL5SN7WTFVu55HfXouT9v1oybylqLJVW19cWxyq0aMnfQU7Mn/YWhyo3/8XU+ApByrYZlieUfmmU5A1Amew==
   dependencies:
     bind-decorator "1.0.11"
     memoize-decorator "^1.0.2"
-
-shiki-uploader@^0.15.33:
-  version "0.15.33"
-  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-0.15.33.tgz#abff71905165426b02107ff5275d0b2d799e0953"
-  integrity sha512-UIMhijiSS9ziGh3Aj0pJxNpA1PPIc/825x8iwiGVN3kMG6K5NHQlHEwdxzJijG0YkUripbFPbkKlXxk1PgHgLQ==
-  dependencies:
-    "@uppy/core" "^1.11.0"
-    "@uppy/xhr-upload" "^1.6.0"
-    is-visible "^2.2.0"
 
 shiki-uploader@^1.0.0:
   version "1.0.0"
@@ -4639,7 +4630,7 @@ shiki-uploader@^1.0.0:
     is-visible "^2.2.0"
 
 "shiki-utils@file:packages/shiki-utils":
-  version "0.15.33"
+  version "0.15.34"
   dependencies:
     ismobilejs "^1.1.1"
     toastify-js "^1.8.0"
