@@ -1,4 +1,5 @@
 export default function processBulletList(state, tagSequence) {
+  let isFirstLine = true;
   const priorSequence = state.nestedSequence;
 
   state.push(state.tagOpen('bullet_list'));
@@ -6,10 +7,11 @@ export default function processBulletList(state, tagSequence) {
   // console.log(`processBulletList '${state.nestedSequence}'`);
 
   do {
-    state.next(tagSequence.length);
+    state.next(isFirstLine ? tagSequence.length : state.nestedSequence.length);
     state.push(state.tagOpen('list_item', { bbcode: tagSequence }));
     processBulletListLines(state, priorSequence, '  ');
     state.push(state.tagClose('list_item'));
+    isFirstLine = false;
   } while (state.isSequenceContinued());
 
   state.push(state.tagClose('bullet_list'));

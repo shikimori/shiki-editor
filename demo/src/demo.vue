@@ -61,7 +61,7 @@ import { flash, ShikiRequest } from '../../packages/shiki-utils';
 // import { throttle, debounce } from '../../packages/shiki-decorators';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
-const TEXT_2 = `
+let TEXT_2 = `
 z
 
 [user=1] https://google.com

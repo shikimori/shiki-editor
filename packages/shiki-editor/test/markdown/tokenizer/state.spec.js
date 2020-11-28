@@ -2375,5 +2375,62 @@ describe('MarkdownTokenizer', () => {
         { type: 'heading', direction: 'close' }
       ]);
     });
+
+    it('blockquote inside list', () => {
+      expect(MarkdownTokenizer.parse('- > test')).to.eql([
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        { type: 'blockquote', direction: 'open' },
+        ...text('test'),
+        { type: 'blockquote', direction: 'close' },
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' }
+      ]);
+
+      expect(MarkdownTokenizer.parse('- > test\n  > 123')).to.eql([
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        { type: 'blockquote', direction: 'open' },
+        ...text('test'),
+        ...text('123'),
+        { type: 'blockquote', direction: 'close' },
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' }
+      ]);
+    });
+
+    it('list inside blockquote', () => {
+      expect(MarkdownTokenizer.parse('> - test')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        ...text('test'),
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+      expect(MarkdownTokenizer.parse('> - test\n>   123')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        ...text('test'),
+        ...text('123'),
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+      expect(MarkdownTokenizer.parse('> - test\n> - 123')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        ...text('test'),
+        { type: 'list_item', direction: 'close' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        ...text('123'),
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+    });
   });
 });
