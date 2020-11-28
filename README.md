@@ -1,14 +1,16 @@
-[![Build Status](https://travis-ci.com/shikimori/shiki-packages.svg?branch=master)](https://travis-ci.com/shikimori/shiki-packages)
+[![Build Status](https://travis-ci.com/shikimori/shiki-editor.svg?branch=master)](https://travis-ci.com/shikimori/shiki-editor)
 
-# shiki-packages
-This repository contains some core shikimori js libraries: `shiki-editor`, `shiki-uploader`, `shiki-utils` and `shiki-decorators`.
+# shiki-editor
+`shiki-editor` is a wysiwyg editor based on [prosemirror](https://prosemirror.net/). To understand how it works internally please read [prosemirror guide](https://prosemirror.net/docs/guide/).
 
-## Demo
-1. Clone this repository
-2. Start demo
+`shiki-editor` inner architecture is also highly inspired by [tiptap](https://github.com/scrumpy/tiptap) source code. Many parts of the code are taken from there.
+
+
+## Installation & Run
+
 ```sh
-yarn
+yarn install
 cd demo
-yarn
-yarn serve
+yarn install
+yarn start
 ```

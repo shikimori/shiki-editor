@@ -1,26 +1,20 @@
 {
-  "private": true,
+  "name": "shiki-editor",
+  "title": "Shikimori text editor",
+  "description": "Shikimori text editor",
   "version": "0.15.35",
-  "workspaces": [
-    "packages/*"
-  ],
+  "main": "src/index",
+  "author": "morr",
+  "license": "MIT",
+  "homepage": "https://github.com/shikimori/shiki-editor",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha-webpack --webpack-config webpack.config.test.js packages/**/*.spec.js --recursive"
+    "test": "mocha-webpack --webpack-config webpack.config.test.js tests/*.js",
+    "release": "release-it"
   },
-  "dependencies": {
-    "@uppy/core": "^1.11.0",
-    "@uppy/xhr-upload": "^1.6.0",
-    "autosize": "^4.0.2",
-    "bind-decorator": "1.0.11",
-    "imagesloaded": "^4.1.4",
-    "is-visible": "^2.2.0",
-    "shiki-decorators": "^1.0.0",
-    "shiki-editor": "^0.15.35",
-    "shiki-uploader": "^1.0.0",
-    "shiki-utils": "^0.15.35",
-    "toastify-js": "^1.8.0",
-    "uevent": "^2.0.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shikimori/shiki-editor.git"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -29,6 +23,7 @@
     "@babel/plugin-proposal-decorators": "^7.10.4",
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@babel/preset-env": "^7.7.4",
+    "autosize": "^4.0.2",
     "babel-eslint": "11.0.0-beta.2",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
@@ -37,13 +32,57 @@
     "eslint-import-resolver-webpack": "^0.12.2",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-vue": "^6.2.2",
+    "imagesloaded": "^4.1.4",
+    "lodash": "^4.17.20",
     "mocha": "^7.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
+    "p-defer": "^3.0.0",
+    "shiki-decorators": "^1.0.0",
+    "shiki-uploader": "^1.0.0",
+    "shiki-utils": "^1.0.0",
+    "uevent": "^2.0.0",
     "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
+    "@popperjs/core": "^2.4.4",
+    "prosemirror-commands": "^1.1.4",
+    "prosemirror-dropcursor": "^1.3.2",
+    "prosemirror-gapcursor": "^1.1.5",
+    "prosemirror-history": "^1.1.3",
+    "prosemirror-inputrules": "^1.1.2",
+    "prosemirror-keymap": "^1.1.4",
+    "prosemirror-model": "^1.10.0",
+    "prosemirror-schema-basic": "^1.1.2",
+    "prosemirror-schema-list": "^1.1.2",
+    "prosemirror-state": "^1.3.3",
+    "prosemirror-tables": "^1.1.0",
+    "prosemirror-utils": "^0.9.6",
+    "prosemirror-view": "1.15.6",
+    "scroll-lock": "^2.1.4",
+    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
+    "vue-dragscroll": "^2.1.0",
+    "vue-keypress": "^2.1.1",
+    "withinviewport": "^2.1.2"
+  },
+  "peerDependencies": {
+    "autosize": "^4.0.2",
+    "imagesloaded": "^4.1.4",
+    "p-defer": "^3.0.0",
+    "shiki-decorators": "^1.0.0",
+    "shiki-uploader": "^1.0.0",
+    "shiki-utils": "^1.0.0",
+    "uevent": "^2.0.0"
   },
   "postcss": {
     "plugins": {
-      "autoprefixer": {}
+      "autoprefixer": {},
+      "postcss-easings": {}
+    }
+  },
+  "release-it": {
+    "github": {
+      "release": true
     }
   }
 }

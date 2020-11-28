@@ -1,0 +1,4 @@
+--webpack-config webpack.config-test.js
+--require mocha.setup.js
+--glob tests/**/*.spec.js
+--recursive
