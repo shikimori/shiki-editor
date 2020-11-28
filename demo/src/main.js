@@ -6,7 +6,7 @@ import 'reset-css/reset.css';
 import '@/stylesheets/application.sass';
 
 import 'shiki-uploader/index.sass';
-import './../../packages/shiki-utils/index.sass';
+import 'shiki-utils/index.sass';
 
 Vue.config.productionTip = false;
 Vue.config.devtools = false;

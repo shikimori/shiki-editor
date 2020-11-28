@@ -30,7 +30,7 @@
     "p-defer": "^3.0.0",
     "shiki-decorators": "^1.0.0",
     "shiki-uploader": "^1.0.0",
-    "shiki-utils": "file:../shiki-utils",
+    "shiki-utils": "^1.0.0",
     "uevent": "^2.0.0"
   },
   "dependencies": {
@@ -61,7 +61,7 @@
     "p-defer": "^3.0.0",
     "shiki-decorators": "^1.0.0",
     "shiki-uploader": "^1.0.0",
-    "shiki-utils": "^0.15.35",
+    "shiki-utils": "^1.0.0",
     "uevent": "^2.0.0"
   }
 }
