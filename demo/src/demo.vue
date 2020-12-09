@@ -63,7 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
-@World_Houp - @World_Houp.
+test @morr test test test
 `.trim();
 
 export default {

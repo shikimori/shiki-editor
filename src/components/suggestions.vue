@@ -252,17 +252,19 @@ export default {
       return JSON.stringify(node.getBoundingClientRect()) ===
         JSON.stringify(new DOMRect());
     },
-    async fetch(query) {
-      if (query && this.query.includes(query) &&
-        !this.filteredUsers.length && this.wasLoadedSomething
-      ) {
-        this.shikiRequest.autocompleteNull('user', this.query);
-        return;
-      }
+    async fetch(query = this.query) {
+      // NOTE: disabled this logic because it does not work when a user
+      //    typing very quickly
+      // if (query && this.query.includes(query) &&
+      //   !this.filteredUsers.length && this.wasLoadedSomething
+      // ) {
+      //   this.shikiRequest.autocompleteNull('user', this.query);
+      //   return;
+      // }
       const requestId = new RequestId('autocomplete_users');
       this.isLoading = true;
 
-      const { data } = await this.shikiRequest.autocomplete('user', this.query);
+      const { data } = await this.shikiRequest.autocomplete('user', query);
       this.wasLoadedSomething ||= !!data.length;
 
       if (requestId.isCurrent) {
@@ -314,7 +316,7 @@ function tryShortenRange(range, nickname, query) {
       };
     }
 
-    const trailingContentMatch = query.match(TRAILING_CONTENT_REGEXP);
+    const trailingContentMatch = TRAILING_CONTENT_REGEXP.exec(query);
     if (trailingContentMatch) {
       return {
         from: range.from,
