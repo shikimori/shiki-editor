@@ -56,6 +56,7 @@
     "prosemirror-model": "^1.10.0",
     "prosemirror-schema-list": "^1.1.2",
     "prosemirror-state": "^1.3.3",
+    "prosemirror-tables": "^1.1.1",
     "prosemirror-utils": "^0.9.6",
     "prosemirror-view": "1.15.6",
     "scroll-lock": "^2.1.4",
