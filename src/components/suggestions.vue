@@ -296,16 +296,31 @@ export default {
   }
 };
 
-// Examples:
-// nickname: "World_Houp"
-// query: "World_Houp - "
-// result: decrement range.to on query.length - nickname.length
+// When query contains nickname, cut everythign except nickname:
+//    nickname: "World_Houp"
+//    query: "World_Houp - "
+//    result: decrement `range.to` on `query.length - nickname.length`
+// When query ends with [^\w+], cut extra content
+//    nickname: "WORLD"
+//    query: "World_Houp - "
+//    result: decrement `range.to` on `' - '.length`
+const TRAILING_CONTENT_REGEXP = /[^\w]+$/;
 function tryShortenRange(range, nickname, query) {
-  if (query.startsWith(nickname) && query.length > nickname.length) {
-    return {
-      from: range.from,
-      to: range.to - (query.length - nickname.length)
-    };
+  if (query.length > nickname.length) {
+    if (query.startsWith(nickname)) {
+      return {
+        from: range.from,
+        to: range.to - (query.length - nickname.length)
+      };
+    }
+
+    const trailingContentMatch = query.match(TRAILING_CONTENT_REGEXP);
+    if (trailingContentMatch) {
+      return {
+        from: range.from,
+        to: range.to - trailingContentMatch[0].length
+      };
+    }
   }
   return range;
 }
