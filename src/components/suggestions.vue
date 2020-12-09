@@ -126,8 +126,6 @@ export default {
           this.renderPopup(virtualNode);
 
           this.fetch(query);
-
-          // this.possiblySelectPriorUser(query, priorQuery, priorFilteredUsers);
         },
         closedEmpty: (args) => {
           this.cleanup(args);
@@ -205,21 +203,10 @@ export default {
     escHandler() {
       this.closePopup();
     },
-    // possiblySelectPriorUser(query, priorQuery, priorUsers) {
-    //   if (query[query.length - 1] !== ' ') { return; }
-    //   if (this.matchUser(query, 'startsWith')) { return; }
-    //
-    //   const user = this.matchUser(priorQuery, 'equals', priorUsers);
-    //
-    //   if (user) {
-    //     this.suggestionRange.to -= 1;
-    //     this.selectUser(user);
-    //   }
-    // },
     selectUser(user) {
       this.isUserSelected = true;
       this.insertMention({
-        range: this.suggestionRange,
+        range: tryShortenRange(this.suggestionRange, user.nickname, this.query),
         attrs: user
       });
       this.editor.focus();
@@ -308,6 +295,20 @@ export default {
     }
   }
 };
+
+// Examples:
+// nickname: "World_Houp"
+// query: "World_Houp - "
+// result: decrement range.to on query.length - nickname.length
+function tryShortenRange(range, nickname, query) {
+  if (query.startsWith(nickname) && query.length > nickname.length) {
+    return {
+      from: range.from,
+      to: range.to - (query.length - nickname.length)
+    };
+  }
+  return range;
+}
 </script>
 
 <style scoped lang='sass'>

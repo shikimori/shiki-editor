@@ -63,17 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
-z
-
-[user=1] https://google.com
-
-\` [user=1] https://google.com \`
-
-\`\`\`
-[user=1] https://google.com
-\`\`\`
-
-b
+@World_Houp - @World_Houp.
 `.trim();
 
 export default {
