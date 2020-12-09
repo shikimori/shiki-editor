@@ -14,3 +14,10 @@ cd demo
 yarn install
 yarn start
 ```
+
+
+
+#### Package release command
+```sh
+GITHUB_TOKEN=... npm run release
+```
