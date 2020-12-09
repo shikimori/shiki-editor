@@ -14,6 +14,7 @@ export default class Span extends Mark {
         class: { default: null },
         data: { default: [] }
       },
+      preventSuggestion: true,
       parseDOM: [{
         tag: 'span[data-span]',
         getAttrs: node => ({

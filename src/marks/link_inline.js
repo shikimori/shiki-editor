@@ -48,6 +48,7 @@ export default class LinkInline extends Mark {
         }
       },
       inclusive: false,
+      preventSuggestion: true,
       parseDOM: [
         {
           tag: 'a[href]' + NOT_LINKS.map(v => `:not(${v})`).join(''),

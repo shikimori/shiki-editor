@@ -10,6 +10,7 @@ export default class CodeInline extends Mark {
     return {
       rank: 10,
       code: true,
+      preventSuggestion: true,
       parseDOM: [{ tag: 'code' }],
       toDOM: () => ['code', { class: 'b-code_inline' }]
     };

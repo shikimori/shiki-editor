@@ -1,5 +1,33 @@
 import { isContainsCodeMark } from '../../utils';
 
+import { Fragment } from 'prosemirror-model';
+
+// based on https://github.com/ProseMirror/prosemirror-model/blob/master/src/fragment.js#L44
+Fragment.prototype._suggestionTextBetween =
+  function(from, to, blockSeparator, leafText) {
+    let text = '';
+    let separated = true;
+
+    this.nodesBetween(from, to, (node, pos) => {
+      if (node.marks.some(mark => mark.type.spec.preventSuggestion)) {
+        return false;
+      }
+
+      if (node.isText) {
+        text += node.text.slice(Math.max(from, pos) - pos, to - pos);
+        separated = !blockSeparator;
+      } else if (node.isLeaf && leafText) {
+        text += leafText;
+        separated = !blockSeparator;
+      } else if (!separated && node.isBlock) {
+        text += blockSeparator;
+        separated = true;
+      }
+    }, 0);
+
+    return text;
+  };
+
 // Create a matcher that matches when a specific character is typed
 export default function buildDetectSequence({
   char,
@@ -27,7 +55,8 @@ export default function buildDetectSequence({
     // Lookup the boundaries of the current node
     const textFrom = $position.before();
     const textTo = $position.end();
-    const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
+    const text = $position.doc.content
+      ._suggestionTextBetween(textFrom, textTo, '\0', '\0');
 
     // let match = text.endsWith('  ') || text.split(' ').length > 3 ?
     //   null :

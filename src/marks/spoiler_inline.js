@@ -13,6 +13,7 @@ export default class SpoilerInline extends Mark {
       attrs: {
         isOpened: { default: true }
       },
+      preventSuggestion: true,
       parseDOM: [{
         tag: 'span.b-spoiler_inline',
         getAttrs: node => ({
