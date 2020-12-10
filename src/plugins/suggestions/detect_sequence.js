@@ -19,13 +19,15 @@ export default function detectSequence($position, { startChar, allowedSpaces }) 
     extractAfterText($position.nodeAfter, 0);
 
   const text = leftText + rightText;
+
   return {
     range: {
       from: $position.pos - leftText.length,
       to: $position.pos + rightText.length
     },
     query: text.slice(startChar.length),
-    text: text
+    text: text,
+    isCursorAtEnd: !rightText.length
   };
 }
 

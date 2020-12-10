@@ -18,6 +18,11 @@ export default function buildSuggestionsPopupPlugin({
   closed = () => false,
   keyPresed = () => false
 }) {
+  let allowedSpacesEnding = '';
+  for (let i = 0; i < matcher.allowedSpaces; i += 1) {
+    allowedSpacesEnding += ' ';
+  }
+
   return new Plugin({
     key: new PluginKey('suggestions_popup'),
 
@@ -65,6 +70,7 @@ export default function buildSuggestionsPopupPlugin({
             range: state.range,
             query: state.query,
             text: state.text,
+            isCursorAtEnd: state.isCursorAtEnd,
             decorationNode,
             virtualNode,
             command: ({ range, attrs }) => {
@@ -106,7 +112,8 @@ export default function buildSuggestionsPopupPlugin({
           disable: false,
           range: {},
           query: null,
-          text: null
+          text: null,
+          isCursorAtEnd: null
         };
       },
 
@@ -143,6 +150,7 @@ export default function buildSuggestionsPopupPlugin({
             next.range = match.range;
             next.query = match.query;
             next.text = match.text;
+            next.isCursorAtEnd = match.isCursorAtEnd;
           } else {
             next.active = false;
           }
@@ -156,6 +164,18 @@ export default function buildSuggestionsPopupPlugin({
           next.range = {};
           next.query = null;
           next.text = null;
+          next.isCursorAtEnd = null;
+        }
+
+        if (next.active && matcher.allowedSpaces) {
+          const split = next.text.split(' ');
+
+          if (next.text.endsWith(allowedSpacesEnding) ||
+            split.length > matcher.allowedSpaces + 1 ||
+            (split.length > matcher.allowedSpaces && next.text.endsWith(' '))
+          ) {
+            next.active = false;
+          }
         }
 
         return next;

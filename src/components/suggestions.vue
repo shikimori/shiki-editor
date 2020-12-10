@@ -69,7 +69,8 @@ export default {
     insertMention: () => {},
     navigatedUserIndex: 0,
     query: null,
-    suggestionRange: null,
+    range: null,
+    isCursorAtEnd: null,
     isLoading: true,
     wasLoadedSomething: false,
     isUserSelected: false,
@@ -107,32 +108,35 @@ export default {
           startChar: '@',
           allowedSpaces: 2
         },
-        showed: ({ query, range, command, virtualNode }) => {
+        showed: ({ query, range, isCursorAtEnd, command, virtualNode }) => {
           this.query = query;
-          this.suggestionRange = range;
+          this.range = range;
+          this.isCursorAtEnd = isCursorAtEnd;
+
           this.renderPopup(virtualNode);
           this.insertMention = command;
           this.wasLoadedSomething = false;
           this.fetch();
         },
-        updated: ({ query, range, virtualNode }) => {
-          // const priorQuery = this.query;
-          // const priorFilteredUsers = this.filteredUsers;
-
+        updated: ({ query, range, isCursorAtEnd, virtualNode }) => {
           this.query = query;
-          this.suggestionRange = range;
+          this.range = range;
+          this.isCursorAtEnd = isCursorAtEnd;
+
           this.navigatedUserIndex = 0;
           this.renderPopup(virtualNode);
 
           this.fetch(query);
         },
-        closedEmpty: (args) => {
-          this.cleanup(args);
+        closedEmpty: (_args) => {
+          this.cleanup();
         },
-        closed: (args) => {
+        closed: (_args) => {
           const { query } = this;
 
-          if (!this.isUserSelected && this.hasResults && query.length > 1) {
+          if (this.isCursorAtEnd &&
+            !this.isUserSelected && this.hasResults && query.length > 1
+          ) {
             if (query[query.length - 1] === ' ') {
               this.trySelectUser(query.slice(0, query.length - 1), 1);
             } else {
@@ -140,7 +144,7 @@ export default {
             }
           }
 
-          this.cleanup(args);
+          this.cleanup();
         },
         // is called on every keyDown event while a suggestion is active
         keyPresed: ({ event }) => {
@@ -205,7 +209,7 @@ export default {
     selectUser(user) {
       this.isUserSelected = true;
       this.insertMention({
-        range: tryShortenRange(this.suggestionRange, user.nickname, this.query),
+        range: tryShortenRange(this.range, user.nickname, this.query),
         attrs: user
       });
       this.editor.focus();
@@ -215,7 +219,7 @@ export default {
 
       if (user) {
         if (decrementSuggestionRange) {
-          this.suggestionRange.to -= decrementSuggestionRange;
+          this.range.to -= decrementSuggestionRange;
         }
         this.selectUser(user);
       }
@@ -276,7 +280,8 @@ export default {
     cleanup() {
       this.query = null;
       this.filteredUsers = [];
-      this.suggestionRange = null;
+      this.range = null;
+      this.isCursorAtEnd = null;
 
       this.isLoading = true;
       this.navigatedUserIndex = 0;
