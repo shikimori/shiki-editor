@@ -17,18 +17,18 @@ export default function buildDetectSequence({
 
   const MATCH_PREFIX_REGEXP = /^[\s\0]?$/;
 
-  return $position => {
+  return $sequence => {
     // cancel if top level node
-    if ($position.depth <= 0) { return false; }
+    if ($sequence.depth <= 0) { return false; }
     // cancel if inside code
-    if ($position.parent.type.spec.code ||
-      isContainsCodeMark($position.nodeBefore || $position.nodeAfter)
+    if ($sequence.parent.type.spec.code ||
+      isContainsCodeMark($sequence.nodeBefore || $sequence.nodeAfter)
     ) { return false; }
 
     // Lookup the boundaries of the current node
-    const textFrom = $position.before();
-    const textTo = $position.end();
-    const text = $position.doc.content
+    const textFrom = $sequence.before();
+    const textTo = $sequence.end();
+    const text = $sequence.doc.content
       ._suggestionTextBetween(textFrom, textTo, '\0', '\0');
 
     // let match = text.endsWith('  ') || text.split(' ').length > 3 ?
@@ -36,7 +36,7 @@ export default function buildDetectSequence({
     //   regexp.exec(text);
 
     let match = regexp.exec(text);
-    let position;
+    let sequence;
 
     while (match !== null) {
       // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
@@ -44,8 +44,8 @@ export default function buildDetectSequence({
       const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
 
       if (MATCH_PREFIX_REGEXP.test(matchPrefix)) {
-        // The absolute position of the match in the document
-        const from = match.index + $position.start();
+        // The absolute sequence of the match in the document
+        const from = match.index + $sequence.start();
         let to = from + match[0].length;
 
         // Edge case handling; if spaces are allowed and we're directly in between
@@ -55,9 +55,9 @@ export default function buildDetectSequence({
           to += 1;
         }
 
-        // If the $position is located within the matched substring, return that range
-        if (from < $position.pos && to >= $position.pos) {
-          position = {
+        // If the $sequence is located within the matched substring, return that range
+        if (from < $sequence.pos && to >= $sequence.pos) {
+          sequence = {
             range: {
               from,
               to
@@ -71,7 +71,7 @@ export default function buildDetectSequence({
       match = regexp.exec(text);
     }
 
-    return position;
+    return sequence;
   };
 }
 

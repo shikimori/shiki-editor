@@ -2,13 +2,12 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../../commands';
-import buildDetectSequence from './build_detect_sequence';
+import buildDetectSequenceV2 from './build_detect_sequence_v2';
 
 export default function buildSuggestionsPopupPlugin({
   matcher = {
-    char: '@',
-    allowSpaces: false,
-    startOfLine: false
+    startChar: '@',
+    allowedSpaces: 0
   },
   appendText = null,
   suggestionClass = 'ProseMirror-suggestion',
@@ -19,7 +18,7 @@ export default function buildSuggestionsPopupPlugin({
   closed = () => false,
   keyPresed = () => false
 }) {
-  const detectSequence = buildDetectSequence(matcher);
+  const detectSequence = buildDetectSequenceV2(matcher);
 
   return new Plugin({
     key: new PluginKey('suggestions_popup'),
@@ -159,12 +158,6 @@ export default function buildSuggestionsPopupPlugin({
           next.range = {};
           next.query = null;
           next.text = null;
-        }
-
-        if (next.active && matcher.allowSpaces && (
-          next.text.endsWith('  ') || next.text.split(' ').length > 3
-        )) {
-          next.active = false;
         }
 
         return next;

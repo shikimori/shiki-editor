@@ -104,9 +104,8 @@ export default {
     createPlugin() {
       return buildSuggestionsPopupPlugin({
         matcher: {
-          char: '@',
-          allowSpaces: true,
-          startOfLine: false
+          startChar: '@',
+          allowedSpaces: 2
         },
         showed: ({ query, range, command, virtualNode }) => {
           this.query = query;
@@ -316,7 +315,8 @@ function tryShortenRange(range, nickname, query) {
       };
     }
 
-    const trailingContentMatch = TRAILING_CONTENT_REGEXP.exec(query);
+    const trailingContentMatch = TRAILING_CONTENT_REGEXP
+      .exec(query.slice(nickname.length));
     if (trailingContentMatch) {
       return {
         from: range.from,
