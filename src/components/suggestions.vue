@@ -137,11 +137,7 @@ export default {
           if (this.isCursorAtEnd &&
             !this.isUserSelected && this.hasResults && query.length > 1
           ) {
-            if (query[query.length - 1] === ' ') {
-              this.trySelectUser(query.slice(0, query.length - 1), 1);
-            } else {
-              this.trySelectUser(query);
-            }
+            this.trySelectUser(query.trim());
           }
 
           this.cleanup();
