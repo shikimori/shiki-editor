@@ -18,10 +18,12 @@ export default function buildDetectSequenceV2({
       extractBeforeText($position.nodeBefore, startChar, allowedSpaces);
     if (!leftText) { return null; }
 
-    let rightText = extractAfterText($position.nodeAfter, 0);
+    let rightText = isForbiddenSpec($position.nodeAfter) ?
+      '' :
+      extractAfterText($position.nodeAfter, 0);
 
     const text = leftText + rightText;
-    const sequence = {
+    return {
       range: {
         from: $position.pos - leftText.length,
         to: $position.pos + rightText.length
@@ -29,8 +31,6 @@ export default function buildDetectSequenceV2({
       query: text.slice(startChar.length),
       text: text
     };
-    console.log(sequence);
-    return sequence;
   };
 }
 
@@ -80,7 +80,7 @@ function extractAfterText(node) {
 }
 
 function isForbiddenSpec(node) {
-  return node.type.spec.code || node.marks.some(mark => (
+  return !node || node.type.spec.code || node.marks.some(mark => (
     mark.type.spec.code || mark.type.spec.preventSuggestion
   ));
 }
