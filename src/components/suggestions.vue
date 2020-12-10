@@ -54,6 +54,8 @@ const QUERY_MATCHERS = {
   }
 };
 
+const MISSING_COORDS = JSON.stringify(new DOMRect());
+
 export default {
   name: 'Suggestions',
   props: {
@@ -64,7 +66,6 @@ export default {
   data: () => ({
     plugin: null,
     popup: null,
-    popupNode: null,
     filteredUsers: [],
     insertMention: () => {},
     navigatedUserIndex: 0,
@@ -81,9 +82,7 @@ export default {
       return this.filteredUsers.length;
     },
     isSuggestions() {
-      return this.isAvailable &&
-        (this.query || this.hasResults) &&
-        this.popup;
+      return this.isAvailable && (this.query || this.hasResults) && this.popup;
     }
   },
   watch: {
@@ -116,6 +115,7 @@ export default {
           this.renderPopup(virtualNode);
           this.insertMention = command;
           this.wasLoadedSomething = false;
+
           this.fetch();
         },
         updated: ({ query, range, isCursorAtEnd, virtualNode }) => {
@@ -224,14 +224,20 @@ export default {
       return users.find(QUERY_MATCHERS[matcher](query));
     },
     renderPopup(node) {
-      if (this.isMisplaced(node)) {
+      if (isMisplacedPopup(node)) {
         this.cleanup();
         return;
       }
 
-      if (this.popup) { return; }
+      if (this.popup) {
+        // can happen when decoration range is completely changed
+        if (isMisplacedPopup(this.popup.state.elements.reference)) {
+          this.popup.state.elements.reference = node;
+          this.popup.update();
+        }
+        return;
+      }
 
-      this.popupNode = node;
       this.popup = createPopper(
         { getBoundingClientRect: node.getBoundingClientRect },
         this.$refs.suggestions,
@@ -246,10 +252,7 @@ export default {
           }]
         }
       );
-    },
-    isMisplaced(node) {
-      return JSON.stringify(node.getBoundingClientRect()) ===
-        JSON.stringify(new DOMRect());
+      window.popup = this.popup;
     },
     async fetch(query = this.query) {
       // NOTE: disabled this logic because it does not work when a user
@@ -327,6 +330,11 @@ function tryShortenRange(range, nickname, query) {
   }
   return range;
 }
+
+function isMisplacedPopup(reference) {
+  return JSON.stringify(reference.getBoundingClientRect()) === MISSING_COORDS;
+}
+
 </script>
 
 <style scoped lang='sass'>
