@@ -2,7 +2,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../../commands';
-import buildDetectSequenceV2 from './build_detect_sequence_v2';
+import detectSequence from './detect_sequence';
 
 export default function buildSuggestionsPopupPlugin({
   matcher = {
@@ -18,8 +18,6 @@ export default function buildSuggestionsPopupPlugin({
   closed = () => false,
   keyPresed = () => false
 }) {
-  const detectSequence = buildDetectSequenceV2(matcher);
-
   return new Plugin({
     key: new PluginKey('suggestions_popup'),
 
@@ -133,7 +131,7 @@ export default function buildSuggestionsPopupPlugin({
 
           // Try to match against where our cursor currently is
           const $position = selection.$from;
-          const match = detectSequence($position);
+          const match = detectSequence($position, matcher);
           const decorationId = (Math.random() + 1).toString(36).substr(2, 5);
 
           // If we found a match, update the current state to show it

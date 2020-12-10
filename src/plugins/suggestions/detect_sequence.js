@@ -1,36 +1,31 @@
 import { Fragment } from 'prosemirror-model';
 
 // Create a matcher that matches when a specific character is typed
-export default function buildDetectSequenceV2({
-  startChar,
-  allowedSpaces
-}) {
-  return $position => {
-    // cancel if top level node
-    if ($position.depth <= 0) { return false; }
-    // cancel if missing nodeBefore
-    if (!$position.nodeBefore) { return false; }
-    // cancel if inside code or contains preventSuggestion mark
-    if (isForbiddenSpec($position.parent)) { return false; }
-    if (isForbiddenSpec($position.nodeBefore)) { return false; }
+export default function detectSequence($position, { startChar, allowedSpaces }) {
+  // cancel if top level node
+  if ($position.depth <= 0) { return false; }
+  // cancel if missing nodeBefore
+  if (!$position.nodeBefore) { return false; }
+  // cancel if inside code or contains preventSuggestion mark
+  if (isForbiddenSpec($position.parent)) { return false; }
+  if (isForbiddenSpec($position.nodeBefore)) { return false; }
 
-    const leftText =
-      extractBeforeText($position.nodeBefore, startChar, allowedSpaces);
-    if (!leftText) { return null; }
+  const leftText =
+    extractBeforeText($position.nodeBefore, startChar, allowedSpaces);
+  if (!leftText) { return null; }
 
-    let rightText = isForbiddenSpec($position.nodeAfter) ?
-      '' :
-      extractAfterText($position.nodeAfter, 0);
+  let rightText = isForbiddenSpec($position.nodeAfter) ?
+    '' :
+    extractAfterText($position.nodeAfter, 0);
 
-    const text = leftText + rightText;
-    return {
-      range: {
-        from: $position.pos - leftText.length,
-        to: $position.pos + rightText.length
-      },
-      query: text.slice(startChar.length),
-      text: text
-    };
+  const text = leftText + rightText;
+  return {
+    range: {
+      from: $position.pos - leftText.length,
+      to: $position.pos + rightText.length
+    },
+    query: text.slice(startChar.length),
+    text: text
   };
 }
 
