@@ -81,6 +81,9 @@
         v-model='editorContent'
         class='ProseMirror'
         @keydown='handleSourceKeypress'
+        @keyup='detectHugeContent'
+        @change='detectHugeContent'
+        @paste='detectHugeContent'
       />
       <EditorContent
         v-else
@@ -109,6 +112,7 @@
 import autosize from 'autosize';
 import withinviewport from 'withinviewport';
 import { dragscroll } from 'vue-dragscroll';
+import delay from 'delay';
 
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
@@ -298,6 +302,27 @@ export default {
     this.editor.destroy();
   },
   methods: {
+    async detectHugeContent() {
+      await Promise.all([delay(100), this.$nextTick()]);
+      const contentSize = this.editorContent.length;
+      console.log('detectHugeContent', contentSize);
+
+      if (!this.isHugeContent && contentSize > MAXIMUM_CONTENT_SIZE) {
+        this.activateHugeContent();
+      } else if (this.isHugeContent && contentSize <= MAXIMUM_CONTENT_SIZE) {
+        this.disableHugeContent();
+      }
+    },
+    async activateHugeContent() {
+      this.isHugeContent = true;
+      await this.$nextTick();
+      flash.info(window.I18n.t('frontend.shiki_editor.huge_content_mode'));
+    },
+    async disableHugeContent() {
+      this.isHugeContent = false;
+      await this.$nextTick();
+      flash.info(window.I18n.t('frontend.shiki_editor.normal_content_mode'));
+    },
     focus(editorPosition = undefined) {
       if (this.isSource) {
         this.$refs.textarea.focus();
@@ -439,8 +464,6 @@ export default {
 
       if (this.isHugeContent) {
         this.toggleSource(this.content);
-        await this.$nextTick();
-        flash.info(window.I18n.t('frontend.shiki_editor.too_large_content'));
       }
 
       await this.$nextTick();
