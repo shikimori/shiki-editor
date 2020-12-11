@@ -36,6 +36,8 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.blockquote': 'Цитата',
   'frontend.shiki_editor.huge_content_mode':
     'Слишком много контента. Визуальный редактор не справится и поэтому отключён.',
+  'frontend.shiki_editor.huge_content_pasted':
+    'Слишком много контента. Визуальный редактор не справится, и поэтому вставка была отменена.',
   'frontend.shiki_editor.normal_content_mode': 'Визуальный редактор снова доступен',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Код',

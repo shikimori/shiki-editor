@@ -122,6 +122,7 @@ import EditorContent from './components/editor_content';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
 import { insertReply, insertFragment, insertQuote } from './commands';
+import { preventHugePaste } from './plugins';
 
 import { flash } from 'shiki-utils';
 
@@ -455,6 +456,7 @@ export default {
         localizationField: this.localizationField,
         extensions,
         plugins: [
+          preventHugePaste(MAXIMUM_CONTENT_SIZE),
           keymap({ 'Mod-Enter': this.submit })
         ]
       }, this, this.vue);
