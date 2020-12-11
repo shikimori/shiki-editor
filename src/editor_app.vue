@@ -305,7 +305,6 @@ export default {
     async detectHugeContent() {
       await Promise.all([delay(100), this.$nextTick()]);
       const contentSize = this.editorContent.length;
-      console.log('detectHugeContent', contentSize);
 
       if (!this.isHugeContent && contentSize > MAXIMUM_CONTENT_SIZE) {
         this.activateHugeContent();
