@@ -63,6 +63,10 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
+[spoiler_block=test is-fullwidth is-centered]
+test
+[/spoiler_block]
+
 @morr
 
 test test @morr test test test @morr test test test test @morr test test test

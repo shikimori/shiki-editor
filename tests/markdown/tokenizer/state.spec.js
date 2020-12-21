@@ -1118,6 +1118,42 @@ describe('MarkdownTokenizer', () => {
             { type: 'spoiler_block', direction: 'close' }
           ]);
         });
+
+        it('[spoiler_block is-centered is-fullwidth]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse(
+            '[spoiler_block is-centered is-fullwidth]z[/spoiler_block]'
+          )).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [
+                ['isFullwidth', true],
+                ['isCentered', true],
+                ['nFormat', n()]
+              ]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
+
+        it('[spoiler_block is-fullwidth is-centered]z[/spoiler_block]', () => {
+          expect(MarkdownTokenizer.parse(
+            '[spoiler_block is-fullwidth is-centered]z[/spoiler_block]'
+          )).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [
+                ['isFullwidth', true],
+                ['isCentered', true],
+                ['nFormat', n()]
+              ]
+            },
+            ...text('z'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
       });
     });
 

@@ -1,4 +1,5 @@
 .b-spoiler_block
+  pointer-events: none
   position: relative
 
   & + .b-spoiler_block
@@ -100,9 +101,10 @@
 
   & > span
     +shiki_button(#678)
-    display: inline-flex
     align-items: center
+    display: inline-flex
     min-height: 23px
+    pointer-events: all
     // line-height: 1.45
 
     &:active
@@ -120,6 +122,7 @@
     background-color: #f3f5f7
     border-left: 4px solid #678
     padding: 3px 3px 3px 14px
+    pointer-events: all
 
     &:after
       content: ''
