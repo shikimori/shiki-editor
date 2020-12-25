@@ -2468,5 +2468,33 @@ describe('MarkdownTokenizer', () => {
         { type: 'blockquote', direction: 'close' }
       ]);
     });
+
+    it('keeps maximum nesting level', () => {
+      expect(MarkdownTokenizer.parse('> > > > > a')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        ...text('> a'),
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+
+      expect(MarkdownTokenizer.parse('> - > > > a')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        ...text('> a'),
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+    });
   });
 });

@@ -2,6 +2,8 @@ import { extractUntil } from '../helpers';
 import { parseQuoteMeta } from '../bbcode_helpers';
 
 export default function processBlockQuote(state, tagSequence) {
+  if (state.isExceededNesting()) { return false; }
+
   if (tagSequence === '>?') {
     const metaText = extractUntil(
       state.text,

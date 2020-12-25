@@ -37,6 +37,7 @@ import processSmiley from './processors/smiley';
 
 export default class MarkdownTokenizer {
   MAX_BBCODE_SIZE = 512
+  MAX_NESTING = 4
 
   SPOILER_BBCODE_REGEXP = /^\[(spoiler|spoiler_block)(?:=(.+?))?((?:(?: is-fullwidth)|(?: is-centered))*)\]$/
   BLOCK_BBCODE_REGEXP = /^\[(quote|spoiler|spoiler_block|code)(?:=(.+?))?\]$/
@@ -662,5 +663,13 @@ export default class MarkdownTokenizer {
     return this.inlineTokens.length == 1 &&
       this.inlineTokens[0].type === 'text' &&
       !!this.inlineTokens[0].content.match(this.EMPTY_SPACES_REGEXP);
+  }
+
+  isExceededNesting() {
+    return this.tokens
+      .filter(({ type }) => (
+        type === 'blockquote' || type === 'bullet_list' || type === 'quote'
+      ))
+      .length >= this.MAX_NESTING;
   }
 }

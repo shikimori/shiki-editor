@@ -1,4 +1,6 @@
 export default function processBulletList(state, tagSequence) {
+  if (state.isExceededNesting()) { return false; }
+
   let isFirstLine = true;
   const priorSequence = state.nestedSequence;
 

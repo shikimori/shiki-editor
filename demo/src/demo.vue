@@ -63,21 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
-[spoiler_block=test is-fullwidth is-centered]
-test
-[/spoiler_block]
-
-@morr
-
-test test @morr test test test @morr test test test test @morr test test test
-
-@mor mor
-
-старый редактор: если упоминать несколько юзеров через @, то после никнейма она не сработает и никнейм останется просто текстом в случае, когда после него идет буква, а не разделительный знак. Пример:
-
-@World_Houp, @World_Houp, и @World_Houp а также @World_Houp и @World_Houp : и @World_Houp № @World_Houp and @World_Houp - [user=34807].
-
-z
+> > > > > a
 `.trim();
 
 export default {
