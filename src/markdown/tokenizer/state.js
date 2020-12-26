@@ -666,10 +666,22 @@ export default class MarkdownTokenizer {
   }
 
   isExceededNesting() {
-    return this.tokens
-      .filter(({ type }) => (
-        type === 'blockquote' || type === 'bullet_list' || type === 'quote'
-      ))
-      .length >= this.MAX_NESTING;
+    if (!this.tokens.length) { return false; }
+
+    let nesting = 0;
+
+    for (let i = this.tokens.length - 1; i >= 0; i -= 1) {
+      const { type, direction } = this.tokens[i];
+
+      if (type === 'blockquote' || type === 'bullet_list' || type === 'quote') {
+        nesting += direction === 'open' ? 1 : -1;
+      }
+
+      if (nesting >= this.MAX_NESTING) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

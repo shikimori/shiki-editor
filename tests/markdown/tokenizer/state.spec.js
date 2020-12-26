@@ -2495,6 +2495,22 @@ describe('MarkdownTokenizer', () => {
         { type: 'bullet_list', direction: 'close' },
         { type: 'blockquote', direction: 'close' }
       ]);
+
+      expect(MarkdownTokenizer.parse('> > > > a\n\n> a')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        { type: 'blockquote', direction: 'open' },
+        ...text('a'),
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        { type: 'blockquote', direction: 'close' },
+        ...text(''),
+        { type: 'blockquote', direction: 'open' },
+        ...text('a'),
+        { type: 'blockquote', direction: 'close' }
+      ]);
     });
   });
 });

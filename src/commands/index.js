@@ -1,4 +1,3 @@
-export { default as joinBackwardEnhanced } from './join_backward_enhanced';
 export { default as insertFragment } from './insert_fragment';
 export { default as insertLink } from './insert_link';
 export { default as insertNode } from './insert_node';
@@ -8,6 +7,7 @@ export { default as insertSlice } from './insert_slice';
 export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as insertUserMention } from './insert_user_mention';
+export { default as joinBackwardEnhanced } from './join_backward_enhanced';
 export { default as linkBbcodePasteRule } from './link_bbcode_paste_rule';
 export { default as linkUrlPasteRule } from './link_url_paste_rule';
 export { default as markInputRule } from './mark_input_rule';
@@ -24,3 +24,5 @@ export { default as toggleMarkWrap } from './toggle_mark_wrap';
 export { default as toggleNodeWrap } from './toggle_node_wrap';
 export { default as toggleWrap } from './toggle_wrap';
 export { default as updateMark } from './update_mark';
+export { default as wrappingInputRuleWithNesting }
+  from './wrapping_input_rule_with_nesting';
