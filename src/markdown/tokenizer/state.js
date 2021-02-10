@@ -381,7 +381,10 @@ export default class MarkdownTokenizer {
         }
       }
 
-      switch (this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5)) {
+      const parseInlineResult =
+        this.parseInline(char1, bbcode, seq2, seq3, seq4, seq5, isOnlySpacingsBefore);
+
+      switch (parseInlineResult) {
         case true: // it means that it was parsed as a block
           return;
         case false: // it means that it was parsed as an inline
@@ -392,7 +395,7 @@ export default class MarkdownTokenizer {
     }
   }
 
-  parseInline(char1, bbcode, seq2, seq3, seq4, seq5) {
+  parseInline(char1, bbcode, seq2, seq3, seq4, seq5, isOnlySpacingsBefore) {
     switch (bbcode) {
       case '[b]':
         if (processMarkOpen(this, 'bold_inline', '[b]', '[/b]')) return false;
@@ -488,15 +491,18 @@ export default class MarkdownTokenizer {
 
     let match;
     let meta;
+    let isProcessed;
 
     if (bbcode) {
       switch (seq4) {
         case '[div':
-          if (processInlineBlock(this, bbcode, '[/div]')) { return false; }
+          isProcessed = processInlineBlock(this, bbcode, '[/div]');
+          if (isProcessed) { return false; }
           break;
 
         case '[img':
-          if (processImage(this, bbcode, '[/img]', false)) { return false; }
+          isProcessed = processImage(this, bbcode, '[/img]', false);
+          if (isProcessed) { return false; }
           break;
       }
 
@@ -505,18 +511,18 @@ export default class MarkdownTokenizer {
           match = bbcode.match(this.LINK_REGEXP);
           if (!match) { break; }
           meta = parseLinkMeta(match[1]);
+          isProcessed = processLinkInline(this, bbcode, meta);
 
-          if (processLinkInline(this, bbcode, meta)) { return false; }
+          if (isProcessed) { return false; }
           break;
 
         case '[span':
           match = bbcode.match(this.SPAN_REGEXP);
           if (!match) { break; }
           meta = parseDivMeta(match[1]);
+          isProcessed = processMarkOpen(this, 'span', bbcode, '[/span]', meta);
 
-          if (processMarkOpen(this, 'span', bbcode, '[/span]', meta)) {
-            return false;
-          }
+          if (isProcessed) { return false; }
           break;
 
         case '[colo':
@@ -524,9 +530,9 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = { color: match[1] };
-          if (processMarkOpen(this, 'color_inline', bbcode, '[/color]', meta)) {
-            return false;
-          }
+          isProcessed =
+            processMarkOpen(this, 'color_inline', bbcode, '[/color]', meta);
+          if (isProcessed) { return false; }
           break;
 
         case '[size':
@@ -534,13 +540,14 @@ export default class MarkdownTokenizer {
           if (!match) { break; }
 
           meta = parseSizeMeta(match[1]);
-          if (processMarkOpen(this, 'size_inline', bbcode, '[/size]', meta)) {
-            return false;
-          }
+          isProcessed =
+            processMarkOpen(this, 'size_inline', bbcode, '[/size]', meta);
+          if (isProcessed) { return false; }
           break;
 
         case '[vide':
-          if (processVideo(this, bbcode, '[/video]')) { return false; }
+          isProcessed = processVideo(this, bbcode, '[/video]');
+          if (isProcessed) { return false; }
           break;
 
         case '[anim':
@@ -555,8 +562,10 @@ export default class MarkdownTokenizer {
         case '[user':
           meta = parseShikiBasicMeta(bbcode);
           if (!meta) { break; }
+          isProcessed =
+            processShikiInline(this, bbcode, `[/${meta.type}]`, meta);
 
-          if (processShikiInline(this, bbcode, `[/${meta.type}]`, meta)) { return false; }
+          if (isProcessed) { return false; }
           break;
 
         case '[post':
@@ -565,6 +574,20 @@ export default class MarkdownTokenizer {
           if (!meta) { break; }
 
           if (processShikiInline(this, bbcode, null, meta)) { return false; }
+          break;
+
+        case '[spoi':
+          match = bbcode.match(this.SPOILER_BBCODE_REGEXP);
+          if (!match || match[1] !== 'spoiler_block') { break; }
+
+          meta = parseSpoilerMeta(match[2], match[3]);
+          isProcessed = processBlock(
+            this,
+            'spoiler_block', bbcode, `[/${match[1]}]`, meta,
+            false, isOnlySpacingsBefore
+          );
+
+          if (isProcessed) { return true; }
           break;
       }
     }
