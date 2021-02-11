@@ -63,7 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
-test [spoiler_block]zxc[/spoiler_block]
+[image=1348321 width=400]
 `.trim();
 
 export default {
