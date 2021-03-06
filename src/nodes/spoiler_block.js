@@ -34,7 +34,9 @@ export default class SpoilerBlock extends Node {
         tag: 'div.b-spoiler_block',
         getAttrs: node => ({
           label: node.children[0].innerText || '',
-          isOpened: node.classList.contains('is-opened')
+          isOpened: node.classList.contains('is-opened'),
+          isFullwidth: node.classList.contains('is-fullwidth'),
+          isCentered: node.classList.contains('is-centered')
         }),
         contentElement: node => node.children[1]
       }],
@@ -44,6 +46,10 @@ export default class SpoilerBlock extends Node {
           {
             class: 'b-spoiler_block' + (
               node.attrs.isOpened ? ' is-opened' : ''
+            ) + (
+              node.attrs.isFullwidth ? ' is-fullwidth' : ''
+            ) + (
+              node.attrs.isCentered ? ' is-centered' : ''
             )
           },
           ['span', node.attrs.label],
