@@ -35,6 +35,7 @@
 <script>
 export default {
   name: 'Icon',
+  inheritAttrs: false,
   props: {
     type: { type: String, required: true },
     title: { type: String, required: true },
