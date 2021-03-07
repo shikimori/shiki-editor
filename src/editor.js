@@ -358,7 +358,11 @@ export default class ShikiEditor {
     const { from, to } = this.resolveSelection(position);
 
     this.setSelection(from, to);
-    setTimeout(() => this.view.focus(), 10);
+    this.view.focus();
+    setTimeout(() => {
+      if (this.view.focused) { return; }
+      this.view.focus();
+    }, 10);
   }
 
   setSelection(from = 0, to = 0) {
