@@ -179,12 +179,7 @@ export default {
     localizationField: {
       type: String,
       required: true,
-      validator: (value) => (
-        [
-          'name',
-          'russian'
-        ].indexOf(value) !== -1
-      )
+      validator: (value) => (['name', 'russian'].indexOf(value) !== -1)
     },
     previewParams: { type: Object, required: false, default: undefined }
   },
