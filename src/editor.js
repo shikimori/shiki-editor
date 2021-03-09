@@ -26,7 +26,8 @@ import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
   trackFocus,
-  uploadPlaceholder
+  uploadPlaceholder,
+  smartCommandSpoilerPlugin
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
 import { buildExtensions } from './extensions';
@@ -195,6 +196,7 @@ export default class ShikiEditor {
         'Mod-z': undo,
         'Shift-Mod-z': redo,
         'Mod-y': redo,
+        'Mod-s': smartCommandSpoilerPlugin(this),
         Backspace: joinBackwardEnhanced
       }),
       keymap(baseKeymap),
