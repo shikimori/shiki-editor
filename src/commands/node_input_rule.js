@@ -6,6 +6,11 @@ export default function(regexp, type, getAttrs) {
     const { tr } = state;
 
     if (match[0]) {
+      const isCode = state.selection.$head.nodeBefore?.marks?.some(mark => (
+        mark.type.spec.code
+      ));
+      if (isCode) { return false; }
+
       tr.replaceWith(start - 1, end, type.create(attrs));
     }
 
