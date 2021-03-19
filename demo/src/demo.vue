@@ -63,9 +63,9 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../packages/shiki-uploader';
 
 let TEXT_2 = `
-[spoiler_block=18+ is-fullwidth is-centered]
-[image=1348321 width=400]
-[/spoiler_block]
+test
+[b]zxc[/b]
+cvn
 `.trim();
 
 export default {
@@ -298,9 +298,12 @@ Instead use \`[span]\` bbcode [span=b-anime_status_tag anons]as inline element[/
       });
     }
   },
-  mounted() {
+  async mounted() {
     window.shikiTokenizer = (this.$refs.editor1 || this.$refs.editor2)
       .editor.markdownParser.tokenizer;
+
+    await this.$nextTick();
+    this.$refs.editor2.toggleSource();
   },
   methods: {
     info() {

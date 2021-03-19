@@ -30,7 +30,7 @@
             :ref='item.type'
             v-bind='item'
             :is-active='nodesState[item.type]'
-            :is-enabled='item.isEditingEnabled ? item.isEditingEnabled() : isEditingEnabled'
+            :is-enabled='item.isEditingEnabled'
             @command='args => command(item.type, args)'
           />
         </div>
@@ -195,8 +195,8 @@ export default {
     },
     isEditingEnabledMappings() {
       return {
-        undo: this.undoIsEnabled,
-        redo: this.redoIsEnabled
+        undo: this.undoIsEnabled && this.isEditingEnabled,
+        redo: this.redoIsEnabled && this.isEditingEnabled
         // link: this.linkIsEnabled
       };
     },
@@ -207,7 +207,7 @@ export default {
           MENU_ITEMS[group].map(item => ({
             type: item,
             title: window.I18n.t(`frontend.shiki_editor.${item}`),
-            isEditingEnabled: this.isEditingEnabledMappings[item]
+            isEditingEnabled: this.isEditingEnabledMappings[item] ?? true
           }))
         ]
       ));
