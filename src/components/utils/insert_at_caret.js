@@ -3,7 +3,7 @@ const INLINE_REPLACEMENT_REGEXP = /\n(.|)/g;
 export default async function insertAtCaret(
   app,
   prefix,
-  postfix = '',
+  postfix,
   isInline = false,
   filler = null
 ) {

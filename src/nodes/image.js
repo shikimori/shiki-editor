@@ -101,8 +101,9 @@ export default class Image extends Node {
 
   commands({ type }) {
     return imageUrl => (state, dispatch) => {
-      const src = imageUrl ||
-        prompt(window.I18n.t('frontend.shiki_editor.prompt.image_url'));
+      const src = imageUrl || prompt(
+        window.I18n.t('frontend.shiki_editor.prompt.image_url')
+      )?.trim();
       if (src == null) { return null; }
 
       const { selection } = state;
