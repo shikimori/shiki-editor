@@ -8,14 +8,14 @@ export default async function insertAtCaret(
   filler = null
 ) {
   const textarea = app.$refs.textarea;
-  const content = app.editorContent;
+  const text = app.editorContent;
 
   const startPos = textarea.selectionStart;
   const endPos = textarea.selectionEnd;
 
   const { scrollTop } = textarea;
 
-  let selectedText = content.substring(startPos, endPos);
+  let selectedText = text.slice(startPos, endPos);
   selectedText = ((selectedText === '') && filler ? filler : selectedText);
 
   if (
@@ -27,9 +27,9 @@ export default async function insertAtCaret(
       `${postfix}\n${prefix}$1`
     );
   }
-  app.editorContent = content.substring(0, startPos) +
+  app.editorContent = text.slice(0, startPos) +
     prefix + selectedText + postfix +
-    content.substring(endPos, content.length);
+    text.slice(endPos);
 
   app.focus();
   await app.$nextTick();
