@@ -1,4 +1,6 @@
 import insertAtCaret from './insert_at_caret';
+import insertAtLineStart from './insert_at_line_start';
+import wrapLine from './wrap_line';
 
 export default function sourceCommand(app, type, data) {
   switch (type) {
@@ -69,11 +71,21 @@ export default function sourceCommand(app, type, data) {
     // case 'upload':
 
     // block commands
+    case 'blockquote':
+      insertAtLineStart(app, '> ');
+      break;
 
-    // case 'blockquote':
-    // case 'spoiler_block':
-    // case 'code_block':
-    // case 'bullet_list':
+    case 'spoiler_block':
+      wrapLine(app, '[spoiler_block]', '[/spoiler_block]');
+      break;
+
+    case 'code_block':
+      wrapLine(app, '```', '```');
+      break;
+
+    case 'bullet_list':
+      insertAtLineStart(app, '- ');
+      break;
 
     default:
       console.error(`undefined command "${type}"`); // eslint-disable-line no-console
