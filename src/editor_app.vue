@@ -92,7 +92,7 @@
     </div>
 
     <Smileys
-      v-show='isSmiley && isEditingEnabled'
+      v-show='isSmiley && !isPreview'
       ref='smileys'
       :is-enabled='isSmiley'
       target-ref='smiley'
@@ -119,7 +119,7 @@ import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
-import { contentToNodes, scrollTop } from './utils';
+import { contentToNodes, scrollTop, insertAtCaret } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
 import { insertReply, insertFragment, insertQuote } from './commands';
 import { preventHugePaste } from './plugins';
@@ -375,7 +375,11 @@ export default {
       this.isSmiley = !this.isSmiley;
 
       if (kind) {
-        this.editor.commands.smiley(kind);
+        if (this.isSource) {
+          insertAtCaret(this, '', kind);
+        } else {
+          this.editor.commands.smiley(kind);
+        }
       }
     },
     shikiLinkCommand() {
