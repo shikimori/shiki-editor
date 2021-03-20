@@ -28,14 +28,19 @@ export default function sourceCommand(app, type, data) {
       break;
 
     // case 'link':
-
     // item commands
 
     case 'smiley':
-      insertAtCaret(app, '', data);
+      insertAtCaret(app, data);
       break;
 
-    // case 'image':
+    case 'image':
+      data = prompt(window.I18n.t('frontend.shiki_editor.prompt.image_url')); // eslint-disable-line no-param-reassign
+      if (data == null) { return; }
+
+      insertAtCaret(app, `[img]${data}[/img]`);
+      break;
+
     case 'shiki_link':
       insertAtCaret(
         app,
@@ -44,6 +49,7 @@ export default function sourceCommand(app, type, data) {
         true,
         data.text
       );
+      break;
 
     // case 'upload':
 

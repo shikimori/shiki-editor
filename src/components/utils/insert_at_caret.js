@@ -1,6 +1,12 @@
 const INLINE_REPLACEMENT_REGEXP = /\n(.|)/g;
 
-export default async function insertAtCaret(app, prefix, postfix, isInline, filler) {
+export default async function insertAtCaret(
+  app,
+  prefix,
+  postfix = '',
+  isInline = false,
+  filler = null
+) {
   const textarea = app.$refs.textarea;
   const content = app.editorContent;
 
