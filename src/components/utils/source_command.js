@@ -1,6 +1,6 @@
 import insertAtCaret from './insert_at_caret';
 
-export default function sourceCommand(app, type, value) {
+export default function sourceCommand(app, type, data) {
   switch (type) {
     // inline commands
     case 'bold':
@@ -32,11 +32,19 @@ export default function sourceCommand(app, type, value) {
     // item commands
 
     case 'smiley':
-      insertAtCaret(app, '', value);
+      insertAtCaret(app, '', data);
       break;
 
     // case 'image':
-    // case 'shiki_link':
+    case 'shiki_link':
+      insertAtCaret(
+        app,
+        `[${data.type}=${data.id}]`,
+        `[/${data.type}]`,
+        true,
+        data.text
+      );
+
     // case 'upload':
 
     // block commands

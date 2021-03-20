@@ -3,6 +3,7 @@ import { bind } from 'shiki-decorators';
 import { Extension } from '../base';
 import { scrollTop } from '../utils';
 import { addToShikiCache } from '../extensions';
+import sourceCommand from '../components/utils/source_command';
 
 export default class ShikiSearch extends Extension {
   editor = null
@@ -17,12 +18,17 @@ export default class ShikiSearch extends Extension {
 
   get defaultOptions() {
     return {
-      globalSeach: null
+      globalSearch: null,
+      editorApp: null
     };
   }
 
   get globalSearch() {
     return this.options.globalSearch;
+  }
+
+  get editorApp() {
+    return this.options.editorApp;
   }
 
   searchOpen(editor) {
@@ -57,6 +63,15 @@ export default class ShikiSearch extends Extension {
       return;
     }
 
+    if (this.editorApp.isSource) {
+      sourceCommand(this.editorApp, 'shiki_link', attrs);
+    } else {
+      this._editorCommand(attrs);
+    }
+    addToShikiCache(attrs.type, attrs.id, attrs);
+  }
+
+  _editorCommand(attrs) {
     const { state, schema, selection } = this.editor;
     const { dispatch } = this.editor.view;
 
@@ -71,7 +86,6 @@ export default class ShikiSearch extends Extension {
     }
 
     dispatch(tr);
-    addToShikiCache(attrs.type, attrs.id, attrs);
   }
 
   _stub() {

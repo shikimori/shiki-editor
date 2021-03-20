@@ -272,7 +272,8 @@ export default {
       if (!this.globalSearch) { return null; }
 
       return new ShikiSearch({
-        globalSearch: this.globalSearch
+        globalSearch: this.globalSearch,
+        editorApp: this
       });
     },
     isStickyMenuOffset() {
