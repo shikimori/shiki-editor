@@ -1,4 +1,6 @@
-export default async function insertAtCaret(app, prefix, postfix, filler) {
+const INLINE_REPLACEMENT_REGEXP = /\n(.)/g;
+
+export default async function insertAtCaret(app, prefix, postfix, isInline, filler) {
   const textarea = app.$refs.textarea;
   const content = app.editorContent;
 
@@ -12,8 +14,8 @@ export default async function insertAtCaret(app, prefix, postfix, filler) {
 
   } else if (
     textarea.selectionStart ||
-    (textarea.selectionStart === '0') ||
-    (textarea.selectionStart === 0)
+      (textarea.selectionStart === '0') ||
+      (textarea.selectionStart === 0)
   ) {
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
@@ -21,6 +23,15 @@ export default async function insertAtCaret(app, prefix, postfix, filler) {
     let selectedText = content.substring(startPos, endPos);
     selectedText = ((selectedText === '') && filler ? filler : selectedText);
 
+    if (
+      isInline && prefix && postfix &&
+        selectedText.match(INLINE_REPLACEMENT_REGEXP)
+    ) {
+      selectedText = selectedText.replace(
+        INLINE_REPLACEMENT_REGEXP,
+        `${postfix}\n${prefix}$1`
+      );
+    }
     app.editorContent = content.substring(0, startPos) +
       prefix + selectedText + postfix +
       content.substring(endPos, content.length);
