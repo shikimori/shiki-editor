@@ -29,7 +29,7 @@
             :key='item.constructor === Object ? item.type : item'
             :ref='item.type'
             v-bind='item'
-            :is-active='nodesState[item.type]'
+            :is-active='nodesState[item.type] && !isSource'
             :is-enabled='item.isEditingEnabled'
             @command='args => command(item.type, args)'
           />
@@ -119,7 +119,8 @@ import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
-import { contentToNodes, scrollTop, insertAtCaret } from './utils';
+import sourceCommand from './components/utils/source_command';
+import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
 import { insertReply, insertFragment, insertQuote } from './commands';
 import { preventHugePaste } from './plugins';
@@ -340,6 +341,10 @@ export default {
         return this[method](args);
       }
 
+      if (this.isSource) {
+        return sourceCommand(this, type, args);
+      }
+
       switch (type) {
         case 'link':
           this.isLinkBlock ?
@@ -376,7 +381,7 @@ export default {
 
       if (kind) {
         if (this.isSource) {
-          insertAtCaret(this, '', kind);
+          sourceCommand(this, 'smiley', kind);
         } else {
           this.editor.commands.smiley(kind);
         }

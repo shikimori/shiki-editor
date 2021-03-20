@@ -25,8 +25,8 @@ export default async function insertAtCaret(app, prefix, postfix, filler) {
       prefix + selectedText + postfix +
       content.substring(endPos, content.length);
 
-    await app.$nextTick();
     app.focus();
+    await app.$nextTick();
 
     textarea.selectionEnd = startPos + prefix.length + selectedText.length + postfix.length;
     textarea.selectionStart = textarea.selectionEnd;
