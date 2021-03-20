@@ -9,31 +9,45 @@ export default async function insertAtLineStart(
   const endPos = textarea.selectionEnd;
 
   if (startPos === endPos) {
-    if (startPos === 0) {
-      replaceAtBeginning(app, prefix);
-    } else {
-    }
+    const newLinePos = indexOfNewLine(content, startPos);
+    const offset = newLinePos === 0 ? 0 : 1;
+    const firstPart = content.slice(0, newLinePos + offset);
+    const secondPart = content.slice(newLinePos + offset);
+
+    finalize(app, firstPart + prefix + secondPart, newLinePos + prefix.length);
   } else {
-    const selectedText = content.substring(startPos, endPos);
+    // const selectedText = content.substring(startPos, endPos);
   }
 
   // app.focus();
   // await app.$nextTick();
-  // 
+
   // textarea.scrollTop = scrollTop;
 }
 
-async function replaceAtBeginning(app, prefix) {
+async function finalize(app, content, selectionStart) {
   const textarea = app.$refs.textarea;
   const { scrollTop } = textarea;
 
-  app.editorContent = prefix + app.editorContent;
+  app.editorContent = content;
 
   app.focus();
   await app.$nextTick();
 
-  textarea.selectionStart = prefix.length;
-  textarea.selectionEnd = textarea.selectionStart;
+  textarea.selectionStart = selectionStart;
+  textarea.selectionEnd = selectionStart;
 
   textarea.scrollTop = scrollTop;
+}
+
+function indexOfNewLine(content, position) {
+  let i = content[position] === '\n' ? position - 1 : position;
+
+  for (; i > 0; i -= 1) {
+    if (content[i] === '\n') {
+      break;
+    }
+  }
+
+  return i;
 }
