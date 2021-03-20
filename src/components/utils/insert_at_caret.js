@@ -1,4 +1,4 @@
-const INLINE_REPLACEMENT_REGEXP = /\n(.)/g;
+const INLINE_REPLACEMENT_REGEXP = /\n(.|)/g;
 
 export default async function insertAtCaret(app, prefix, postfix, isInline, filler) {
   const textarea = app.$refs.textarea;
@@ -39,8 +39,14 @@ export default async function insertAtCaret(app, prefix, postfix, isInline, fill
     app.focus();
     await app.$nextTick();
 
-    textarea.selectionEnd = startPos + prefix.length + selectedText.length + postfix.length;
-    textarea.selectionStart = textarea.selectionEnd;
+    if (selectedText.length || !prefix.length) {
+      textarea.selectionEnd = startPos + prefix.length +
+        selectedText.length + postfix.length;
+      textarea.selectionStart = textarea.selectionEnd;
+    } else {
+      textarea.selectionStart = startPos + prefix.length;
+      textarea.selectionEnd = textarea.selectionStart;
+    }
     textarea.scrollTop = scrollTop;
 
   } else {
