@@ -1,6 +1,43 @@
-const SELECT_REPLACEMENT_REGEXP = /\n(.)/g;
+const NEWLINE_REGEXP = /\n(.)/g;
+const NEWLINE_OR_END_REGEXP = /\n(.|)/g;
 
-export default async function insertAtLineStart(
+export function insertAtCaret(
+  app,
+  prefix,
+  postfix,
+  isInline = false,
+  filler = null
+) {
+  const textarea = app.$refs.textarea;
+  const text = app.editorContent;
+
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+
+  let selectedText = text.slice(startPos, endPos);
+  selectedText = ((selectedText === '') && filler ? filler : selectedText);
+
+  if (
+    isInline && prefix && postfix &&
+      selectedText.match(NEWLINE_OR_END_REGEXP)
+  ) {
+    selectedText = selectedText.replace(
+      NEWLINE_OR_END_REGEXP,
+      `${postfix}\n${prefix}$1`
+    );
+  }
+  const finalText = text.slice(0, startPos) +
+    prefix + selectedText + postfix +
+    text.slice(endPos);
+
+  const finalPos = selectedText.length || !prefix.length ?
+    startPos + prefix.length + selectedText.length + postfix.length :
+    startPos + prefix.length;
+
+  finalize(app, finalText, finalPos);
+}
+
+export function insertAtLineStart(
   app,
   prefix
 ) {
@@ -26,7 +63,7 @@ export default async function insertAtLineStart(
     const selectedText = newText.slice(newStartPos, newEndPos);
     const replacedText = selectedText
       .replace(
-        SELECT_REPLACEMENT_REGEXP,
+        NEWLINE_REGEXP,
         `\n${prefix}$1`
       );
     const finalText = newText.slice(0, newStartPos) +
