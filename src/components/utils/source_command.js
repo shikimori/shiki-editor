@@ -1,5 +1,8 @@
-import { insertAtCaret, insertAtLineStart } from './insert_at_textarea';
-import wrapLine from './wrap_line';
+import {
+  insertAtCaret,
+  insertAtLineStart,
+  wrapLine
+} from './insert_at_textarea';
 
 export default function sourceCommand(app, type, data) {
   switch (type) {

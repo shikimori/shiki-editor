@@ -10,11 +10,9 @@ export function insertAtCaret(
 ) {
   const textarea = app.$refs.textarea;
   const text = app.editorContent;
+  const { selectionStart, selectionEnd } = textarea;
 
-  const startPos = textarea.selectionStart;
-  const endPos = textarea.selectionEnd;
-
-  let selectedText = text.slice(startPos, endPos);
+  let selectedText = text.slice(selectionStart, selectionEnd);
   selectedText = ((selectedText === '') && filler ? filler : selectedText);
 
   if (
@@ -26,13 +24,13 @@ export function insertAtCaret(
       `${postfix}\n${prefix}$1`
     );
   }
-  const finalText = text.slice(0, startPos) +
+  const finalText = text.slice(0, selectionStart) +
     prefix + selectedText + postfix +
-    text.slice(endPos);
+    text.slice(selectionEnd);
 
   const finalPos = selectedText.length || !prefix.length ?
-    startPos + prefix.length + selectedText.length + postfix.length :
-    startPos + prefix.length;
+    selectionStart + prefix.length + selectedText.length + postfix.length :
+    selectionStart + prefix.length;
 
   finalize(app, finalText, finalPos);
 }
@@ -43,23 +41,21 @@ export function insertAtLineStart(
 ) {
   const textarea = app.$refs.textarea;
   const text = app.editorContent;
+  const { selectionStart, selectionEnd } = textarea;
 
-  const startPos = textarea.selectionStart;
-  const endPos = textarea.selectionEnd;
+  const lineStartPos = indexOfLineStart(text, selectionStart);
+  const offset = lineStartPos === 0 ? 0 : 1;
 
-  const newLinePos = indexOfNewLine(text, startPos);
-  const offset = newLinePos === 0 ? 0 : 1;
-
-  const firstPart = text.slice(0, newLinePos + offset);
-  const secondPart = text.slice(newLinePos + offset);
+  const firstPart = text.slice(0, lineStartPos + offset);
+  const secondPart = text.slice(lineStartPos + offset);
 
   const newText = firstPart + prefix + secondPart;
 
-  if (startPos === endPos) {
-    finalize(app, newText, newLinePos + prefix.length);
+  if (selectionStart === selectionEnd) {
+    finalize(app, newText, lineStartPos + prefix.length);
   } else {
-    const newStartPos = startPos + prefix.length;
-    const newEndPos = endPos + prefix.length;
+    const newStartPos = selectionStart + prefix.length;
+    const newEndPos = selectionEnd + prefix.length;
     const selectedText = newText.slice(newStartPos, newEndPos);
     const replacedText = selectedText
       .replace(
@@ -71,6 +67,44 @@ export function insertAtLineStart(
       newText.slice(newStartPos + selectedText.length);
 
     finalize(app, finalText, newStartPos + replacedText.length);
+  }
+}
+
+export function wrapLine(
+  app,
+  prefix,
+  postfix
+) {
+  const textarea = app.$refs.textarea;
+  const text = app.editorContent;
+  const { selectionStart, selectionEnd } = textarea;
+
+  const lineStartPos = indexOfLineStart(text, selectionStart);
+
+  if (selectionStart === selectionEnd) {
+    const lineEndPos = indexOfLineEnd(text, selectionStart);
+    const offset = lineStartPos === 0 ? 0 : 1;
+
+    if (lineEndPos) {
+      const fixedPrefix = prefix + '\n';
+      const fixedPostfix = postfix + '\n';
+
+      const firstPart = text.slice(0, lineStartPos + offset);
+      const secondPart = text.slice(lineStartPos + offset, lineEndPos + 1);
+      const thirdPart = text.slice(lineEndPos + 1);
+
+      const finalText = firstPart + fixedPrefix +
+        secondPart +
+        fixedPostfix + thirdPart;
+
+      console.log({ firstPart, secondPart, thirdPart, finalText });
+      finalize(
+        app,
+        finalText,
+        firstPart.length + fixedPrefix.length + secondPart.length - 1
+      );
+    }
+  } else {
   }
 }
 
@@ -89,7 +123,7 @@ async function finalize(app, text, selectionStart) {
   textarea.scrollTop = scrollTop;
 }
 
-function indexOfNewLine(text, position) {
+function indexOfLineStart(text, position) {
   let i = text[position] === '\n' ? position - 1 : position;
 
   for (; i > 0; i -= 1) {
@@ -99,4 +133,16 @@ function indexOfNewLine(text, position) {
   }
 
   return i;
+}
+
+function indexOfLineEnd(text, position) {
+  let i = position;
+
+  for (; i < text.length; i += 1) {
+    if (text[i] === '\n') {
+      return i;
+    }
+  }
+
+  return null;
 }
