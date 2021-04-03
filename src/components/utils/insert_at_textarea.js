@@ -82,28 +82,30 @@ export function wrapLine(
   const lineStartPos = indexOfLineStart(text, selectionStart);
 
   if (selectionStart === selectionEnd) {
-    const lineEndPos = indexOfLineEnd(text, selectionStart);
-    const offset = lineStartPos === 0 ? 0 : 1;
+    const lineEndPos = indexOfLineEnd(text, selectionStart) ?? text.length;
 
-    if (lineEndPos) {
-      const fixedPrefix = prefix + '\n';
-      const fixedPostfix = postfix + '\n';
+    const isFirstPos = lineStartPos === 0;
+    const isLastPos = lineEndPos === text.length;
 
-      const firstPart = text.slice(0, lineStartPos + offset);
-      const secondPart = text.slice(lineStartPos + offset, lineEndPos + 1);
-      const thirdPart = text.slice(lineEndPos + 1);
+    const offset = isFirstPos ? 0 : 1;
 
-      const finalText = firstPart + fixedPrefix +
-        secondPart +
-        fixedPostfix + thirdPart;
+    const fixedPrefix = prefix + '\n';
+    const fixedPostfix = postfix + (isLastPos ? '' : '\n');
 
-      console.log({ firstPart, secondPart, thirdPart, finalText });
-      finalize(
-        app,
-        finalText,
-        firstPart.length + fixedPrefix.length + secondPart.length - 1
-      );
-    }
+    const firstPart = text.slice(0, lineStartPos + offset);
+    const secondPart = text.slice(lineStartPos + offset, lineEndPos + 1) +
+      (isLastPos ? '\n' : '');
+    const thirdPart = text.slice(lineEndPos + 1);
+
+    const finalText = firstPart + fixedPrefix +
+      secondPart +
+      fixedPostfix + thirdPart;
+
+    finalize(
+      app,
+      finalText,
+      firstPart.length + fixedPrefix.length + secondPart.length - 1
+    );
   } else {
   }
 }
