@@ -1,3 +1,5 @@
+import { set } from 'text-field-edit';
+
 const NEWLINE_REGEXP = /\n(.)/g;
 const NEWLINE_OR_END_REGEXP = /\n(.|)/g;
 
@@ -108,7 +110,7 @@ async function finalize(app, text, selectionStart) {
   const textarea = app.$refs.textarea;
   const { scrollTop } = textarea;
 
-  app.editorContent = text;
+  set(textarea, text);
 
   app.focus();
   await app.$nextTick();
