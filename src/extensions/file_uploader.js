@@ -2,6 +2,7 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { bind } from 'shiki-decorators';
 
 import { Extension } from '../base';
+import sourceCommand from '../components/utils/source_command';
 
 import {
   insertUploadPlaceholder,
@@ -16,8 +17,13 @@ export default class FileUploader extends Extension {
 
   get defaultOptions() {
     return {
+      editorApp: null,
       shikiUploader: null
     };
+  }
+
+  get editorApp() {
+    return this.options.editorApp;
   }
 
   attachShikiUploader({ node, progressContainerNode }) {
@@ -50,26 +56,38 @@ export default class FileUploader extends Extension {
 
   @bind
   _uploadFileAdded(_e, uppyFile) {
-    insertUploadPlaceholder(
-      this.editor,
-      { uploadId: uppyFile.id, file: uppyFile.data }
-    );
+    if (this.editorApp.isSource) {
+      sourceCommand(this.editorApp, 'upload:added', uppyFile.id);
+    } else {
+      insertUploadPlaceholder(
+        this.editor,
+        { uploadId: uppyFile.id, file: uppyFile.data }
+      );
+    }
   }
 
   @bind
   _uploadFileSuccess(_e, { uppyFile, response }) {
-    replaceUploadPlaceholder(
-      this.editor,
-      { uploadId: uppyFile.id, response }
-    );
+    if (this.editorApp.isSource) {
+      sourceCommand(this.editorApp, 'upload:success', uppyFile.id);
+    } else {
+      replaceUploadPlaceholder(
+        this.editor,
+        { uploadId: uppyFile.id, response }
+      );
+    }
   }
 
   @bind
   _uploadFileError(_e, { uppyFile }) {
-    removeUploadPlaceholder(
-      this.editor,
-      { uploadId: uppyFile.id }
-    );
+    if (this.editorApp.isSource) {
+      sourceCommand(this.editorApp, 'upload:error', uppyFile.id);
+    } else {
+      removeUploadPlaceholder(
+        this.editor,
+        { uploadId: uppyFile.id }
+      );
+    }
   }
 
   get plugins() {

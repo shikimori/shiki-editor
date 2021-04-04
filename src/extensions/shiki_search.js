@@ -18,8 +18,8 @@ export default class ShikiSearch extends Extension {
 
   get defaultOptions() {
     return {
-      globalSearch: null,
-      editorApp: null
+      editorApp: null,
+      globalSearch: null
     };
   }
 

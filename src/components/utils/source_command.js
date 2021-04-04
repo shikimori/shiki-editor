@@ -70,7 +70,17 @@ export default function sourceCommand(app, type, data) {
       );
       break;
 
-    // case 'upload':
+    case 'upload:added':
+      insertAtCaret(app, '', uploadPlaceholder(data));
+      break;
+
+    case 'upload:success':
+      console.log(type, data);
+      break;
+
+    case 'upload:error':
+      console.log(type, data);
+      break;
 
     // block commands
     case 'blockquote':
@@ -92,4 +102,8 @@ export default function sourceCommand(app, type, data) {
     default:
       console.error(`undefined command "${type}"`); // eslint-disable-line no-console
   }
+}
+
+function uploadPlaceholder(uploadId) {
+  return `[upload #${uploadId}]`;
 }

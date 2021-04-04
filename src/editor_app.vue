@@ -265,6 +265,7 @@ export default {
     },
     fileUploaderExtension() {
       return new FileUploader({
+        editorApp: this,
         shikiUploader: this.shikiUploader
       });
     },
@@ -272,8 +273,8 @@ export default {
       if (!this.globalSearch) { return null; }
 
       return new ShikiSearch({
-        globalSearch: this.globalSearch,
-        editorApp: this
+        editorApp: this,
+        globalSearch: this.globalSearch
       });
     },
     isStickyMenuOffset() {
