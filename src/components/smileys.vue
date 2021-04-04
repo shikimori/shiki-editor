@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import Keypress from 'vue-keypress';
 import { isMobile } from 'shiki-utils';
-import { disablePageScroll, enablePageScroll } from 'scroll-lock';
-import vueCustomScrollbar from 'vue-custom-scrollbar';
+
+// import Keypress from 'vue-keypress';
+// import vueCustomScrollbar from 'vue-custom-scrollbar';
 
 // import { createPopper } from '@popperjs/core';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
@@ -60,7 +60,14 @@ import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 export default {
   name: 'Smileys',
-  components: { Keypress, vueCustomScrollbar },
+  components: {
+    Keypress: () => import(
+      /* webpackChunkName: "smileys-dependencies" */ 'vue-keypress'
+    ),
+    vueCustomScrollbar: () => import(
+      /* webpackChunkName: "smileys-dependencies" */ 'vue-custom-scrollbar'
+    )
+  },
   props: {
     isEnabled: { type: Boolean, required: true },
     shikiRequest: { type: Object, required: true },
@@ -97,8 +104,11 @@ export default {
     this.cleanup();
   },
   methods: {
-    show() {
+    async show() {
       if (this.isMobile) {
+        const { disablePageScroll } = await import(
+          /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
+        );
         disablePageScroll();
       } else {
         this.showPopup();
@@ -141,6 +151,9 @@ export default {
     },
     async close() {
       if (this.isMobile) {
+        const { enablePageScroll } = await import(
+          /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
+        );
         enablePageScroll();
       }
 
