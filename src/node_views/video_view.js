@@ -1,6 +1,5 @@
 import imagesloaded from 'imagesloaded';
 import { bind } from 'shiki-decorators';
-import round from 'lodash/round';
 
 import DOMView from './dom_view';
 import { getShikiLoader } from '../utils';
@@ -176,7 +175,9 @@ export default class VideoView extends DOMView {
       return;
     }
 
-    const ratio = round((img.naturalWidth * 1.0) / img.naturalHeight, 1);
+    const ratio = Math.round(
+      (img.naturalWidth * 1.0) / img.naturalHeight * 10.0
+    ) / 10.0;
 
     // http://vk.com/video98023184_165811692
     if (ratio === 1.3) {
