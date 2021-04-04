@@ -29,8 +29,8 @@
             :key='item.constructor === Object ? item.type : item'
             :ref='item.type'
             v-bind='item'
-            :is-active='nodesState[item.type]'
-            :is-enabled='item.isEditingEnabled ? item.isEditingEnabled() : isEditingEnabled'
+            :is-active='nodesState[item.type] && !isSource'
+            :is-enabled='item.isEditingEnabled'
             @command='args => command(item.type, args)'
           />
         </div>
@@ -92,7 +92,7 @@
     </div>
 
     <Smileys
-      v-show='isSmiley && isEditingEnabled'
+      v-show='isSmiley && !isPreview'
       ref='smileys'
       :is-enabled='isSmiley'
       target-ref='smiley'
@@ -119,6 +119,7 @@ import { undo, redo } from 'prosemirror-history';
 
 import ShikiEditor from './editor';
 import EditorContent from './components/editor_content';
+import sourceCommand from './components/utils/source_command';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
 import { insertReply, insertFragment, insertQuote } from './commands';
@@ -195,8 +196,8 @@ export default {
     },
     isEditingEnabledMappings() {
       return {
-        undo: this.undoIsEnabled,
-        redo: this.redoIsEnabled
+        undo: this.undoIsEnabled && this.isEditingEnabled,
+        redo: this.redoIsEnabled && this.isEditingEnabled
         // link: this.linkIsEnabled
       };
     },
@@ -207,7 +208,7 @@ export default {
           MENU_ITEMS[group].map(item => ({
             type: item,
             title: window.I18n.t(`frontend.shiki_editor.${item}`),
-            isEditingEnabled: this.isEditingEnabledMappings[item]
+            isEditingEnabled: this.isEditingEnabledMappings[item] ?? true
           }))
         ]
       ));
@@ -260,10 +261,11 @@ export default {
         // !this.isContentManipulationsPending && !this.isPreview;
     },
     isSourceDisabled() {
-      return this.isPreview;
+      return this.isPreview || this.isContentManipulationsPending;
     },
     fileUploaderExtension() {
       return new FileUploader({
+        editorApp: this,
         shikiUploader: this.shikiUploader
       });
     },
@@ -271,6 +273,7 @@ export default {
       if (!this.globalSearch) { return null; }
 
       return new ShikiSearch({
+        editorApp: this,
         globalSearch: this.globalSearch
       });
     },
@@ -279,15 +282,6 @@ export default {
       if (!topMenuNode) { return false; }
 
       return getComputedStyle(topMenuNode).position === 'sticky';
-    }
-  },
-  watch: {
-    isSource() {
-      if (this.isSource) {
-        this.fileUploaderExtension.disable();
-      } else {
-        this.fileUploaderExtension.enable();
-      }
     }
   },
   async created() {
@@ -340,6 +334,10 @@ export default {
         return this[method](args);
       }
 
+      if (this.isSource) {
+        return sourceCommand(this, type, args);
+      }
+
       switch (type) {
         case 'link':
           this.isLinkBlock ?
@@ -375,7 +373,11 @@ export default {
       this.isSmiley = !this.isSmiley;
 
       if (kind) {
-        this.editor.commands.smiley(kind);
+        if (this.isSource) {
+          sourceCommand(this, 'smiley', kind);
+        } else {
+          this.editor.commands.smiley(kind);
+        }
       }
     },
     shikiLinkCommand() {
@@ -549,21 +551,32 @@ export default {
     },
     async handleSourceKeypress(e) {
       if (e.keyCode === 27) { // esc
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
+        preventEvent(e);
         this.toggleSource();
       }
       if (!e.metaKey && !e.ctrlKey) { return; }
 
       if ((e.keyCode === 10) || (e.keyCode === 13)) { // ctrl+enter
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
+        preventEvent(e);
         this.toggleSource();
         await this.$nextTick();
 
         this.submit();
+      } if (e.keyCode === 66) { // b - [b] tag
+        preventEvent(e);
+        sourceCommand(this, 'bold');
+      } if (e.keyCode === 73) { // i - [i] tag
+        preventEvent(e);
+        sourceCommand(this, 'italic');
+      } if (e.keyCode === 85) { // u - [u] tag
+        preventEvent(e);
+        sourceCommand(this, 'underline');
+      } if (e.keyCode === 83) { //  - spoiler tag
+        preventEvent(e);
+        sourceCommand(this, 'spoiler_inline');
+      } if (e.keyCode === 79) { // o - code tag
+        preventEvent(e);
+        sourceCommand(this, 'code_inline');
       }
     },
     submit() {
@@ -571,6 +584,11 @@ export default {
     }
   }
 };
+
+function preventEvent(e) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+}
 </script>
 
 <style lang='sass'>
