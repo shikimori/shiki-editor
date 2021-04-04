@@ -6349,9 +6349,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 uevent@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/uevent/-/uevent-2.0.0.tgz#83d3a27dc746f0e0c98db3ca1c850ffe4aef4993"
-  integrity sha512-UWXwwdYnrc/q2AibFqZpq77aKl+uOQdmAZ4SZf4B8kG1Y3eDFGiYqfZ4kaiQZ3jxZDX8XgDm84AAcIWeGu63Zw==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/uevent/-/uevent-2.0.1.tgz#eda5226f957772a09f0d84868fea634421160d44"
+  integrity sha512-jKGgT4/BVWVRSwGyGjZLen/VvUSKaW5E4JQPD0zBXVc5RP/PHZQrXBJwH1cBynhBV6pSLSbujNMydEC9Dho7ng==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

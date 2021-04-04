@@ -323,6 +323,7 @@ export default class ShikiEditor {
 
     this.setActiveNodesAndMarks();
 
+    // provided by uEvent
     this.trigger('update', { transaction });
   }
 
