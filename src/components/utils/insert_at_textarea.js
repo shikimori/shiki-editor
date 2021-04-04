@@ -44,10 +44,10 @@ export function insertAtLineStart(
   const { selectionStart, selectionEnd } = textarea;
 
   const lineStartPos = indexOfLineStart(text, selectionStart);
-  const offset = lineStartPos === 0 ? 0 : 1;
+  const firstPosOffset = lineStartPos === 0 ? 0 : 1;
 
-  const firstPart = text.slice(0, lineStartPos + offset);
-  const secondPart = text.slice(lineStartPos + offset);
+  const firstPart = text.slice(0, lineStartPos + firstPosOffset);
+  const secondPart = text.slice(lineStartPos + firstPosOffset);
 
   const newText = firstPart + prefix + secondPart;
 
@@ -80,34 +80,28 @@ export function wrapLine(
   const { selectionStart, selectionEnd } = textarea;
 
   const lineStartPos = indexOfLineStart(text, selectionStart);
+  const isFirstPos = lineStartPos === 0;
+  const firstPosOffset = isFirstPos ? 0 : 1;
+  const fixedPrefix = prefix + '\n';
 
-  if (selectionStart === selectionEnd) {
-    const lineEndPos = indexOfLineEnd(text, selectionStart) ?? text.length;
+  const lineEndPos = indexOfLineEnd(text, selectionEnd) ?? text.length;
+  const isLastPos = lineEndPos === text.length;
+  const fixedPostfix = postfix + (isLastPos ? '' : '\n');
 
-    const isFirstPos = lineStartPos === 0;
-    const isLastPos = lineEndPos === text.length;
+  const firstPart = text.slice(0, lineStartPos + firstPosOffset);
+  const secondPart = text.slice(lineStartPos + firstPosOffset, lineEndPos + 1) +
+    (isLastPos ? '\n' : '');
+  const thirdPart = text.slice(lineEndPos + 1);
 
-    const offset = isFirstPos ? 0 : 1;
+  const finalText = firstPart + fixedPrefix +
+    secondPart +
+    fixedPostfix + thirdPart;
 
-    const fixedPrefix = prefix + '\n';
-    const fixedPostfix = postfix + (isLastPos ? '' : '\n');
-
-    const firstPart = text.slice(0, lineStartPos + offset);
-    const secondPart = text.slice(lineStartPos + offset, lineEndPos + 1) +
-      (isLastPos ? '\n' : '');
-    const thirdPart = text.slice(lineEndPos + 1);
-
-    const finalText = firstPart + fixedPrefix +
-      secondPart +
-      fixedPostfix + thirdPart;
-
-    finalize(
-      app,
-      finalText,
-      firstPart.length + fixedPrefix.length + secondPart.length - 1
-    );
-  } else {
-  }
+  finalize(
+    app,
+    finalText,
+    firstPart.length + fixedPrefix.length + secondPart.length - 1
+  );
 }
 
 async function finalize(app, text, selectionStart) {
