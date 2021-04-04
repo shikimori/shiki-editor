@@ -1,10 +1,12 @@
 import {
   insertAtCaret,
   insertAtLineStart,
-  wrapLine
+  wrapLine,
+  insertPlaceholder,
+  replacePlaceholder
 } from './insert_at_textarea';
 
-export default function sourceCommand(app, type, data) {
+export default function sourceCommand(app, type, payload) {
   switch (type) {
     // inline commands
     case 'bold':
@@ -32,54 +34,58 @@ export default function sourceCommand(app, type, data) {
       break;
 
     case 'link':
-      data = prompt( // eslint-disable-line no-param-reassign
+      payload = prompt( // eslint-disable-line no-param-reassign
         window.I18n.t('frontend.shiki_editor.prompt.link_url')
       )?.trim();
-      if (data == null) { return; }
+      if (payload == null) { return; }
 
       insertAtCaret(
         app,
-        `[url=${data}]`,
+        `[url=${payload}]`,
         '[/url]',
         true,
-        data.replace(/^https?:\/\/|\/.*/g, '')
+        payload.replace(/^https?:\/\/|\/.*/g, '')
       );
       break;
 
     // item commands
     case 'smiley':
-      insertAtCaret(app, '', data);
+      insertAtCaret(app, '', payload);
       break;
 
     case 'image':
-      data = prompt( // eslint-disable-line no-param-reassign
+      payload = prompt( // eslint-disable-line no-param-reassign
         window.I18n.t('frontend.shiki_editor.prompt.image_url')
       )?.trim();
-      if (data == null) { return; }
+      if (payload == null) { return; }
 
-      insertAtCaret(app, '', `[img]${data}[/img]`);
+      insertAtCaret(app, '', `[img]${payload}[/img]`);
       break;
 
     case 'shiki_link':
       insertAtCaret(
         app,
-        `[${data.type}=${data.id}]`,
-        `[/${data.type}]`,
+        `[${payload.type}=${payload.id}]`,
+        `[/${payload.type}]`,
         true,
-        data.text
+        payload.text
       );
       break;
 
     case 'upload:added':
-      insertAtCaret(app, '', uploadPlaceholder(data));
+      insertPlaceholder(app, uploadPlaceholder(payload.uploadId));
       break;
 
     case 'upload:success':
-      console.log(type, data);
+      replacePlaceholder(
+        app,
+        uploadPlaceholder(payload.uploadId),
+        payload.response.bbcode
+      );
       break;
 
     case 'upload:error':
-      console.log(type, data);
+      replacePlaceholder(app, uploadPlaceholder(payload.uploadId), '');
       break;
 
     // block commands
@@ -105,5 +111,5 @@ export default function sourceCommand(app, type, data) {
 }
 
 function uploadPlaceholder(uploadId) {
-  return `[upload #${uploadId}]`;
+  return `[upload #${uploadId}...]`;
 }

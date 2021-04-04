@@ -106,7 +106,30 @@ export function wrapLine(
   );
 }
 
-async function finalize(app, text, selectionStart) {
+export function insertPlaceholder(app, placeholder) {
+  insertAtCaret(app, '', placeholder);
+}
+
+export function replacePlaceholder(app, placeholder, replacement) {
+  const textarea = app.$refs.textarea;
+  const text = app.editorContent;
+  const placeholderIndex = text.indexOf(placeholder);
+  if (placeholderIndex === -1) { return; }
+
+  const finalText = text.replace(placeholder, replacement);
+  const { selectionStart, selectionEnd } = textarea;
+
+  const textLengthDelta = replacement.length - placeholder.length;
+
+  finalize(
+    app,
+    finalText,
+    selectionStart < placeholderIndex ? selectionStart : selectionStart + textLengthDelta,
+    selectionEnd < placeholderIndex ? selectionEnd : selectionEnd + textLengthDelta
+  );
+}
+
+async function finalize(app, text, selectionStart, selectionEnd = selectionStart) {
   const textarea = app.$refs.textarea;
   const { scrollTop } = textarea;
 
@@ -116,7 +139,7 @@ async function finalize(app, text, selectionStart) {
   await app.$nextTick();
 
   textarea.selectionStart = selectionStart;
-  textarea.selectionEnd = selectionStart;
+  textarea.selectionEnd = selectionEnd;
 
   textarea.scrollTop = scrollTop;
 }

@@ -56,37 +56,33 @@ export default class FileUploader extends Extension {
 
   @bind
   _uploadFileAdded(_e, uppyFile) {
+    const payload = { uploadId: uppyFile.id, file: uppyFile.data };
     if (this.editorApp.isSource) {
-      sourceCommand(this.editorApp, 'upload:added', uppyFile.id);
+      sourceCommand(this.editorApp, 'upload:added', payload);
     } else {
-      insertUploadPlaceholder(
-        this.editor,
-        { uploadId: uppyFile.id, file: uppyFile.data }
-      );
+      insertUploadPlaceholder(this.editor, payload);
     }
   }
 
   @bind
   _uploadFileSuccess(_e, { uppyFile, response }) {
+    const payload = { uploadId: uppyFile.id, response };
+
     if (this.editorApp.isSource) {
-      sourceCommand(this.editorApp, 'upload:success', uppyFile.id);
+      sourceCommand(this.editorApp, 'upload:success', payload);
     } else {
-      replaceUploadPlaceholder(
-        this.editor,
-        { uploadId: uppyFile.id, response }
-      );
+      replaceUploadPlaceholder(this.editor, payload);
     }
   }
 
   @bind
   _uploadFileError(_e, { uppyFile }) {
+    const payload = { uploadId: uppyFile.id };
+
     if (this.editorApp.isSource) {
-      sourceCommand(this.editorApp, 'upload:error', uppyFile.id);
+      sourceCommand(this.editorApp, 'upload:error', payload);
     } else {
-      removeUploadPlaceholder(
-        this.editor,
-        { uploadId: uppyFile.id }
-      );
+      removeUploadPlaceholder(this.editor, payload);
     }
   }
 
