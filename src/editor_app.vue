@@ -559,21 +559,32 @@ export default {
     },
     async handleSourceKeypress(e) {
       if (e.keyCode === 27) { // esc
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
+        preventEvent(e);
         this.toggleSource();
       }
       if (!e.metaKey && !e.ctrlKey) { return; }
 
       if ((e.keyCode === 10) || (e.keyCode === 13)) { // ctrl+enter
-        e.preventDefault();
-        e.stopImmediatePropagation();
-
+        preventEvent(e);
         this.toggleSource();
         await this.$nextTick();
 
         this.submit();
+      } if (e.keyCode === 66) { // b - [b] tag
+        preventEvent(e);
+        sourceCommand(this, 'bold');
+      } if (e.keyCode === 73) { // i - [i] tag
+        preventEvent(e);
+        sourceCommand(this, 'italic');
+      } if (e.keyCode === 85) { // u - [u] tag
+        preventEvent(e);
+        sourceCommand(this, 'underline');
+      } if (e.keyCode === 83) { //  - spoiler tag
+        preventEvent(e);
+        sourceCommand(this, 'spoiler_inline');
+      } if (e.keyCode === 79) { // o - code tag
+        preventEvent(e);
+        sourceCommand(this, 'code_inline');
       }
     },
     submit() {
@@ -581,6 +592,11 @@ export default {
     }
   }
 };
+
+function preventEvent(e) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+}
 </script>
 
 <style lang='sass'>
