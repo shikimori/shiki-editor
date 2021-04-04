@@ -302,8 +302,8 @@ Instead use \`[span]\` bbcode [span=b-anime_status_tag anons]as inline element[/
     window.shikiTokenizer = (this.$refs.editor1 || this.$refs.editor2)
       .editor.markdownParser.tokenizer;
 
-    await this.$nextTick();
-    this.$refs.editor2.toggleSource();
+    // await this.$nextTick();
+    // this.$refs.editor2.toggleSource();
   },
   methods: {
     info() {
