@@ -261,7 +261,7 @@ export default {
         // !this.isContentManipulationsPending && !this.isPreview;
     },
     isSourceDisabled() {
-      return this.isPreview;
+      return this.isPreview || this.isContentManipulationsPending;
     },
     fileUploaderExtension() {
       return new FileUploader({
@@ -281,15 +281,6 @@ export default {
       if (!topMenuNode) { return false; }
 
       return getComputedStyle(topMenuNode).position === 'sticky';
-    }
-  },
-  watch: {
-    isSource() {
-      if (this.isSource) {
-        this.fileUploaderExtension.disable();
-      } else {
-        this.fileUploaderExtension.enable();
-      }
     }
   },
   async created() {
