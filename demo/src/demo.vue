@@ -60,7 +60,7 @@ import { ShikiEditorApp } from '../../index';
 import { flash, ShikiRequest } from 'shiki-utils';
 // import { flash, ShikiRequest } from '../../packages/shiki-utils';
 // import { throttle, debounce } from '../../packages/shiki-decorators';
-// import ShikiUploader from '../../packages/shiki-uploader';
+// import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
 test

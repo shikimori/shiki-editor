@@ -5799,27 +5799,53 @@ shelljs@0.8.4:
     interpret "^1.0.0"
     rechoir "^0.6.2"
 
-shiki-decorators@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/shiki-decorators/-/shiki-decorators-1.0.0.tgz#6fbb7107928fa8394bd511d3f5f40149e297da85"
-  integrity sha512-RtBBL5SN7WTFVu55HfXouT9v1oybylqLJVW19cWxyq0aMnfQU7Mn/YWhyo3/8XU+ApByrYZlieUfmmU5A1Amew==
+shiki-decorators@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/shiki-decorators/-/shiki-decorators-1.0.1.tgz#7fb58be60898ab0df32246c173be541bd9c96a1b"
+  integrity sha512-ftCUyG8BwE0wB/YwubJwcG8d6wOsBUu/jqVMtjzQkTTfY5mNnwCzt70X5tMZoRHZBvAP70GW/BEwAOVGn0m0wg==
   dependencies:
     bind-decorator "1.0.11"
     memoize-decorator "^1.0.2"
 
-shiki-uploader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.0.0.tgz#7827f08558f89d3becd69560e71cfb80cf22548f"
-  integrity sha512-DSekZMoHhUHR3bdH2E51l50RbuvwDpGoFhtY8VdvtSw+W9EKuVH/uqN35KCQhKAemq9F+sHaSiSPA0TOigoQfw==
+shiki-editor@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/shiki-editor/-/shiki-editor-1.1.2.tgz#cd1f9d04010c0b539d73c3063a29306307b28bfb"
+  integrity sha512-V8wj7G0YzJG9S0qn2DX1x0eNaF+cLF+CQE86GEP/iIEgn2tje5kj8hQtsYpIW+thzyfciCXBazupgvfE0JNU5Q==
+  dependencies:
+    "@babel/plugin-proposal-logical-assignment-operators" "^7.10.4"
+    "@popperjs/core" "^2.4.4"
+    prosemirror-commands "^1.1.4"
+    prosemirror-dropcursor "^1.3.2"
+    prosemirror-gapcursor "^1.1.5"
+    prosemirror-history "^1.1.3"
+    prosemirror-inputrules "^1.1.2"
+    prosemirror-keymap "^1.1.4"
+    prosemirror-model "^1.10.0"
+    prosemirror-schema-list "^1.1.2"
+    prosemirror-state "^1.3.3"
+    prosemirror-tables "^1.1.1"
+    prosemirror-utils "^0.9.6"
+    prosemirror-view "1.15.6"
+    scroll-lock "^2.1.4"
+    text-field-edit "^3.1.0"
+    vue-custom-scrollbar morr/vue-custom-scrollbar#1.1.5
+    vue-dragscroll "^2.1.0"
+    vue-keypress "^2.1.1"
+    withinviewport "^2.1.2"
+
+shiki-uploader@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.1.0.tgz#7474da56b04b38c774fbc734421c8266d879ea84"
+  integrity sha512-1TXEPjJ/y2qI6cEkimf5zxYsIIOaI7o9QDMFPkFuRsToz7GwrxXpQ++N44eYH8Zk6q/ju3Fl42HMnn5QMl6/BA==
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
     is-visible "^2.2.0"
 
-shiki-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/shiki-utils/-/shiki-utils-1.0.0.tgz#c3e7f362c4e33fc629364b18ab7d6cfa05668cba"
-  integrity sha512-g75NUqZkvjGO4FP0wR/x0yz7eTCKklekspL0CIDpaFKWcdHFN+5AcHCPoPaWhn9ol6AuO/1Y7pRw5e4ncaiwBw==
+shiki-utils@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/shiki-utils/-/shiki-utils-1.0.1.tgz#525ef9161ce2583187e27ae171e3df69e9488566"
+  integrity sha512-P3RyVl8oSn4ZxiH/j2WuvDLMNVbtELbmNWSI7MktTKj/MGTKg3DgyguV3fX7MOczVw1ips4ETSLETEvpI8xbNQ==
   dependencies:
     ismobilejs "^1.1.1"
     toastify-js "^1.8.0"
@@ -6524,7 +6550,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-custom-scrollbar@morr/vue-custom-scrollbar#1.1.5:
+"vue-custom-scrollbar@github:morr/vue-custom-scrollbar#1.1.5", vue-custom-scrollbar@morr/vue-custom-scrollbar#1.1.5:
   version "1.1.5"
   resolved "https://codeload.github.com/morr/vue-custom-scrollbar/tar.gz/d50510e6d63c59b3f29c94e106b5b6972e3081d0"
 
