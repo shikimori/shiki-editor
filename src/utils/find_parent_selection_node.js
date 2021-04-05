@@ -1,4 +1,4 @@
-import { findParentNode, findSelectedNodeOfType } from 'prosemirror-utils';
+import { findParentNode, findSelectedNodeOfType } from 'prosemirror-utils/src/selection';
 
 export default function(type, selection) {
   const predicate = node => node.type === type;

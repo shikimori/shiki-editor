@@ -11,7 +11,8 @@ module.exports = {
     'shiki-utils',
     'shiki-editor',
     'shiki-uploader',
-    'shiki-decorators'
+    'shiki-decorators',
+    'prosemirror-utils'
   ],
   pluginOptions: {
   }

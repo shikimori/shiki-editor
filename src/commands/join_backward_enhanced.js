@@ -1,7 +1,7 @@
 import { joinBackward } from 'prosemirror-commands';
 import { Node } from 'prosemirror-model';
 import { Selection, NodeSelection } from 'prosemirror-state';
-import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils';
+import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils/src/selection';
 
 import toggleWrap from './toggle_wrap';
 import toggleBlockType from './toggle_block_type';

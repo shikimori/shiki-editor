@@ -1,6 +1,6 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/toggleList.js
 import { wrapInList, liftListItem } from 'prosemirror-schema-list';
-import { findParentNode } from 'prosemirror-utils';
+import { findParentNode } from 'prosemirror-utils/src/selection';
 
 function isList(node, schema) {
   return (node.type === schema.nodes.bullet_list ||

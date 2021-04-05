@@ -1,5 +1,5 @@
 import { bind } from 'shiki-decorators';
-import { findChildren } from 'prosemirror-utils';
+import { findChildren } from 'prosemirror-utils/src/node';
 
 import DOMView from './dom_view';
 
