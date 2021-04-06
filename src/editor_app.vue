@@ -232,8 +232,8 @@ export default {
     },
     isEditingEnabledMappings() {
       return {
-        undo: this.undoIsEnabled && this.isEditingEnabled,
-        redo: this.redoIsEnabled && this.isEditingEnabled
+        undo: this.undoIsEnabled,
+        redo: this.redoIsEnabled
         // link: this.linkIsEnabled
       };
     },
@@ -299,6 +299,17 @@ export default {
     isSourceDisabled() {
       return this.isPreview || this.isContentManipulationsPending;
     },
+    undoIsEnabled() {
+      return this.isEditingEnabled && undo(this.editor.state);
+    },
+    redoIsEnabled() {
+      return this.isEditingEnabled && redo(this.editor.state);
+    },
+    // linkIsEnabled() {
+    //   return this.isEditingEnabled && (
+    //     this.nodesState.link || !this.editor.state.selection.empty
+    //   );
+    // },
     fileUploaderExtension() {
       return new FileUploader({
         editorApp: this,
@@ -426,17 +437,6 @@ export default {
     uploadCommand(files) {
       this.fileUploaderExtension.addFiles(files);
     },
-    undoIsEnabled() {
-      return this.isEditingEnabled && undo(this.editor.state);
-    },
-    redoIsEnabled() {
-      return this.isEditingEnabled && redo(this.editor.state);
-    },
-    // linkIsEnabled() {
-    //   return this.isEditingEnabled && (
-    //     this.nodesState.link || !this.editor.state.selection.empty
-    //   );
-    // },
     appendReply(reply) {
       const { editor } = this;
       insertReply(reply)(editor.state, editor.view.dispatch);
