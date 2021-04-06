@@ -627,12 +627,16 @@ export default {
     submit() {
       this.$emit('submit');
     },
-    applyUnsavedContent() {
+    async applyUnsavedContent() {
       this.setContent(this.unsavedContent, true, false);
       this.unsavedContent = null;
+      await this.$nextTick();
+      this.focus();
     },
-    discardUnsavedContent() {
+    async discardUnsavedContent() {
       this.unsavedContent = null;
+      await this.$nextTick();
+      this.focus();
     },
     i18n_t(key) {
       return window.I18n.t(key);
