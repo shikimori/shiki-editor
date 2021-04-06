@@ -64,18 +64,18 @@
       v-if='unsavedContent'
       class='unsaved-content'
     >
-      {{ unsavedContentLabel }}
+      {{ i18n_t('frontend.shiki_editor.unsaved_content.label') }}
       <button
         class='b-button'
         @click.prevent='applyUnsavedContent'
       >
-        {{ unsavedContentYes }}
+        {{ i18n_t('frontend.shiki_editor.unsaved_content.yes') }}
       </button>
       <button
         class='b-button'
         @click.prevent='discardUnsavedContent'
       >
-        {{ unsavedContentNo }}
+        {{ i18n_t('frontend.shiki_editor.unsaved_content.no') }}
       </button>
     </div>
     <div
@@ -302,15 +302,6 @@ export default {
       if (!topMenuNode) { return false; }
 
       return getComputedStyle(topMenuNode).position === 'sticky';
-    },
-    unsavedContentLabel() {
-      return window.I18n.t('frontend.shiki_editor.unsaved_content.label');
-    },
-    unsavedContentYes() {
-      return window.I18n.t('frontend.shiki_editor.unsaved_content.yes');
-    },
-    unsavedContentNo() {
-      return window.I18n.t('frontend.shiki_editor.unsaved_content.no');
     }
   },
   async created() {
@@ -451,7 +442,7 @@ export default {
       isToggleSource = true
     ) {
       if (this.isSource && !isToggleSource) {
-        set(content, this.$refs.textarea);
+        set(this.$refs.textarea, content);
         return;
       }
 
@@ -626,6 +617,9 @@ export default {
     },
     discardUnsavedContent() {
       this.unsavedContent = null;
+    },
+    i18n_t(key) {
+      return window.I18n.t(key);
     }
   }
 };
