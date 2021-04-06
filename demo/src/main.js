@@ -39,6 +39,10 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.huge_content_pasted':
     'Слишком много контента. Визуальный редактор не справится, и поэтому вставка была отменена.',
   'frontend.shiki_editor.normal_content_mode': 'Визуальный редактор снова доступен',
+  'frontend.shiki_editor.unsaved_content_mode.label':
+    'В редакторе остался не сохранённый текст. Восстановить?',
+  'frontend.shiki_editor.unsaved_content_mode.yes': 'Да',
+  'frontend.shiki_editor.unsaved_content_mode.no': 'Нет',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Код',
   'frontend.lib.loading': 'Загрузка...',

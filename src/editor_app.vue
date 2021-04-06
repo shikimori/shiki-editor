@@ -61,6 +61,24 @@
     {{ editor.selection.$from.pos }} - {{ editor.selection.$to.pos }}
     -->
     <div
+      v-if='unsavedContent'
+      class='unsaved-content'
+    >
+      {{ unsavedContentLabel }}
+      <button
+        class='b-button'
+        @click.prevent='applyUnsavedContent'
+      >
+        {{ unsavedContentYes }}
+      </button>
+      <button
+        class='b-button'
+        @click.prevent='discardUnsavedContent'
+      >
+        {{ unsavedContentNo }}
+      </button>
+    </div>
+    <div
       v-if='editor'
       ref='editor_container'
       class='editor-container'
@@ -113,6 +131,7 @@ import autosize from 'autosize';
 import withinviewport from 'withinviewport';
 import { dragscroll } from 'vue-dragscroll';
 import delay from 'delay';
+import { set } from 'text-field-edit';
 
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
@@ -188,6 +207,7 @@ export default {
     editor: null,
     editorContent: null,
     editorPosition: null,
+    unsavedContent: null,
     ...DEFAULT_DATA
   }),
   computed: {
@@ -282,6 +302,15 @@ export default {
       if (!topMenuNode) { return false; }
 
       return getComputedStyle(topMenuNode).position === 'sticky';
+    },
+    unsavedContentLabel() {
+      return window.I18n.t('frontend.shiki_editor.unsaved_content.label');
+    },
+    unsavedContentYes() {
+      return window.I18n.t('frontend.shiki_editor.unsaved_content.yes');
+    },
+    unsavedContentNo() {
+      return window.I18n.t('frontend.shiki_editor.unsaved_content.no');
     }
   },
   async created() {
@@ -418,8 +447,14 @@ export default {
     },
     async setContent(
       content,
-      isAaddToHistory = content !== this.editor.exportMarkdown()
+      isAaddToHistory = content !== this.editor.exportMarkdown(),
+      isToggleSource = true
     ) {
+      if (this.isSource && !isToggleSource) {
+        set(content, this.$refs.textarea);
+        return;
+      }
+
       if (this.isSource) {
         await this.toggleSource();
       }
@@ -429,6 +464,9 @@ export default {
         false,
         isAaddToHistory
       );
+    },
+    setUnsavedContent(content) {
+      this.unsavedContent = content;
     },
     clearContent() {
       this.editor.destroy();
@@ -581,6 +619,13 @@ export default {
     },
     submit() {
       this.$emit('submit');
+    },
+    applyUnsavedContent() {
+      this.setContent(this.unsavedContent, true, false);
+      this.unsavedContent = null;
+    },
+    discardUnsavedContent() {
+      this.unsavedContent = null;
     }
   }
 };
