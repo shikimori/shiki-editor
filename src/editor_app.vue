@@ -77,6 +77,21 @@
       >
         {{ i18n_t('frontend.shiki_editor.unsaved_content.no') }}
       </button>
+      <div
+        class='b-spoiler_block'
+        :class='{ "is-opened": isUnsavedContentExpanded }'
+      >
+        <span
+          ref='unsavedContentSpoiler'
+          tabindex='0'
+          @click='toggleUnsavedConent'
+        >
+          {{
+            i18n_t('frontend.shiki_editor.unsaved_content.draft')
+          }}
+        </span>
+        <div>{{ unsavedContent }}</div>
+      </div>
     </div>
     <div
       v-if='editor'
@@ -208,6 +223,7 @@ export default {
     editorContent: null,
     editorPosition: null,
     unsavedContent: null,
+    isUnsavedContentExpanded: false,
     ...DEFAULT_DATA
   }),
   computed: {
@@ -620,6 +636,10 @@ export default {
     },
     i18n_t(key) {
       return window.I18n.t(key);
+    },
+    toggleUnsavedConent() {
+      this.isUnsavedContentExpanded = !this.isUnsavedContentExpanded;
+      this.$refs.unsavedContentSpoiler.blur();
     }
   }
 };

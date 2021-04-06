@@ -43,6 +43,7 @@ const TRANSLATIONS = {
     'В редакторе остался не сохранённый текст. Восстановить?',
   'frontend.shiki_editor.unsaved_content_mode.yes': 'Да',
   'frontend.shiki_editor.unsaved_content_mode.no': 'Нет',
+  'frontend.shiki_editor.unsaved_content_mode.draft': 'Текст',
   'frontend.shiki_editor.preview': 'Предпросмотр',
   'frontend.shiki_editor.source': 'Код',
   'frontend.lib.loading': 'Загрузка...',
