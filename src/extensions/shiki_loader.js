@@ -79,7 +79,7 @@ export class ShikiLoader extends Extension {
 
     this.options.shikiRequest.post('shiki_editor', idsParams)
       .then(result => (
-        result ? this.processSuccess(result.data) : this.processError()
+        result?.data ? this.processSuccess(result.data) : this.processError()
       ));
   }
 
