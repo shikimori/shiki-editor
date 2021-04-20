@@ -56,9 +56,8 @@ export default class LinkInline extends Mark {
             let attrs = JSON.parse(node.getAttribute('data-attrs'));
             const url = node.href;
 
-            if (!attrs) { // pasted common link
-              attrs = { url };
-            }
+            attrs ||= {}; // can be pasted common link
+            attrs.url ||= url; // for common links and also pasted from shikimori does not have url
 
             if (attrs.russian) { // pasted from html
               const shikiData = {
