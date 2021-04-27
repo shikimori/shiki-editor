@@ -177,11 +177,9 @@ export default class ShikiEditor {
   }
 
   createState(content = this.options.content) {
-    return EditorState.create({
-      schema: this.schema,
-      doc: this.markdownParser.parse(content),
-      plugins: []
-    });
+    const doc = this.markdownParser.parse(content);
+
+    return EditorState.create({ doc, plugins: [] });
   }
 
   createPlugins() {
