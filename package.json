@@ -35,7 +35,7 @@
     "imagesloaded": "^4.1.4",
     "mocha": "^7.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
-    "p-defer": "^3.0.0",
+    "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.1",
     "shiki-uploader": "^1.1.0",
     "shiki-utils": "^1.0.1",
@@ -66,7 +66,7 @@
   "peerDependencies": {
     "autosize": "^4.0.2",
     "imagesloaded": "^4.1.4",
-    "p-defer": "^3.0.0",
+    "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.0",
     "shiki-uploader": "^1.0.0",
     "shiki-utils": "^1.0.0",
