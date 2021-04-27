@@ -1,4 +1,4 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { isContainsCodeMark } from '../utils';
 
@@ -46,6 +46,7 @@ export default function pasteRule(regexp, type, getAttrs) {
   };
 
   return new Plugin({
+    key: new PluginKey('paste_rule'),
     props: {
       transformPasted: slice => (
         new Slice(handler(slice.content), slice.openStart, slice.openEnd)

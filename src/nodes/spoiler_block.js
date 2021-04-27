@@ -1,5 +1,5 @@
 import { bind } from 'shiki-decorators';
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
@@ -79,6 +79,7 @@ export default class SpoilerBlock extends Node {
   get plugins() {
     return [
       new Plugin({
+        key: new PluginKey('node_spoiler_block'),
         props: {
           transformPastedHTML(html) {
             if (html.includes('data-pm-slice')) { return html; }

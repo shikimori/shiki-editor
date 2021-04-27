@@ -1,4 +1,4 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { serializeAttrs, toDOMInnerQuoteable } from '../utils/quote_helpers';
@@ -68,6 +68,7 @@ export default class Quote extends Node {
   get plugins() {
     return [
       new Plugin({
+        key: new PluginKey('node_quote'),
         props: {
           transformPastedHTML(html) {
             if (html.includes('data-pm-slice')) { return html; }

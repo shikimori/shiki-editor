@@ -1,5 +1,5 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/pasteRule.js
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { isContainsCodeMark } from '../utils';
 
@@ -55,6 +55,7 @@ export default function linkBbcodePasteRule(type) {
   };
 
   return new Plugin({
+    key: new PluginKey('link_bbcode_paste_rule'),
     props: {
       transformPasted: slice => (
         new Slice(handler(slice.content), slice.openStart, slice.openEnd)

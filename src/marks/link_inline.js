@@ -1,5 +1,5 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/marks/LinkInline.js
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Mark } from '../base';
 import {
   // updateMark,
@@ -144,6 +144,7 @@ export default class LinkInline extends Mark {
 
     return [
       new Plugin({
+        key: new PluginKey('mark_link_inline'),
         props: {
           handleClick: (view, pos, event) => {
             const { schema } = view.state;

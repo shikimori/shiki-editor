@@ -1,4 +1,4 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
@@ -84,6 +84,7 @@ export default class Blockquote extends Node {
   get plugins() {
     return [
       new Plugin({
+        key: new PluginKey('node_blockquote'),
         props: {
           transformPastedHTML(html) {
             if (html.includes('data-pm-slice')) { return html; }

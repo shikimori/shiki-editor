@@ -1,5 +1,5 @@
 // based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/markPasteRule.js
-import { Plugin } from 'prosemirror-state';
+import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 
 export default function(regexp, type, getAttrs) {
@@ -51,6 +51,7 @@ export default function(regexp, type, getAttrs) {
   };
 
   return new Plugin({
+    key: new PluginKey('mark_paste_rule'),
     props: {
       transformPasted: slice => {
         const node = slice.content.content[0];
