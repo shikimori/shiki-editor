@@ -9,8 +9,7 @@
   "homepage": "https://github.com/shikimori/shiki-editor",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha-webpack --opts mocha-webpack.opts",
-    "release": "release-it"
+    "test": "mocha-webpack --opts mocha-webpack.opts"
   },
   "repository": {
     "type": "git",
@@ -37,7 +36,6 @@
     "mocha": "^7.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
     "p-defer": "^3.0.0",
-    "release-it": "^14.6.1",
     "shiki-decorators": "^1.0.1",
     "shiki-uploader": "^1.1.0",
     "shiki-utils": "^1.0.1",
