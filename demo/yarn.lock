@@ -918,6 +918,11 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@morr/withinviewport@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@morr/withinviewport/-/withinviewport-2.1.2.tgz#087bc41dee42c206dd64e4a0d52747af42aebf55"
+  integrity sha512-gxOazX3XUw5VhQUkrr5V5Y3UwV85UJ3KK8O5wr0uNoYfKfP4cmdcvgIZnGuBQ5cv75gXOBO1MB1OrhhFdC9TFA==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -7304,9 +7309,8 @@ prosemirror-transform@^1.0.0, prosemirror-transform@^1.1.0:
   dependencies:
     prosemirror-model "^1.0.0"
 
-prosemirror-utils@atlassian/prosemirror-utils#remove-prosemirror-tables:
+prosemirror-utils@atlassian/prosemirror-utils#remove-prosemirror-tables, "prosemirror-utils@github:atlassian/prosemirror-utils#remove-prosemirror-tables":
   version "0.9.6"
-  uid "9e2db389d408f376e0fc1f8bdffd95063e8d00af"
   resolved "https://codeload.github.com/atlassian/prosemirror-utils/tar.gz/9e2db389d408f376e0fc1f8bdffd95063e8d00af"
 
 prosemirror-view@1.15.6:
@@ -8117,10 +8121,36 @@ shiki-editor@^1.1.5:
     vue-keypress "^2.1.1"
     withinviewport "^2.1.2"
 
-shiki-uploader@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.1.0.tgz#7474da56b04b38c774fbc734421c8266d879ea84"
-  integrity sha512-1TXEPjJ/y2qI6cEkimf5zxYsIIOaI7o9QDMFPkFuRsToz7GwrxXpQ++N44eYH8Zk6q/ju3Fl42HMnn5QMl6/BA==
+shiki-editor@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/shiki-editor/-/shiki-editor-1.2.2.tgz#691dbd62d28ec18e1b82a9835859347d73881ba2"
+  integrity sha512-7+2BTLj+I9bHd6OtpET0TKN1jsleWo3ZB2TecXj68ZqDGI3FI9NaJESmX+/cMxgWBBXhFSv9HFlT7/wPGzZAVw==
+  dependencies:
+    "@babel/plugin-proposal-logical-assignment-operators" "^7.10.4"
+    "@morr/withinviewport" "^2.1.2"
+    "@popperjs/core" "^2.4.4"
+    prosemirror-commands "^1.1.4"
+    prosemirror-dropcursor "^1.3.2"
+    prosemirror-gapcursor "^1.1.5"
+    prosemirror-history "^1.1.3"
+    prosemirror-inputrules "^1.1.2"
+    prosemirror-keymap "^1.1.4"
+    prosemirror-model "^1.10.0"
+    prosemirror-schema-list "^1.1.2"
+    prosemirror-state "^1.3.3"
+    prosemirror-utils atlassian/prosemirror-utils#remove-prosemirror-tables
+    prosemirror-view "1.15.6"
+    scroll-lock "^2.1.4"
+    shiki-editor "^1.1.5"
+    text-field-edit "^3.1.0"
+    vue-custom-scrollbar morr/vue-custom-scrollbar#1.1.5
+    vue-dragscroll "^2.1.0"
+    vue-keypress "^2.1.1"
+
+shiki-uploader@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.1.1.tgz#26ac99f69cc145dcc28253e95ce837aa282a4d13"
+  integrity sha512-1iMeGml0l6dmdj2zg/pBzdwwiseBcBRYh0osRqkWzvOJ2A8TSjvFheWvocCyN9aX01FT7WhIjO8DDSYZNcJ7hQ==
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
@@ -9188,7 +9218,7 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-custom-scrollbar@morr/vue-custom-scrollbar#1.1.5:
+"vue-custom-scrollbar@github:morr/vue-custom-scrollbar#1.1.5", vue-custom-scrollbar@morr/vue-custom-scrollbar#1.1.5:
   version "1.1.5"
   uid d50510e6d63c59b3f29c94e106b5b6972e3081d0
   resolved "https://codeload.github.com/morr/vue-custom-scrollbar/tar.gz/d50510e6d63c59b3f29c94e106b5b6972e3081d0"

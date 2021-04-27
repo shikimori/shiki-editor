@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
-    "@morr/withinviewport": "^2.1.2",
+    "@morr/withinviewport": "2.1.3-0",
     "@popperjs/core": "^2.4.4",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-dropcursor": "^1.3.2",
@@ -58,7 +58,6 @@
     "prosemirror-utils": "atlassian/prosemirror-utils#remove-prosemirror-tables",
     "prosemirror-view": "1.15.6",
     "scroll-lock": "^2.1.4",
-    "shiki-editor": "^1.1.5",
     "text-field-edit": "^3.1.0",
     "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "vue-dragscroll": "^2.1.0",
