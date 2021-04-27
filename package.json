@@ -64,7 +64,7 @@
     "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
     "vue-dragscroll": "^2.1.0",
     "vue-keypress": "^2.1.1",
-    "withinviewport": "^2.1.2"
+    "@morr/withinviewport": "^2.1.2"
   },
   "peerDependencies": {
     "autosize": "^4.0.2",

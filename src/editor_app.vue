@@ -143,7 +143,7 @@
 
 <script>
 import autosize from 'autosize';
-import withinviewport from 'withinviewport';
+import withinviewport from '@morr/withinviewport';
 import { dragscroll } from 'vue-dragscroll';
 import delay from 'delay';
 import { set } from 'text-field-edit';
