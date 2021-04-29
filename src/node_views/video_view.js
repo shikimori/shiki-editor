@@ -1,4 +1,4 @@
-import imagesloaded from 'imagesloaded';
+import imagePromise from 'image-promise';
 import { bind } from 'shiki-decorators';
 
 import DOMView from './dom_view';
@@ -61,7 +61,7 @@ export default class VideoView extends DOMView {
         this.shikiLoader.origin + '/assets/globals/missing_video.png' :
         attrs.poster;
 
-      imagesloaded(img, this.checkImage);
+      imagePromise(img).then(this.checkImage);
 
       const marker = document.createElement('span');
       marker.classList.add('marker');
