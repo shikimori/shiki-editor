@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import imagesloaded from 'imagesloaded';
+import imagePromise from 'image-promise';
 import { NodeSelection } from 'prosemirror-state';
 
 import { tagSequence } from '../nodes/image';
@@ -78,14 +78,13 @@ export default {
       return tagSequence(this.node);
     }
   },
-  mounted() {
-    imagesloaded(this.$refs.image, () => {
-      if (!this.$refs.image) { return; } // becase component can be already unmounted
+  async mounted() {
+    await imagePromise(this.$refs.image);
+    if (!this.$refs.image) { return; } // becase component can be already unmounted
 
-      this.isLoaded = true;
-      this.naturalWidth = this.$refs.image.naturalWidth;
-      this.imageWidth = this.$refs.image.width;
-    });
+    this.isLoaded = true;
+    this.naturalWidth = this.$refs.image.naturalWidth;
+    this.imageWidth = this.$refs.image.width;
   },
   methods: {
     remove(e) {
