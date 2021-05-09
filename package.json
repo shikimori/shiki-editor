@@ -37,7 +37,7 @@
     "mocha-webpack": "^2.0.0-beta.0",
     "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.1",
-    "shiki-uploader": "^1.1.0",
+    "shiki-uploader": "^1.1.1",
     "shiki-utils": "^1.0.1",
     "uevent": "^2.0.0",
     "webpack": "^4.44.1"

@@ -7,9 +7,14 @@ import {
   MENTION_TYPES
 } from '../../../src/markdown/tokenizer/processors/shiki_inline';
 
-function text(content) {
+function text(content, attributes) {
+  const openTag = { type: 'paragraph', direction: 'open' };
+  if (attributes) {
+    openTag.attrs = attributes;
+  }
+
   return [
-    { type: 'paragraph', direction: 'open' },
+    openTag,
     {
       type: 'inline',
       children: content ?
@@ -66,7 +71,7 @@ describe('MarkdownTokenizer', () => {
 
     it('[br]', () => {
       expect(MarkdownTokenizer.parse('qwe[br]zxc')).to.eql([
-        ...text('qwe'),
+        ...text('qwe', [['isHardBreak', true]]),
         ...text('zxc')
       ]);
     });

@@ -471,7 +471,7 @@ export default class MarkdownTokenizer {
 
       case '[br]':
         this.next(bbcode.length);
-        this.finalizeParagraph();
+        this.finalizeParagraph(true);
         return true;
     }
 
@@ -646,12 +646,15 @@ export default class MarkdownTokenizer {
     }
   }
 
-  finalizeParagraph() {
+  finalizeParagraph(isHardBreak) {
     if (this.inlineTokens.length || !this.nestedSequence || (
       this.nestedSequence && this.isSequenceContinued(1)
     )) {
       if (!this.paragraphToken) {
         this.paragraphToken = this.tagOpen('paragraph');
+      }
+      if (isHardBreak) {
+        this.paragraphToken.attrSet('isHardBreak', true);
       }
 
       this.push(this.paragraphToken);

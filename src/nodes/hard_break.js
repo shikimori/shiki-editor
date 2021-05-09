@@ -38,6 +38,6 @@ export default class HardBreak extends Node {
   }
 
   markdownSerialize(state, _node) {
-    state.write('\n');
+    state.write('[br]');
   }
 }
