@@ -18,6 +18,7 @@ export { default as removeMark } from './remove_mark';
 export { default as removeUploadPlaceholder } from './remove_upload_placeholder';
 export { default as replaceText } from './replace_text';
 export { default as replaceUploadPlaceholder } from './replace_upload_placeholder';
+export { default as splitBlockWithParagraphFix } from './split_block_with_paragraph_fix';
 export { default as toggleBlockType } from './toggle_block_type';
 export { default as toggleList } from './toggle_list';
 export { default as toggleMarkWrap } from './toggle_mark_wrap';

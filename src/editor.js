@@ -30,6 +30,7 @@ import {
   smartCommandSpoilerPlugin
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
+import { enterCommand } from './key_commands';
 import { buildExtensions } from './extensions';
 
 export default class ShikiEditor {
@@ -191,6 +192,7 @@ export default class ShikiEditor {
       ...this.pasteRules,
       ...this.keymaps,
       keymap({
+        'Enter': enterCommand,
         'Mod-z': undo,
         'Shift-Mod-z': redo,
         'Mod-y': redo,

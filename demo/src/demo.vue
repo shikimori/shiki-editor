@@ -64,7 +64,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 
 let TEXT_2 = `
 test
-[b]zxc[/b]
+[b]zxc[/b][br]
 cvn
 `.trim();
 

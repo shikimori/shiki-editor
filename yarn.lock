@@ -4722,10 +4722,10 @@ shiki-decorators@^1.0.1:
     bind-decorator "1.0.11"
     memoize-decorator "^1.0.2"
 
-shiki-uploader@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.1.0.tgz#7474da56b04b38c774fbc734421c8266d879ea84"
-  integrity sha512-1TXEPjJ/y2qI6cEkimf5zxYsIIOaI7o9QDMFPkFuRsToz7GwrxXpQ++N44eYH8Zk6q/ju3Fl42HMnn5QMl6/BA==
+shiki-uploader@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/shiki-uploader/-/shiki-uploader-1.1.1.tgz#26ac99f69cc145dcc28253e95ce837aa282a4d13"
+  integrity sha512-1iMeGml0l6dmdj2zg/pBzdwwiseBcBRYh0osRqkWzvOJ2A8TSjvFheWvocCyN9aX01FT7WhIjO8DDSYZNcJ7hQ==
   dependencies:
     "@uppy/core" "^1.11.0"
     "@uppy/xhr-upload" "^1.6.0"
