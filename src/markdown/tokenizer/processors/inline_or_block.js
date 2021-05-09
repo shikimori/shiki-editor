@@ -3,7 +3,7 @@ import processMarkOpen from './mark_open';
 
 import processBlock from './block';
 
-export const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center)/;
+export const PSEUDO_BLOCK_TEST_REGEXP = /\[(?:quote|div|spoiler|right|center|img|image)/;
 
 export function processInlineOrBlock(
   state,
