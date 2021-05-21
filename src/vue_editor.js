@@ -1,3 +1,4 @@
+// https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/Editor.ts
 import Editor from './editor';
 
 import {
@@ -47,5 +48,15 @@ export default class VueEditor extends Editor {
     return this.reactiveState ?
       this.reactiveState.value :
       this.view.state;
+  }
+
+  registerPlugin(plugin, handlePlugins) {
+    super.registerPlugin(plugin, handlePlugins);
+    this.reactiveState.value = this.view.state;
+  }
+
+  unregisterPlugin(nameOrPluginKey) {
+    super.unregisterPlugin(nameOrPluginKey);
+    this.reactiveState.value = this.view.state;
   }
 }

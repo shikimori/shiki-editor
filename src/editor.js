@@ -47,18 +47,7 @@ export default class Editor {
 
   constructor(options) {
     uEvent.mixin(this);
-    this.init(options);
-  }
 
-  get state() {
-    return this.view.state;
-  }
-
-  get selection() {
-    return this.state.selection;
-  }
-
-  init(options = {}) {
     this.options = {
       ...this.options,
       ...options
@@ -92,6 +81,14 @@ export default class Editor {
 
     // give extension manager access to our view
     this.extensionManager.view = this.view;
+  }
+
+  get state() {
+    return this.view.state;
+  }
+
+  get selection() {
+    return this.state.selection;
   }
 
   createExtensionManager() {
@@ -282,28 +279,28 @@ export default class Editor {
     this.setActiveNodesAndMarks();
 
     // provided by uEvent
-    // this.emit('transaction', { editor: this, transaction });
+    this.trigger('transaction', { editor: this, transaction });
 
     // if (selectionHasChanged) {
-    //   this.emit('selectionUpdate', { editor: this });
+    //   this.trigger('selectionUpdate', { editor: this });
     // }
-    //
+
     // const focus = transaction.getMeta('focus');
     // const blur = transaction.getMeta('blur');
     //
     // if (focus) {
-    //   this.emit('focus', { editor: this, event: focus.event });
+    //   this.trigger('focus', { editor: this, event: focus.event });
     // }
     //
     // if (blur) {
-    //   this.emit('blur', { editor: this, event: blur.event });
+    //   this.trigger('blur', { editor: this, event: blur.event });
     // }
     //
     // if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
     //   return;
     // }
     //
-    // this.emit('update', { editor: this, transaction });
+    // this.trigger('update', { editor: this, transaction });
   }
 
   resolveSelection(position = null) {

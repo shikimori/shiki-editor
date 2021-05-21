@@ -1,4 +1,4 @@
-// https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/EditorContent.ts
+// based on https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/EditorContent.ts
 import {
   h,
   ref,
@@ -106,7 +106,7 @@ export const EditorContent = defineComponent({
 
 // import { h } from 'vue';
 //
-// // https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Components/EditorContent.js
+// // https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Components/EditorContent.js
 // export default {
 //   name: 'EditorContent',
 //   props: {
