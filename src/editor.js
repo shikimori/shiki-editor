@@ -66,7 +66,7 @@ export default class Editor {
 
     this.focused = false;
 
-    this.extensionsManager = this.createExtensionManager();
+    this.extensionManager = this.createExtensionManager();
 
     this.nodes = this.createNodes();
     this.marks = this.createMarks();
@@ -91,7 +91,7 @@ export default class Editor {
     }
 
     // give extension manager access to our view
-    this.extensionsManager.view = this.view;
+    this.extensionManager.view = this.view;
   }
 
   createExtensionManager() {
@@ -103,11 +103,11 @@ export default class Editor {
   }
 
   createNodes() {
-    return this.extensionsManager.nodes;
+    return this.extensionManager.nodes;
   }
 
   createMarks() {
-    return this.extensionsManager.marks;
+    return this.extensionManager.marks;
   }
 
   createSchema() {
@@ -130,30 +130,30 @@ export default class Editor {
     return new MarkdownParser(
       this.schema,
       MarkdownTokenizer,
-      this.extensionsManager.markdownParserTokens()
+      this.extensionManager.markdownParserTokens()
     );
   }
 
   createMarkdownSerializer() {
-    const { nodes, marks } = this.extensionsManager.markdownSerializerTokens();
+    const { nodes, marks } = this.extensionManager.markdownSerializerTokens();
     return new MarkdownSerializer(nodes, marks);
   }
 
   createKeymaps() {
-    return this.extensionsManager.keymaps({
+    return this.extensionManager.keymaps({
       schema: this.schema
     });
   }
 
   createInputRules() {
-    return this.extensionsManager.inputRules({
+    return this.extensionManager.inputRules({
       schema: this.schema,
       excludedExtensions: this.options.disableInputRules
     });
   }
 
   createPasteRules() {
-    return this.extensionsManager.pasteRules({
+    return this.extensionManager.pasteRules({
       schema: this.schema,
       excludedExtensions: this.options.disablePasteRules
     });
@@ -185,7 +185,7 @@ export default class Editor {
 
   createPlugins() {
     return [
-      ...this.extensionsManager.plugins,
+      ...this.extensionManager.plugins,
       ...this.options.plugins,
       history(),
       inputRules({ rules: this.inputRules }),
@@ -218,14 +218,14 @@ export default class Editor {
   }
 
   createCommands() {
-    return this.extensionsManager.commands({
+    return this.extensionManager.commands({
       schema: this.schema,
       view: this.view
     });
   }
 
   createActiveChecks() {
-    return this.extensionsManager.activeChecks({
+    return this.extensionManager.activeChecks({
       schema: this.schema,
       view: this.view
     });
@@ -390,6 +390,6 @@ export default class Editor {
 
   destroy() {
     this.view?.destroy();
-    this.extensionsManager.destroy();
+    this.extensionManager.destroy();
   }
 }

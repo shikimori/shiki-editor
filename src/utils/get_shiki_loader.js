@@ -1,6 +1,6 @@
 export default function(editor) {
   return editor
-    .extensionsManager
+    .extensionManager
     .extensions
     .find(v => v.name === 'shiki_loader');
 }

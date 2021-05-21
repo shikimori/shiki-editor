@@ -4,13 +4,16 @@ import VueView from '../node_views/vue_view';
 
 export default class ExtensionManager {
   view = null
+  editor = null
 
   constructor(extensions = [], editor) {
     extensions.forEach(extension => {
       extension.bindEditor(editor);
       extension.init();
     });
+
     this.extensions = extensions;
+    this.editor = editor;
   }
 
   get nodes() {
@@ -24,6 +27,7 @@ export default class ExtensionManager {
 
   get options() {
     const { view } = this;
+
     return this.extensions
       .reduce((nodes, extension) => ({
         ...nodes,
