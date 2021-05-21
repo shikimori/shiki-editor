@@ -70,7 +70,8 @@
     "shiki-decorators": "^1.0.0",
     "shiki-uploader": "^1.0.0",
     "shiki-utils": "^1.0.0",
-    "uevent": "^2.0.0"
+    "uevent": "^2.0.0",
+    "vue": "^3.0.11"
   },
   "postcss": {
     "plugins": {
