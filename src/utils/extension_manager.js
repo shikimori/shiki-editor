@@ -3,7 +3,6 @@ import { keymap } from 'prosemirror-keymap';
 import VueView from '../node_views/vue_view';
 
 export default class ExtensionManager {
-  view = null
   editor = null
 
   constructor(extensions = [], editor) {
@@ -22,28 +21,6 @@ export default class ExtensionManager {
       .reduce((nodes, { name, schema }) => ({
         ...nodes,
         [name]: schema
-      }), {});
-  }
-
-  get options() {
-    const { view } = this;
-
-    return this.extensions
-      .reduce((nodes, extension) => ({
-        ...nodes,
-        [extension.name]: new Proxy(extension.options, {
-          set(obj, prop, value) {
-            const changed = (obj[prop] !== value);
-
-            Object.assign(obj, { [prop]: value });
-
-            if (changed) {
-              view.updateState(view.state);
-            }
-
-            return true;
-          }
-        })
       }), {});
   }
 
