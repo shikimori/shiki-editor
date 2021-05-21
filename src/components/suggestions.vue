@@ -92,7 +92,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup();
     this?.editor?.unregisterPlugin(this.plugin.key);
   },

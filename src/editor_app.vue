@@ -1,11 +1,15 @@
 <template>
+  <!--div>
+    <EditorContent :editor='editor' />
+  </div-->
   <div>
     <div
       ref='menubar'
       class='menubar'
       :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
     >
-      <div v-if='editor' v-dragscroll class='icons'>
+      <!--div v-if='editor' v-dragscroll class='icons'-->
+      <div v-if='editor' class='icons'>
         <div
           v-for='([group, items], index) in menuItems'
           :key='index'
@@ -57,9 +61,9 @@
         </div>
       </div>
     </div>
-    <!--
+
     {{ editor.selection.$from.pos }} - {{ editor.selection.$to.pos }}
-    -->
+
     <div
       v-if='unsavedContent'
       class='unsaved-content'
@@ -124,7 +128,7 @@
       />
     </div>
 
-    <Smileys
+    <!--Smileys
       v-show='isSmiley && !isPreview'
       ref='smileys'
       :is-enabled='isSmiley'
@@ -137,22 +141,22 @@
       :is-available='isEditingEnabled'
       :editor='editor'
       :shiki-request='shikiRequest'
-    />
+    /-->
   </div>
 </template>
 
 <script>
 import autosize from 'autosize';
 import withinviewport from '@morr/withinviewport';
-import { dragscroll } from 'vue-dragscroll';
+// import { dragscroll } from 'vue-dragscroll';
 import delay from 'delay';
 import { set } from 'text-field-edit';
 
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
-import ShikiEditor from './editor';
-import EditorContent from './components/editor_content';
+import VueEditor from './vue_editor';
+import { EditorContent } from './components/editor_content';
 import sourceCommand from './components/utils/source_command';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
@@ -162,8 +166,8 @@ import { preventHugePaste } from './plugins';
 import { flash } from 'shiki-utils';
 
 import Icon from './components/icon';
-import Smileys from './components/smileys';
-import Suggestions from './components/suggestions';
+// import Smileys from './components/smileys';
+// import Suggestions from './components/suggestions';
 
 const MENU_ITEMS = {
   inline: [
@@ -196,17 +200,17 @@ const DEFAULT_DATA = {
 
 export default {
   name: 'EditorApp',
-  directives: {
-    dragscroll
-  },
+  // directives: {
+  //   dragscroll
+  // },
   components: {
     EditorContent,
-    Icon,
-    Smileys,
-    Suggestions
+    Icon
+    // Smileys,
+    // Suggestions
   },
+  inheritAttrs: false,
   props: {
-    vue: { type: Function, required: true },
     shikiRequest: { type: Object, required: true },
     content: { type: String, required: true },
     shikiUploader: { type: Object, required: true },
@@ -286,7 +290,8 @@ export default {
       return memo;
     },
     isContentManipulationsPending() {
-      return this.fileUploaderExtension.isUploading;
+      return false;
+      // return this.fileUploaderExtension.isUploading;
     },
     isPreviewEnabled() {
       return !this.isContentManipulationsPending;
@@ -335,7 +340,7 @@ export default {
     window.editorApp = this;
     this.createEditor();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.editor.destroy();
   },
   methods: {
@@ -487,12 +492,13 @@ export default {
     async createEditor() {
       this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
 
-      const extensions = [this.fileUploaderExtension];
+      const extensions = [];
+      /* const extensions = [this.fileUploaderExtension]; */
       if (this.shikiSearchExtension) {
         extensions.push(this.shikiSearchExtension);
       }
 
-      this.editor = new ShikiEditor({
+      this.editor = new VueEditor({
         content: this.isHugeContent ? '' : this.content,
         shikiRequest: this.shikiRequest,
         localizationField: this.localizationField,
@@ -501,7 +507,7 @@ export default {
           preventHugePaste(MAXIMUM_CONTENT_SIZE),
           keymap({ 'Mod-Enter': this.submit })
         ]
-      }, this, this.vue);
+      });
 
       this.editorContent = this.content;
 
@@ -511,10 +517,10 @@ export default {
 
       await this.$nextTick();
 
-      this.fileUploaderExtension.attachShikiUploader({
-        node: this.$refs.editor_container,
-        progressContainerNode: this.$refs.menubar
-      });
+      /* this.fileUploaderExtension.attachShikiUploader({ */
+      /*   node: this.$refs.editor_container,             */
+      /*   progressContainerNode: this.$refs.menubar      */
+      /* });                                              */
     },
     async togglePreview() {
       this.isPreview = !this.isPreview;

@@ -1,5 +1,6 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Utils/ExtensionManager.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Utils/ExtensionManager.js
 import { keymap } from 'prosemirror-keymap';
+import VueView from '../node_views/vue_view';
 
 export default class ExtensionManager {
   view = null
@@ -220,6 +221,49 @@ export default class ExtensionManager {
         return {
           ...allCommands,
           ...commands
+        };
+      }, {});
+  }
+
+  nodeViews() {
+    const isVue = !!this.editor.contentComponent;
+
+    return this.extensions
+      .filter(extension => ['node', 'mark'].includes(extension.type))
+      .filter(extension => (
+        extension.view && (
+          isVue || extension.view.constructor === Function
+        )
+      ))
+      .reduce((nodeViews, extension) => {
+        const { editor } = this;
+
+        const nodeView = (node, view, getPos, decorations) => {
+          if (extension.view.constructor === Function) {
+            return extension.view({
+              editor,
+              extension,
+              node,
+              view,
+              getPos,
+              decorations
+            });
+          }
+          const component = extension.view;
+
+          return new VueView(component, {
+            editor,
+            extension,
+            node,
+            view,
+            getPos,
+            decorations
+          });
+        };
+
+        return {
+          ...nodeViews,
+          [extension.name]: nodeView
         };
       }, {});
   }

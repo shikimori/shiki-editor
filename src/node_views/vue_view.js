@@ -1,19 +1,20 @@
+import { defineComponent } from 'vue';
 import { getMarkRange } from '../utils';
 
 export default class VueView {
   constructor(component, {
     editor,
     extension,
-    parent,
+    // parent,
     node,
     view,
-    decorations,
-    getPos
-  }, Vue) {
+    getPos,
+    decorations
+  }) {
     this.component = component;
     this.editor = editor;
     this.extension = extension;
-    this.parent = parent;
+    // this.parent = parent;
     this.node = node;
     this.view = view;
     this.decorations = decorations;
@@ -22,14 +23,12 @@ export default class VueView {
     this.getPos = this.isMark ? this.getMarkPos : getPos;
     this.captureEvents = true;
 
-    this.Vue = Vue;
-
     this.dom = this.createDOM();
     this.contentDOM = this.vm.$refs.content;
   }
 
   createDOM() {
-    const Component = this.Vue.extend(this.component);
+    const Component = defineComponent(this.component);
     const props = {
       editor: this.editor,
       node: this.node,
@@ -50,7 +49,8 @@ export default class VueView {
     }
 
     this.vm = new Component({
-      parent: this.parent,
+      parent: this.editor.contentComponent,
+      // parent: this.editor.contentComponent.el,
       propsData: props
     }).$mount();
 

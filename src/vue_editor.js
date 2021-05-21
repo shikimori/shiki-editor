@@ -1,0 +1,51 @@
+import Editor from './editor';
+
+import {
+  markRaw,
+  customRef,
+  reactive
+} from 'vue';
+
+function useDebouncedRef(value) {
+  return customRef((track, trigger) => ({
+    get() {
+      track();
+      return value;
+    },
+    set(newValue) {
+      // update state
+      value = newValue; // eslint-disable-line no-param-reassign
+
+      // update view as soon as possible
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          trigger();
+        });
+      });
+    }
+  }));
+}
+
+export default class VueEditor extends Editor {
+  reactiveState = null
+  contentComponent = null
+  vueRenderers = reactive(new Map())
+
+  constructor(options) {
+    super(options);
+
+    this.reactiveState = useDebouncedRef(this.view.state);
+
+    this.on('transaction', () => {
+      this.reactiveState.value = this.view.state;
+    });
+
+    markRaw(this);
+  }
+
+  get state() {
+    return this.reactiveState ?
+      this.reactiveState.value :
+      this.view.state;
+  }
+}

@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/extensions/TrailingNode.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-extensions/src/extensions/TrailingNode.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
 import { nodeEqualsType } from '../utils';

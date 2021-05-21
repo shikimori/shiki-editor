@@ -100,7 +100,7 @@ export default {
       this.show();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup();
   },
   methods: {
