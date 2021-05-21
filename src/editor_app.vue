@@ -1,7 +1,4 @@
 <template>
-  <!--div>
-    <EditorContent :editor='editor' />
-  </div-->
   <div>
     <div
       ref='menubar'
@@ -62,7 +59,9 @@
       </div>
     </div>
 
+    <!--
     {{ editor.selection.$from.pos }} - {{ editor.selection.$to.pos }}
+    -->
 
     <div
       v-if='unsavedContent'
@@ -146,6 +145,7 @@
 </template>
 
 <script>
+import { watch } from 'vue';
 import autosize from 'autosize';
 import withinviewport from '@morr/withinviewport';
 // import { dragscroll } from 'vue-dragscroll';
@@ -227,6 +227,7 @@ export default {
     editorContent: null,
     editorPosition: null,
     unsavedContent: null,
+    nodesState: {},
     isUnsavedContentExpanded: false,
     ...DEFAULT_DATA
   }),
@@ -264,30 +265,6 @@ export default {
         type: 'source',
         title: window.I18n.t('frontend.shiki_editor.source')
       };
-    },
-    nodesState() {
-      const memo = {};
-
-      Object.keys(MENU_ITEMS).forEach(group => (
-        MENU_ITEMS[group].forEach(item => (
-          memo[item] = this.editor.activeChecks[item] ?
-            this.editor.activeChecks[item]() :
-            false
-        ))
-      ));
-
-      this.isBoldBlock = this.editor.activeChecks.bold_block(); // eslint-disable-line
-      memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
-
-      this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
-      memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
-
-      this.isLinkBlock = this.editor.activeChecks.link_block(); // eslint-disable-line
-      memo.link = this.isLinkBlock || this.editor.activeChecks.link_inline();
-
-      memo.smiley = this.isSmiley;
-
-      return memo;
     },
     isContentManipulationsPending() {
       return false;
@@ -336,7 +313,7 @@ export default {
       return getComputedStyle(topMenuNode).position === 'sticky';
     }
   },
-  async created() {
+  created() {
     window.editorApp = this;
     this.createEditor();
   },
@@ -509,6 +486,7 @@ export default {
         ]
       });
 
+      watch(this.editor.reactiveState, this.updateNodesState);
       this.editorContent = this.content;
 
       if (this.isHugeContent) {
@@ -521,6 +499,30 @@ export default {
       /*   node: this.$refs.editor_container,             */
       /*   progressContainerNode: this.$refs.menubar      */
       /* });                                              */
+    },
+    updateNodesState() {
+      const memo = {};
+
+      Object.keys(MENU_ITEMS).forEach(group => (
+        MENU_ITEMS[group].forEach(item => (
+          memo[item] = this.editor.activeChecks[item] ?
+            this.editor.activeChecks[item]() :
+            false
+        ))
+      ));
+
+      this.isBoldBlock = this.editor.activeChecks.bold_block(); // eslint-disable-line
+      memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
+
+      this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
+      memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
+
+      this.isLinkBlock = this.editor.activeChecks.link_block(); // eslint-disable-line
+      memo.link = this.isLinkBlock || this.editor.activeChecks.link_inline();
+
+      memo.smiley = this.isSmiley;
+
+      this.nodesState = memo;
     },
     async togglePreview() {
       this.isPreview = !this.isPreview;

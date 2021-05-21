@@ -37,9 +37,8 @@ export default class VueEditor extends Editor {
 
     this.reactiveState = useDebouncedRef(this.view.state);
 
-    this.on('transaction', () => {
-      this.reactiveState.value = this.view.state;
-    });
+    this.on('transaction', this.syncReactiveState);
+    this.on('selectionUpdate', this.syncReactiveState);
 
     markRaw(this);
   }
@@ -48,6 +47,10 @@ export default class VueEditor extends Editor {
     return this.reactiveState ?
       this.reactiveState.value :
       this.view.state;
+  }
+
+  syncReactiveState() {
+    this.reactiveState.value = this.view.state;
   }
 
   registerPlugin(plugin, handlePlugins) {

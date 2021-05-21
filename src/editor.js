@@ -251,7 +251,7 @@ export default class Editor {
   }
 
   getMarkAttrs(type = null) {
-    return this.activeMarkAttrs[type];
+    return this.ctiveMarkAttrs[type];
   }
 
   getNodeAttrs(type = null) {
@@ -269,8 +269,14 @@ export default class Editor {
 
   @bind
   dispatchTransaction(transaction) {
-    const { state } = this.state.applyTransaction(transaction);
+    const state = this.state.apply(transaction);
+    const selectionHasChanged = !this.state.selection.eq(state.selection);
+
     this.view.updateState(state);
+
+    if (selectionHasChanged) {
+      this.trigger('selectionUpdate', { editor: this });
+    }
 
     if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
       return;
@@ -280,10 +286,6 @@ export default class Editor {
 
     // provided by uEvent
     this.trigger('transaction', { editor: this, transaction });
-
-    // if (selectionHasChanged) {
-    //   this.trigger('selectionUpdate', { editor: this });
-    // }
 
     // const focus = transaction.getMeta('focus');
     // const blur = transaction.getMeta('blur');
