@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Utils/Mark.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Utils/Mark.js
 import { toggleMarkWrap } from '../commands';
 import { markIsActive } from '../checks';
 import Extension from './extension';

@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/toggleList.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/toggleList.js
 import { wrapInList, liftListItem } from 'prosemirror-schema-list';
 import { findParentNode } from 'prosemirror-utils/src/selection';
 

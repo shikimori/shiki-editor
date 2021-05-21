@@ -2,7 +2,7 @@ import { canSplit } from 'prosemirror-transform';
 import { Fragment } from 'prosemirror-model';
 import { TextSelection, NodeSelection, AllSelection } from 'prosemirror-state';
 
-// based on splitBlock from prosemirror-transform, but instead of original
+// splitBlock from prosemirror-transform, but instead of original
 // splitBlock this command removes `isHardBreak` attribute from original `paragraph` node
 export default function splitBlock(state, dispatch) {
   let { $from, $to } = state.selection;

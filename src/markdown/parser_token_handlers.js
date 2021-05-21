@@ -1,5 +1,5 @@
 /* eslint-disable */
-// based on https://github.com/ProseMirror/prosemirror-markdown/blob/master/src/from_markdown.js
+// https://github.com/ProseMirror/prosemirror-markdown/blob/v1/src/from_markdown.js
 
 export default function tokenHandlers(schema, tokens) {
   const handlers = Object.create(null);

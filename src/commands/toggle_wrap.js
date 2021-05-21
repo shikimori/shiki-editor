@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/toggleWrap.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/toggleWrap.js
 import { wrapIn } from 'prosemirror-commands';
 import { nodeIsActive } from '../checks';
 import { liftTarget } from 'prosemirror-transform';

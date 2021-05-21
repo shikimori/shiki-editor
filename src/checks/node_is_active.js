@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-utils/src/utils/nodeIsActive.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-utils/src/utils/nodeIsActive.js
 import { findParentSelectionNode } from '../utils';
 
 export default function(type, state, attrs = {}) {

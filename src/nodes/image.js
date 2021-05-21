@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ImageView } from '../node_views';
