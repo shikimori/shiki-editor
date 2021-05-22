@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-@import ../stylesheets/mixins/icon
+@import ../../stylesheets/mixins/icon
 
 .icon
   +icon

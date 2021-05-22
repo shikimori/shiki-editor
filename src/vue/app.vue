@@ -165,9 +165,9 @@ import { preventHugePaste } from '../plugins';
 
 import { flash } from 'shiki-utils';
 
-import Icon from './icon';
-import Smileys from './smileys';
-// import Suggestions from './vue/suggestions';
+import Icon from './components/icon';
+import Smileys from './components/smileys';
+// import Suggestions from './components/suggestions';
 
 const MENU_ITEMS = {
   inline: [

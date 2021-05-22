@@ -173,8 +173,8 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-@import ../stylesheets/mixins/responsive.sass
-@import ../stylesheets/mixins/icon
+@import ../../stylesheets/mixins/responsive.sass
+@import ../../stylesheets/mixins/icon
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
