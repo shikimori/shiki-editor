@@ -5377,10 +5377,10 @@ vue-eslint-parser@^7.0.0:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
-vue3-keypress@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/vue3-keypress/-/vue3-keypress-4.0.0.tgz#3bc845c6c5e2bd2add46c5561f3e63f0d6541f6d"
-  integrity sha512-yxaGA2PaeAl2Ow6QvP2poXS9XHyN+/+611hscBsIWVXqUjI/9iIDNUr7ik9mVxUBtZZdlVzvRomxAJfMSiB0Zg==
+vue3-keypress@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/vue3-keypress/-/vue3-keypress-4.0.1.tgz#161959779dda7a0bb86902fac594c75117a0dca4"
+  integrity sha512-oKxLpVsQq1iosuwi38fbH+K2NL2HqbFT8U7yE1fzxcUB0Mup1vS7OcnNMqkgv+FHFJTNvlYAOwLctVK/ahz6Ng==
 
 vue3-perfect-scrollbar@morr/vue3-perfect-scrollbar#master:
   version "1.5.5"

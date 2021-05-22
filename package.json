@@ -60,7 +60,7 @@
     "scroll-lock": "^2.1.4",
     "text-field-edit": "^3.1.0",
     "vue-dragscroll": "^2.1.0",
-    "vue3-keypress": "^4.0.0",
+    "vue3-keypress": "^4.0.1",
     "vue3-perfect-scrollbar": "morr/vue3-perfect-scrollbar#master"
   },
   "peerDependencies": {

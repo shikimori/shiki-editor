@@ -40,10 +40,9 @@
 
 <script>
 import { isMobile } from 'shiki-utils';
-import { defineAsyncComponent, getCurrentInstance, watch, toRefs } from 'vue';
+import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
 import { useKeypress } from 'vue3-keypress';
 
-// import { createPopper } from '@popperjs/core';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
@@ -54,9 +53,6 @@ import arrow from '@popperjs/core/lib/modifiers/arrow';
 export default {
   name: 'Smileys',
   components: {
-    // Keypress: () => import(
-    //   /* webpackChunkName: "smileys-dependencies" */ 'vue3-keypress'
-    // ),
     PerfectScrollbar: defineAsyncComponent(() => import(
       /* webpackChunkName: "smileys-dependencies" */ 'vue3-perfect-scrollbar'
     ))
@@ -72,24 +68,15 @@ export default {
     smileysHTML: null
   }),
   setup(props) {
-    const { isEnabled } = toRefs(props)
-
-    // const isEnabled = ref(props.isEnabled);
-    // console.log('isEnabled', props.isEnabled);
-    // const internalInstance = getCurrentInstance();
-    // <Keypress
-    //   v-if='isEnabled'
-    //   key-event='keyup'
-    //   :key-code='27'
-    //   @success='close'
-    // />
+    const { isEnabled } = toRefs(props);
+    const internalInstance = getCurrentInstance();
 
     useKeypress({
       keyEvent: 'keyup',
       keyBinds: [{
         keyCode: 27,
         success: () => {
-          debugger
+          internalInstance.ctx.close();
         }
       }],
       isActive: isEnabled
