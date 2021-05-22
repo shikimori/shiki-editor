@@ -89,6 +89,10 @@ export default class Editor {
     return this.state.selection;
   }
 
+  get isDestroyed() {
+    return !this.view?.docView;
+  }
+
   createExtensionManager() {
     return new ExtensionManager([
       ...buildNodesAndMarks(this),

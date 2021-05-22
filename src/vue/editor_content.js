@@ -103,32 +103,3 @@ export const EditorContent = defineComponent({
     );
   }
 });
-
-// import { h } from 'vue';
-//
-// // https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Components/EditorContent.js
-// export default {
-//   name: 'EditorContent',
-//   props: {
-//     editor: { type: Object, required: true }
-//   },
-//   watch: {
-//     editor: {
-//       immediate: true,
-//       handler(editor) {
-//         if (editor && editor.element) {
-//           this.$nextTick(() => {
-//             this.$el.appendChild(editor.element.firstChild);
-//             editor.setParentComponent(this);
-//           });
-//         }
-//       }
-//     }
-//   },
-//   render() {
-//     return h('div');
-//   },
-//   beforeUnmount() {
-//     this.editor.element = this.$el;
-//   }
-// };
