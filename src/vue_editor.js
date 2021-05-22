@@ -62,4 +62,9 @@ export default class VueEditor extends Editor {
     super.unregisterPlugin(nameOrPluginKey);
     this.reactiveState.value = this.view.state;
   }
+
+  // destroy() {
+  //   this.reactiveState.value = null;
+  //   super.destroy();
+  // }
 }

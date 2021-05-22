@@ -2,7 +2,7 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { bind } from 'shiki-decorators';
 
 import { Extension } from '../base';
-import sourceCommand from '../components/utils/source_command';
+import sourceCommand from '../vue/utils/source_command';
 
 import {
   insertUploadPlaceholder,

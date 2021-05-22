@@ -3,7 +3,7 @@ import { bind } from 'shiki-decorators';
 import { Extension } from '../base';
 import { scrollTop } from '../utils';
 import { addToShikiCache } from '../extensions';
-import sourceCommand from '../components/utils/source_command';
+import sourceCommand from '../vue/utils/source_command';
 
 export default class ShikiSearch extends Extension {
   editor = null

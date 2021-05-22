@@ -127,7 +127,7 @@
       />
     </div>
 
-    <!--Smileys
+    <Smileys
       v-show='isSmiley && !isPreview'
       ref='smileys'
       :is-enabled='isSmiley'
@@ -136,7 +136,7 @@
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
     />
-    <Suggestions
+    <!--Suggestions
       :is-available='isEditingEnabled'
       :editor='editor'
       :shiki-request='shikiRequest'
@@ -156,8 +156,8 @@ import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
 import VueEditor from './vue_editor';
-import { EditorContent } from './components/editor_content';
-import sourceCommand from './components/utils/source_command';
+import { EditorContent } from './vue/editor_content';
+import sourceCommand from './vue/utils/source_command';
 import { contentToNodes, scrollTop } from './utils';
 import { FileUploader, ShikiSearch } from './extensions';
 import { insertReply, insertFragment, insertQuote } from './commands';
@@ -165,9 +165,9 @@ import { preventHugePaste } from './plugins';
 
 import { flash } from 'shiki-utils';
 
-import Icon from './components/icon';
-// import Smileys from './components/smileys';
-// import Suggestions from './components/suggestions';
+import Icon from './vue/icon';
+import Smileys from './vue/smileys';
+// import Suggestions from './vue/suggestions';
 
 const MENU_ITEMS = {
   inline: [
@@ -205,8 +205,8 @@ export default {
   // },
   components: {
     EditorContent,
-    Icon
-    // Smileys,
+    Icon,
+    Smileys
     // Suggestions
   },
   inheritAttrs: false,

@@ -63,10 +63,6 @@ export default {
     targetRef: { type: String, required: true },
     isStickyMenuOffset: { type: Boolean, required: true }
   },
-  data: () => ({
-    popup: null,
-    smileysHTML: null
-  }),
   setup(props) {
     const { isEnabled } = toRefs(props);
     const internalInstance = getCurrentInstance();
@@ -82,6 +78,10 @@ export default {
       isActive: isEnabled
     });
   },
+  data: () => ({
+    popup: null,
+    smileysHTML: null
+  }),
   computed: {
     isMobile() {
       return isMobile();
