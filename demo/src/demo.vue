@@ -64,6 +64,7 @@ let TEXT_2 = `
 test
 [b]zxc[/b][br]
 cvn
+[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 `.trim();
 
 export default {
