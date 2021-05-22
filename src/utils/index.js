@@ -13,6 +13,7 @@ export { default as getNodeAttrs } from './get_node_attrs';
 export { default as getShikiLoader } from './get_shiki_loader';
 export { default as htmlToNodes } from './html_to_nodes';
 export { default as isContainsCodeMark } from './is_contains_code_mark';
+export { default as isiOS } from './is_ios';
 export { default as minMax } from './min_max';
 export { default as nodeEqualsType } from './node_equals_type';
 export { default as resolveWord } from './resolve_word';
