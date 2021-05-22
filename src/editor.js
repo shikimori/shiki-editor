@@ -53,8 +53,6 @@ export default class Editor {
       ...options
     };
 
-    this.focused = false;
-
     this.extensionManager = this.createExtensionManager();
 
     this.nodes = this.createNodes();
