@@ -155,18 +155,18 @@ import { set } from 'text-field-edit';
 import { keymap } from 'prosemirror-keymap';
 import { undo, redo } from 'prosemirror-history';
 
-import VueEditor from './vue_editor';
-import { EditorContent } from './vue/editor_content';
-import sourceCommand from './vue/utils/source_command';
-import { contentToNodes, scrollTop } from './utils';
-import { FileUploader, ShikiSearch } from './extensions';
-import { insertReply, insertFragment, insertQuote } from './commands';
-import { preventHugePaste } from './plugins';
+import VueEditor from './editor';
+import { EditorContent } from './editor_content';
+import sourceCommand from './utils/source_command';
+import { contentToNodes, scrollTop } from '../utils';
+import { FileUploader, ShikiSearch } from '../extensions';
+import { insertReply, insertFragment, insertQuote } from '../commands';
+import { preventHugePaste } from '../plugins';
 
 import { flash } from 'shiki-utils';
 
-import Icon from './vue/icon';
-import Smileys from './vue/smileys';
+import Icon from './icon';
+import Smileys from './smileys';
 // import Suggestions from './vue/suggestions';
 
 const MENU_ITEMS = {
@@ -662,9 +662,6 @@ function preventEvent(e) {
 }
 </script>
 
-<style lang='sass'>
-@import ./stylesheets/prosemirror.sass
-@import ./stylesheets/prosemirror_shiki.sass
-</style>
-
-<style scoped lang='sass' src='./stylesheets/editor_app.sass' />
+<style lang='sass' src='../stylesheets/prosemirror.sass' />
+<style lang='sass' src='../stylesheets/prosemirror_shiki.sass' />
+<style scoped lang='sass' src='../stylesheets/app.sass' />

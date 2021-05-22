@@ -1,5 +1,5 @@
 // https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/Editor.ts
-import Editor from './editor';
+import Editor from '../editor';
 
 import {
   markRaw,
