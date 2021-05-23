@@ -4,6 +4,7 @@ import NodeView from '../node_view';
 export default class SpoilerInlineView extends NodeView {
   mount() {
     this.dom = document.createElement('span');
+    this.dom.setAttribute('data-node-view-wrapper', '');
     this.contentDOM = document.createElement('span');
 
     this.syncState();

@@ -17,6 +17,7 @@ export default class SpoilerBlock extends Node {
       content: 'block*',
       group: 'block',
       defining: true,
+      selectable: false,
       draggable: false,
       attrs: {
         label: { default: this.defaultLabel },

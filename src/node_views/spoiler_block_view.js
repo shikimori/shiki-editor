@@ -43,6 +43,13 @@ export default class SpoilerBlockView extends NodeView {
     this.trigger_center.addEventListener('keypress', this.centerKeypress);
     this.trigger_center.setAttribute('tabindex', 0);
 
+    this.trigger_drag_handle = document.createElement('i');
+    this.trigger_drag_handle.classList.add('drag-handle');
+    this.trigger_drag_handle.setAttribute('data-drag-handle', '');
+    this.trigger_drag_handle.setAttribute('draggable', 'true');
+    this.trigger_drag_handle.addEventListener('dragstart', this.onDragStart);
+    this.trigger_drag_handle.addEventListener('dragend', this.onDragEnd);
+
     this.trigger_remove = document.createElement('i');
     this.trigger_remove.classList.add('remove');
     this.trigger_remove.addEventListener('click', this.removeClick);
@@ -89,6 +96,7 @@ export default class SpoilerBlockView extends NodeView {
     this.trigger.appendChild(this.trigger_expand);
     this.trigger.appendChild(this.trigger_center);
     this.trigger.appendChild(this.trigger_edit);
+    this.trigger.appendChild(this.trigger_drag_handle);
     this.trigger.appendChild(this.trigger_remove);
   }
 

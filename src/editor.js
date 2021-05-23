@@ -24,9 +24,9 @@ import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
 import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
+  smartCommandSpoilerPlugin,
   trackFocus,
-  uploadPlaceholder,
-  smartCommandSpoilerPlugin
+  uploadPlaceholder
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
 import { enterCommand } from './key_commands';

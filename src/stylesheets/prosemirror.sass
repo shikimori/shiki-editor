@@ -61,15 +61,19 @@ textarea.ProseMirror
     border-color: #2b8acc
 
 .ProseMirror-hideselection
-  *
-    &::selection,
-    &::-moz-selection
-      background: transparent
-
   caret-color: transparent
+
+.ProseMirror-hideselection ::selection
+  background-color: transparent
+
+.ProseMirror-hideselection ::-moz-selection
+  background-color: transparent
 
 .ProseMirror-selectednode
   outline: 2px solid #8cf !important
+
+  .ProseMirror-hideselection &
+    outline: none !important
 
 /* Make sure li selections wrap around markers
 li.ProseMirror-selectednode

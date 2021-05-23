@@ -1,5 +1,5 @@
 import { bind } from 'shiki-decorators';
-import { NodeSelection } from 'prosemirror-state';
+import { NodeSelection, TextSelection } from 'prosemirror-state';
 
 import { getMarkRange, isiOS } from './utils';
 import { deleteRange } from './commands';
@@ -164,6 +164,7 @@ export default class NodeView {
   //   return this.captureEvents;
   // }
 
+  @bind
   onDragStart(event) {
     const target = event.target;
 
@@ -198,9 +199,15 @@ export default class NodeView {
     // we need to tell ProseMirror that we want to move the whole node
     // so we create a NodeSelection
     const selection = NodeSelection.create(this.view.state.doc, this.getPos());
-    const transaction = this.view.state.tr.setSelection(selection);
+    const tr = this.tr.setSelection(selection);
 
-    this.dispatch(transaction);
+    this.dispatch(tr);
+  }
+
+  @bind
+  onDragEnd() {
+    const pos = this.getPos() || 0;
+    this.editor.setSelection(pos + 1, pos + 1);
   }
 
   ignoreMutation(mutation) {

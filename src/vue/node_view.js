@@ -23,7 +23,7 @@ export default class VueNodeView extends NodeView {
       deleteNode: () => this.deleteNode()
     };
 
-    const onDragStart = this.onDragStart.bind(this);
+    const { onDragStart, onDragEnd } = this;
 
     this.decorationClasses = ref(this.getDecorationClasses());
 
@@ -32,6 +32,7 @@ export default class VueNodeView extends NodeView {
       props: Object.keys(props),
       setup: () => {
         provide('onDragStart', onDragStart);
+        provide('onDragEnd', onDragEnd);
         provide('decorationClasses', this.decorationClasses);
 
         return this.component.setup?.(props);

@@ -1,6 +1,6 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 
-export default function(editor) {
+export default function trackFocus(editor) {
   return new Plugin({
     key: new PluginKey('track_focus'),
     props: {
