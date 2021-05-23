@@ -1,6 +1,5 @@
 // https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Utils/ExtensionManager.js
 import { keymap } from 'prosemirror-keymap';
-import VueView from '../vue/node_view_old';
 
 export default class ExtensionManager {
   editor = null
