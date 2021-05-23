@@ -8,9 +8,7 @@ import { attrsAddClass, attrsRemoveClass } from '../utils/node_helpers';
 import { findParent, findIndex } from '../utils/dom_helpers';
 
 export default class TabsView extends NodeView {
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement('div');
     this.contentDOM = this.dom;
 

@@ -9,9 +9,7 @@ const ANY_BBCODE_REGEXP = /\[\w+/;
 export default class SpoilerBlockView extends NodeView {
   priorLabel = null
 
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement('div');
     this.contentDOM = document.createElement('div');
 

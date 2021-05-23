@@ -3,14 +3,13 @@ import { NodeSelection } from 'prosemirror-state';
 import { getMarkRange, isiOS } from './utils';
 
 export default class NodeView {
+  editor = null
   node = null
   extension = null
-  isNode = null
-  isMark = null
   view = null
   getPos = null
   decorations = null
-  editor = null
+  isDragging = false
   isDestroyed = false
   isSelected = false
   captureEvents = true
@@ -18,12 +17,20 @@ export default class NodeView {
   constructor({ node, extension, view, getPos, decorations, editor }) {
     this.node = node;
     this.extension = extension;
-    this.isNode = !!this.node.marks;
-    this.isMark = !this.isNode;
     this.view = view;
     this.getPos = this.isMark ? this.getMarkPos : getPos;
     this.decorations = decorations;
     this.editor = editor;
+
+    this.mount();
+  }
+
+  get isNode() {
+    return !!this.node?.marks;
+  }
+
+  get isMark() {
+    return !this.isNode;
   }
 
   get dispatch() {
@@ -36,6 +43,9 @@ export default class NodeView {
 
   get nodeSelection() {
     return new NodeSelection(this.tr.doc.resolve(this.getPos()));
+  }
+
+  mount() {
   }
 
   @bind

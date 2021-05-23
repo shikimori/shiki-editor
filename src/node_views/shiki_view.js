@@ -5,9 +5,7 @@ import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 
 export default class ShikiView extends NodeView {
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement(this.elementType);
     this.dom.classList.add('b-shiki_editor-node');
     this.dom.setAttribute('data-attrs', JSON.stringify(this.node.attrs));

@@ -6,9 +6,7 @@ import { getShikiLoader } from '../utils';
 import { addToShikiCache } from '../extensions';
 
 export default class VideoView extends NodeView {
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement('span');
 
     this.syncState();

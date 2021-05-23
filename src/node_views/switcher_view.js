@@ -13,9 +13,7 @@ import { attrsAddClass, attrsRemoveClass } from '../utils/node_helpers';
 import { removeAllAttributes } from '../utils/dom_helpers';
 
 export default class SwitcherView extends NodeView {
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement(this.elementType);
     this.contentDOM = this.dom;
 

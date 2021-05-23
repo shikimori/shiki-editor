@@ -2,9 +2,7 @@ import { bind } from 'shiki-decorators';
 import NodeView from '../node_view';
 
 export default class SpoilerInlineView extends NodeView {
-  constructor(options) {
-    super(options);
-
+  mount() {
     this.dom = document.createElement('span');
     this.contentDOM = document.createElement('span');
 

@@ -7,7 +7,7 @@ export class NodeView {
   editor = null
   extension = null
   node = null
-  decorations = []
+  decorations = null
   getPos = null
   isDragging = false
   options = {
@@ -103,7 +103,6 @@ export class NodeView {
       return true;
     }
 
-    const { isEditable } = this.editor;
     const { isDragging } = this;
     const isDraggable = !!this.node.type.spec.draggable;
     const isSelectable = NodeSelection.isSelectable(this.node);
@@ -126,7 +125,7 @@ export class NodeView {
     }
 
     // we have to store that dragging started
-    if (isDraggable && isEditable && !isDragging && isClickEvent) {
+    if (isDraggable && !isDragging && isClickEvent) {
       const dragHandle = target.closest('[data-drag-handle]');
       const isValidDragHandle = dragHandle &&
         (this.dom === dragHandle || (this.dom.contains(dragHandle)));
