@@ -136,11 +136,11 @@
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
     />
-    <!--Suggestions
+    <Suggestions
       :is-available='isEditingEnabled'
       :editor='editor'
       :shiki-request='shikiRequest'
-    /-->
+    />
   </div>
 </template>
 
@@ -167,7 +167,7 @@ import { flash } from 'shiki-utils';
 
 import Icon from './components/icon';
 import Smileys from './components/smileys';
-// import Suggestions from './components/suggestions';
+import Suggestions from './components/suggestions';
 
 const MENU_ITEMS = {
   inline: [
@@ -206,8 +206,8 @@ export default {
   components: {
     EditorContent,
     Icon,
-    Smileys
-    // Suggestions
+    Smileys,
+    Suggestions
   },
   inheritAttrs: false,
   props: {

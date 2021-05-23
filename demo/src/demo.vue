@@ -61,19 +61,10 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-[poster]https://www.ljmu.ac.uk/~/media/ljmu/news/starsedit.jpg[/poster]
-
-[spoiler_block=spoiler block with label]
-spoiler \`content\`
-[/spoiler_block]
-
-[video]https://www.youtube.com/watch?v=EM898MJWGzU[/video]
 test
 [b]zxc[/b][br]
 cvn
-[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 ||test||
-[manga=1]
 `.trim();
 
 export default {
