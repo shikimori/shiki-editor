@@ -9,6 +9,7 @@ export default class ShikiView extends NodeView {
     this.dom = document.createElement(this.elementType);
     this.dom.classList.add('b-shiki_editor-node');
     this.dom.setAttribute('data-attrs', JSON.stringify(this.node.attrs));
+    this.dom.setAttribute('data-node-view-wrapper', '');
 
     this.syncState();
     this.appendContent();

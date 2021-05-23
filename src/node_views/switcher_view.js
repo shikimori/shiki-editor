@@ -16,6 +16,7 @@ import { removeAllAttributes } from '../utils/dom_helpers';
 export default class SwitcherView extends NodeView {
   mount() {
     this.dom = document.createElement(this.elementType);
+    this.dom.setAttribute('data-node-view-wrapper', '');
     this.contentDOM = this.dom;
 
     this.syncState();

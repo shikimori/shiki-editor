@@ -12,9 +12,11 @@ export default class SpoilerBlockView extends NodeView {
 
   mount() {
     this.dom = document.createElement('div');
+    this.dom.classList.add('b-spoiler_block');
+    this.dom.setAttribute('data-node-view-wrapper', '');
+
     this.contentDOM = document.createElement('div');
 
-    this.dom.classList.add('b-spoiler_block');
     this.trigger = document.createElement('span');
     this.trigger.addEventListener('click', this.triggerClick);
     this.trigger.addEventListener('keypress', this.triggerKeypress);

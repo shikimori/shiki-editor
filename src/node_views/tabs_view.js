@@ -9,6 +9,7 @@ import { findParent, findIndex } from '../utils/dom_helpers';
 export default class TabsView extends NodeView {
   mount() {
     this.dom = document.createElement('div');
+    this.dom.setAttribute('data-node-view-wrapper', '');
     this.contentDOM = this.dom;
 
     if (this.node.attrs.class) {

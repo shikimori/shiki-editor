@@ -8,6 +8,7 @@ import { addToShikiCache } from '../extensions';
 export default class VideoView extends NodeView {
   mount() {
     this.dom = document.createElement('span');
+    this.dom.setAttribute('data-node-view-wrapper', '');
 
     this.syncState();
 
