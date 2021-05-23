@@ -3,7 +3,7 @@
     <span
       class='b-image'
       :class='[customClass, {
-        "is-prosemirror-selected": isSelected,
+        "ProseMirror-selectednode": isSelected,
         "b-poster": isPoster,
         "check-width": isCheckWidth,
         "no-zoom": node.attrs.isNoZoom || isPoster,
@@ -119,9 +119,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang='sass'>
-.b-image
-  img
-    transition: max-width .25s
-</style>

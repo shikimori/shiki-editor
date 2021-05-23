@@ -1,10 +1,7 @@
 .ProseMirror
   .b-image
-    display: inline-flex // need to fix cursor display in position after image
-
-    &:hover,
-    &.is-prosemirror-selected
-      position: relative
+    img
+      transition: max-width .25s
 
   .b-mention
     &:before
@@ -36,7 +33,7 @@
   & > :first-child:before
     top: 0 !important
 
-  [data-image].is-prosemirror-selected,
+  [data-image].ProseMirror-selectednode,
   [data-video].ProseMirror-selectednode,
   [data-image]:hover,
   [data-video]:hover,
@@ -67,7 +64,7 @@
     .no-prosemirror-info &:before
       display: none
 
-  [data-image].is-prosemirror-selected,
+  [data-image].ProseMirror-selectednode,
   [data-video].ProseMirror-selectednode
     outline: 2px solid #9cf
     position: relative
