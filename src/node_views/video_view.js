@@ -1,11 +1,11 @@
 import imagePromise from 'image-promise';
 import { bind } from 'shiki-decorators';
 
-import DOMView from './dom_view';
+import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 import { addToShikiCache } from '../extensions';
 
-export default class VideoView extends DOMView {
+export default class VideoView extends NodeView {
   constructor(options) {
     super(options);
 

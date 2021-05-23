@@ -1,10 +1,10 @@
 import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
-import DOMView from './dom_view';
+import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 
-export default class ShikiView extends DOMView {
+export default class ShikiView extends NodeView {
   constructor(options) {
     super(options);
 

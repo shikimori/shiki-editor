@@ -1,8 +1,8 @@
 import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
-import { getMarkRange } from '../utils';
+import { getMarkRange } from './utils';
 
-export default class DOMView {
+export default class NodeView {
   node = null
   extension = null
   isNode = null
@@ -86,39 +86,39 @@ export default class DOMView {
   }
 
   // disable (almost) all prosemirror event listener for node views
-  stopEvent(event) {
-    if (typeof this.extension.stopEvent === 'function') {
-      return this.extension.stopEvent(event);
-    }
-
-    const draggable = !!this.extension.schema.draggable;
-
-    // support a custom drag handle
-    if (draggable && event.type === 'mousedown') {
-      const dragHandle = event.target.closest &&
-        event.target.closest('[data-drag-handle]');
-      const isValidDragHandle = dragHandle &&
-        (this.dom === dragHandle || this.dom.contains(dragHandle));
-
-      if (isValidDragHandle) {
-        this.captureEvents = false;
-        document.addEventListener('dragend', () => {
-          this.captureEvents = true;
-        }, { once: true });
-      }
-    }
-
-    const isCopy = event.type === 'copy';
-    const isPaste = event.type === 'paste';
-    const isCut = event.type === 'cut';
-    const isDrag = event.type.startsWith('drag') || event.type === 'drop';
-
-    if ((draggable && isDrag) || isCopy || isPaste || isCut) {
-      return false;
-    }
-
-    return this.captureEvents;
-  }
+  // stopEvent(event) {
+  //   if (typeof this.extension.stopEvent === 'function') {
+  //     return this.extension.stopEvent(event);
+  //   }
+  //
+  //   const draggable = !!this.extension.schema.draggable;
+  //
+  //   // support a custom drag handle
+  //   if (draggable && event.type === 'mousedown') {
+  //     const dragHandle = event.target.closest &&
+  //       event.target.closest('[data-drag-handle]');
+  //     const isValidDragHandle = dragHandle &&
+  //       (this.dom === dragHandle || this.dom.contains(dragHandle));
+  //
+  //     if (isValidDragHandle) {
+  //       this.captureEvents = false;
+  //       document.addEventListener('dragend', () => {
+  //         this.captureEvents = true;
+  //       }, { once: true });
+  //     }
+  //   }
+  //
+  //   const isCopy = event.type === 'copy';
+  //   const isPaste = event.type === 'paste';
+  //   const isCut = event.type === 'cut';
+  //   const isDrag = event.type.startsWith('drag') || event.type === 'drop';
+  //
+  //   if ((draggable && isDrag) || isCopy || isPaste || isCut) {
+  //     return false;
+  //   }
+  //
+  //   return this.captureEvents;
+  // }
 
   updateAttrs(attrs, isAddToHistory = true) {
     const { type } = this.node;
@@ -146,6 +146,13 @@ export default class DOMView {
     const resolvedPos = this.view.state.doc.resolve(pos);
     const range = getMarkRange(resolvedPos, this.node.type);
     return range;
+  }
+
+  deleteNode() {
+    const from = this.getPos();
+    const to = from + this.node.nodeSize;
+
+    this.editor.commands.deleteRange({ from, to });
   }
 
   destroy() {

@@ -1,4 +1,4 @@
-// based on https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/EditorContent.ts
+// https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/EditorContent.ts
 import {
   h,
   ref,

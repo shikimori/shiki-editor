@@ -1,12 +1,12 @@
 import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
-import DOMView from './dom_view';
+import NodeView from '../node_view';
 import { contentToNodes } from '../utils';
 
 const ANY_BBCODE_REGEXP = /\[\w+/;
 
-export default class SpoilerBlockView extends DOMView {
+export default class SpoilerBlockView extends NodeView {
   priorLabel = null
 
   constructor(options) {

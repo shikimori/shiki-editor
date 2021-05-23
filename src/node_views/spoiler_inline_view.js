@@ -1,8 +1,7 @@
 import { bind } from 'shiki-decorators';
-import DOMView from './dom_view';
-// import { getMarkRange } from '../utils';
+import NodeView from '../node_view';
 
-export default class SpoilerInlineView extends DOMView {
+export default class SpoilerInlineView extends NodeView {
   constructor(options) {
     super(options);
 
