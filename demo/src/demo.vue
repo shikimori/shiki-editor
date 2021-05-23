@@ -64,13 +64,13 @@ let TEXT_2 = `
 test
 [b]zxc[/b][br]
 cvn
-||test||
-[manga=1]
-[spoiler_block=spoiler block with label]
-spoiler \`content\`
-[/spoiler_block]
 [img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 `.trim();
+// ||test||
+// [manga=1]
+// [spoiler_block=spoiler block with label]
+// spoiler \`content\`
+// [/spoiler_block]
 
 export default {
   name: 'App',

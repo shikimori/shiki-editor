@@ -1,39 +1,43 @@
 <template>
-  <span
-    class='b-image'
-    :class='[customClass, {
-      "is-prosemirror-selected": isSelected,
-      "b-poster": isPoster,
-      "check-width": isCheckWidth,
-      "no-zoom": node.attrs.isNoZoom || isPoster,
-    }]'
-    :data-attrs='serializedAttributes'
-    :data-image='tagPreview'
-    @click='select'
-  >
-    <div class='controls'>
-      <a class='prosemirror-open' :href='node.attrs.src' target='_blank' />
-      <div v-if='isPoster' class='collapse' @click='collapse' />
-      <div v-else-if='isExpandable' class='prosemirror-expand' @click='expand' />
-      <div class='delete' @click='remove' />
-    </div>
-    <img
-      ref='image'
-      :src='node.attrs.src'
-      :width='width'
-      :height='height'
+  <NodeViewWrapper>
+    <span
+      class='b-image'
+      :class='[customClass, {
+        "is-prosemirror-selected": isSelected,
+        "b-poster": isPoster,
+        "check-width": isCheckWidth,
+        "no-zoom": node.attrs.isNoZoom || isPoster,
+      }]'
+      :data-attrs='serializedAttributes'
+      :data-image='tagPreview'
+      @click='select'
     >
-  </span>
+      <div class='controls'>
+        <a class='prosemirror-open' :href='node.attrs.src' target='_blank' />
+        <div v-if='isPoster' class='collapse' @click='collapse' />
+        <div v-else-if='isExpandable' class='prosemirror-expand' @click='expand' />
+        <div class='delete' @click='remove' />
+      </div>
+      <img
+        ref='image'
+        :src='node.attrs.src'
+        :width='width'
+        :height='height'
+      >
+    </span>
+  </NodeViewWrapper>
 </template>
 
 <script>
 import imagePromise from 'image-promise';
 import { NodeSelection } from 'prosemirror-state';
 
+import { NodeViewWrapper } from '../vue/node_view_wrapper';
 import { tagSequence } from '../nodes/image';
 
 export default {
   name: 'ImageView',
+  components: { NodeViewWrapper },
   props: {
     editor: { type: Object, required: true },
     node: { type: Object, required: true },

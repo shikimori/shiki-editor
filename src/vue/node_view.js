@@ -8,8 +8,8 @@ import NodeView from '../node_view';
 import VueRenderer from './renderer';
 
 export default class VueNodeView extends NodeView {
-  renderer = null
-  decorationClasses = null
+  // renderer = null
+  // decorationClasses = null
 
   mount() {
     const props = {
