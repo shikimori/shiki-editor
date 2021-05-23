@@ -115,9 +115,9 @@ export default class ShikiView extends NodeView {
   @bind
   handleClick() {
     if (this.node.attrs.isLoading) {
-      this.updateAttrs({ isLoading: false }, false);
+      this.updateAttributes({ isLoading: false }, false);
     } else if (this.node.attrs.isError) {
-      this.updateAttrs({ isLoading: true, isError: false }, false);
+      this.updateAttributes({ isLoading: true, isError: false }, false);
       this.fetch();
     } else {
       this.focus();
@@ -127,7 +127,7 @@ export default class ShikiView extends NodeView {
   // @bind
   // resetCache() {
   //   this.shikiLoader.resetCache(this.node.attrs);
-  //   this.updateAttrs({ isError: false });
+  //   this.updateAttributes({ isError: false });
   //   this.dom.removeEventListener('click', this.resetCache);
   // }
 
@@ -228,10 +228,10 @@ export default class ShikiView extends NodeView {
   }
 
   notFound() {
-    this.updateAttrs({ isLoading: false, isNotFound: true }, false);
+    this.updateAttributes({ isLoading: false, isNotFound: true }, false);
   }
 
   error() {
-    this.updateAttrs({ isLoading: false, isError: true }, false);
+    this.updateAttributes({ isLoading: false, isError: true }, false);
   }
 }

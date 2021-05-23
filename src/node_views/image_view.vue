@@ -38,9 +38,8 @@ export default {
     editor: { type: Object, required: true },
     node: { type: Object, required: true },
     getPos: { type: Function, required: true },
-    view: { type: Object, required: true },
     isSelected: { type: Boolean, required: true },
-    updateAttrs: { type: Function, required: true }
+    updateAttributes: { type: Function, required: true }
   },
   data: () => ({
     isLoaded: false,
@@ -90,8 +89,8 @@ export default {
     remove(e) {
       e.stopImmediatePropagation();
 
-      this.view.dispatch(
-        this.view.state.tr.delete(
+      this.editor.view.dispatch(
+        this.editor.view.state.tr.delete(
           this.getPos(),
           this.getPos() + 1
         )
@@ -99,17 +98,17 @@ export default {
       this.editor.focus();
     },
     select() {
-      this.view.dispatch(
-        this.view.state.tr.setSelection(
-          new NodeSelection(this.view.state.tr.doc.resolve(this.getPos()))
+      this.editor.view.dispatch(
+        this.editor.view.state.tr.setSelection(
+          new NodeSelection(this.editor.view.state.tr.doc.resolve(this.getPos()))
         )
       );
     },
     expand() {
-      this.updateAttrs({ ...this.node.attrs, isPoster: true });
+      this.updateAttributes({ ...this.node.attrs, isPoster: true });
     },
     collapse() {
-      this.updateAttrs({ ...this.node.attrs, isPoster: false });
+      this.updateAttributes({ ...this.node.attrs, isPoster: false });
       // have to update image width when animation is completed
       setTimeout(() => this.imageWidth = this.$refs.image.width, 350);
     }

@@ -96,7 +96,7 @@ export default class NodeView {
   syncState() {
   }
 
-  updateAttrs(attrs, isAddToHistory = true) {
+  updateAttributes(attrs, isAddToHistory = true) {
     const { type } = this.node;
     const pos = this.getPos();
 

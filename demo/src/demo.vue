@@ -69,8 +69,8 @@ cvn
 [spoiler_block=spoiler block with label]
 spoiler \`content\`
 [/spoiler_block]
+[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 `.trim();
-// [img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
 
 export default {
   name: 'App',

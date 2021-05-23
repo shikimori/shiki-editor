@@ -31,7 +31,7 @@ export default class SpoilerInlineView extends NodeView {
   toggle() {
     if (!this.view.state.selection.empty) { return; }
 
-    this.updateAttrs({ isOpened: !this.isOpened });
+    this.updateAttributes({ isOpened: !this.isOpened });
     this.syncState();
   }
 

@@ -79,7 +79,7 @@ export default class SpoilerBlockView extends NodeView {
   toggle(e) {
     e.preventDefault();
 
-    this.updateAttrs({ isOpened: !this.node.attrs.isOpened });
+    this.updateAttributes({ isOpened: !this.node.attrs.isOpened });
     this.syncState();
     this.view.focus();
   }
@@ -94,7 +94,7 @@ export default class SpoilerBlockView extends NodeView {
     );
     if (!label) { return; }
 
-    this.updateAttrs({ label });
+    this.updateAttributes({ label });
     this.view.focus();
   }
 
@@ -112,7 +112,7 @@ export default class SpoilerBlockView extends NodeView {
   expandClick(e) {
     e.stopImmediatePropagation();
 
-    this.updateAttrs({ isFullwidth: !this.node.attrs.isFullwidth });
+    this.updateAttributes({ isFullwidth: !this.node.attrs.isFullwidth });
   }
 
   @bind
@@ -129,7 +129,7 @@ export default class SpoilerBlockView extends NodeView {
   centerClick(e) {
     e.stopImmediatePropagation();
 
-    this.updateAttrs({ isCentered: !this.node.attrs.isCentered });
+    this.updateAttributes({ isCentered: !this.node.attrs.isCentered });
   }
 
   @bind

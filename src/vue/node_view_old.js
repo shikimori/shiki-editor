@@ -37,7 +37,7 @@ export default class VueView {
       decorations: this.decorations,
       selected: false,
       options: this.extension.options,
-      updateAttrs: attrs => this.updateAttrs(attrs)
+      updateAttributes: attrs => this.updateAttributes(attrs)
     };
 
     if (typeof this.extension.setSelection === 'function') {
@@ -103,7 +103,7 @@ export default class VueView {
     this.Vue.config.silent = originalSilent;
   }
 
-  updateAttrs(attrs) {
+  updateAttributes(attrs) {
     if (!this.view.editable) {
       return;
     }

@@ -19,7 +19,7 @@ export default class VueNodeView extends NodeView {
       isSelected: false,
       extension: this.extension,
       getPos: () => this.getPos(),
-      updateAttributes: (attributes = {}) => this.updateAttributes(attributes),
+      updateAttributes: attrs => this.updateAttributes(attrs),
       deleteNode: () => this.deleteNode()
     };
 

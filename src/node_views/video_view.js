@@ -107,7 +107,7 @@ export default class VideoView extends NodeView {
 
   success(result) {
     if (result.id) {
-      this.updateAttrs({ ...result, isLoading: false }, false);
+      this.updateAttributes({ ...result, isLoading: false }, false);
     } else {
       this.notFound();
     }
@@ -130,7 +130,7 @@ export default class VideoView extends NodeView {
   }
 
   error() {
-    this.updateAttrs({ isLoading: false, isError: true }, false);
+    this.updateAttributes({ isLoading: false, isError: true }, false);
   }
 
   @bind
@@ -168,7 +168,7 @@ export default class VideoView extends NodeView {
       };
 
       addToShikiCache('video', this.node.attrs.url, shikiData);
-      this.updateAttrs({ isBroken: true }, false);
+      this.updateAttributes({ isBroken: true }, false);
 
       return;
     }
