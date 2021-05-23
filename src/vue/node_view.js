@@ -46,7 +46,7 @@ export default class VueNodeView extends NodeView {
 
 
   get dom() {
-    if (!this.renderer.element.hasAttribute('data-node-view-wrapper')) {
+    if (!this.renderer.element.hasAttribute('data-vue-node-view-wrapper')) {
       throw Error('Please use the NodeViewWrapper component for your node view.');
     }
 

@@ -18,7 +18,7 @@ export const NodeViewWrapper = defineComponent({
         style: {
           whiteSpace: 'normal'
         },
-        'data-node-view-wrapper': '',
+        'data-vue-node-view-wrapper': '',
         onDragStart: this.onDragStart
       },
       this.$slots.default?.()
