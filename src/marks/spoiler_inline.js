@@ -32,8 +32,8 @@ export default class SpoilerInline extends Mark {
     };
   }
 
-  view(props) {
-    return new SpoilerInlineView(null, props);
+  get view() {
+    return nodeViewRenderer(SpoilerInlineView);
   }
 
   inputRules({ type }) {

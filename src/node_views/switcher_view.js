@@ -1,6 +1,7 @@
 import { Mark } from 'prosemirror-model';
 import { bind } from 'shiki-decorators';
-import NodeView from '../node_view';
+
+import { NodeView } from '../node_view';
 import { findChildren } from 'prosemirror-utils/src/node';
 import { getMarkRange } from '../utils';
 

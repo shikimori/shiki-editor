@@ -1,7 +1,7 @@
 import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
-import NodeView from '../node_view';
+import { NodeView } from '../node_view';
 import { contentToNodes } from '../utils';
 
 const ANY_BBCODE_REGEXP = /\[\w+/;

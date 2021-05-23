@@ -64,7 +64,7 @@ export default class SpoilerBlock extends Node {
     return window.I18n.t('frontend.shiki_editor.spoiler');
   }
 
-  get nodeView() {
+  get view() {
     return nodeViewRenderer(SpoilerBlockView);
   }
 

@@ -1,7 +1,7 @@
 import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
-import NodeView from '../node_view';
+import { NodeView } from '../node_view';
 import { getShikiLoader } from '../utils';
 
 export default class ShikiView extends NodeView {

@@ -1,5 +1,5 @@
 import { bind } from 'shiki-decorators';
-import NodeView from '../node_view';
+import { NodeView } from '../node_view';
 
 export default class SpoilerInlineView extends NodeView {
   mount() {

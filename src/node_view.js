@@ -262,16 +262,9 @@ export class NodeView {
   }
 }
 
-export function nodeViewRenderer(component) {
-  return (props) => {
-    // try to get the parent component
-    // this is important for vue devtools to show the component hierarchy correctly
-    // maybe it’s `undefined` because <editor-content> isn’t rendered yet
-    if (!props.editor.contentComponent) {
-      return {};
-    }
+export function nodeViewRenderer(Component = null, buildComponent = null) {
+  if (buildComponent) { return buildComponent; }
+  if (Component) { return props => new Component(null, props); }
 
-    return new component(null, props);
-  };
+  return null;
 }
-
