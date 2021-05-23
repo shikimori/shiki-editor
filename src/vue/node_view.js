@@ -4,9 +4,10 @@ import {
   provide,
   defineComponent
 } from 'vue';
-import { VueRenderer } from './renderer';
+import NodeView from '../node_view';
+import VueRenderer from './renderer';
 
-class VueNodeView {
+export default class VueNodeView extends NodeView {
   renderer = null
   decorationClasses = null
 
@@ -15,7 +16,7 @@ class VueNodeView {
       editor: this.editor,
       node: this.node,
       decorations: this.decorations,
-      selected: false,
+      isSelected: false,
       extension: this.extension,
       getPos: () => this.getPos(),
       updateAttributes: (attributes = {}) => this.updateAttributes(attributes),
@@ -84,13 +85,13 @@ class VueNodeView {
 
   selectNode() {
     this.renderer.updateProps({
-      selected: true
+      isSelected: true
     });
   }
 
   deselectNode() {
     this.renderer.updateProps({
-      selected: false
+      isSelected: false
     });
   }
 
@@ -107,7 +108,7 @@ class VueNodeView {
   }
 }
 
-export function VueNodeViewRenderer(component, options) {
+VueNodeView.buildRenderer = function(component, options) {
   return (props) => {
     // try to get the parent component
     // this is important for vue devtools to show the component hierarchy correctly
@@ -118,4 +119,4 @@ export function VueNodeViewRenderer(component, options) {
 
     return new VueNodeView(component, props, options);
   };
-}
+};

@@ -2,6 +2,7 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ImageView } from '../node_views';
+import VuewNodeView from '../vue/node_view';
 import { addToShikiCache } from '../extensions';
 
 const IMAGE_INPUT_REGEX = /\[img\](.*?)\[\/img\]/;
@@ -87,7 +88,7 @@ export default class Image extends Node {
   }
 
   get view() {
-    return ImageView;
+    return VuewNodeView.buildRenderer(ImageView);
   }
 
   inputRules({ type }) {

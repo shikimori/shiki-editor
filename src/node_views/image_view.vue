@@ -2,7 +2,7 @@
   <span
     class='b-image'
     :class='[customClass, {
-      "is-prosemirror-selected": selected,
+      "is-prosemirror-selected": isSelected,
       "b-poster": isPoster,
       "check-width": isCheckWidth,
       "no-zoom": node.attrs.isNoZoom || isPoster,
@@ -39,7 +39,7 @@ export default {
     node: { type: Object, required: true },
     getPos: { type: Function, required: true },
     view: { type: Object, required: true },
-    selected: { type: Boolean, required: true },
+    isSelected: { type: Boolean, required: true },
     updateAttrs: { type: Function, required: true }
   },
   data: () => ({

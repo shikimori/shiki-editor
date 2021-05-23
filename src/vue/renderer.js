@@ -1,7 +1,7 @@
 // https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/VueRenderer.ts
 import { reactive, markRaw } from 'vue';
 
-export class VueRenderer {
+export default class VueRenderer {
   id = null
   editor = null
   component = null
