@@ -207,8 +207,6 @@ export default class ExtensionManager {
   }
 
   nodeViews() {
-    const isVue = !!this.editor.contentComponent;
-
     return this.extensions
       .filter(extension => (
         ['node', 'mark'].includes(extension.type) &&
@@ -217,12 +215,11 @@ export default class ExtensionManager {
       .reduce((nodeViews, extension) => {
         const { editor } = this;
 
-        const nodeView = (node, view, getPos, decorations) => (
+        const nodeView = (node, _view, getPos, decorations) => (
           extension.view({
             editor,
             extension,
             node,
-            view,
             getPos,
             decorations
           })

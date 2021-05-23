@@ -7,7 +7,6 @@ export default class NodeView {
   editor = null
   node = null
   extension = null
-  view = null
   getPos = null
   decorations = null
   isDragging = false
@@ -15,16 +14,19 @@ export default class NodeView {
   isSelected = false
   captureEvents = true
 
-  constructor(component, { node, extension, view, getPos, decorations, editor }) {
+  constructor(component, { node, extension, getPos, decorations, editor }) {
     this.component = component;
     this.node = node;
     this.extension = extension;
-    this.view = view;
     this.getPos = this.isMark ? this.getMarkPos : getPos;
     this.decorations = decorations;
     this.editor = editor;
 
     this.mount();
+  }
+
+  get view() {
+    return this.editor.view;
   }
 
   get isNode() {
@@ -56,10 +58,8 @@ export default class NodeView {
       this.editor.focus();
     }
 
-    const { dispatch, tr } = this;
-
-    dispatch(
-      tr.setSelection(this.nodeSelection)
+    this.dispatch(
+      this.tr.setSelection(this.nodeSelection)
     );
   }
 
@@ -68,11 +68,10 @@ export default class NodeView {
   }
 
   replaceWith(replacement, isAddToHistory = true) {
-    const { dispatch, tr } = this;
     const selection = this.nodeSelection;
 
-    dispatch(
-      tr
+    this.dispatch(
+      this.tr
         .setMeta('addToHistory', isAddToHistory)
         .replaceWith(selection.$from.pos, selection.$to.pos, replacement)
     );
@@ -164,7 +163,6 @@ export default class NodeView {
   // }
 
   onDragStart(event) {
-    const { view } = this.editor;
     const target = event.target;
 
     // get the drag handle element
@@ -197,10 +195,10 @@ export default class NodeView {
 
     // we need to tell ProseMirror that we want to move the whole node
     // so we create a NodeSelection
-    const selection = NodeSelection.create(view.state.doc, this.getPos());
-    const transaction = view.state.tr.setSelection(selection);
+    const selection = NodeSelection.create(this.view.state.doc, this.getPos());
+    const transaction = this.view.state.tr.setSelection(selection);
 
-    view.dispatch(transaction);
+    this.dispatch(transaction);
   }
 
   ignoreMutation(mutation) {
