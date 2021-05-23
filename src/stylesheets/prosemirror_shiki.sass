@@ -16,6 +16,14 @@
       display: block
       outline: 1px solid rgba(#9cf, 0.5)
 
+  .b-spoiler_block
+    // drag'n'drop inside PromiseMirror
+    &[data-node-view-wrapper]
+      transition: opacity 0.25s
+    &.ProseMirror-selectednode
+      opacity: 0.65
+
+
   span[contenteditable=false]
     cursor: default
 
