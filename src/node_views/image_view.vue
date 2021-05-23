@@ -109,10 +109,10 @@ export default {
       );
     },
     expand() {
-      this.updateAttributes({ ...this.node.attrs, isPoster: true });
+      this.updateAttributes({ isPoster: true });
     },
     collapse() {
-      this.updateAttributes({ ...this.node.attrs, isPoster: false });
+      this.updateAttributes({ isPoster: false });
       // have to update image width when animation is completed
       setTimeout(() => this.imageWidth = this.$refs.image.width, 350);
     }

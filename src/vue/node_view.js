@@ -44,6 +44,7 @@ export default class VueNodeView extends NodeView {
     });
   }
 
+
   get dom() {
     if (!this.renderer.element.hasAttribute('data-node-view-wrapper')) {
       throw Error('Please use the NodeViewWrapper component for your node view.');
@@ -63,10 +64,6 @@ export default class VueNodeView extends NodeView {
   }
 
   update(node, decorations) {
-    if (typeof this.options.update === 'function') {
-      return this.options.update(node, decorations);
-    }
-
     if (node.type !== this.node.type) {
       return false;
     }
@@ -97,7 +94,6 @@ export default class VueNodeView extends NodeView {
 
   getDecorationClasses() {
     return this.decorations
-      // @ts-ignore
       .map(item => item.type.attrs.class)
       .flat()
       .join(' ');
@@ -108,7 +104,7 @@ export default class VueNodeView extends NodeView {
   }
 }
 
-VueNodeView.buildRenderer = function(component, options) {
+VueNodeView.buildRenderer = function(component) {
   return (props) => {
     // try to get the parent component
     // this is important for vue devtools to show the component hierarchy correctly
@@ -117,6 +113,6 @@ VueNodeView.buildRenderer = function(component, options) {
       return {};
     }
 
-    return new VueNodeView(component, props, options);
+    return new VueNodeView(component, props);
   };
 };
