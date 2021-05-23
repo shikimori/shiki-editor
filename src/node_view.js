@@ -1,6 +1,8 @@
 import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
+
 import { getMarkRange, isiOS } from './utils';
+import { deleteRange } from './commands';
 
 export default class NodeView {
   component = null
@@ -252,7 +254,7 @@ export default class NodeView {
     const from = this.getPos();
     const to = from + this.node.nodeSize;
 
-    this.editor.commands.deleteRange({ from, to });
+    deleteRange(from, to)(this.view.state, this.dispatch);
   }
 
   destroy() {

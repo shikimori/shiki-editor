@@ -2,7 +2,7 @@ import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
 import NodeView from '../node_view';
-import { contentToNodes } from '../utils';
+import { contentToNodes, preventEvent } from '../utils';
 
 const ANY_BBCODE_REGEXP = /\[\w+/;
 
@@ -16,7 +16,7 @@ export default class SpoilerBlockView extends NodeView {
 
     this.dom.classList.add('b-spoiler_block');
     this.trigger = document.createElement('span');
-    this.trigger.addEventListener('click', this.toggle);
+    this.trigger.addEventListener('click', this.triggerClick);
     this.trigger.addEventListener('keypress', this.triggerKeypress);
     this.trigger.setAttribute('tabindex', 0);
 
@@ -40,6 +40,12 @@ export default class SpoilerBlockView extends NodeView {
     this.trigger_center.addEventListener('click', this.centerClick);
     this.trigger_center.addEventListener('keypress', this.centerKeypress);
     this.trigger_center.setAttribute('tabindex', 0);
+
+    this.trigger_remove = document.createElement('i');
+    this.trigger_remove.classList.add('remove');
+    this.trigger_remove.addEventListener('click', this.removeClick);
+    this.trigger_remove.addEventListener('keypress', this.removeKeypress);
+    this.trigger_remove.setAttribute('tabindex', 0);
 
     this.syncState();
 
@@ -81,20 +87,13 @@ export default class SpoilerBlockView extends NodeView {
     this.trigger.appendChild(this.trigger_expand);
     this.trigger.appendChild(this.trigger_center);
     this.trigger.appendChild(this.trigger_edit);
+    this.trigger.appendChild(this.trigger_remove);
   }
 
-  @bind
-  toggle(e) {
-    e.preventDefault();
-
-    this.updateAttributes({ isOpened: !this.node.attrs.isOpened });
-    this.syncState();
-    this.view.focus();
-  }
 
   @bind
   editClick(e) {
-    e.stopImmediatePropagation();
+    preventEvent(e);
 
     const label = prompt(
       window.I18n.t('frontend.shiki_editor.prompt.spoiler_label'),
@@ -111,14 +110,13 @@ export default class SpoilerBlockView extends NodeView {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
-        e.preventDefault();
         this.editClick(e);
     }
   }
 
   @bind
   expandClick(e) {
-    e.stopImmediatePropagation();
+    preventEvent(e);
 
     this.updateAttributes({ isFullwidth: !this.node.attrs.isFullwidth });
   }
@@ -128,14 +126,13 @@ export default class SpoilerBlockView extends NodeView {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
-        e.preventDefault();
         this.expandClick(e);
     }
   }
 
   @bind
   centerClick(e) {
-    e.stopImmediatePropagation();
+    preventEvent(e);
 
     this.updateAttributes({ isCentered: !this.node.attrs.isCentered });
   }
@@ -145,17 +142,43 @@ export default class SpoilerBlockView extends NodeView {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
-        e.preventDefault();
         this.centerClick(e);
     }
   }
+
+  @bind
+  triggerClick(e) {
+    preventEvent(e);
+
+    this.updateAttributes({ isOpened: !this.node.attrs.isOpened });
+    this.syncState();
+    this.view.focus();
+  }
+
 
   @bind
   triggerKeypress(e) {
     switch (e.keyCode) {
       case 32: // space
       case 13: // enter
-        this.toggle(e);
+        this.triggerClick(e);
+    }
+  }
+
+  @bind
+  removeClick(e) {
+    preventEvent(e);
+
+    this.deleteNode();
+    this.view.focus();
+  }
+
+  @bind
+  removeKeypress(e) {
+    switch (e.keyCode) {
+      case 32: // space
+      case 13: // enter
+        this.removeClick(e);
     }
   }
 }
