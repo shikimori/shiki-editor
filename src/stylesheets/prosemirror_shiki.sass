@@ -22,7 +22,8 @@
       transition: opacity 0.25s
     &.ProseMirror-selectednode
       opacity: 0.65
-
+  &.ProseMirror-hideselection .b-spoiler_block.ProseMirror-selectednode
+    outline: none !important
 
   span[contenteditable=false]
     cursor: default
