@@ -154,9 +154,7 @@ export default class VideoView extends NodeView {
   }
 
   @bind
-  checkImage(imagesLoaded) {
-    const [img] = imagesLoaded.elements;
-
+  checkImage(img) {
     if (this.node.attrs.hosting === 'youtube' &&
       img.naturalWidth === 120 && img.naturalHeight === 90
     ) {

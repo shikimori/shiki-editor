@@ -61,6 +61,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
+[video]https://www.youtube.com/watch?v=EM898MJWGzU[/video]
 test
 [b]zxc[/b][br]
 cvn
