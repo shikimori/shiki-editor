@@ -210,37 +210,23 @@ export default class ExtensionManager {
     const isVue = !!this.editor.contentComponent;
 
     return this.extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
       .filter(extension => (
-        extension.view && (
-          isVue || extension.view.constructor === Function
-        )
+        ['node', 'mark'].includes(extension.type) &&
+          extension.view
       ))
       .reduce((nodeViews, extension) => {
         const { editor } = this;
 
-        const nodeView = (node, view, getPos, decorations) => {
-          if (extension.view.constructor === Function) {
-            return extension.view({
-              editor,
-              extension,
-              node,
-              view,
-              getPos,
-              decorations
-            });
-          }
-          const component = extension.view;
-
-          return new VueView(component, {
+        const nodeView = (node, view, getPos, decorations) => (
+          extension.view({
             editor,
             extension,
             node,
             view,
             getPos,
             decorations
-          });
-        };
+          })
+        );
 
         return {
           ...nodeViews,

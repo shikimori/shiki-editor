@@ -1,6 +1,7 @@
 import { Mark } from '../base';
 import { markInputRule, markPasteRule } from '../commands';
 import { SpoilerInlineView } from '../node_views';
+import { nodeViewRenderer } from '../node_view';
 
 export default class SpoilerInline extends Mark {
   get name() {
@@ -31,8 +32,8 @@ export default class SpoilerInline extends Mark {
     };
   }
 
-  view(options) {
-    return new SpoilerInlineView(options);
+  view(props) {
+    return new SpoilerInlineView(null, props);
   }
 
   inputRules({ type }) {

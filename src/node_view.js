@@ -2,7 +2,8 @@ import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
 import { getMarkRange, isiOS } from './utils';
 
-export default class NodeView {
+export class NodeView {
+  component = null
   editor = null
   node = null
   extension = null
@@ -14,7 +15,8 @@ export default class NodeView {
   isSelected = false
   captureEvents = true
 
-  constructor({ node, extension, view, getPos, decorations, editor }) {
+  constructor(component, { node, extension, view, getPos, decorations, editor }) {
+    this.component = component;
     this.node = node;
     this.extension = extension;
     this.view = view;
@@ -259,3 +261,17 @@ export default class NodeView {
     this.isDestroyed = true;
   }
 }
+
+export function nodeViewRenderer(component) {
+  return (props) => {
+    // try to get the parent component
+    // this is important for vue devtools to show the component hierarchy correctly
+    // maybe it’s `undefined` because <editor-content> isn’t rendered yet
+    if (!props.editor.contentComponent) {
+      return {};
+    }
+
+    return new component(null, props);
+  };
+}
+
