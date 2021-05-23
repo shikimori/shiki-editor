@@ -65,12 +65,13 @@ test
 [b]zxc[/b][br]
 cvn
 [img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]
+||test||
+[manga=1]
+[spoiler_block=spoiler block with label]
+spoiler \`content\`
+[/spoiler_block]
+[poster]https://www.ljmu.ac.uk/~/media/ljmu/news/starsedit.jpg[/poster]
 `.trim();
-// ||test||
-// [manga=1]
-// [spoiler_block=spoiler block with label]
-// spoiler \`content\`
-// [/spoiler_block]
 
 export default {
   name: 'App',

@@ -8,6 +8,7 @@ const ANY_BBCODE_REGEXP = /\[\w+/;
 
 export default class SpoilerBlockView extends NodeView {
   priorLabel = null
+  priorIsFullwidth = null
 
   mount() {
     this.dom = document.createElement('div');
@@ -50,6 +51,13 @@ export default class SpoilerBlockView extends NodeView {
     this.dom.classList.toggle('is-opened', this.node.attrs.isOpened);
     this.dom.classList.toggle('is-fullwidth', this.node.attrs.isFullwidth);
     this.dom.classList.toggle('is-centered', this.node.attrs.isCentered);
+
+    if (this.node.attrs.isFullwidth !== this.priorIsFullwidth) {
+      this.priorIsFullwidth = this.node.attrs.isFullwidth;
+      this.trigger_center.style.display = this.node.attrs.isFullwidth ?
+        '' :
+        'none';
+    }
 
     if (this.node.attrs.label === this.priorLabel) { return; }
     this.priorLabel = this.node.attrs.label;
