@@ -266,8 +266,7 @@ export default {
       };
     },
     isContentManipulationsPending() {
-      return false;
-      // return this.fileUploaderExtension.isUploading;
+      return this.fileUploaderExtension.isUploading;
     },
     isPreviewEnabled() {
       return !this.isContentManipulationsPending;
@@ -468,8 +467,7 @@ export default {
     async createEditor() {
       this.isHugeContent = this.content.length > MAXIMUM_CONTENT_SIZE;
 
-      const extensions = [];
-      /* const extensions = [this.fileUploaderExtension]; */
+      const extensions = [this.fileUploaderExtension];
       if (this.shikiSearchExtension) {
         extensions.push(this.shikiSearchExtension);
       }
@@ -494,10 +492,10 @@ export default {
 
       await this.$nextTick();
 
-      /* this.fileUploaderExtension.attachShikiUploader({ */
-      /*   node: this.$refs.editor_container,             */
-      /*   progressContainerNode: this.$refs.menubar      */
-      /* });                                              */
+      this.fileUploaderExtension.attachShikiUploader({
+        node: this.$refs.editor_container,
+        progressContainerNode: this.$refs.menubar
+      });
     },
     updateNodesState() {
       const memo = {};
