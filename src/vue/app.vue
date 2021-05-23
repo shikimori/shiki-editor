@@ -5,8 +5,7 @@
       class='menubar'
       :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
     >
-      <!--div v-if='editor' v-dragscroll class='icons'-->
-      <div v-if='editor' class='icons'>
+      <div v-if='editor' v-dragscroll class='icons'>
         <div
           v-for='([group, items], index) in menuItems'
           :key='index'
@@ -148,7 +147,7 @@
 import { watch } from 'vue';
 import autosize from 'autosize';
 import withinviewport from '@morr/withinviewport';
-// import { dragscroll } from 'vue-dragscroll';
+import { dragscrollNext } from 'vue-dragscroll';
 import delay from 'delay';
 import { set } from 'text-field-edit';
 
@@ -200,9 +199,9 @@ const DEFAULT_DATA = {
 
 export default {
   name: 'EditorApp',
-  // directives: {
-  //   dragscroll
-  // },
+  directives: {
+    dragscroll: dragscrollNext
+  },
   components: {
     EditorContent,
     Icon,
