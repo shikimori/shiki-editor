@@ -1,6 +1,6 @@
 import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
-import { getMarkRange } from './utils';
+import { getMarkRange, isiOS } from './utils';
 
 export default class NodeView {
   node = null
@@ -85,8 +85,39 @@ export default class NodeView {
   syncState() {
   }
 
+  updateAttrs(attrs, isAddToHistory = true) {
+    const { type } = this.node;
+    const pos = this.getPos();
+
+    const newAttrs = {
+      ...this.node.attrs,
+      ...attrs
+    };
+    let transaction = this.tr.setMeta('addToHistory', isAddToHistory);
+
+    if (this.isMark) {
+      transaction = transaction
+        .removeMark(pos.from, pos.to, type)
+        .addMark(pos.from, pos.to, type.create(newAttrs));
+    } else {
+      transaction = transaction.setNodeMarkup(pos, null, newAttrs);
+    }
+
+    this.dispatch(transaction);
+  }
+
+  getMarkPos() {
+    const pos = this.view.posAtDOM(this.dom);
+    const resolvedPos = this.view.state.doc.resolve(pos);
+    const range = getMarkRange(resolvedPos, this.node.type);
+    return range;
+  }
+
   // disable (almost) all prosemirror event listener for node views
   // stopEvent(event) {
+  //   if (!this.dom) {
+  //     return false;
+  //   }
   //   if (typeof this.extension.stopEvent === 'function') {
   //     return this.extension.stopEvent(event);
   //   }
@@ -120,32 +151,91 @@ export default class NodeView {
   //   return this.captureEvents;
   // }
 
-  updateAttrs(attrs, isAddToHistory = true) {
-    const { type } = this.node;
-    const pos = this.getPos();
+  onDragStart(event) {
+    const { view } = this.editor;
+    const target = event.target;
 
-    const newAttrs = {
-      ...this.node.attrs,
-      ...attrs
-    };
-    let transaction = this.tr.setMeta('addToHistory', isAddToHistory);
+    // get the drag handle element
+    // `closest` is not available for text nodes so we may have to use its parent
+    const dragHandle = target.nodeType === 3 ?
+      target.parentElement?.closest('[data-drag-handle]') :
+      target.closest('[data-drag-handle]');
 
-    if (this.isMark) {
-      transaction = transaction
-        .removeMark(pos.from, pos.to, type)
-        .addMark(pos.from, pos.to, type.create(newAttrs));
-    } else {
-      transaction = transaction.setNodeMarkup(pos, null, newAttrs);
+    if (
+      !this.dom ||
+      this.contentDOM?.contains(target) ||
+      !dragHandle
+    ) {
+      return;
     }
 
-    this.dispatch(transaction);
+    let x = 0;
+    let y = 0;
+
+    // calculate offset for drag element if we use a different drag handle element
+    if (this.dom !== dragHandle) {
+      const domBox = this.dom.getBoundingClientRect();
+      const handleBox = dragHandle.getBoundingClientRect();
+
+      x = handleBox.x - domBox.x + event.offsetX;
+      y = handleBox.y - domBox.y + event.offsetY;
+    }
+
+    event.dataTransfer?.setDragImage(this.dom, x, y);
+
+    // we need to tell ProseMirror that we want to move the whole node
+    // so we create a NodeSelection
+    const selection = NodeSelection.create(view.state.doc, this.getPos());
+    const transaction = view.state.tr.setSelection(selection);
+
+    view.dispatch(transaction);
   }
 
-  getMarkPos() {
-    const pos = this.view.posAtDOM(this.dom);
-    const resolvedPos = this.view.state.doc.resolve(pos);
-    const range = getMarkRange(resolvedPos, this.node.type);
-    return range;
+  ignoreMutation(mutation) {
+    if (!this.dom || !this.contentDOM) {
+      return true;
+    }
+
+    // a leaf/atom node is like a black box for ProseMirror
+    // and should be fully handled by the node view
+    if (this.node.isLeaf) {
+      return true;
+    }
+
+    // ProseMirror should handle any selections
+    if (mutation.type === 'selection') {
+      return false;
+    }
+
+    // try to prevent a bug on iOS that will break node views on enter
+    // this is because ProseMirror can’t preventDispatch on enter
+    // this will lead to a re-render of the node view on enter
+    // see: https://github.com/ueberdosis/tiptap/issues/1214
+    if (this.dom.contains(mutation.target) && mutation.type === 'childList' && isiOS()) {
+      const changedNodes = [
+        ...Array.from(mutation.addedNodes),
+        ...Array.from(mutation.removedNodes)
+      ];
+
+      // we’ll check if every changed node is contentEditable
+      // to make sure it’s probably mutated by ProseMirror
+      if (changedNodes.every(node => node.isContentEditable)) {
+        return false;
+      }
+    }
+
+    // we will allow mutation contentDOM with attributes
+    // so we can for example adding classes within our node view
+    if (this.contentDOM === mutation.target && mutation.type === 'attributes') {
+      return true;
+    }
+
+    // ProseMirror should handle any changes within contentDOM
+    if (this.contentDOM.contains(mutation.target)) {
+      return false;
+    }
+
+    return true;
   }
 
   deleteNode() {
