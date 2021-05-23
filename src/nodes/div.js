@@ -2,7 +2,7 @@ import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
 import { Node } from '../base';
 import { SwitcherView } from '../node_views';
 import { TabsView } from '../node_views';
-import { nodeViewRenderer } from '../node_view';
+import NodeView from '../node_view';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 
 export default class Div extends Node {
@@ -63,7 +63,7 @@ export default class Div extends Node {
   }
 
   get view() {
-    return nodeViewRenderer(null, props => {
+    return NodeView.buildRenderer(null, props => {
       const isTabs = props.node.attrs.data?.some(([name, value]) => (
         name === 'data-dynamic' && value === 'tabs'
       ));

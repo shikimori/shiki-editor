@@ -1,6 +1,6 @@
 import { Node } from '../base';
 import { ShikiView } from '../node_views';
-import { nodeViewRenderer } from '../node_view';
+import NodeView from '../node_view';
 
 export default class ShikiBlock extends Node {
   get name() {
@@ -34,7 +34,7 @@ export default class ShikiBlock extends Node {
   }
 
   get view() {
-    return nodeViewRenderer(ShikiView);
+    return NodeView.buildRenderer(ShikiView);
   }
 
   get markdownParserToken() {

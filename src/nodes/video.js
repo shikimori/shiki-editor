@@ -1,7 +1,7 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { VideoView } from '../node_views';
-import { nodeViewRenderer } from '../node_view';
+import NodeView from '../node_view';
 import { addToShikiCache } from '../extensions';
 
 const VIDEO_INPUT_REGEX = /\[video\](.*?)\[\/video\]/;
@@ -65,7 +65,7 @@ export default class Video extends Node {
   }
 
   get view() {
-    return nodeViewRenderer(VideoView);
+    return NodeView.buildRenderer(VideoView);
   }
 
   inputRules({ type }) {

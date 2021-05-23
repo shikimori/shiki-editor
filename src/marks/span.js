@@ -1,7 +1,7 @@
 import { Mark } from '../base';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 import { SwitcherView } from '../node_views';
-import { nodeViewRenderer } from '../node_view';
+import NodeView from '../node_view';
 
 export default class Span extends Mark {
   get name() {
@@ -51,7 +51,7 @@ export default class Span extends Mark {
   }
 
   get view() {
-    return nodeViewRenderer(null, props => {
+    return NodeView.buildRenderer(null, props => {
       const isSwitcher = props.node.attrs.data?.some(([name, value]) => (
         name === 'data-dynamic' && value === 'switcher'
       ));

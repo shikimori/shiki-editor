@@ -2,7 +2,7 @@ import { bind } from 'shiki-decorators';
 import { NodeSelection } from 'prosemirror-state';
 import { getMarkRange, isiOS } from './utils';
 
-export class NodeView {
+export default class NodeView {
   component = null
   editor = null
   node = null
@@ -262,9 +262,9 @@ export class NodeView {
   }
 }
 
-export function nodeViewRenderer(Component = null, buildComponent = null) {
+NodeView.buildRenderer = function(Component = null, buildComponent = null) {
   if (buildComponent) { return buildComponent; }
   if (Component) { return props => new Component(null, props); }
 
   return null;
-}
+};

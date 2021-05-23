@@ -5,7 +5,7 @@ import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleWrap } from '../commands';
 import { SpoilerBlockView } from '../node_views';
-import { nodeViewRenderer } from '../node_view';
+import NodeView from '../node_view';
 
 export default class SpoilerBlock extends Node {
   get name() {
@@ -65,7 +65,7 @@ export default class SpoilerBlock extends Node {
   }
 
   get view() {
-    return nodeViewRenderer(SpoilerBlockView);
+    return NodeView.buildRenderer(SpoilerBlockView);
   }
 
   commands({ schema, type }) {

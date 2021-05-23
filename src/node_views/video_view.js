@@ -1,7 +1,7 @@
 import imagePromise from 'image-promise';
 import { bind } from 'shiki-decorators';
 
-import { NodeView } from '../node_view';
+import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 import { addToShikiCache } from '../extensions';
 
