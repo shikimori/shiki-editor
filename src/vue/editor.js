@@ -1,11 +1,7 @@
 // https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/Editor.ts
 import Editor from '../editor';
 
-import {
-  markRaw,
-  customRef,
-  reactive
-} from 'vue';
+import { markRaw, customRef, reactive } from 'vue';
 
 function useDebouncedRef(value) {
   return customRef((track, trigger) => ({
