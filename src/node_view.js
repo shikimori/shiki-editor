@@ -1,5 +1,5 @@
 import { bind } from 'shiki-decorators';
-import { NodeSelection, TextSelection } from 'prosemirror-state';
+import { NodeSelection } from 'prosemirror-state';
 
 import { getMarkRange, isiOS } from './utils';
 import { deleteRange } from './commands';
