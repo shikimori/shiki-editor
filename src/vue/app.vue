@@ -221,6 +221,7 @@ export default {
     },
     previewParams: { type: Object, required: false, default: undefined }
   },
+  emits: ['preview', 'submit'],
   data: () => ({
     editor: null,
     editorContent: null,
