@@ -41,7 +41,7 @@
 <script>
 import { isMobile } from 'shiki-utils';
 import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
-// import { useKeypress } from 'vue3-keypress';
+import { useKeypress } from 'vue3-keypress';
 
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
@@ -67,16 +67,16 @@ export default {
     const { isEnabled } = toRefs(props);
     const internalInstance = getCurrentInstance();
 
-    // useKeypress({
-    //   keyEvent: 'keyup',
-    //   keyBinds: [{
-    //     keyCode: 27,
-    //     success: () => {
-    //       internalInstance.ctx.close();
-    //     }
-    //   }],
-    //   isActive: isEnabled
-    // });
+    useKeypress({
+      keyEvent: 'keyup',
+      keyBinds: [{
+        keyCode: 27,
+        success: () => {
+          internalInstance.ctx.close();
+        }
+      }],
+      isActive: isEnabled
+    });
   },
   data: () => ({
     popup: null,
