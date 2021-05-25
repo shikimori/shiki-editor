@@ -1,7 +1,8 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Image.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-extensions/src/nodes/Image.js
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ImageView } from '../node_views';
+import VuewNodeView from '../vue/node_view';
 import { addToShikiCache } from '../extensions';
 
 const IMAGE_INPUT_REGEX = /\[img\](.*?)\[\/img\]/;
@@ -87,7 +88,7 @@ export default class Image extends Node {
   }
 
   get view() {
-    return ImageView;
+    return VuewNodeView.buildRenderer(ImageView);
   }
 
   inputRules({ type }) {

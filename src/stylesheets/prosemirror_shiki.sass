@@ -1,10 +1,7 @@
 .ProseMirror
   .b-image
-    display: inline-flex // need to fix cursor display in position after image
-
-    &:hover,
-    &.is-prosemirror-selected
-      position: relative
+    img
+      transition: max-width .25s
 
   .b-mention
     &:before
@@ -18,6 +15,15 @@
     &[data-span]
       display: block
       outline: 1px solid rgba(#9cf, 0.5)
+
+  .b-spoiler_block
+    // drag'n'drop inside PromiseMirror
+    &[data-node-view-wrapper]
+      transition: opacity 0.25s
+    &.ProseMirror-selectednode
+      opacity: 0.65
+  &.ProseMirror-hideselection .b-spoiler_block.ProseMirror-selectednode
+    outline: none !important
 
   span[contenteditable=false]
     cursor: default
@@ -36,7 +42,7 @@
   & > :first-child:before
     top: 0 !important
 
-  [data-image].is-prosemirror-selected,
+  [data-image].ProseMirror-selectednode,
   [data-video].ProseMirror-selectednode,
   [data-image]:hover,
   [data-video]:hover,
@@ -54,20 +60,20 @@
       font-weight: normal
       left: 0
       letter-spacing: 0.8px
-      line-height: 1.25
+      line-height: 1
       padding: 2px 0
       pointer-events: none
       position: absolute
       text-align: left
       text-shadow: 1px 1px 0px #fff
-      top: -16px
+      top: -15px
       width: 999999px
       z-index: 20
 
     .no-prosemirror-info &:before
       display: none
 
-  [data-image].is-prosemirror-selected,
+  [data-image].ProseMirror-selectednode,
   [data-video].ProseMirror-selectednode
     outline: 2px solid #9cf
     position: relative

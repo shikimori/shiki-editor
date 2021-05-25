@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-extensions/src/marks/LinkInline.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-extensions/src/marks/LinkInline.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Mark } from '../base';
 import {

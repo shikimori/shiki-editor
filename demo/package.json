@@ -9,7 +9,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.14.2",
+    "@vue/compiler-sfc": "^3.0.11",
     "add": "^2.0.6",
     "autosize": "^4.0.2",
     "axios": "^0.21.1",
@@ -17,19 +18,19 @@
     "imagesloaded": "^4.1.4",
     "reset-css": "^5.0.1",
     "tippy.js": "^6.2.6",
-    "vue": "^2.6.11",
+    "vue": "^3.0.11",
     "yarn": "^1.22.4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-eslint": "^4.4.1",
-    "@vue/cli-service": "~4.4.0",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "babel-eslint": "^10.1.0",
     "es-check": "^5.1.0",
-    "eslint": "^7.2.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^7.26.0",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-vue": "7.9.0",
     "node-sass": "^4.13.0",
     "postcss-easings": "^2.0.0",
     "raw-loader": "^4.0.1",
@@ -38,8 +39,7 @@
     "shiki-editor": "^1.2.2",
     "shiki-uploader": "^1.1.1",
     "shiki-utils": "^1.0.1",
-    "style-loader": "^1.0.1",
-    "vue-template-compiler": "^2.6.11"
+    "style-loader": "^1.0.1"
   },
   "postcss": {
     "plugins": {

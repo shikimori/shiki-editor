@@ -1,4 +1,4 @@
-// based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-extensions/src/plugins/Suggestions.js
+// https://github.com/ueberdosis/tiptap/blob/v1/packages/tiptap-extensions/src/plugins/Suggestions.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { insertText } from '../../commands';

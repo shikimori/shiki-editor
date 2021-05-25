@@ -1,3 +1,4 @@
+export { default as deleteRange } from './delete_range';
 export { default as insertFragment } from './insert_fragment';
 export { default as insertLink } from './insert_link';
 export { default as insertNode } from './insert_node';

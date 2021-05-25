@@ -19,7 +19,7 @@ export default function preventTransformPastedInsideCodeMark(editor) {
       // when pasted `html` into node with code mark,
       // create new slice of text with code mark,
       // otherwise parse content as regular html similar to prosemirror does in
-      // https://github.com/ProseMirror/prosemirror-view/blob/master/src/clipboard.js#L38
+      // https://github.com/ProseMirror/prosemirror-view/blob/v1/src/clipboard.js#L38
       clipboardParser: {
         parseSlice(dom, { context, preserveWhitespace }) {
           const node = context.nodeBefore || context.nodeAfter;

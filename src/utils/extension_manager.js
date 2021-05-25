@@ -1,15 +1,17 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Utils/ExtensionManager.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Utils/ExtensionManager.js
 import { keymap } from 'prosemirror-keymap';
 
 export default class ExtensionManager {
-  view = null
+  editor = null
 
   constructor(extensions = [], editor) {
     extensions.forEach(extension => {
       extension.bindEditor(editor);
       extension.init();
     });
+
     this.extensions = extensions;
+    this.editor = editor;
   }
 
   get nodes() {
@@ -18,27 +20,6 @@ export default class ExtensionManager {
       .reduce((nodes, { name, schema }) => ({
         ...nodes,
         [name]: schema
-      }), {});
-  }
-
-  get options() {
-    const { view } = this;
-    return this.extensions
-      .reduce((nodes, extension) => ({
-        ...nodes,
-        [extension.name]: new Proxy(extension.options, {
-          set(obj, prop, value) {
-            const changed = (obj[prop] !== value);
-
-            Object.assign(obj, { [prop]: value });
-
-            if (changed) {
-              view.updateState(view.state);
-            }
-
-            return true;
-          }
-        })
       }), {});
   }
 
@@ -220,6 +201,32 @@ export default class ExtensionManager {
         return {
           ...allCommands,
           ...commands
+        };
+      }, {});
+  }
+
+  nodeViews() {
+    return this.extensions
+      .filter(extension => (
+        ['node', 'mark'].includes(extension.type) &&
+          extension.view
+      ))
+      .reduce((nodeViews, extension) => {
+        const { editor } = this;
+
+        const nodeView = (node, _view, getPos, decorations) => (
+          extension.view({
+            editor,
+            extension,
+            node,
+            getPos,
+            decorations
+          })
+        );
+
+        return {
+          ...nodeViews,
+          [extension.name]: nodeView
         };
       }, {});
   }

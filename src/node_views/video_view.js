@@ -1,15 +1,14 @@
 import imagePromise from 'image-promise';
 import { bind } from 'shiki-decorators';
 
-import DOMView from './dom_view';
+import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 import { addToShikiCache } from '../extensions';
 
-export default class VideoView extends DOMView {
-  constructor(options) {
-    super(options);
-
+export default class VideoView extends NodeView {
+  mount() {
     this.dom = document.createElement('span');
+    this.dom.setAttribute('data-node-view-wrapper', '');
 
     this.syncState();
 
@@ -109,7 +108,7 @@ export default class VideoView extends DOMView {
 
   success(result) {
     if (result.id) {
-      this.updateAttrs({ ...result, isLoading: false }, false);
+      this.updateAttributes({ ...result, isLoading: false }, false);
     } else {
       this.notFound();
     }
@@ -132,7 +131,7 @@ export default class VideoView extends DOMView {
   }
 
   error() {
-    this.updateAttrs({ isLoading: false, isError: true }, false);
+    this.updateAttributes({ isLoading: false, isError: true }, false);
   }
 
   @bind
@@ -156,9 +155,7 @@ export default class VideoView extends DOMView {
   }
 
   @bind
-  checkImage(imagesLoaded) {
-    const [img] = imagesLoaded.elements;
-
+  checkImage(img) {
     if (this.node.attrs.hosting === 'youtube' &&
       img.naturalWidth === 120 && img.naturalHeight === 90
     ) {
@@ -170,7 +167,7 @@ export default class VideoView extends DOMView {
       };
 
       addToShikiCache('video', this.node.attrs.url, shikiData);
-      this.updateAttrs({ isBroken: true }, false);
+      this.updateAttributes({ isBroken: true }, false);
 
       return;
     }

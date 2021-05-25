@@ -1,5 +1,5 @@
 // based on
-// https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Utils/Extension.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Utils/Extension.js
 export default class Extension {
   constructor(options = {}) {
     this.options = {

@@ -1,4 +1,4 @@
-// based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-extensions/src/nodes/Mention.js
+// https://github.com/ueberdosis/tiptap/blob/v1/packages/tiptap-extensions/src/nodes/Mention.js
 import { Node } from '../base';
 import { replaceText } from '../commands';
 import { buildSuggestionsPlugin } from '../plugins';

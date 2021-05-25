@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/pasteRule.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/pasteRule.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { isContainsCodeMark } from '../utils';

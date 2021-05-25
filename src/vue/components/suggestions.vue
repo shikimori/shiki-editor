@@ -40,8 +40,8 @@ import flip from '@popperjs/core/lib/modifiers/flip';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 import { RequestId } from 'shiki-utils';
-import { buildSuggestionsPopupPlugin } from '../plugins';
-import { insertUserMention } from '../commands';
+import { buildSuggestionsPopupPlugin } from '../../plugins';
+import { insertUserMention } from '../../commands';
 
 const QUERY_MATCHERS = {
   equals: (query) => {
@@ -92,7 +92,7 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup();
     this?.editor?.unregisterPlugin(this.plugin.key);
   },

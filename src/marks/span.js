@@ -1,6 +1,7 @@
 import { Mark } from '../base';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 import { SwitcherView } from '../node_views';
+import NodeView from '../node_view';
 
 export default class Span extends Mark {
   get name() {
@@ -49,14 +50,17 @@ export default class Span extends Mark {
     };
   }
 
-  view(options) {
-    const isSwitcher = options.node.attrs.data?.some(([name, value]) => (
-      name === 'data-dynamic' && value === 'switcher'
-    ));
+  get view() {
+    return NodeView.buildRenderer(null, props => {
+      const isSwitcher = props.node.attrs.data?.some(([name, value]) => (
+        name === 'data-dynamic' && value === 'switcher'
+      ));
 
-    if (isSwitcher) {
-      return new SwitcherView(options);
-    }
+      if (isSwitcher) {
+        return new SwitcherView(props);
+      }
+      return null;
+    });
   }
 
   get markdownParserToken() {

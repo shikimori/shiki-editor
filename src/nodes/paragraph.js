@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Nodes/Paragraph.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Nodes/Paragraph.js
 // import { setBlockType } from 'prosemirror-commands';
 import { Node } from '../base';
 // import { Plugin, PluginKey } from 'prosemirror-state';

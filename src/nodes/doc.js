@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Nodes/Doc.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Nodes/Doc.js
 import { Node } from '../base';
 
 export default class Doc extends Node {

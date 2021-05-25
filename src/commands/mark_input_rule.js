@@ -1,4 +1,4 @@
-// https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/markInputRule.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/markInputRule.js
 import { InputRule } from 'prosemirror-inputrules';
 
 function getMarksBetween(start, end, state) {

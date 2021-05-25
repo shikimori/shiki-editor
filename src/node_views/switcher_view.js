@@ -1,6 +1,7 @@
 import { Mark } from 'prosemirror-model';
 import { bind } from 'shiki-decorators';
-import DOMView from './dom_view';
+
+import NodeView from '../node_view';
 import { findChildren } from 'prosemirror-utils/src/node';
 import { getMarkRange } from '../utils';
 
@@ -12,11 +13,10 @@ import {
 import { attrsAddClass, attrsRemoveClass } from '../utils/node_helpers';
 import { removeAllAttributes } from '../utils/dom_helpers';
 
-export default class SwitcherView extends DOMView {
-  constructor(options) {
-    super(options);
-
+export default class SwitcherView extends NodeView {
+  mount() {
     this.dom = document.createElement(this.elementType);
+    this.dom.setAttribute('data-node-view-wrapper', '');
     this.contentDOM = this.dom;
 
     this.syncState();

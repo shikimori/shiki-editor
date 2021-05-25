@@ -1,46 +1,49 @@
 <template>
-  <span
-    class='b-image'
-    :class='[customClass, {
-      "is-prosemirror-selected": selected,
-      "b-poster": isPoster,
-      "check-width": isCheckWidth,
-      "no-zoom": node.attrs.isNoZoom || isPoster,
-    }]'
-    :data-attrs='serializedAttributes'
-    :data-image='tagPreview'
-    @click='select'
-  >
-    <div class='controls'>
-      <a class='prosemirror-open' :href='node.attrs.src' target='_blank' />
-      <div v-if='isPoster' class='collapse' @click='collapse' />
-      <div v-else-if='isExpandable' class='prosemirror-expand' @click='expand' />
-      <div class='delete' @click='remove' />
-    </div>
-    <img
-      ref='image'
-      :src='node.attrs.src'
-      :width='width'
-      :height='height'
+  <NodeViewWrapper>
+    <span
+      class='b-image'
+      :class='[customClass, {
+        "ProseMirror-selectednode": isSelected,
+        "b-poster": isPoster,
+        "check-width": isCheckWidth,
+        "no-zoom": node.attrs.isNoZoom || isPoster,
+      }]'
+      :data-attrs='serializedAttributes'
+      :data-image='tagPreview'
+      @click='select'
     >
-  </span>
+      <div class='controls'>
+        <a class='prosemirror-open' :href='node.attrs.src' target='_blank' />
+        <div v-if='isPoster' class='collapse' @click='collapse' />
+        <div v-else-if='isExpandable' class='prosemirror-expand' @click='expand' />
+        <div class='delete' @click='remove' />
+      </div>
+      <img
+        ref='image'
+        :src='node.attrs.src'
+        :width='width'
+        :height='height'
+      >
+    </span>
+  </NodeViewWrapper>
 </template>
 
 <script>
 import imagePromise from 'image-promise';
 import { NodeSelection } from 'prosemirror-state';
 
+import { NodeViewWrapper } from '../vue/node_view_wrapper';
 import { tagSequence } from '../nodes/image';
 
 export default {
   name: 'ImageView',
+  components: { NodeViewWrapper },
   props: {
     editor: { type: Object, required: true },
     node: { type: Object, required: true },
     getPos: { type: Function, required: true },
-    view: { type: Object, required: true },
-    selected: { type: Boolean, required: true },
-    updateAttrs: { type: Function, required: true }
+    isSelected: { type: Boolean, required: true },
+    updateAttributes: { type: Function, required: true }
   },
   data: () => ({
     isLoaded: false,
@@ -90,8 +93,8 @@ export default {
     remove(e) {
       e.stopImmediatePropagation();
 
-      this.view.dispatch(
-        this.view.state.tr.delete(
+      this.editor.view.dispatch(
+        this.editor.view.state.tr.delete(
           this.getPos(),
           this.getPos() + 1
         )
@@ -99,26 +102,20 @@ export default {
       this.editor.focus();
     },
     select() {
-      this.view.dispatch(
-        this.view.state.tr.setSelection(
-          new NodeSelection(this.view.state.tr.doc.resolve(this.getPos()))
+      this.editor.view.dispatch(
+        this.editor.view.state.tr.setSelection(
+          new NodeSelection(this.editor.view.state.tr.doc.resolve(this.getPos()))
         )
       );
     },
     expand() {
-      this.updateAttrs({ ...this.node.attrs, isPoster: true });
+      this.updateAttributes({ isPoster: true });
     },
     collapse() {
-      this.updateAttrs({ ...this.node.attrs, isPoster: false });
+      this.updateAttributes({ isPoster: false });
       // have to update image width when animation is completed
       setTimeout(() => this.imageWidth = this.$refs.image.width, 350);
     }
   }
 };
 </script>
-
-<style scoped lang='sass'>
-.b-image
-  img
-    transition: max-width .25s
-</style>

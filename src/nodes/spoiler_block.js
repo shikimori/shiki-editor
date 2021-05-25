@@ -5,6 +5,7 @@ import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleWrap } from '../commands';
 import { SpoilerBlockView } from '../node_views';
+import NodeView from '../node_view';
 
 export default class SpoilerBlock extends Node {
   get name() {
@@ -16,6 +17,7 @@ export default class SpoilerBlock extends Node {
       content: 'block*',
       group: 'block',
       defining: true,
+      selectable: false,
       draggable: false,
       attrs: {
         label: { default: this.defaultLabel },
@@ -63,8 +65,8 @@ export default class SpoilerBlock extends Node {
     return window.I18n.t('frontend.shiki_editor.spoiler');
   }
 
-  view(options) {
-    return new SpoilerBlockView(options);
+  get view() {
+    return NodeView.buildRenderer(SpoilerBlockView);
   }
 
   commands({ schema, type }) {

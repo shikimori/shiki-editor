@@ -27,7 +27,7 @@
     min-height: 1em
     overflow: hidden
 
-  /deep/ .shiki-file_uploader-upload_progress
+  ::v-deep(.shiki-file_uploader-upload_progress)
     margin-top: 1px
     margin-bottom: 3px
 
@@ -37,7 +37,7 @@
   padding: 5px 0
 
   +iphone
-    /deep/ .icon
+    ::v-deep(.icon)
       display: none
 
       &.is-active
@@ -52,7 +52,7 @@
     &.is-active,
     &.menu_group-controls,
     &.menu_group-history
-      /deep/ .icon
+      ::v-deep(.icon)
         display: block
 
   .mobile_placeholder

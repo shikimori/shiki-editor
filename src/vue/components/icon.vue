@@ -39,7 +39,7 @@ export default {
   props: {
     type: { type: String, required: true },
     title: { type: String, required: true },
-    isActive: { type: Boolean, required: true },
+    isActive: { type: Boolean, required: false, default: false },
     isEnabled: { type: Boolean, required: false, default: true },
     isDisabled: { type: Boolean, required: false, default: false },
     isButton: { type: Boolean, required: false, default: false }
@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-@import ../stylesheets/mixins/icon
+@import ../../stylesheets/mixins/icon
 
 .icon
   +icon

@@ -31,7 +31,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint-plugin-vue": "^7.9.0",
     "image-promise": "^7.0.1",
     "mocha": "^7.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
@@ -59,9 +59,9 @@
     "prosemirror-view": "^1.18.4",
     "scroll-lock": "^2.1.4",
     "text-field-edit": "^3.1.0",
-    "vue-custom-scrollbar": "morr/vue-custom-scrollbar#1.1.5",
-    "vue-dragscroll": "^2.1.0",
-    "vue-keypress": "^2.1.1"
+    "vue-dragscroll": "^3.0.0",
+    "vue3-keypress": "^4.0.1",
+    "vue3-perfect-scrollbar": "morr/vue3-perfect-scrollbar#master"
   },
   "peerDependencies": {
     "autosize": "^4.0.2",
@@ -70,7 +70,8 @@
     "shiki-decorators": "^1.0.0",
     "shiki-uploader": "^1.0.0",
     "shiki-utils": "^1.0.0",
-    "uevent": "^2.0.0"
+    "uevent": "^2.0.0",
+    "vue": "^3.0.11"
   },
   "postcss": {
     "plugins": {

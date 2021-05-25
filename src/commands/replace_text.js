@@ -1,4 +1,4 @@
-// based on https://github.com/ueberdosis/tiptap/blob/master/packages/tiptap-commands/src/commands/replaceText.js
+// https://github.com/ueberdosis/tiptap/blob/v1/packages/tiptap-commands/src/commands/replaceText.js
 export default function replaceText(range = null, type, attrs = {}) {
   return (state, dispatch) => {
     const { $from, $to } = state.selection;

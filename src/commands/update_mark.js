@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap-commands/src/commands/updateMark.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/updateMark.js
 import { getMarkRange } from '../utils';
 
 export default function updateMark(type, attrs) {

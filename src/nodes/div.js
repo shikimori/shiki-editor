@@ -2,6 +2,7 @@ import { LIST_DEPRECATION_TEXT } from '../markdown/tokenizer/bbcode_helpers';
 import { Node } from '../base';
 import { SwitcherView } from '../node_views';
 import { TabsView } from '../node_views';
+import NodeView from '../node_view';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 
 export default class Div extends Node {
@@ -61,19 +62,22 @@ export default class Div extends Node {
     };
   }
 
-  view(options) {
-    const isTabs = options.node.attrs.data?.some(([name, value]) => (
-      name === 'data-dynamic' && value === 'tabs'
-    ));
-    const isSwitcher = options.node.attrs.data?.some(([name, value]) => (
-      name === 'data-dynamic' && value === 'switcher'
-    ));
+  get view() {
+    return NodeView.buildRenderer(null, props => {
+      const isTabs = props.node.attrs.data?.some(([name, value]) => (
+        name === 'data-dynamic' && value === 'tabs'
+      ));
+      const isSwitcher = props.node.attrs.data?.some(([name, value]) => (
+        name === 'data-dynamic' && value === 'switcher'
+      ));
 
-    if (isTabs) {
-      return new TabsView(options);
-    } else if (isSwitcher) {
-      return new SwitcherView(options);
-    }
+      if (isTabs) {
+        return new TabsView(props);
+      } else if (isSwitcher) {
+        return new SwitcherView(props);
+      }
+      return null;
+    });
   }
 
   markdownSerialize(state, node) {

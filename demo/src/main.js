@@ -1,5 +1,5 @@
 // /* eslint max-len: 0 */
-import Vue from 'vue';
+import { createApp } from 'vue';
 import Demo from './demo.vue';
 
 import 'reset-css/reset.css';
@@ -7,9 +7,6 @@ import '@/stylesheets/application.sass';
 
 import 'shiki-uploader/index.sass';
 import 'shiki-utils/flash.sass';
-
-Vue.config.productionTip = false;
-Vue.config.devtools = false;
 
 const TRANSLATIONS = {
   'frontend.lib.please_try_again_later': 'Ошибка. Попробуй еще раз позже',
@@ -59,11 +56,4 @@ window.I18n = {
   t: key => TRANSLATIONS[key] || `:${key}`
 };
 
-new Vue({
-  components: { Demo },
-  render: h => h(Demo, {
-    props: {
-      vue: Vue
-    }
-  })
-}).$mount('#app');
+createApp(Demo).mount('#app');

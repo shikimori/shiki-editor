@@ -82,7 +82,7 @@ function isForbiddenSpec(node) {
   ));
 }
 
-// based on https://github.com/ProseMirror/prosemirror-model/blob/master/src/fragment.js#L44
+// https://github.com/ProseMirror/prosemirror-model/blob/v1/src/fragment.js#L44
 Fragment.prototype._suggestionTextBetween =
   function(from, to, blockSeparator, leafText) {
     let text = '';

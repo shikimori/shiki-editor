@@ -1,4 +1,4 @@
-// based on https://github.com/ProseMirror/prosemirror-markdown/blob/master/src/from_markdown.js
+// https://github.com/ProseMirror/prosemirror-markdown/blob/v1/src/from_markdown.js
 import MarkdownParseState from './parse_state';
 import tokenHandlers from './parser_token_handlers';
 

@@ -1,16 +1,15 @@
 import { bind } from 'shiki-decorators';
 import { DOMSerializer } from 'prosemirror-model';
 
-import DOMView from './dom_view';
+import NodeView from '../node_view';
 import { getShikiLoader } from '../utils';
 
-export default class ShikiView extends DOMView {
-  constructor(options) {
-    super(options);
-
+export default class ShikiView extends NodeView {
+  mount() {
     this.dom = document.createElement(this.elementType);
     this.dom.classList.add('b-shiki_editor-node');
     this.dom.setAttribute('data-attrs', JSON.stringify(this.node.attrs));
+    this.dom.setAttribute('data-node-view-wrapper', '');
 
     this.syncState();
     this.appendContent();
@@ -117,9 +116,9 @@ export default class ShikiView extends DOMView {
   @bind
   handleClick() {
     if (this.node.attrs.isLoading) {
-      this.updateAttrs({ isLoading: false }, false);
+      this.updateAttributes({ isLoading: false }, false);
     } else if (this.node.attrs.isError) {
-      this.updateAttrs({ isLoading: true, isError: false }, false);
+      this.updateAttributes({ isLoading: true, isError: false }, false);
       this.fetch();
     } else {
       this.focus();
@@ -129,7 +128,7 @@ export default class ShikiView extends DOMView {
   // @bind
   // resetCache() {
   //   this.shikiLoader.resetCache(this.node.attrs);
-  //   this.updateAttrs({ isError: false });
+  //   this.updateAttributes({ isError: false });
   //   this.dom.removeEventListener('click', this.resetCache);
   // }
 
@@ -230,10 +229,10 @@ export default class ShikiView extends DOMView {
   }
 
   notFound() {
-    this.updateAttrs({ isLoading: false, isNotFound: true }, false);
+    this.updateAttributes({ isLoading: false, isNotFound: true }, false);
   }
 
   error() {
-    this.updateAttrs({ isLoading: false, isError: true }, false);
+    this.updateAttributes({ isLoading: false, isError: true }, false);
   }
 }

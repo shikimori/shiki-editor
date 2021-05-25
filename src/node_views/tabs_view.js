@@ -1,17 +1,15 @@
 import { bind } from 'shiki-decorators';
 import { findChildren } from 'prosemirror-utils/src/node';
 
-import DOMView from './dom_view';
-
+import NodeView from '../node_view';
 import { serializeClassAttr, serializeDataAttr } from '../utils/div_helpers';
 import { attrsAddClass, attrsRemoveClass } from '../utils/node_helpers';
 import { findParent, findIndex } from '../utils/dom_helpers';
 
-export default class TabsView extends DOMView {
-  constructor(options) {
-    super(options);
-
+export default class TabsView extends NodeView {
+  mount() {
     this.dom = document.createElement('div');
+    this.dom.setAttribute('data-node-view-wrapper', '');
     this.contentDOM = this.dom;
 
     if (this.node.attrs.class) {

@@ -25,7 +25,6 @@
         <div v-if='isColumn1' class='f-column'>
           <ShikiEditorApp
             ref='editor1'
-            :vue='vue'
             :content='text1'
             :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader1'
@@ -36,7 +35,6 @@
         <div v-if='isColumn2' class='f-column'>
           <ShikiEditorApp
             ref='editor2'
-            :vue='vue'
             :content='text2'
             :shiki-request='shikiRequest'
             :shiki-uploader='shikiUploader2'
@@ -66,15 +64,13 @@ let TEXT_2 = `
 test
 [b]zxc[/b][br]
 cvn
+||test||
 `.trim();
 
 export default {
   name: 'App',
   components: {
     ShikiEditorApp
-  },
-  props: {
-    vue: { type: Function, required: true }
   },
   data: () => ({
     uploadHeaders: () => ({}),

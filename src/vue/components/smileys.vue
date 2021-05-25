@@ -1,28 +1,22 @@
 <template>
   <div>
-    <Keypress
-      v-if='isEnabled'
-      key-event='keyup'
-      :key-code='27'
-      @success='close'
-    />
     <div
       v-if='isMobile'
-      class='smileys fixed'
+      class='smileys mobile-fixed'
       :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
     >
       <div class='outer'>
         <div class='close' @click='close' />
-        <vue-custom-scrollbar
+        <PerfectScrollbar
           v-if='smileysHTML'
           ref='scrollbar'
-          :settings='{ wheelPropagation: false }'
+          :options='{ wheelPropagation: false }'
         >
           <div
             @click='select'
             v-html='smileysHTML'
           />
-        </vue-custom-scrollbar>
+        </PerfectScrollbar>
         <div v-else class='b-ajax' />
       </div>
     </div>
@@ -46,11 +40,9 @@
 
 <script>
 import { isMobile } from 'shiki-utils';
+import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
+import { useKeypress } from 'vue3-keypress';
 
-// import Keypress from 'vue-keypress';
-// import vueCustomScrollbar from 'vue-custom-scrollbar';
-
-// import { createPopper } from '@popperjs/core';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
@@ -61,18 +53,30 @@ import arrow from '@popperjs/core/lib/modifiers/arrow';
 export default {
   name: 'Smileys',
   components: {
-    Keypress: () => import(
-      /* webpackChunkName: "smileys-dependencies" */ 'vue-keypress'
-    ),
-    vueCustomScrollbar: () => import(
-      /* webpackChunkName: "smileys-dependencies" */ 'vue-custom-scrollbar'
-    )
+    PerfectScrollbar: defineAsyncComponent(() => import(
+      /* webpackChunkName: "smileys-dependencies" */ 'vue3-perfect-scrollbar'
+    ))
   },
   props: {
     isEnabled: { type: Boolean, required: true },
     shikiRequest: { type: Object, required: true },
     targetRef: { type: String, required: true },
     isStickyMenuOffset: { type: Boolean, required: true }
+  },
+  setup(props) {
+    const { isEnabled } = toRefs(props);
+    const internalInstance = getCurrentInstance();
+
+    useKeypress({
+      keyEvent: 'keyup',
+      keyBinds: [{
+        keyCode: 27,
+        success: () => {
+          internalInstance.ctx.close();
+        }
+      }],
+      isActive: isEnabled
+    });
   },
   data: () => ({
     popup: null,
@@ -100,7 +104,7 @@ export default {
       this.show();
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cleanup();
   },
   methods: {
@@ -135,7 +139,7 @@ export default {
     },
     showPopup() {
       this.popup = createPopper(
-        this.$parent.$refs[this.targetRef][0].$el,
+        this.$parent.$refs[this.targetRef].$el,
         this.$refs.container,
         {
           placement: 'bottom',
@@ -169,8 +173,8 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-@import ../stylesheets/mixins/responsive.sass
-@import ../stylesheets/mixins/icon
+@import ../../stylesheets/mixins/responsive.sass
+@import ../../stylesheets/mixins/icon
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
@@ -198,7 +202,7 @@ $padding-vertical: 8px
       +lte_ipad
         max-height: calc(100vh - 98px)
 
-  &.fixed
+  &.mobile-fixed
     height: 100%
     left: 0
     position: fixed
@@ -227,12 +231,14 @@ $padding-vertical: 8px
       overflow-y: auto
       max-height: 100%
 
-/deep/ .smiley
+::v-deep(.smiley)
   cursor: pointer
-  margin-right: 7px
   margin-bottom: 10px
+  margin-right: 7px
   outline: 2px solid transparent
+  position: relative
   transition: outline .15s
+  z-index: 1
 
   +gte_laptop
     &:hover
@@ -273,3 +279,5 @@ $padding-vertical: 8px
   width: 100%
   z-index: 39
 </style>
+
+<style src='vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.min.css' />

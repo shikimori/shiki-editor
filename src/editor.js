@@ -1,4 +1,4 @@
-// based on https://github.com/scrumpy/tiptap/blob/master/packages/tiptap/src/Editor.js
+// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap/src/Editor.js
 
 import { bind } from 'shiki-decorators';
 
@@ -21,20 +21,20 @@ import {
 } from './utils';
 import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
   from './markdown';
-import { VueView } from './node_views';
 import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
+  smartCommandSpoilerPlugin,
   trackFocus,
-  uploadPlaceholder,
-  smartCommandSpoilerPlugin
+  uploadPlaceholder
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
 import { enterCommand } from './key_commands';
 import { buildExtensions } from './extensions';
 
-export default class ShikiEditor {
+export default class Editor {
   options = {
+    element: document.createElement('div'),
     autofocus: null,
     shikiRequest: null,
     localizationField: 'name',
@@ -45,33 +45,15 @@ export default class ShikiEditor {
     editorProps: {}
   }
 
-  constructor(options, vueComponent, Vue) {
+  constructor(options) {
     uEvent.mixin(this);
 
-    this.vueComponent = vueComponent;
-    this.Vue = Vue;
-
-    this.init(options);
-  }
-
-  get state() {
-    return this.view.state;
-  }
-
-  get selection() {
-    return this.state.selection;
-  }
-
-  init(options = {}) {
     this.options = {
       ...this.options,
       ...options
     };
 
-    this.focused = false;
-
-    this.extensionsManager = this.createExtensionManager();
-    this.element = this.options.element || document.createElement('div');
+    this.extensionManager = this.createExtensionManager();
 
     this.nodes = this.createNodes();
     this.marks = this.createMarks();
@@ -83,13 +65,11 @@ export default class ShikiEditor {
     this.keymaps = this.createKeymaps();
     this.inputRules = this.createInputRules();
     this.pasteRules = this.createPasteRules();
-    this.view = this.createView();
+
+    this.createView();
 
     this.commands = this.createCommands();
     this.activeChecks = this.createActiveChecks();
-
-    this.plugins = this.createPlugins();
-    this.attachPlugins();
 
     this.setActiveNodesAndMarks();
 
@@ -98,7 +78,19 @@ export default class ShikiEditor {
     }
 
     // give extension manager access to our view
-    this.extensionsManager.view = this.view;
+    this.extensionManager.view = this.view;
+  }
+
+  get state() {
+    return this.view.state;
+  }
+
+  get selection() {
+    return this.state.selection;
+  }
+
+  get isDestroyed() {
+    return !this.view?.docView;
   }
 
   createExtensionManager() {
@@ -110,11 +102,11 @@ export default class ShikiEditor {
   }
 
   createNodes() {
-    return this.extensionsManager.nodes;
+    return this.extensionManager.nodes;
   }
 
   createMarks() {
-    return this.extensionsManager.marks;
+    return this.extensionManager.marks;
   }
 
   createSchema() {
@@ -137,44 +129,51 @@ export default class ShikiEditor {
     return new MarkdownParser(
       this.schema,
       MarkdownTokenizer,
-      this.extensionsManager.markdownParserTokens()
+      this.extensionManager.markdownParserTokens()
     );
   }
 
   createMarkdownSerializer() {
-    const { nodes, marks } = this.extensionsManager.markdownSerializerTokens();
+    const { nodes, marks } = this.extensionManager.markdownSerializerTokens();
     return new MarkdownSerializer(nodes, marks);
   }
 
   createKeymaps() {
-    return this.extensionsManager.keymaps({
+    return this.extensionManager.keymaps({
       schema: this.schema
     });
   }
 
   createInputRules() {
-    return this.extensionsManager.inputRules({
+    return this.extensionManager.inputRules({
       schema: this.schema,
       excludedExtensions: this.options.disableInputRules
     });
   }
 
   createPasteRules() {
-    return this.extensionsManager.pasteRules({
+    return this.extensionManager.pasteRules({
       schema: this.schema,
       excludedExtensions: this.options.disablePasteRules
     });
   }
 
   createView() {
-    return new EditorView(this.element, {
+    this.view = new EditorView(this.options.element, {
+      ...this.options.editorProps,
       state: this.createState(),
-      dispatchTransaction: this.dispatchTransaction,
-      nodeViews: this.initNodeViews({
-        parent: this.element,
-        extensions: this.extensionsManager.extensions
-      }, false)
+      dispatchTransaction: this.dispatchTransaction
     });
+
+    // `editor.view` is not yet available at this time.
+    // Therefore we will add all plugins and node views directly afterwards.
+    const newState = this.state.reconfigure({
+      plugins: this.createPlugins()
+    });
+
+    this.view.updateState(newState);
+
+    this.createNodeViews();
   }
 
   createState(content = this.options.content) {
@@ -185,7 +184,7 @@ export default class ShikiEditor {
 
   createPlugins() {
     return [
-      ...this.extensionsManager.plugins,
+      ...this.extensionManager.plugins,
       ...this.options.plugins,
       history(),
       inputRules({ rules: this.inputRules }),
@@ -211,62 +210,24 @@ export default class ShikiEditor {
     ];
   }
 
-  attachPlugins() {
-    this.view.updateState(
-      this.state.reconfigure({ plugins: this.plugins })
-    );
+  createNodeViews() {
+    this.view.setProps({
+      nodeViews: this.extensionManager.nodeViews()
+    });
   }
 
   createCommands() {
-    return this.extensionsManager.commands({
+    return this.extensionManager.commands({
       schema: this.schema,
       view: this.view
     });
   }
 
   createActiveChecks() {
-    return this.extensionsManager.activeChecks({
+    return this.extensionManager.activeChecks({
       schema: this.schema,
       view: this.view
     });
-  }
-
-  initNodeViews({ parent, extensions }, isVue) {
-    return extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => (
-        extension.view && (isVue || extension.view.constructor === Function)
-      ))
-      .reduce((nodeViews, extension) => {
-        const nodeView = (node, view, getPos, decorations) => {
-          if (extension.view.constructor === Function) {
-            return extension.view({
-              editor: this,
-              extension,
-              node,
-              view,
-              getPos,
-              decorations
-            });
-          }
-          const component = extension.view;
-
-          return new VueView(component, {
-            editor: this,
-            extension,
-            parent,
-            node,
-            view,
-            getPos,
-            decorations
-          }, this.Vue);
-        };
-
-        return {
-          ...nodeViews,
-          [extension.name]: nodeView
-        };
-      }, {});
   }
 
   setContent(content, isEmitUpdate = false, isAaddToHistory = true) {
@@ -292,7 +253,7 @@ export default class ShikiEditor {
   }
 
   getMarkAttrs(type = null) {
-    return this.activeMarkAttrs[type];
+    return this.ctiveMarkAttrs[type];
   }
 
   getNodeAttrs(type = null) {
@@ -301,21 +262,23 @@ export default class ShikiEditor {
     };
   }
 
-  setParentComponent(component = null) {
-    if (!component) { return; }
-
-    this.view.setProps({
-      nodeViews: this.initNodeViews({
-        parent: component,
-        extensions: this.extensionsManager.extensions
-      }, true)
-    });
+  setOptions(options) {
+    this.options = {
+      ...this.options,
+      ...options
+    };
   }
 
   @bind
   dispatchTransaction(transaction) {
-    const { state } = this.state.applyTransaction(transaction);
+    const state = this.state.apply(transaction);
+    const selectionHasChanged = !this.state.selection.eq(state.selection);
+
     this.view.updateState(state);
+
+    if (selectionHasChanged) {
+      this.trigger('selectionUpdate', { editor: this });
+    }
 
     if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
       return;
@@ -324,7 +287,24 @@ export default class ShikiEditor {
     this.setActiveNodesAndMarks();
 
     // provided by uEvent
-    this.trigger('update', { transaction });
+    this.trigger('transaction', { editor: this, transaction });
+
+    // const focus = transaction.getMeta('focus');
+    // const blur = transaction.getMeta('blur');
+    //
+    // if (focus) {
+    //   this.trigger('focus', { editor: this, event: focus.event });
+    // }
+    //
+    // if (blur) {
+    //   this.trigger('blur', { editor: this, event: blur.event });
+    // }
+    //
+    // if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
+    //   return;
+    // }
+    //
+    // this.trigger('update', { editor: this, transaction });
   }
 
   resolveSelection(position = null) {
@@ -411,6 +391,6 @@ export default class ShikiEditor {
 
   destroy() {
     this.view?.destroy();
-    this.extensionsManager.destroy();
+    this.extensionManager.destroy();
   }
 }

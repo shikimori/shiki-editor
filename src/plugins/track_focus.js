@@ -1,6 +1,6 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
 
-export default function(editor) {
+export default function trackFocus(editor) {
   return new Plugin({
     key: new PluginKey('track_focus'),
     props: {
@@ -9,8 +9,6 @@ export default function(editor) {
       },
       handleDOMEvents: {
         focus: (view, event) => {
-          editor.focused = true;
-
           // provided by uEvent
           editor.trigger('focus', {
             event,
@@ -22,8 +20,6 @@ export default function(editor) {
           editor.view.dispatch(transaction);
         },
         blur: (view, event) => {
-          editor.focused = false;
-
           // provided by uEvent
           editor.trigger('blur', {
             event,

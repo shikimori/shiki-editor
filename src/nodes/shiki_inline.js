@@ -1,6 +1,7 @@
 import { Node } from '../base';
 import { nodeInputRule } from '../commands';
 import { ShikiView } from '../node_views';
+import NodeView from '../node_view';
 import { pasteRule } from '../commands';
 import { addToShikiCache } from '../extensions';
 
@@ -117,8 +118,8 @@ export default class ShikiInline extends Node {
     };
   }
 
-  view(options) {
-    return new ShikiView(options);
+  get view() {
+    return NodeView.buildRenderer(ShikiView);
   }
 
   inputRules({ type }) {
