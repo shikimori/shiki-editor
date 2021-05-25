@@ -2,7 +2,7 @@
   "name": "shiki-editor",
   "title": "Shikimori text editor",
   "description": "Shikimori text editor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "src/index",
   "author": "morr",
   "license": "MIT",
