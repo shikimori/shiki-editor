@@ -343,8 +343,6 @@ function isMisplacedPopup(reference) {
 
 .suggestions
   z-index: 35
-  /* padding: 0.2rem */
-  /* border: 2px solid rgba(#000, 0.1) */
 
   .item
     padding: 3px 16px 3px 12px
@@ -362,7 +360,7 @@ function isMisplacedPopup(reference) {
     &:last-child
       margin-bottom: 0
 
-    &:not(.is-empty):not(.is-loading),
+    &:not(.is-empty):not(.is-loading)
       cursor: pointer
 
       &.is-selected,
