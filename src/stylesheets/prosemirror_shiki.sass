@@ -13,8 +13,9 @@
   .hidden
     &[data-div],
     &[data-span]
-      display: block
-      outline: 1px solid rgba(#9cf, 0.5)
+      &:not([data-tab])
+        display: block
+        outline: 1px solid rgba(#9cf, 0.5)
 
   .b-spoiler_block
     // drag'n'drop inside PromiseMirror
