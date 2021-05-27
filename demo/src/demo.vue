@@ -64,7 +64,7 @@ let TEXT_2 = `
 [div=to-process data-dynamic=tabs]
 [div=b-button active data-tab-switch]tab 1 switch[/div][div=b-button data-tab-switch]tab 2 switch[/div]
 [div data-tab]tab 1 content[/div]
-[div data-tab]tab 2 content[/div]
+[div=hidden data-tab]tab 2 content[/div]
 [/div]
 `.trim();
 
