@@ -57,7 +57,7 @@ export default class Span extends Mark {
       ));
 
       if (isSwitcher) {
-        return new SwitcherView(props);
+        return new SwitcherView(null, props);
       }
       return null;
     });

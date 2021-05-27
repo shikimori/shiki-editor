@@ -72,9 +72,9 @@ export default class Div extends Node {
       ));
 
       if (isTabs) {
-        return new TabsView(props);
+        return new TabsView(null, props);
       } else if (isSwitcher) {
-        return new SwitcherView(props);
+        return new SwitcherView(null, props);
       }
       return null;
     });
