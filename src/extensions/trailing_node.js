@@ -1,7 +1,6 @@
 // https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-extensions/src/extensions/TrailingNode.js
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Extension } from '../base';
-import { nodeEqualsType } from '../utils';
 
 export default class TrailingNode extends Extension {
   get name() {
@@ -10,51 +9,53 @@ export default class TrailingNode extends Extension {
 
   get defaultOptions() {
     return {
-      node: 'paragraph',
-      notAfter: [
+      nodeName: 'paragraph',
+      ignoredNodes: [
         'paragraph'
       ]
     };
   }
 
   get plugins() {
-    const plugin = new PluginKey(this.name);
-    const disabledNodes = Object.entries(this.editor.schema.nodes)
-      .map(([, value]) => value)
-      .filter(node => this.options.notAfter.includes(node.name));
+    const trailingNodePluginKey = new PluginKey(this.name);
+    const { nodeName, ignoredNodes } = this.options;
+    const types = Object.values(this.editor.schema.nodes)
+      .map((node) => node)
+      .filter((node) => !ignoredNodes.includes(node.name));
 
     return [
       new Plugin({
-        key: plugin,
-        view: () => ({
-          update: view => {
-            const { state } = view;
-            const insertNodeAtEnd = plugin.getState(state);
+        key: trailingNodePluginKey,
+        appendTransaction(_, __, state) {
+          const type = state.schema.nodes[nodeName];
+          const { doc, tr } = state;
+          const shouldInsertNodeAtEnd = trailingNodePluginKey.getState(state);
+          const endPosition = doc.content.size;
 
-            if (!insertNodeAtEnd) {
-              return;
+          if (!shouldInsertNodeAtEnd) {
+            return;
+          }
+
+          return tr
+            .insert(endPosition, type.create())
+            .setMeta('addToHistory', false);
+        },
+        state: {
+          init: (_, { doc, schema }) => {
+            const nodeType = schema.nodes[nodeName];
+
+            if (!nodeType) {
+              throw new Error(`Invalid node being used for trailing node extension: '${nodeName}'`);
             }
 
-            const { doc, schema, tr } = state;
-            const type = schema.nodes[this.options.node];
-            const transaction = tr
-              .insert(doc.content.size, type.create())
-              .setMeta('addToHistory', false);
-            view.dispatch(transaction);
-          }
-        }),
-        state: {
-          init: (_, state) => {
-            const lastNode = state.tr.doc.lastChild;
-            return !nodeEqualsType({ node: lastNode, types: disabledNodes });
+            return types.includes(doc.lastChild?.type);
           },
           apply: (tr, value) => {
             if (!tr.docChanged) {
               return value;
             }
 
-            const lastNode = tr.doc.lastChild;
-            return !nodeEqualsType({ node: lastNode, types: disabledNodes });
+            return types.includes(tr.doc.lastChild?.type);
           }
         }
       })

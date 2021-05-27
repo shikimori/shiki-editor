@@ -25,7 +25,7 @@ import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
   smartCommandSpoilerPlugin,
-  trackFocus,
+  // trackFocus,
   uploadPlaceholder
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
@@ -201,7 +201,7 @@ export default class Editor {
       keymap(baseKeymap),
       dropCursor(this.options.dropCursor),
       gapCursor(),
-      trackFocus(this),
+      // trackFocus(this),
       preventTransformPastedInsideCodeMark(this),
       uploadPlaceholder,
       new Plugin({
