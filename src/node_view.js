@@ -269,9 +269,9 @@ export default class NodeView {
   }
 }
 
-NodeView.buildRenderer = function(Component = null, buildComponent = null) {
-  if (buildComponent) { return buildComponent; }
-  if (Component) { return props => new Component(null, props); }
+NodeView.buildRenderer = function(ComponentView = null, buildComponentView = null) {
+  if (buildComponentView) { return buildComponentView; }
+  if (ComponentView) { return props => new ComponentView(null, props); }
 
   return null;
 };

@@ -105,7 +105,7 @@ export default class VueNodeView extends NodeView {
   }
 }
 
-VueNodeView.buildRenderer = function(component) {
+VueNodeView.buildRenderer = function(Component) {
   return (props) => {
     // try to get the parent component
     // this is important for vue devtools to show the component hierarchy correctly
@@ -114,6 +114,6 @@ VueNodeView.buildRenderer = function(component) {
       return {};
     }
 
-    return new VueNodeView(component, props);
+    return new VueNodeView(Component, props);
   };
 };
