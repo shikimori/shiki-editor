@@ -21,7 +21,7 @@ export function findParent(node, predicate) {
 // }
 
 export function findIndex(nodes, predicate) {
-  for (let i = 0; i <= nodes.length; i += 1) {
+  for (let i = 0; i < nodes.length; i += 1) {
     if (predicate(nodes[i])) {
       return i;
     }
