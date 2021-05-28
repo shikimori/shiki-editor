@@ -101,23 +101,21 @@ export default class Image extends Node {
   }
 
   commands({ type }) {
-    return imageUrl => (state, dispatch) => {
-      const src = imageUrl || prompt(
+    return (attrs = {}) => (state, dispatch) => {
+      attrs.src ||= prompt(
         window.I18n.t('frontend.shiki_editor.prompt.image_url')
       )?.trim();
-      if (src == null) { return null; }
+      if (attrs.src == null) { return null; }
 
       const { selection } = state;
       const position = selection.$cursor ?
         selection.$cursor.pos :
         selection.$to.pos;
 
-      const node = type.create({ src });
+      const node = type.create(attrs);
       const transaction = state.tr.insert(position, node);
 
       dispatch(transaction);
-
-      return src;
     };
   }
 

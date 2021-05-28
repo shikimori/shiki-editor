@@ -7,16 +7,15 @@ export default function(editor, { uploadId, response }) {
   const pos = findPlaceholder(state, uploadId);
   const url = editor.options.shikiRequest.origin + response.url;
 
+  const attrs = { id: response.id, src: url };
+
   if (pos != null) {
     dispatch(
       state.tr
-        .replaceWith(pos, pos, editor.schema.nodes.image.create({
-          id: response.id,
-          src: url
-        }))
+        .replaceWith(pos, pos, editor.schema.nodes.image.create(attrs))
         .setMeta(uploadPlaceholder, { remove: { id: uploadId } })
     );
   } else {
-    editor.commands.image(url);
+    editor.commands.image(attrs);
   }
 }
