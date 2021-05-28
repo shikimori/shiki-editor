@@ -280,14 +280,14 @@ export default class Editor {
       this.trigger('selectionUpdate', { editor: this });
     }
 
+    // provided by uEvent
+    this.trigger('transaction', { editor: this, transaction });
+
     if (!transaction.docChanged || transaction.getMeta('preventUpdate')) {
       return;
     }
 
     this.setActiveNodesAndMarks();
-
-    // provided by uEvent
-    this.trigger('transaction', { editor: this, transaction });
 
     // const focus = transaction.getMeta('focus');
     // const blur = transaction.getMeta('blur');

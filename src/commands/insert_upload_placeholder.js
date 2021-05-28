@@ -1,11 +1,13 @@
 import { uploadPlaceholder } from '../plugins';
 
-export default function(editor, { uploadId, file }) {
+export default function insertUploadPlaceholder(editor, { uploadId, file }) {
   const { state } = editor;
   const { dispatch } = editor.view;
   const { tr } = state;
 
-  if (!tr.selection.empty) tr.deleteSelection();
+  if (!tr.selection.empty) {
+    tr.deleteSelection();
+  }
 
   tr.setMeta(uploadPlaceholder, {
     add: {

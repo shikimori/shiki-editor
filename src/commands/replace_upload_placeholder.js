@@ -1,7 +1,7 @@
 import { uploadPlaceholder } from '../plugins';
 import { findPlaceholder } from '../utils';
 
-export default function(editor, { uploadId, response }) {
+export default function replaceUploadPlaceholder(editor, { uploadId, response }) {
   const { state } = editor;
   const { dispatch } = editor.view;
   const pos = findPlaceholder(state, uploadId);

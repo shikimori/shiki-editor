@@ -1,5 +1,5 @@
 <template>
-  <NodeViewWrapper>
+  <NodeViewWrapper as='span'>
     <span
       class='b-image'
       :class='[customClass, {

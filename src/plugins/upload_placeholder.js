@@ -11,6 +11,7 @@ export default new Plugin({
       set = set.map(tr.mapping, tr.doc);
       // See if the transaction adds or removes any placeholders
       const action = tr.getMeta(this);
+
       if (action && action.add) {
         const widget = createPlaceholder(action.add.file);
 
