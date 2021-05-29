@@ -1,7 +1,7 @@
 // https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/NodeViewWrapper.ts
 import { h, defineComponent } from 'vue';
 
-export const NodeViewWrapper = defineComponent({
+export default defineComponent({
   inject: ['onDragStart', 'decorationClasses'],
 
   props: {

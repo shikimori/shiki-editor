@@ -1,7 +1,7 @@
 // https://github.com/ueberdosis/tiptap/blob/main/packages/vue-3/src/NodeViewContent.ts
 import { h, defineComponent } from 'vue';
 
-export const NodeViewContent = defineComponent({
+export default defineComponent({
   props: {
     as: {
       type: String,
