@@ -30,6 +30,7 @@ import {
 } from './plugins';
 import {
   arrowRightCommand,
+  arrowLeftCommand,
   backspaceCommand,
   enterCommand
 } from './key_commands';
@@ -194,12 +195,13 @@ export default class Editor {
       ...this.pasteRules,
       ...this.keymaps,
       keymap({
-        'Enter': enterCommand,
         'Mod-z': undo,
         'Shift-Mod-z': redo,
         'Mod-y': redo,
         'Mod-s': smartCommandSpoilerPlugin(this),
+        Enter: enterCommand,
         ArrowRight: arrowRightCommand,
+        ArrowLeft: arrowLeftCommand(),
         Backspace: backspaceCommand
       }),
       keymap(baseKeymap),
