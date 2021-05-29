@@ -1,3 +1,4 @@
+export { default as CodeBlockView } from './code_block_view';
 export { default as ImageView } from './image_view';
 export { default as ShikiView } from './shiki_view';
 export { default as SpoilerBlockView } from './spoiler_block_view';

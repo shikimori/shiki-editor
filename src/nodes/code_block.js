@@ -3,6 +3,8 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules';
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleBlockType } from '../commands';
+import { CodeBlockView } from '../node_views';
+import VuewNodeView from '../vue/node_view';
 
 export default class CodeBlock extends Node {
   get name() {
@@ -44,6 +46,10 @@ export default class CodeBlock extends Node {
 
   activeCheck(type, state) {
     return nodeIsActive(type, state);
+  }
+
+  get view() {
+    return VuewNodeView.buildRenderer(CodeBlockView);
   }
 
   inputRules({ type }) {
