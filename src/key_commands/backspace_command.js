@@ -3,8 +3,7 @@ import { Node } from 'prosemirror-model';
 import { Selection, NodeSelection } from 'prosemirror-state';
 import { findParentNodeOfTypeClosestToPos } from 'prosemirror-utils/src/selection';
 
-import toggleWrap from './toggle_wrap';
-import toggleBlockType from './toggle_block_type';
+import { toggleWrap, toggleBlockType } from '../commands';
 import { findCutBefore } from '../utils';
 
 export default function joinBackwardEnhanced(state, dispatch, view) {
@@ -144,3 +143,4 @@ function textblockAt(node, side) {
   }
   return false;
 }
+

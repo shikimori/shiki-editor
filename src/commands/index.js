@@ -8,7 +8,6 @@ export { default as insertSlice } from './insert_slice';
 export { default as insertText } from './insert_text';
 export { default as insertUploadPlaceholder } from './insert_upload_placeholder';
 export { default as insertUserMention } from './insert_user_mention';
-export { default as joinBackwardEnhanced } from './join_backward_enhanced';
 export { default as linkBbcodePasteRule } from './link_bbcode_paste_rule';
 export { default as linkUrlPasteRule } from './link_url_paste_rule';
 export { default as markInputRule } from './mark_input_rule';

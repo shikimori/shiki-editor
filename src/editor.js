@@ -28,10 +28,10 @@ import {
   // trackFocus,
   uploadPlaceholder
 } from './plugins';
-import { joinBackwardEnhanced } from './commands';
 import {
-  enterCommand,
-  arrowRightCommand
+  arrowRightCommand,
+  backspaceCommand,
+  enterCommand
 } from './key_commands';
 import { buildExtensions } from './extensions';
 
@@ -200,7 +200,7 @@ export default class Editor {
         'Mod-y': redo,
         'Mod-s': smartCommandSpoilerPlugin(this),
         ArrowRight: arrowRightCommand,
-        Backspace: joinBackwardEnhanced
+        Backspace: backspaceCommand
       }),
       keymap(baseKeymap),
       dropCursor(this.options.dropCursor),

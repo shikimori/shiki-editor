@@ -1,11 +1,7 @@
 import { TextSelection } from 'prosemirror-state';
 
 // https://github.com/remirror/remirror/blob/270edd91ba6badf9468721e35fa0ddc6a21c6dd2/packages/remirror__core/src/builtins/keymap-extension.ts#L277
-export default function(state, dispatch) {
-  return exitMarkForwards(state, dispatch);
-}
-
-function exitMarkForwards(state, dispatch) {
+export default function exitMarkForwards(state, dispatch) {
   // const excludedMarks = [];
   // const excludedNodes = [];
 
