@@ -8,9 +8,6 @@ import NodeView from '../node_view';
 import VueRenderer from './renderer';
 
 export default class VueNodeView extends NodeView {
-  // renderer = null
-  // decorationClasses = null
-
   mount() {
     const props = {
       editor: this.editor,

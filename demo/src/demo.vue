@@ -64,11 +64,13 @@ let TEXT_2 = `
 \`test\`
 vbn
 
+
 \`\`\`ruby
 def a
   puts "zxc"
 end
 \`\`\`
+
 
 \`\`\`
 def a
@@ -91,6 +93,7 @@ function findSequence(goal) {
   return find(1, "1");
 }
 \`\`\`
+
 
 \`\`\`css
 body {
