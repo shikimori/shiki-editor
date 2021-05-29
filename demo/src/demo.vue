@@ -64,20 +64,17 @@ let TEXT_2 = `
 \`test\`
 vbn
 
-
 \`\`\`ruby
 def a
   puts "zxc"
 end
 \`\`\`
 
-
 \`\`\`
 def a
   puts "zxc"
 end
 \`\`\`
-
 
 \`\`\`javascript
 function findSequence(goal) {
@@ -94,14 +91,12 @@ function findSequence(goal) {
 }
 \`\`\`
 
-
 \`\`\`css
 body {
   color: red;
   line-height: 0;
 }
 \`\`\`
-
 
 [div=to-process data-dynamic=tabs]
 [div=b-button active data-tab-switch]tab 1 switch[/div][div=b-button data-tab-switch]tab 2 switch[/div]
