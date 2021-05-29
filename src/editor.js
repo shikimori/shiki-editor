@@ -29,7 +29,10 @@ import {
   uploadPlaceholder
 } from './plugins';
 import { joinBackwardEnhanced } from './commands';
-import { enterCommand } from './key_commands';
+import {
+  enterCommand,
+  arrowRightCommand
+} from './key_commands';
 import { buildExtensions } from './extensions';
 
 export default class Editor {
@@ -196,6 +199,7 @@ export default class Editor {
         'Shift-Mod-z': redo,
         'Mod-y': redo,
         'Mod-s': smartCommandSpoilerPlugin(this),
+        ArrowRight: arrowRightCommand,
         Backspace: joinBackwardEnhanced
       }),
       keymap(baseKeymap),

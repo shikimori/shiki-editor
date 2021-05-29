@@ -4,7 +4,7 @@ import { TextSelection, NodeSelection, AllSelection } from 'prosemirror-state';
 
 // splitBlock from prosemirror-transform, but instead of original
 // splitBlock this command removes `isHardBreak` attribute from original `paragraph` node
-export default function splitBlock(state, dispatch) {
+export default function splitBlockWithParagraphFix(state, dispatch) {
   let { $from, $to } = state.selection;
 
   if (state.selection instanceof NodeSelection && state.selection.node.isBlock) {

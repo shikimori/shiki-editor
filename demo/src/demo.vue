@@ -61,6 +61,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
+\`test\`
 vbn
 
 [div=to-process data-dynamic=tabs]

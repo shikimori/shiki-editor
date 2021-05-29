@@ -14,6 +14,7 @@ export default class CodeBlock extends Node {
       content: 'text*',
       group: 'block',
       code: true,
+      isolating: true,
       defining: true,
       draggable: false,
       marks: '',
