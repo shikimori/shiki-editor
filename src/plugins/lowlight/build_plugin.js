@@ -2,23 +2,29 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { findChildren } from 'prosemirror-utils/src/node';
 
-export default function buildLowlightPlugin(name, lowlight) {
+export default function buildLowlightPlugin(nodeName, lowlight) {
   return new Plugin({
     key: new PluginKey('lowlight'),
     state: {
-      init: (_, { doc }) => getDecorations(doc, name, lowlight),
+      init: (_, { doc }) => getDecorations(doc, nodeName, lowlight),
       apply: (transaction, decorationSet, oldState, newState) => {
         const oldNodeName = oldState.selection.$head.parent.type.name;
         const newNodeName = newState.selection.$head.parent.type.name;
         const oldNodes =
-          findChildren(oldState.doc, node => node.type.name === name);
+          findChildren(oldState.doc, node => node.type.name === nodeName);
         const newNodes =
-          findChildren(newState.doc, node => node.type.name === name);
-        const isApply =
-          isApplyDecoration(transaction, oldNodeName, newNodeName, oldNodes, newNodes);
+          findChildren(newState.doc, node => node.type.name === nodeName);
+        const isApply = isApplyDecoration(
+          nodeName,
+          transaction,
+          oldNodeName,
+          newNodeName,
+          oldNodes,
+          newNodes
+        );
 
         if (isApply) {
-          return getDecorations(transaction.doc, name, lowlight);
+          return getDecorations(transaction.doc, nodeName, lowlight);
         }
 
         return decorationSet.map(transaction.mapping, transaction.doc);
@@ -52,10 +58,10 @@ function parseNodes(nodes, className = []) {
     .flat();
 }
 
-function getDecorations(doc, name, lowlight) {
+function getDecorations(doc, nodeName, lowlight) {
   const decorations = [];
 
-  findChildren(doc, node => node.type.name === name)
+  findChildren(doc, node => node.type.name === nodeName)
     .forEach(block => {
       let from = block.pos + 1;
 
@@ -83,6 +89,7 @@ function getDecorations(doc, name, lowlight) {
 }
 
 function isApplyDecoration(
+  nodeName,
   transaction,
   oldNodeName,
   newNodeName,
@@ -93,7 +100,7 @@ function isApplyDecoration(
     // Apply decorations if:
     (
       // selection includes named node,
-      [oldNodeName, newNodeName].includes(name) ||
+      [oldNodeName, newNodeName].includes(nodeName) ||
       // OR transaction adds/removes named node,
       newNodes.length !== oldNodes.length ||
       // OR transaction has changes that completely encapsulte a node
