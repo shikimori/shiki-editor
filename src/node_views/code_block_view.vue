@@ -1,5 +1,5 @@
 <template>
-  <NodeViewWrapper class='code-block'>
+  <NodeViewWrapper>
     <select v-model='selectedLanguage' contenteditable='false'>
       <option :value='null'>
         auto
@@ -11,7 +11,7 @@
         {{ language }}
       </option>
     </select>
-    <pre><NodeViewContent as='code' /></pre>
+    <pre class='b-code-v2'><NodeViewContent as='code' /></pre>
   </NodeViewWrapper>
 </template>
 

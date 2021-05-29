@@ -7,8 +7,8 @@ import { buildLowlightPlugin } from '../plugins';
 import { CodeBlockView } from '../node_views';
 import VuewNodeView from '../vue/node_view';
 
-import lowlight from 'lowlight/lib/common';
-// import lowlight from 'lowlight/lib/core';
+// import { lowlight } from 'lowlight/lib/core';
+import { lowlight } from 'lowlight/lib/common';
 
 export default class CodeBlock extends Node {
   get name() {
@@ -43,7 +43,7 @@ export default class CodeBlock extends Node {
       toDOM(node) {
         return [
           'pre',
-          { class: 'b-code_block', 'data-language': node.attrs.language || '' },
+          { class: 'b-code-v2', 'data-language': node.attrs.language || '' },
           ['code', 0]
         ];
       }
