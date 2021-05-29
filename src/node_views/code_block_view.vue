@@ -16,11 +16,7 @@
 </template>
 
 <script>
-import {
-  NodeViewWrapper,
-  NodeViewContent,
-  NodeViewProps
-} from '../vue';
+import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '../vue';
 
 export default {
   components: {

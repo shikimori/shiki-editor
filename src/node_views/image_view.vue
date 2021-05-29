@@ -32,19 +32,14 @@
 import imagePromise from 'image-promise';
 import { NodeSelection } from 'prosemirror-state';
 
-import { NodeViewWrapper } from '../vue/node_view_wrapper';
+import { NodeViewWrapper, nodeViewProps } from '../vue';
+
 import { tagSequence } from '../nodes/image';
 
 export default {
   name: 'ImageView',
   components: { NodeViewWrapper },
-  props: {
-    editor: { type: Object, required: true },
-    node: { type: Object, required: true },
-    getPos: { type: Function, required: true },
-    isSelected: { type: Boolean, required: true },
-    updateAttributes: { type: Function, required: true }
-  },
+  props: nodeViewProps,
   data: () => ({
     isLoaded: false,
     naturalWidth: undefined,
