@@ -1,13 +1,13 @@
 <template>
-  <NodeViewWrapper>
+  <NodeViewWrapper class='code-block'>
     <select v-model='selectedLanguage' contenteditable='false'>
-      <option :value='null'>
-        auto
-      </option>
-      <option disabled>
-        —
-      </option>
-      <option v-for='(language, index) in languages' :key='index' :value='language'>
+      <option :value='""'>none</option>
+      <option disabled>—</option>
+      <option
+        v-for='(language, index) in languages'
+        :key='index'
+        :value='language'
+      >
         {{ language }}
       </option>
     </select>
@@ -39,14 +39,5 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-.code-block {
-  position: relative;
-
-  select {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-  }
-}
+<style scoped lang='sass'>
 </style>
