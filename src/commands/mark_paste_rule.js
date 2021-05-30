@@ -1,13 +1,13 @@
-// https://github.com/scrumpy/tiptap/blob/v1/packages/tiptap-commands/src/commands/markPasteRule.js
+// https://github.com/ueberdosis/tiptap/blob/main/packages/core/src/pasteRules/markPasteRule.ts
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 
-export default function(regexp, type, getAttrs) {
+export default function markPasteRule(regexp, type, getAttributes) {
   const handler = (fragment, parent) => {
     const nodes = [];
 
     fragment.forEach(child => {
-      if (child.isText) {
+      if (child.isText && child.text) {
         const { text, marks } = child;
         let pos = 0;
         let match;
@@ -16,25 +16,31 @@ export default function(regexp, type, getAttrs) {
 
         // eslint-disable-next-line
         while (!isLinkInline && (match = regexp.exec(text)) !== null) {
-          if (parent.type.allowsMarkType(type) && match[1]) {
+          const outerMatch = Math.max(match.length - 2, 0);
+          const innerMatch = Math.max(match.length - 1, 0);
+
+          if (parent === null || parent === void 0 ? void 0 : parent.type.allowsMarkType(type)) {
             const start = match.index;
-            const end = start + match[0].length;
-            const textStart = start + match[0].indexOf(match[1]);
-            const textEnd = textStart + match[1].length;
-            const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
+            const matchStart = start + match[0].indexOf(match[outerMatch]);
+            const matchEnd = matchStart + match[outerMatch].length;
+            const textStart = matchStart +
+              match[outerMatch].lastIndexOf(match[innerMatch]);
+            const textEnd = textStart + match[innerMatch].length;
+            const attrs = getAttributes instanceof Function ?
+              getAttributes(match) :
+              getAttributes;
 
             // adding text before markdown to nodes
-            if (start > 0) {
-              nodes.push(child.cut(pos, start));
+            if (matchStart > 0) {
+              nodes.push(child.cut(pos, matchStart));
             }
 
             // adding the markdown part to nodes
             nodes.push(child
               .cut(textStart, textEnd)
-              .mark(type.create(attrs)
-                .addToSet(child.marks)));
+              .mark(type.create(attrs).addToSet(child.marks)));
 
-            pos = end;
+            pos = matchEnd;
           }
         }
 
@@ -42,7 +48,8 @@ export default function(regexp, type, getAttrs) {
         if (pos < text.length) {
           nodes.push(child.cut(pos));
         }
-      } else {
+      }
+      else {
         nodes.push(child.copy(handler(child.content, child)));
       }
     });
@@ -60,8 +67,7 @@ export default function(regexp, type, getAttrs) {
           return slice;
         }
 
-        const parsedFragment = handler(slice.content);
-        return new Slice(parsedFragment, slice.openStart, slice.openEnd);
+        return new Slice(handler(slice.content), slice.openStart, slice.openEnd);
       }
     }
   });
