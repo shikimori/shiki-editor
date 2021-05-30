@@ -3,12 +3,12 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules';
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
 import { toggleBlockType } from '../commands';
-import { buildLowlightPlugin } from '../plugins';
+// import { buildLowlightPlugin } from '../plugins';
 import { CodeBlockView } from '../node_views';
 import VuewNodeView from '../vue/node_view';
 
-// import { lowlight } from 'lowlight/lib/core';
-import { lowlight } from 'lowlight/lib/common';
+// // import { lowlight } from 'lowlight/lib/core';
+// import { lowlight } from 'lowlight/lib/common';
 
 export default class CodeBlock extends Node {
   get name() {
@@ -17,7 +17,8 @@ export default class CodeBlock extends Node {
 
   get defaultOptions() {
     return {
-      lowlight
+      lowlight: null,
+      lowlightPromise: null
     };
   }
 
@@ -70,9 +71,9 @@ export default class CodeBlock extends Node {
     ];
   }
 
-  get plugins() {
-    return [buildLowlightPlugin(this.name, lowlight)];
-  }
+  // get plugins() {
+  //   return [buildLowlightPlugin(this.name, lowlight)];
+  // }
 
   markdownSerialize(state, node) {
     state.write('```' + (node.attrs.language || '') + '\n');
