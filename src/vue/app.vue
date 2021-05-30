@@ -313,7 +313,6 @@ export default {
     }
   },
   created() {
-    window.editorApp = this;
     this.createEditor();
   },
   beforeUnmount() {
