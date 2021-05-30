@@ -46,7 +46,7 @@
     "@babel/plugin-proposal-logical-assignment-operators": "^7.10.4",
     "@morr/withinviewport": "2.1.3-1",
     "@popperjs/core": "^2.4.4",
-    "lowlight": "wooorm/lowlight#main",
+    "lowlight": "2.0.1",
     "prosemirror-commands": "^1.1.7",
     "prosemirror-dropcursor": "^1.3.5",
     "prosemirror-gapcursor": "^1.1.5",

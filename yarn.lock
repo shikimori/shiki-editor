@@ -3061,10 +3061,10 @@ he@1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-highlight.js@~11.0.0-beta1:
-  version "11.0.0-beta1"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.0-beta1.tgz#25a5bb4d3d146559eced4546e30589b677eaea55"
-  integrity sha512-VW5JkcAcxP4xmNXd30gI5xlgDyb+gdRRfs/uviAknAxbykaoW1Ua0xCHPFrZgeuAcWSc0ZpyI11r5kigJFVH2A==
+highlight.js@~11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.0.tgz#e22ac9ca45edc4f87a2187685d591a108ceb8449"
+  integrity sha512-ByaTMfsSuoqerTwemOgpIhfULEIaK52JJYhky/sK7/Yqc0+t7Uh5DHay9vIC94YXSupnQ1Vqfc9VXrYP4eXW3Q==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -3598,13 +3598,14 @@ log-symbols@3.0.0:
   dependencies:
     chalk "^2.4.2"
 
-lowlight@wooorm/lowlight#main:
-  version "1.20.0"
-  resolved "https://codeload.github.com/wooorm/lowlight/tar.gz/b6d0d245e43f5dd63cb3b0a1c07c6ee1f97a14fd"
+lowlight@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/lowlight/-/lowlight-2.0.1.tgz#2c1afacc34feab47411e71a39d4efedc2b8ee820"
+  integrity sha512-HB2PZDjmI3NlcSukkKHTwhXIiVhKMq8NZVcIMo8qXUJundfbes8JpE3jtqW/InByhOVd4X0XitTTzgiNoavAzQ==
   dependencies:
     "@types/hast" "^2.0.0"
     fault "^2.0.0"
-    highlight.js "~11.0.0-beta1"
+    highlight.js "~11.0.0"
 
 lru-cache@^5.1.1:
   version "5.1.1"
