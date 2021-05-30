@@ -20,8 +20,8 @@
 </template>
 
 <script>
+import pDefer from 'p-defer';
 import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '../vue';
-import buildLowlightPlugin from '../plugins/lowlight/build_plugin';
 
 export default {
   components: { NodeViewWrapper, NodeViewContent },
@@ -54,15 +54,21 @@ export default {
     if (this.extension.options.lowlight) { return; }
 
     if (!this.extension.options.lowlightPromise) {
-      this.extension.options.lowlightPromise = import(/* webpackChunkName: "lowlight" */
-        'lowlight/lib/common'
-      ).then(({ lowlight }) => {
-        this.extension.options.lowlight = lowlight;
+      const deferred = pDefer();
+      this.extension.options.lowlightPromise = deferred.promise;
 
-        this.editor.registerPlugin(
-          buildLowlightPlugin(this.extension.name, lowlight)
-        );
-      });
+      Promise.all([
+        import(/* webpackChunkName: "lowlight" */ 'lowlight/lib/common'),
+        import(/* webpackChunkName: "lowlight" */ '../plugins/lowlight/build_plugin')
+      ])
+        .then(([{ lowlight }, { default: buildLowlightPlugin }]) => {
+          this.extension.options.lowlight = lowlight;
+
+          this.editor.registerPlugin(
+            buildLowlightPlugin(this.extension.name, lowlight)
+          );
+          deferred.resolve();
+        });
     }
 
     await this.extension.options.lowlightPromise;
