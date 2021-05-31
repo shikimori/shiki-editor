@@ -104,9 +104,10 @@ export default class MarkdownSerializerState {
     const indexToCheck = this.out.length;
     if (nAfterOpen) {
       // paragraph anyway produces new lines
-      if (node.content?.content?.[0]?.type?.name !== 'paragraph') {
-        this.ensureNewLine();
-      }
+      // if (node.content?.content?.[0]?.type?.name !== 'paragraph') {
+      //   this.ensureNewLine();
+      // }
+      this.ensureNewLine();
       this.renderContent(node);
 
       if (this.out[indexToCheck] !== '\n') {
@@ -164,6 +165,7 @@ export default class MarkdownSerializerState {
   renderInline(parent) {
     const active = [];
     let trailing = '';
+
     const progress = (node, _, index) => {
       let marks = node ? node.marks : [];
 
