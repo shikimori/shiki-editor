@@ -8,11 +8,17 @@ export default class HardBreak extends Node {
 
   get schema() {
     return {
+      attrs: {
+        isPasted: { default: false }
+      },
       inline: true,
       group: 'inline',
       selectable: false,
       parseDOM: [
-        { tag: 'br' }
+        {
+          tag: 'br',
+          getAttrs: _node => ({ isPasted: true })
+        }
       ],
       toDOM: () => ['br']
     };
@@ -37,7 +43,7 @@ export default class HardBreak extends Node {
     };
   }
 
-  markdownSerialize(state, _node) {
-    state.write('[br]');
+  markdownSerialize(state, node) {
+    state.write(node.attrs.isPasted ? '\n' : '[br]');
   }
 }
