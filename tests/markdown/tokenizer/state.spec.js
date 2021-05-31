@@ -30,9 +30,9 @@ function n(
   nBeforeClose = false
 ) {
   return {
-    nBeforeOpen: !!nBeforeOpen,
-    nAfterOpen: !!nAfterOpen,
-    nBeforeClose: !!nBeforeClose
+    nBeforeOpen: nBeforeOpen,
+    nAfterOpen: nAfterOpen,
+    nBeforeClose: nBeforeClose
   };
 }
 
@@ -635,20 +635,6 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      it('> [quote]\\n> a\\n> [/quote]', () => {
-        expect(MarkdownTokenizer.parse('> [quote]\n> a\n> [/quote]')).to.eql([
-          { type: 'blockquote', direction: 'open' },
-          {
-            type: 'quote',
-            direction: 'open',
-            attrs: [['nFormat', n(false, true)]]
-          },
-          ...text('a'),
-          { type: 'quote', direction: 'close' },
-          { type: 'blockquote', direction: 'close' }
-        ]);
-      });
-
       it('> before\\n> [quote]\\n> a[/quote]', () => {
         expect(MarkdownTokenizer.parse('> before\n> [quote]\n> a[/quote]')).to.eql([
           { type: 'blockquote', direction: 'open' },
@@ -657,6 +643,20 @@ describe('MarkdownTokenizer', () => {
             type: 'quote',
             direction: 'open',
             attrs: [['nFormat', n(true, true)]]
+          },
+          ...text('a'),
+          { type: 'quote', direction: 'close' },
+          { type: 'blockquote', direction: 'close' }
+        ]);
+      });
+
+      it('> [quote]\\n> a\\n> [/quote]', () => {
+        expect(MarkdownTokenizer.parse('> [quote]\n> a\n> [/quote]')).to.eql([
+          { type: 'blockquote', direction: 'open' },
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [['nFormat', n(false, true, true)]]
           },
           ...text('a'),
           { type: 'quote', direction: 'close' },

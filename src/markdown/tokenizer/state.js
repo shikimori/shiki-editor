@@ -70,6 +70,7 @@ export default class MarkdownTokenizer {
   }
 
   static parse(text) {
+    // console.log(new MarkdownTokenizer(text, 0).parse());
     return new MarkdownTokenizer(text, 0).parse();
   }
 
