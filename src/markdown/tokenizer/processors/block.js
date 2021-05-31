@@ -8,7 +8,9 @@ export default function(
   isOnlySpacingsBefore = false
 ) {
   const nFormat = {
-    nBeforeOpen: state.text[state.index - 1] === '\n' || isStart
+    nBeforeOpen: state.text[state.index - 1] === '\n' || (
+      isStart && state.text[state.index - 1] != null
+    )
   };
   let index = state.index + startSequence.length;
   nFormat.nAfterOpen = state.text[index] === '\n';
