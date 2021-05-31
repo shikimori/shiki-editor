@@ -60,15 +60,9 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import { throttle, debounce } from '../../packages/shiki-decorators';
 // import ShikiUploader from '../../../shiki-uploader';
 
-// let TEXT_2 = `
-// > [quote]
-// > line1
-// > line2
-// > line3
-// > [/quote]
-// `.trim();
-
 let TEXT_2 = `
+zxc
+
 > before
 > [quote]
 > line1
@@ -77,12 +71,22 @@ let TEXT_2 = `
 > [/quote]
 > after
 
+wqe
+
 > before
 > [quote]line1
 > line2
 > line3[/quote]
 > after
+
+xcv
 `.trim();
+
+// TEXT_2 = `
+// > [quote]
+// > line1[/quote]
+// `.trim();
+
 
 export default {
   name: 'App',
