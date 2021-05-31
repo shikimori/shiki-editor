@@ -649,6 +649,21 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('> before\\n> [quote]\\n> a[/quote]', () => {
+        expect(MarkdownTokenizer.parse('> before\n> [quote]\n> a[/quote]')).to.eql([
+          { type: 'blockquote', direction: 'open' },
+          ...text('before'),
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [['nFormat', n(true, true)]]
+          },
+          ...text('a'),
+          { type: 'quote', direction: 'close' },
+          { type: 'blockquote', direction: 'close' }
+        ]);
+      });
+
       describe('with author', () => {
         it('>?t1;2;x\\n> a', () => {
           expect(MarkdownTokenizer.parse('>?t1;2;x\n> a')).to.eql([
