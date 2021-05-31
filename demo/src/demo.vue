@@ -61,50 +61,12 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-\`test\`
-vbn
-
-\`\`\`ruby
-def a
-  puts "zxc"
-end
-\`\`\`
-
-\`\`\`
-def a
-  puts "zxc"
-end
-\`\`\`
-
-\`\`\`javascript
-function findSequence(goal) {
-  function find(start, history) {
-    if (start == goal)
-      return history;
-    else if (start > goal)
-      return null;
-    else
-      return find(start + 5, "(" + history + " + 5)") ||
-             find(start * 3, "(" + history + " * 3)");
-  }
-  return find(1, "1");
-}
-\`\`\`
-
-\`\`\`css
-body {
-  color: red;
-  line-height: 0;
-}
-\`\`\`
-
-[div=to-process data-dynamic=tabs]
-[div=b-button active data-tab-switch]tab 1 switch[/div][div=b-button data-tab-switch]tab 2 switch[/div]
-[div data-tab]tab 1 content[/div]
-[div=hidden data-tab]tab 2 content[/div]
-[/div]
-
-zxc
+> before
+> [quote]
+> line1
+> line2
+> [/quote]
+> after
 `.trim();
 
 export default {
@@ -228,7 +190,7 @@ spoiler content
 code block
 \`\`\`
 \`\`\`css
-.css /* code block */ { color: red; } 
+.css /* code block */ { color: red; }
 \`\`\`
 
 ### Inline code
