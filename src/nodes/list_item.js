@@ -16,7 +16,7 @@ export default class ListItem extends Node {
       attrs: {
         bbcode: { default: '- ' }
       },
-      content: 'block*',
+      content: 'paragraph | block+',
       defining: true,
       parseDOM: [{ tag: 'li' }],
       toDOM() { return ['li', 0]; }
