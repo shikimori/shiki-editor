@@ -9,7 +9,8 @@ export default class HardBreak extends Node {
   get schema() {
     return {
       attrs: {
-        isPasted: { default: false }
+        isPasted: { default: false },
+        isTyped: { default: false }
       },
       inline: true,
       group: 'inline',
@@ -26,24 +27,20 @@ export default class HardBreak extends Node {
 
   commands({ type }) {
     return () => chainCommands(exitCode, (state, dispatch) => {
-      dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
+      const tr = state.tr.replaceSelectionWith(type.create({ isTyped: true }));
+      dispatch(tr.scrollIntoView());
       return true;
     });
   }
 
   keys({ type }) {
-    const command = chainCommands(exitCode, (state, dispatch) => {
-      dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
-      return true;
-    });
-
     return {
       // 'Mod-Enter': command,
-      'Shift-Enter': command
+      'Shift-Enter': this.commands({ type })()
     };
   }
 
   markdownSerialize(state, node) {
-    state.write(node.attrs.isPasted ? '\n' : '[br]');
+    state.write(node.attrs.isPasted || node.attrs.isTyped ? '\n' : '[br]');
   }
 }
