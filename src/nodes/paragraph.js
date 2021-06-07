@@ -3,6 +3,8 @@
 import { Node } from '../base';
 // import { Plugin, PluginKey } from 'prosemirror-state';
 
+const OMIT_NEWLINE_INSIDE_EMPTY_NODES =  ['list_item', 'blockquote'];
+
 export default class Paragraph extends Node {
   get name() {
     return 'paragraph';
@@ -58,7 +60,7 @@ export default class Paragraph extends Node {
   //   });
   // }
 
-  markdownSerialize(state, node) {
+  markdownSerialize(state, node, parent) {
     if (node.content.content.length) {
       state.renderInline(node);
 
@@ -70,9 +72,16 @@ export default class Paragraph extends Node {
       }
 
     } else {
-      if (!state.atBlank) {
+      if (!state.atBlank()) {
         state.closeBlock(node);
       }
+
+      if (OMIT_NEWLINE_INSIDE_EMPTY_NODES.includes(parent.type.name) &&
+        parent.childCount == 1
+      ) {
+        return;
+      }
+
       state.write(node.attrs.isHardBreak ? '[br]' : '\n');
     }
   }
