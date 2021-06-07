@@ -25,5 +25,3 @@ export { default as toggleMarkWrap } from './toggle_mark_wrap';
 export { default as toggleNodeWrap } from './toggle_node_wrap';
 export { default as toggleWrap } from './toggle_wrap';
 export { default as updateMark } from './update_mark';
-export { default as wrappingInputRuleWithNesting }
-  from './wrapping_input_rule_with_nesting';

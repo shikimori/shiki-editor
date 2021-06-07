@@ -1,8 +1,9 @@
 import { Plugin, PluginKey } from 'prosemirror-state';
+import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
-import { toggleWrap, wrappingInputRuleWithNesting } from '../commands';
+import { toggleWrap } from '../commands';
 
 import { serializeAttrs, toDOMInnerQuoteable } from '../utils/quote_helpers';
 import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';
@@ -76,7 +77,7 @@ export default class Blockquote extends Node {
 
   inputRules({ type }) {
     return [
-      wrappingInputRuleWithNesting(/^\s*>\s$/, type)
+      wrappingInputRule(/^\s*>\s$/, type)
     ];
   }
 
