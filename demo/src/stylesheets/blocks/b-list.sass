@@ -1,5 +1,6 @@
 .b-list
   margin-left: 17px
+  // list-style-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle style='fill: %23548eaa' cx='2' cy='2' r='2'/%3E%3C/svg%3E%0A")
 
   &.is-wide li
     margin-bottom: 5px
@@ -7,6 +8,9 @@
   li
     line-height: $line_height
     list-style: none
+
+    &:empty:after
+      content: ' '
 
     &:before
       position: absolute
@@ -21,4 +25,3 @@
 
       +gte_laptop
         margin-top: 0.615em
-

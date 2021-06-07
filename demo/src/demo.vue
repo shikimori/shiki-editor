@@ -61,25 +61,21 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-zxc
+- test
+- 
 
-> before
-> [quote]
-> line1
-> line2
-> line3
-> [/quote]
-> after
+> - 
+> -
 
-wqe
+[hr]
 
-> before
-> [quote]line1
-> line2
-> line3[/quote]
-> after
+> - 
+1
 
-xcv
+[hr]
+
+- 
+-
 `.trim();
 
 // TEXT_2 = `
