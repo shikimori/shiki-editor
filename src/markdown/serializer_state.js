@@ -10,15 +10,9 @@ export default class MarkdownSerializerState {
     this.delim = '';
     this.out = '';
     this.closed = false;
-    this.inTightList = false;
     // :: Object
     // The options passed to the serializer.
-    //   tightLists:: ?bool
-    //   Whether to render lists in a tight style. This can be overridden
-    //   on a node level by specifying a tight attribute on the node.
-    //   Defaults to false.
     this.options = options || {};
-    if (typeof this.options.tightLists === 'undefined') this.options.tightLists = false;
   }
 
   flushClose(size) {
@@ -292,16 +286,8 @@ export default class MarkdownSerializerState {
   // delimiter for the first line of the item.
   renderList(node, delim) {
     if (this.closed && this.closed.type === node.type) this.flushClose(3);
-    else if (this.inTightList) this.flushClose(1);
 
-    const isTight = typeof node.attrs.tight !== 'undefined' ?
-      node.attrs.tight :
-      this.options.tightLists;
-    const prevTight = this.inTightList;
-
-    this.inTightList = isTight;
     node.forEach((child, _, i) => {
-      if (i && isTight) this.flushClose(1);
       this.wrapBlock(
         delim,
         child.attrs.bbcode,
@@ -309,16 +295,15 @@ export default class MarkdownSerializerState {
         () => this.render(child, node, i)
       );
     });
-    this.inTightList = prevTight;
   }
 
   // :: (string, ?bool) → string
   // Escape the given string so that it can safely appear in Markdown
   // content. If `startOfLine` is true, also escape characters that
-  // has special meaning only at the start of the line.
+  // have special meaning only at the start of the line.
   // esc(str, startOfLine) {
   //   str = str.replace(/[`*\\~\[\]]/g, '\\$&');
-  //   if (startOfLine) str = str.replace(/^[:#\-*+]/, '\\$&').replace(/^(\d+)\./, '$1\\.');
+  //   if (startOfLine) str = str.replace(/^[:#\-*+]/, "\\$&").replace(/^(\s*\d+)\./, "$1\\.")
   //   return str;
   // }
 
