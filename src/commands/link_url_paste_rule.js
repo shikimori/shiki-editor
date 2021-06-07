@@ -3,7 +3,9 @@ import { Plugin, PluginKey } from 'prosemirror-state';
 import { Slice, Fragment } from 'prosemirror-model';
 import { isContainsCodeMark } from '../utils';
 
-const URL_REGEXP = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-zA-Z]{2,}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g; // eslint-disable-line
+const BEFORE_URL_ALLOWED_SYMBOL_REGEXP = /\s|>|\(/;
+
+const URL_REGEXP = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}\b(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)/gi; // eslint-disable-line
 const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|local)\/(animes|mangas|ranobe|characters|people)\/(\w+)[^/]*$/;
 
 const VIDEO_REGEXPES = [
@@ -49,57 +51,54 @@ export default function linkUrlPasteRule(type, schema, getAttrs) {
         let pos = 0;
         let match;
 
-        do {
-          match = URL_REGEXP.exec(text);
+        while ((match = URL_REGEXP.exec(text)) != null) {
+          const symbolBeforeUrl = text[match.index - 1];
 
-          if (match) {
-            const start = match.index;
-            const [url] = match;
-            const end = start + url.length;
-            const attrs = getAttrs instanceof Function ? getAttrs(url) : getAttrs;
-
-            if (start > 0) {
-              nodes.push(child.cut(pos, start));
-            }
-
-            const shikiMatch = url.match(SHIKI_URL_REGEXP);
-            const videoMatch = !shikiMatch && VIDEO_REGEXPES.some(regexp => (
-              url.match(regexp)
-            ));
-
-
-            if (shikiMatch) {
-              const id = parseInt(shikiMatch[2].replace(/[A-z]+/, ''));
-              const type = SHIKI_TYPES[shikiMatch[1]];
-              const shikiAttrs = { id, type, bbcode: `[${type}=id]` };
-
-              child.cut(start, end);
-              nodes.push(
-                schema.nodes.shiki_inline.create(shikiAttrs)
-              );
-            } else if (videoMatch) {
-              child.cut(start, end);
-              nodes.push(
-                schema.nodes.video.create({
-                  url,
-                  bbcode: `[video]${url}[/video]`
-                })
-              );
-            } else {
-              nodes.push(
-                child
-                  .cut(start, end)
-                  .mark(
-                    type
-                      .create(attrs)
-                      .addToSet(child.marks)
-                  )
-              );
-            }
-
-            pos = end;
+          if (symbolBeforeUrl != null &&
+            !BEFORE_URL_ALLOWED_SYMBOL_REGEXP.exec(symbolBeforeUrl)
+          ) {
+            continue;
           }
-        } while (match);
+
+          const start = match.index;
+          const [url] = match;
+          const end = start + url.length;
+          const attrs = getAttrs instanceof Function ? getAttrs(url) : getAttrs;
+
+          if (start > 0) {
+            nodes.push(child.cut(pos, start));
+          }
+
+          const shikiMatch = url.match(SHIKI_URL_REGEXP);
+          const videoMatch = !shikiMatch && VIDEO_REGEXPES.some(regexp => (
+            url.match(regexp)
+          ));
+
+          if (shikiMatch) {
+            const id = parseInt(shikiMatch[2].replace(/[A-z]+/, ''));
+            const type = SHIKI_TYPES[shikiMatch[1]];
+            const shikiAttrs = { id, type, bbcode: `[${type}=id]` };
+
+            child.cut(start, end);
+            nodes.push(
+              schema.nodes.shiki_inline.create(shikiAttrs)
+            );
+          } else if (videoMatch) {
+            child.cut(start, end);
+            nodes.push(
+              schema.nodes.video.create({
+                url,
+                bbcode: `[video]${url}[/video]`
+              })
+            );
+          } else {
+            nodes.push(child
+              .cut(start, end)
+              .mark(type.create(attrs).addToSet(child.marks)));
+          }
+
+          pos = end;
+        }
 
         if (pos < text.length) {
           nodes.push(child.cut(pos));
