@@ -66,17 +66,8 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // `.trim();
 
 let TEXT_2 = `
-z
-- 1
-- 2[br]
-- 3
-- 4[br][br]
-z
-> 1
-> 2[br]
-> 3
-> 4[br][br]
-z
+>?c7156698;1;morr
+> На самом сайте нет[br]Добавить ссылки
 `.trim();
 
 // TEXT_2 = `
