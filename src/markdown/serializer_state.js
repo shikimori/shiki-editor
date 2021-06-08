@@ -52,6 +52,10 @@ export default class MarkdownSerializerState {
     return /(^|\n|\[br\])$/.test(this.out);
   }
 
+  atHardBreak() {
+    return /\[br\]$/.test(this.out);
+  }
+
   // :: ()
   // Ensure the current content ends with a newline.
   ensureNewLine() {
@@ -65,7 +69,7 @@ export default class MarkdownSerializerState {
   write(content) {
     this.flushClose();
 
-    if (this.delim && this.atBlank()) {
+    if (this.delim && this.atBlank() && !this.atHardBreak()) {
       this.writeInline(this.delim);
     }
     if (content) {
