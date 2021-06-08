@@ -5,7 +5,8 @@ import {
   hasInlineSequence,
   extractMarkdownLanguage,
   isMatchedToken,
-  rollbackUnbalancedTokens
+  rollbackUnbalancedTokens,
+  isPriorParagraphEndedWithHardBreak
 } from '../../../src/markdown/tokenizer/helpers';
 
 describe('tokenizer_helpers', () => {
@@ -109,5 +110,39 @@ describe('tokenizer_helpers', () => {
       { type: 'text', content: 'zxc' },
       { type: 'bold', direction: 'close' }
     ]);
+  });
+
+  it('isPriorParagraphEndedWithHardBreak', () => {
+    expect(isPriorParagraphEndedWithHardBreak([])).to.eql(false);
+    expect(isPriorParagraphEndedWithHardBreak([
+      { type: 'bold', direction: 'open', bbcode: '[b]' },
+      { type: 'text', content: 'zxc' },
+      { type: 'bold', direction: 'close' }
+    ])).to.eql(false);
+    expect(isPriorParagraphEndedWithHardBreak([
+      { type: 'paragraph', direction: 'open' },
+      { type: 'text', content: 'zxc' },
+      { type: 'paragraph', direction: 'close' }
+    ])).to.eql(false);
+    expect(isPriorParagraphEndedWithHardBreak([
+      { type: 'paragraph', direction: 'open', attrs: [['isHardBreak', true]] },
+      { type: 'text', content: 'zxc' },
+      { type: 'paragraph', direction: 'close' },
+      { type: 'paragraph', direction: 'open' },
+      { type: 'text', content: 'zxc' },
+      { type: 'paragraph', direction: 'close' }
+    ])).to.eql(false);
+    expect(isPriorParagraphEndedWithHardBreak([
+      { type: 'paragraph', direction: 'open', attrs: [['isHardBreak', true]] },
+      { type: 'text', content: 'zxc' },
+      { type: 'paragraph', direction: 'close' }
+    ])).to.eql(true);
+    expect(isPriorParagraphEndedWithHardBreak([
+      { type: 'paragraph', direction: 'open', attrs: [['isHardBreak', true]] },
+      { type: 'bold', direction: 'open', bbcode: '[b]' },
+      { type: 'text', content: 'zxc' },
+      { type: 'bold', direction: 'close' },
+      { type: 'paragraph', direction: 'close' }
+    ])).to.eql(true);
   });
 });

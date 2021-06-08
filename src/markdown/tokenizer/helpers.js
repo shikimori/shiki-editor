@@ -117,3 +117,34 @@ export function rollbackUnbalancedTokens(tokens) {
 
   return tokens;
 }
+
+export function isPriorParagraphEndedWithHardBreak(tokens) {
+  const paragraphCloseToken = tokens[tokens.length - 1];
+  const isPriorTokenParagraphClose = paragraphCloseToken &&
+    paragraphCloseToken.type === 'paragraph' &&
+    paragraphCloseToken.direction === 'close';
+
+
+  if (isPriorTokenParagraphClose) {
+    const paragraphOpenToken = findParahraphOpenToken(tokens);
+
+    return !!(
+      paragraphOpenToken.attrs &&
+        paragraphOpenToken.attrs[0][0] === 'isHardBreak' &&
+        paragraphOpenToken.attrs[0][1] === true
+    );
+  }
+
+  return false;
+}
+
+function findParahraphOpenToken(tokens) {
+  for (let i = tokens.length - 2; i >= 0; i -= 1) {
+    const token = tokens[i];
+    if (token.type === 'paragraph' && token.direction === 'open') {
+      return token;
+    }
+  }
+
+  return null;
+}
