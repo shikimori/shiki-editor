@@ -1,3 +1,5 @@
+import { isPriorParagraphEndedWithHardBreak } from '../helpers';
+
 export default function processBulletList(state, tagSequence) {
   if (state.isExceededNesting()) { return false; }
 
@@ -31,7 +33,7 @@ function processBulletListLines(state, priorSequence, tagSequence) {
   let line = 0;
 
   do {
-    if (line > 0) {
+    if (line > 0 && !isPriorParagraphEndedWithHardBreak(state.tokens)) {
       state.next(state.nestedSequence.length);
     }
 

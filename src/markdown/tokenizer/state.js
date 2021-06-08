@@ -20,7 +20,7 @@ import {
 
 import processBlock from './processors/block';
 import processBlockQuote from './processors/block_quote';
-import processBulletList from './processors/bulle_list';
+import processBulletList from './processors/bullet_list';
 import processCodeBlock from './processors/code_block';
 import processCodeInline from './processors/code_inline';
 import processHeading from './processors/heading';

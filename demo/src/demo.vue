@@ -60,8 +60,22 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import { throttle, debounce } from '../../packages/shiki-decorators';
 // import ShikiUploader from '../../../shiki-uploader';
 
+// let TEXT_2 = `
+// > qwe[br]
+// z
+// `.trim();
+
 let TEXT_2 = `
-> asd[br]
+z
+- 1
+- 2[br]
+- 3
+- 4[br]
+z
+> 1
+> 2[br]
+> 3
+> 4[br]
 z
 `.trim();
 
