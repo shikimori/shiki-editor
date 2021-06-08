@@ -4343,9 +4343,9 @@ promise-inflight@^1.0.1:
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
 prosemirror-commands@^1.1.7:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/prosemirror-commands/-/prosemirror-commands-1.1.8.tgz#61aec59ac101b7990ec59726199f2a31ef0cd8ca"
-  integrity sha512-EIj/WAlrK2rVugxNxsFG6pI4430RL63ka2QKB9dO7vvStsLO//nq/oMjmd3VXp08+QNrmmLE23utqBUZwbS9Jg==
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/prosemirror-commands/-/prosemirror-commands-1.1.9.tgz#97db3ec7e2ac042f809b1367352d4c4b1f3e0737"
+  integrity sha512-zedlbQ+8QK0tIeibb6vbnAX5FO/S5x67xHgF57Fned+3G6RZY3JAGma9kC1jSCmLF/XC7MCZ90oekb0qo2b+Pw==
   dependencies:
     prosemirror-model "^1.0.0"
     prosemirror-state "^1.0.0"
