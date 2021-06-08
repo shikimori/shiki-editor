@@ -74,6 +74,12 @@ describe('MarkdownTokenizer', () => {
         ...text('qwe', [['isHardBreak', true]]),
         ...text('zxc')
       ]);
+
+      expect(MarkdownTokenizer.parse('qwe[br]\nzxc')).to.eql([
+        ...text('qwe', [['isHardBreak', true]]),
+        ...text(''),
+        ...text('zxc')
+      ]);
     });
   });
 
