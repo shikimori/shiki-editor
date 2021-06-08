@@ -3,7 +3,7 @@
 import { Node } from '../base';
 // import { Plugin, PluginKey } from 'prosemirror-state';
 
-const OMIT_NEWLINE_INSIDE_EMPTY_NODES =  ['list_item', 'blockquote'];
+const OMIT_LAST_NEWLINE_INSIDE_NODES = ['list_item', 'blockquote'];
 
 export default class Paragraph extends Node {
   get name() {
@@ -76,8 +76,8 @@ export default class Paragraph extends Node {
         state.closeBlock(node);
       }
 
-      if (OMIT_NEWLINE_INSIDE_EMPTY_NODES.includes(parent.type.name) &&
-        parent.childCount == 1
+      if (OMIT_LAST_NEWLINE_INSIDE_NODES.includes(parent.type.name) &&
+        parent.lastChild === node
       ) {
         return;
       }

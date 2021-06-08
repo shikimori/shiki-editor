@@ -80,6 +80,25 @@ describe('MarkdownTokenizer', () => {
         ...text(''),
         ...text('zxc')
       ]);
+
+      expect(MarkdownTokenizer.parse('> qwe[br]\nzxc')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        ...text('qwe', [['isHardBreak', true]]),
+        ...text(''),
+        { type: 'blockquote', direction: 'close' },
+        ...text('zxc')
+      ]);
+
+      // expect(MarkdownTokenizer.parse('- qwe[br]\nzxc')).to.eql([
+      //   { type: 'bullet_list', direction: 'open' },
+      //   { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+      //   ...text('qwe', [['isHardBreak', true]]),
+      //   ...text(''),
+      //   { type: 'list_item', direction: 'close' },
+      //   { type: 'bullet_list', direction: 'close' },
+      //   ...text('zxc')
+      // ]);
+
     });
   });
 

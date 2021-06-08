@@ -2,7 +2,8 @@ import Token from './token';
 
 import {
   extractBbCode,
-  rollbackUnbalancedTokens
+  rollbackUnbalancedTokens,
+  isPriorParagraphEndedWithHardBreak
 } from './helpers';
 
 import {
@@ -676,7 +677,8 @@ export default class MarkdownTokenizer {
       this.index + offset + this.nestedSequence.length
     );
 
-    return sequenceSlice === this.nestedSequence;
+    return sequenceSlice === this.nestedSequence ||
+      isPriorParagraphEndedWithHardBreak(this.tokens);
   }
 
   isSkippableSequence(skipSequence) {

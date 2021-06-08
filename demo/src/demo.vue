@@ -61,8 +61,8 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-- asd[br]
-zxc
+> asd[br]
+z
 `.trim();
 
 // TEXT_2 = `
