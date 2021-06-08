@@ -12,18 +12,23 @@ export default class Paragraph extends Node {
 
   get schema() {
     return {
+      attrs: {
+        isHardBreak: { default: false }
+      },
       content: 'inline*',
       group: 'block',
       draggable: false,
       parseDOM: [{
-        tag: 'p'
+        tag: 'p',
+        getAttrs: node => ({
+          isHardBreak: node.getAttribute('data-hard-break') != undefined
+        })
       }],
-      toDOM: () => ['p', 0],
-      attrs: {
-        isHardBreak: {
-          default: false
-        }
-      }
+      toDOM: node => [
+        'p',
+        node.attrs.isHardBreak ? { 'data-hard-break': '' } : {},
+        0
+      ]
     };
   }
 
