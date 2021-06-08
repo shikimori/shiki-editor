@@ -66,8 +66,9 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // `.trim();
 
 let TEXT_2 = `
->?c7156698;1;morr
-> На самом сайте нет[br]Добавить ссылки
+test
+
+test
 `.trim();
 
 // TEXT_2 = `

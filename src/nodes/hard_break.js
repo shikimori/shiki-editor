@@ -9,25 +9,29 @@ export default class HardBreak extends Node {
   get schema() {
     return {
       attrs: {
-        isPasted: { default: false },
-        isTyped: { default: false }
+        isKeep: { default: false }
       },
       inline: true,
       group: 'inline',
       selectable: false,
-      parseDOM: [
-        {
-          tag: 'br',
-          getAttrs: _node => ({ isPasted: true })
-        }
-      ],
-      toDOM: () => ['br']
+      parseDOM: [{
+        tag: 'br',
+        getAttrs: node => ({
+          isKeep: node.getAttribute('data-keep') != undefined
+        })
+      }],
+      toDOM: node => [
+        'br',
+        node.attrs.isKeep ? { 'data-keep': '' } : {}
+      ]
     };
   }
 
   commands({ type }) {
     return () => chainCommands(exitCode, (state, dispatch) => {
-      const tr = state.tr.replaceSelectionWith(type.create({ isTyped: true }));
+      const tr = state.tr.replaceSelectionWith(
+        type.create({ isShiftEntered: true })
+      );
       dispatch(tr.scrollIntoView());
       return true;
     });
@@ -41,6 +45,9 @@ export default class HardBreak extends Node {
   }
 
   markdownSerialize(state, node) {
-    state.write(node.attrs.isPasted || node.attrs.isTyped ? '\n' : '[br]');
+    const bbcode = node.attrs.isKeep ?
+      '[br]' :
+      '\n';
+    state.write(bbcode);
   }
 }
