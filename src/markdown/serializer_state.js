@@ -49,7 +49,7 @@ export default class MarkdownSerializerState {
   }
 
   atBlank() {
-    return /(^|\n)$/.test(this.out);
+    return /(^|\n|\[br\])$/.test(this.out);
   }
 
   // :: ()
