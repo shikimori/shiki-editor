@@ -564,6 +564,7 @@ export default class MarkdownTokenizer {
         case '[user':
           meta = parseShikiBasicMeta(bbcode);
           if (!meta) { break; }
+
           isProcessed =
             processShikiInline(this, bbcode, `[/${meta.type}]`, meta);
 
