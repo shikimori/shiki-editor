@@ -29,7 +29,15 @@ export default class ShikiBlock extends Node {
       content: 'block*',
       group: 'block',
       draggable: false,
-      selectable: false
+      selectable: false,
+      toDOM: node => [
+        'div',
+        {
+          class: 'b-shiki_editor-node',
+          'data-attrs': JSON.stringify(node.attrs)
+        },
+        node.attrs.bbcode
+      ]
     };
   }
 
