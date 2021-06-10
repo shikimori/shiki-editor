@@ -64,25 +64,6 @@ export default class Quote extends Node {
     };
   }
 
-  // hack to prevent getting extra new line before tag
-  get plugins() {
-    return [
-      new Plugin({
-        key: new PluginKey('node_quote'),
-        props: {
-          transformPastedHTML(html) {
-            if (html.includes('data-pm-slice')) { return html; }
-
-            return html.replace(
-              /<br[^>]*><div class="b-quote/g,
-              '<div class="b-quote'
-            );
-          }
-        }
-      })
-    ];
-  }
-
   markdownSerialize(state, node) {
     state.renderBlock(
       node,

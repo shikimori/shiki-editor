@@ -77,25 +77,6 @@ export default class SpoilerBlock extends Node {
     return nodeIsActive(type, state);
   }
 
-  // hack to prevent getting extra new line before tag
-  get plugins() {
-    return [
-      new Plugin({
-        key: new PluginKey('node_spoiler_block'),
-        props: {
-          transformPastedHTML(html) {
-            if (html.includes('data-pm-slice')) { return html; }
-
-            return html.replace(
-              /<br[^>]*><div class=(['"])b-spoiler_block/g,
-              '<div class=$1b-spoiler_block'
-            );
-          }
-        }
-      })
-    ];
-  }
-
   @bind
   markdownSerialize(state, node) {
     let meta = node.attrs.label && node.attrs.label !== this.defaultLabel ?

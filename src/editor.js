@@ -25,6 +25,7 @@ import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
   smartCommandSpoilerPlugin,
+  fixExtraNewLineBeforeBlockInPasted,
   // trackFocus,
   uploadPlaceholder
 } from './plugins';
@@ -209,6 +210,7 @@ export default class Editor {
       gapCursor(),
       // trackFocus(this),
       preventTransformPastedInsideCodeMark(this),
+      fixExtraNewLineBeforeBlockInPasted(),
       uploadPlaceholder,
       new Plugin({
         props: this.options.editorProps
