@@ -95,6 +95,7 @@ export default class ShikiView extends NodeView {
   }
 
   syncState() {
+    // console.log('syncState', this.type, this.node.attrs.isLoading, { ...this.node.attrs });
     const { dom, node } = this;
     const { attrs } = node;
 
@@ -107,7 +108,8 @@ export default class ShikiView extends NodeView {
   // rerender node view every time on any update
   update(node, decorations) {
     if (this.isInline) {
-      return super.update(node, decorations);
+      return this.node.attrs.type === node.attrs.type &&
+        super.update(node, decorations);
     }
 
     return false;
@@ -149,12 +151,17 @@ export default class ShikiView extends NodeView {
   }
 
   success(result) {
+    // console.log('success', this.type, this.node.attrs.isLoading, { ...this.node.attrs });
+
     if (this.type === 'poster' || this.type === 'image') {
       this.replaceImage(result);
+
     } else if (this.node.attrs.text) {
       this.replaceFragment(result);
+
     } else if (this.isInline) {
       this.replaceDefaultLink(result);
+
     } else {
       this.replaceNode(result);
     }
@@ -162,7 +169,7 @@ export default class ShikiView extends NodeView {
 
   replaceImage(result) {
     this.replaceWith(
-      this.view.state.schema.nodes.image.create({
+      this.schema.nodes.image.create({
         id: result.id,
         src: result.url,
         isPoster: this.type === 'poster',
@@ -176,7 +183,7 @@ export default class ShikiView extends NodeView {
     const selection = this.nodeSelection;
     const content = this.node.content.size ? // is 0 when `[anime=477]Ария[/anime]` is pasted
       this.node.content :
-      this.view.state.schema.text(this.node.attrs.text);
+      this.schema.text(this.node.attrs.text);
     const contentSize = this.node.content.size || content.nodeSize;
 
     this.dispatch(
@@ -197,7 +204,7 @@ export default class ShikiView extends NodeView {
 
   replaceDefaultLink(result) {
     this.replaceWith(
-      this.view.state.schema.text(
+      this.schema.text(
         result.text,
         [
           ...this.node.marks,
@@ -210,7 +217,7 @@ export default class ShikiView extends NodeView {
 
   replaceNode(result) {
     this.replaceWith(
-      this.view.state.schema.nodes.link_block.create({
+      this.schema.nodes.link_block.create({
         ...result,
         type: this.type,
         meta: this.node.attrs.meta,
@@ -221,7 +228,7 @@ export default class ShikiView extends NodeView {
   }
 
   markLinkInline(result) {
-    return this.view.state.schema.marks.link_inline.create({
+    return this.schema.marks.link_inline.create({
       ...result,
       type: this.type,
       meta: this.node.attrs.meta

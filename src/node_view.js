@@ -47,6 +47,11 @@ export default class NodeView {
     return this.view.state.tr;
   }
 
+  get schema() {
+    return this.editor.schema;
+    // return this.view.state.schema;
+  }
+
   get nodeSelection() {
     return new NodeSelection(this.tr.doc.resolve(this.getPos()));
   }
