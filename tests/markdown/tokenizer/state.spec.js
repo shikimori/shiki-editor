@@ -2282,6 +2282,40 @@ describe('MarkdownTokenizer', () => {
           { type: 'paragraph', direction: 'close' }
         ]);
       });
+
+      it('[anime=1][image=2][/anime]', () => {
+        expect(MarkdownTokenizer.parse('[anime=1][image=2][/anime]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              {
+                type: 'shiki_inline',
+                attrs: [
+                  ['bbcode', '[anime=1][image=2][/anime]'],
+                  ['type', 'anime'],
+                  ['id', 1],
+                  ['openBbcode', '[anime=1]'],
+                  ['closeBbcode', '[/anime]'],
+                  ['text', '[image=2]'],
+                  ['isLoading', true],
+                  ['isNotFound', false]
+                ],
+                children: [{
+                  type: 'shiki_inline',
+                  attrs: [
+                    ['bbcode', '[image=2]'],
+                    ['type', 'image'],
+                    ['id', 2],
+                    ['meta', {}]
+                  ]
+                }]
+              }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
     });
 
     describe('shiki_block', () => {
