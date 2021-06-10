@@ -1,5 +1,3 @@
-import { Plugin, PluginKey } from 'prosemirror-state';
-
 import { Node } from '../base';
 import { serializeAttrs, toDOMInnerQuoteable } from '../utils/quote_helpers';
 import { parseQuoteMeta } from '../markdown/tokenizer/bbcode_helpers';

@@ -1,5 +1,4 @@
 import { bind } from 'shiki-decorators';
-import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { Node } from '../base';
 import { nodeIsActive } from '../checks';
