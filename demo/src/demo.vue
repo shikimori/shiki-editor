@@ -60,21 +60,13 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import { throttle, debounce } from '../../packages/shiki-decorators';
 // import ShikiUploader from '../../../shiki-uploader';
 
-// let TEXT_2 = `
-// > qwe[br]
-// z
-// `.trim();
-
 let TEXT_2 = `
-test
+> qwe[br]
+z
 
-test
+> [quote]
+> line1[/quote]
 `.trim();
-
-// TEXT_2 = `
-// > [quote]
-// > line1[/quote]
-// `.trim();
 
 
 export default {

@@ -55,6 +55,7 @@ function remadeFragmentWoExtraNewLinesBeforeBlock(fragment) {
 
 function isParagraphEndedWithHardBreak(child) {
   return child.type.name === 'paragraph' &&
+    child.childCount &&
     child.content.lastChild.type.name === 'hard_break';
 }
 
