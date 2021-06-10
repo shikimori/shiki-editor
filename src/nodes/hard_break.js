@@ -29,9 +29,7 @@ export default class HardBreak extends Node {
 
   commands({ type }) {
     return () => chainCommands(exitCode, (state, dispatch) => {
-      const tr = state.tr.replaceSelectionWith(
-        type.create({ isShiftEntered: true })
-      );
+      const tr = state.tr.replaceSelectionWith(type.create());
       dispatch(tr.scrollIntoView());
       return true;
     });
