@@ -14,7 +14,6 @@ export default class Image extends Node {
 
   get schema() {
     return {
-      inline: true,
       attrs: {
         id: { default: null },
         src: {},
@@ -26,6 +25,7 @@ export default class Image extends Node {
       },
       group: 'inline',
       draggable: true,
+      inline: true,
       parseDOM: [{
         tag: '.b-image',
         getAttrs: node => {

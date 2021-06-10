@@ -43,6 +43,7 @@ export default class ShikiInline extends Node {
         isError: { default: false },
         isPasted: { default: false }
       },
+      atom: true, // otherwise marks won't be applied to a node: [character=80][image=1124146][/character]
       inline: true,
       content: 'inline*',
       group: 'inline',
@@ -121,6 +122,13 @@ export default class ShikiInline extends Node {
   get view() {
     return NodeView.buildRenderer(ShikiView);
   }
+
+  // get view() {
+  //   return NodeView.buildRenderer(null, props => {
+  //     if (props.node.attrs.type === 'image') { return null; }
+  //     return new ShikiView(null, props);
+  //   });
+  // }
 
   inputRules({ type }) {
     return [
