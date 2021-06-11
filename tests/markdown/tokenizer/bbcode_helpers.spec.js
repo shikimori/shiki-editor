@@ -91,25 +91,36 @@ describe('tokenizer_helpers', () => {
   });
 
   it('parseSpoilerMeta', () => {
-    expect(parseSpoilerMeta('', null)).to.eq(null);
-    expect(parseSpoilerMeta('qwe', null)).to.eql({ label: 'qwe' });
-    expect(parseSpoilerMeta('qwe', ' is-fullwidth')).to.eql({
+    expect(parseSpoilerMeta('spoiler_block', '', null)).to.eql({});
+    expect(parseSpoilerMeta('spoiler_block', 'qwe', null)).to.eql({
+      label: 'qwe'
+    });
+    expect(parseSpoilerMeta('spoiler', '', null)).to.eql({
+      isLegacy: true
+    });
+    expect(parseSpoilerMeta('spoiler_block', 'qwe', ' is-fullwidth')).to.eql({
       label: 'qwe',
       isFullwidth: true
     });
-    expect(parseSpoilerMeta('qwe', ' is-centered')).to.eql({
+    expect(parseSpoilerMeta('spoiler_block', 'qwe', ' is-centered')).to.eql({
       label: 'qwe',
       isCentered: true
     });
-    expect(parseSpoilerMeta('qwe', ' is-fullwidth is-centered')).to.eql({
+    expect(parseSpoilerMeta('spoiler_block', 'qwe', ' is-fullwidth is-centered')).to.eql({
       label: 'qwe',
       isFullwidth: true,
       isCentered: true
     });
-    expect(parseSpoilerMeta('qwe', ' is-centered is-fullwidth')).to.eql({
+    expect(parseSpoilerMeta('spoiler_block', 'qwe', ' is-centered is-fullwidth')).to.eql({
       label: 'qwe',
       isFullwidth: true,
       isCentered: true
+    });
+    expect(parseSpoilerMeta('spoiler', 'qwe', ' is-centered is-fullwidth')).to.eql({
+      label: 'qwe',
+      isFullwidth: true,
+      isCentered: true,
+      isLegacy: true
     });
   });
 
