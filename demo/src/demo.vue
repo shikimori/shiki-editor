@@ -61,16 +61,8 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-[spoiler]
-x[spoiler]c[/spoiler]
-[/spoiler]
+test
 `.trim();
-
-// [spoiler=Здесь моё субъективное мнение]
-// Здравствуйте, сегодня я поведаю вам одну историю из моей жизни...
-// [spoiler=[image=1293625]]:hi:[/spoiler]
-// [/spoiler]
-
 
 export default {
   name: 'App',

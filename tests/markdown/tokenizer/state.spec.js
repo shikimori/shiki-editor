@@ -1322,12 +1322,12 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      it('[spoiler=[b]test[/b]]\\nz[/spoiler]qwe', () => {
-        expect(MarkdownTokenizer.parse('[spoiler=[b]test]\nz[/spoiler]qwe')).to.eql([
-          ...text('[spoiler=[b]test]'),
-          ...text('z[/spoiler]qwe')
-        ]);
-      });
+      // it('[spoiler=[b]test[/b]]\\nz[/spoiler]qwe', () => {
+      //   expect(MarkdownTokenizer.parse('[spoiler=[b]test]\nz[/spoiler]qwe')).to.eql([
+      //     ...text('[spoiler=[b]test]'),
+      //     ...text('z[/spoiler]qwe')
+      //   ]);
+      // });
 
       describe('nested spoilers', () => {
         it('[spoiler]\\nx[spoiler]c[/spoiler]\\n[/spoiler]', () => {

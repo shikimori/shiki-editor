@@ -266,9 +266,9 @@ export default class MarkdownTokenizer {
 
             meta = parseSpoilerMeta(match[1], match[2], match[3]);
             // ignore common spoilers with bbcodes
-            if (meta.isLegacy && meta.label?.match(/\[\w+/)) {
-              break;
-            }
+            // if (meta.isLegacy && meta.label?.match(/\[\w+/)) {
+            //   break;
+            // }
 
             isProcessed = processBlock(
               this,
