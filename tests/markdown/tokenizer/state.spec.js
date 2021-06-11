@@ -1220,7 +1220,10 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['nFormat', n()]]
+            attrs: [
+              ['isLegacy', true],
+              ['nFormat', n()]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
@@ -1232,7 +1235,11 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['label', 'qw er'], ['nFormat', n()]]
+            attrs: [
+              ['label', 'qw er'],
+              ['isLegacy', true],
+              ['nFormat', n()]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
@@ -1242,7 +1249,10 @@ describe('MarkdownTokenizer', () => {
       // it('[spoiler=q[b]w[i]e[/i]r[/b]t]z[/spoiler]', () => {
       //   expect(MarkdownTokenizer.parse('[spoiler=q[b]w[i]e[/i]r[/b]t]z[/spoiler]')).to.eql([{
       //     type: 'spoiler_block', direction: 'open',
-      //     attrs: [['label', 'q[b]w[i]e[/i]r[/b]t']]
+      //     attrs: [
+      //       ['label', 'q[b]w[i]e[/i]r[/b]t'],
+      //       ['isLegacy', true]
+      //     ]
       //   },
       //   ...text('z'),
       //   {
@@ -1255,7 +1265,11 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['label', 'qw er'], ['nFormat', n()]]
+            attrs: [
+              ['label', 'qw er'],
+              ['isLegacy', true],
+              ['nFormat', n()]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
@@ -1267,7 +1281,10 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['nFormat', n(false, true, true)]]
+            attrs: [
+              ['isLegacy', true],
+              ['nFormat', n(false, true, true)]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
@@ -1279,7 +1296,10 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['nFormat', n(false, true)]]
+            attrs: [
+              ['isLegacy', true],
+              ['nFormat', n(false, true)]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' }
@@ -1291,7 +1311,10 @@ describe('MarkdownTokenizer', () => {
           {
             type: 'spoiler_block',
             direction: 'open',
-            attrs: [['nFormat', n(false, true)]]
+            attrs: [
+              ['isLegacy', true],
+              ['nFormat', n(false, true)]
+            ]
           },
           ...text('z'),
           { type: 'spoiler_block', direction: 'close' },
@@ -1314,7 +1337,10 @@ describe('MarkdownTokenizer', () => {
             {
               type: 'spoiler_block',
               direction: 'open',
-              attrs: [['nFormat', n(false, true, true)]]
+              attrs: [
+                ['isLegacy', true],
+                ['nFormat', n(false, true, true)]
+              ]
             },
             ...text('x[spoiler]c[/spoiler]'),
             { type: 'spoiler_block', direction: 'close' }
@@ -2480,7 +2506,10 @@ describe('MarkdownTokenizer', () => {
         {
           type: 'spoiler_block',
           direction: 'open',
-          attrs: [['nFormat', n(true)]]
+          attrs: [
+            ['isLegacy', true],
+            ['nFormat', n(true)]
+          ]
         },
         ...text('z'),
         { type: 'spoiler_block', direction: 'close' }
@@ -2499,7 +2528,10 @@ describe('MarkdownTokenizer', () => {
         {
           type: 'spoiler_block',
           direction: 'open',
-          attrs: [['nFormat', n(true, true, true)]]
+          attrs: [
+            ['isLegacy', true],
+            ['nFormat', n(true, true, true)]
+          ]
         },
         ...text('z'),
         { type: 'spoiler_block', direction: 'close' },

@@ -127,7 +127,7 @@ export function parseSizeMeta(meta) {
   };
 }
 
-export function parseSpoilerMeta(label, fullwidth_or_centered) {
+export function parseSpoilerMeta(bbcode, label, fullwidth_or_centered) {
   const meta = {};
 
   if (label) {
@@ -142,7 +142,11 @@ export function parseSpoilerMeta(label, fullwidth_or_centered) {
     meta.isCentered = true;
   }
 
-  return !label && !fullwidth_or_centered ? null : meta;
+  if (bbcode === 'spoiler') {
+    meta.isLegacy = true;
+  }
+
+  return meta;
 }
 
 export function parseShikiBasicMeta(bbcode) {

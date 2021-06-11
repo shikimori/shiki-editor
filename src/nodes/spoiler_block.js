@@ -23,6 +23,7 @@ export default class SpoilerBlock extends Node {
         isOpened: { default: true },
         isFullwidth: { default: false },
         isCentered: { default: false },
+        isLegacy: { default: false },
         nFormat: {
           default: {
             nBeforeOpen: true,
@@ -81,18 +82,28 @@ export default class SpoilerBlock extends Node {
     let meta = node.attrs.label && node.attrs.label !== this.defaultLabel ?
       `=${node.attrs.label}` :
       '';
-    if (node.attrs.isFullwidth) {
-      meta += ' is-fullwidth';
-    }
-    if (node.attrs.isCentered) {
-      meta += ' is-centered';
-    }
 
-    state.renderBlock(
-      node,
-      'spoiler_block',
-      meta,
-      node.attrs.nFormat
-    );
+    if (node.attrs.isLegacy && !node.attrs.isFullwidth && !node.attrs.isCentered) {
+      state.renderBlock(
+        node,
+        'spoiler',
+        meta,
+        node.attrs.nFormat
+      );
+    } else {
+      if (node.attrs.isFullwidth) {
+        meta += ' is-fullwidth';
+      }
+      if (node.attrs.isCentered) {
+        meta += ' is-centered';
+      }
+
+      state.renderBlock(
+        node,
+        'spoiler_block',
+        meta,
+        node.attrs.nFormat
+      );
+    }
   }
 }

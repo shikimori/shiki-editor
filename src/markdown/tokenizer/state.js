@@ -264,9 +264,9 @@ export default class MarkdownTokenizer {
             match = bbcode.match(this.SPOILER_BBCODE_REGEXP);
             if (!match) { break; }
 
-            meta = parseSpoilerMeta(match[2], match[3]);
+            meta = parseSpoilerMeta(match[1], match[2], match[3]);
             // ignore common spoilers with bbcodes
-            if (match[1] === 'spoiler' && meta?.label?.match(/\[\w+/)) {
+            if (meta.isLegacy && meta.label?.match(/\[\w+/)) {
               break;
             }
 
@@ -591,12 +591,13 @@ export default class MarkdownTokenizer {
         case '[spoi':
           match = bbcode.match(this.SPOILER_BBCODE_REGEXP);
           if (!match) { break; }
-          if (match[1] === 'spoiler') {
+
+          meta = parseSpoilerMeta(match[1], match[2], match[3]);
+          if (meta.isLegacy) {
             this.skippableSequences.push('[/spoiler]');
             break;
           }
 
-          meta = parseSpoilerMeta(match[2], match[3]);
           isProcessed = processBlock(
             this,
             'spoiler_block', bbcode, `[/${match[1]}]`, meta,
