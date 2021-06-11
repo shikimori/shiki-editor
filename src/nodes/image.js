@@ -23,9 +23,10 @@ export default class Image extends Node {
         isNoZoom: { default: false },
         class: { default: null }
       },
-      group: 'inline',
-      draggable: true,
+      // atom: true,
       inline: true,
+      draggable: true,
+      group: 'inline',
       parseDOM: [{
         tag: '.b-image',
         getAttrs: node => {

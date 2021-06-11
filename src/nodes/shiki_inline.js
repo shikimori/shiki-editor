@@ -21,12 +21,6 @@ export default class ShikiInline extends Node {
     return 'shiki_inline';
   }
 
-  // get defaultOptions() {
-  //   return {
-  //     localizationField: 'name'
-  //   };
-  // }
-
   get schema() {
     return {
       attrs: {

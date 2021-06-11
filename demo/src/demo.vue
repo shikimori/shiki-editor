@@ -61,11 +61,9 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-> qwe[br]
 z
 
-> [quote]
-> line1[/quote]
+z
 `.trim();
 
 

@@ -35,7 +35,7 @@ export default new Plugin({
 });
 
 function createPlaceholder(file) {
-  const node = document.createElement('div');
+  const node = document.createElement('span');
 
   node.classList.add('b-image');
   node.classList.add('b-ajax');
