@@ -1305,6 +1305,22 @@ describe('MarkdownTokenizer', () => {
           ...text('z[/spoiler]qwe')
         ]);
       });
+
+      describe('nested spoilers', () => {
+        it('[spoiler]\\nx[spoiler]c[/spoiler]\\n[/spoiler]', () => {
+          expect(MarkdownTokenizer.parse(
+            '[spoiler]\nx[spoiler]c[/spoiler]\n[/spoiler]'
+          )).to.eql([
+            {
+              type: 'spoiler_block',
+              direction: 'open',
+              attrs: [['nFormat', n(false, true, true)]]
+            },
+            ...text('x[spoiler]c[/spoiler]'),
+            { type: 'spoiler_block', direction: 'close' }
+          ]);
+        });
+      });
     });
 
     describe('quote', () => {

@@ -67,6 +67,7 @@ export default class MarkdownTokenizer {
     this.tokens = [];
     this.inlineTokens = [];
     this.marksStack = [];
+    this.skippableSequences = [];
     this.paragraphToken = null;
   }
 
@@ -121,6 +122,7 @@ export default class MarkdownTokenizer {
     if (this.exitSequence && !this.isExitSequence) {
       return null;
     }
+
     return this.tokens;
   }
 
@@ -150,7 +152,7 @@ export default class MarkdownTokenizer {
       if (isEnd) {
         this.finalizeParagraph();
         this.next();
-        // add aditional parahraph when meet \n before exitSequesnce
+        // add aditional parahraph when meet \n before exitSequence
         // if (this.isExitSequence) { this.finalizeParagraph(); }
         return;
       }
@@ -453,6 +455,13 @@ export default class MarkdownTokenizer {
         }
         break;
 
+      case '[/spoiler]':
+        if (this.skippableSequences[this.skippableSequences.length - 1] === '[/spoiler]') {
+          this.skippableSequences.pop();
+          return;
+        }
+        break;
+
       case '[/size]':
         if (processMarkClose(this, 'size_inline', '[size]', '[/size]')) {
           return false;
@@ -581,7 +590,11 @@ export default class MarkdownTokenizer {
 
         case '[spoi':
           match = bbcode.match(this.SPOILER_BBCODE_REGEXP);
-          if (!match || match[1] !== 'spoiler_block') { break; }
+          if (!match) { break; }
+          if (match[1] === 'spoiler') {
+            this.skippableSequences.push('[/spoiler]');
+            break;
+          }
 
           meta = parseSpoilerMeta(match[2], match[3]);
           isProcessed = processBlock(
@@ -606,11 +619,7 @@ export default class MarkdownTokenizer {
       this.isExitSequence = this.char1 === '\n' || this.char1 === undefined;
 
     } else if (this.exitSequence) {
-      this.isExitSequence = this.char1 === this.exitSequence[0] && (
-        this.exitSequence.length === 1 ||
-        this.text.slice(this.index, this.index + this.exitSequence.length) ===
-          this.exitSequence
-      );
+      this.isExitSequence = this.isMatchedExitSequence();
     }
 
     if (isSkipNewLine && (this.char1 === '\n' || this.char1 === undefined)) {
@@ -713,5 +722,20 @@ export default class MarkdownTokenizer {
     }
 
     return false;
+  }
+
+  isMatchedExitSequence() {
+    const { char1, exitSequence, skippableSequences, text, index } = this;
+
+    if (char1 !== exitSequence[0]) { return false; }
+    if (exitSequence.length === 1) { return true; }
+
+    const sequence = text.slice(index, index + exitSequence.length);
+
+    if (skippableSequences[skippableSequences.length - 1] === sequence) {
+      return false;
+    }
+
+    return sequence === exitSequence;
   }
 }
