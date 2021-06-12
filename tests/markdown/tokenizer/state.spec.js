@@ -2608,6 +2608,24 @@ describe('MarkdownTokenizer', () => {
       ]);
     });
 
+    it('code block inside blockquote', () => {
+      expect(MarkdownTokenizer.parse('> ```\n> zxc\n> ```')).to.eql([
+        { type: 'blockquote', direction: 'open' },
+        { type: 'code_block', content: 'zxc' },
+        { type: 'blockquote', direction: 'close' }
+      ]);
+    });
+
+    it('code block inside list', () => {
+      expect(MarkdownTokenizer.parse('> ```\n> zxc\n> ```')).to.eql([
+        { type: 'bullet_list', direction: 'open' },
+        { type: 'list_item', direction: 'open', attrs: [['bbcode', '- ']] },
+        { type: 'code_block', content: 'zxc' },
+        { type: 'list_item', direction: 'close' },
+        { type: 'bullet_list', direction: 'close' }
+      ]);
+    });
+
     it('keeps maximum nesting level', () => {
       expect(MarkdownTokenizer.parse('> > > > > a')).to.eql([
         { type: 'blockquote', direction: 'open' },
