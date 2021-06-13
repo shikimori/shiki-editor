@@ -44,9 +44,17 @@ export default function processCodeBlock(
   const endIndex = isMarkdown ?
     index :
     state.text[index - 1] === '\n' ? index - 1 : index;
-  const text = state.text
+  let text = state.text
     .slice(startIndex, endIndex)
     .replace(/\\`/g, '`');
+
+  if (state.nestedSequence) {
+    text = text.replace(
+      new RegExp(`(\n|^)${state.nestedSequence}`, 'g'),
+      '$1'
+    );
+  }
+
   const languageAttr = language ? [['language', language]] : null;
   index += endSequence.length;
 

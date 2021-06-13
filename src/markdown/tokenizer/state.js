@@ -178,7 +178,7 @@ export default class MarkdownTokenizer {
 
         switch (seq3) {
           case '```':
-            if (processCodeBlock(this, seq3, '\n```', null, true)) {
+            if (processCodeBlock(this, seq3, `${this.nestedSequence || '\n'}\`\`\``, null, true)) {
               break outer;
             }
             break;
