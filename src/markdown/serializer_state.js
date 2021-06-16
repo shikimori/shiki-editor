@@ -59,7 +59,11 @@ export default class MarkdownSerializerState {
   // :: ()
   // Ensure the current content ends with a newline.
   ensureNewLine() {
-    if (!this.atBlank()) this.out += '\n';
+    if (!this.atBlank()) {
+      this.out += '\n';
+    }
+    // consider prior node closed when we forcibly ensureNewLine
+    this.closed = false;
   }
 
   // :: (?string)
