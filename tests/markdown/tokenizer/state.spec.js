@@ -1567,17 +1567,6 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
-      // it('[div]z[/div][div]x[/div]', () => {
-      //   expect(MarkdownTokenizer.parse('[div]z[/div][div]x[/div]')).to.eql([
-      //     { type: 'div', direction: 'open', attrs: [['nFormat', n()]] },
-      //     ...text('z'),
-      //     { type: 'div', direction: 'close' },
-      //     { type: 'div', direction: 'open', attrs: [['nFormat', n()]] },
-      //     ...text('x'),
-      //     { type: 'div', direction: 'close' }
-      //   ]);
-      // });
-
       it('[div data-test=qwe]z[/div]', () => {
         expect(MarkdownTokenizer.parse(
           '[div data-test=qwe]z[/div]'
@@ -1662,6 +1651,14 @@ describe('MarkdownTokenizer', () => {
         expect(MarkdownTokenizer.parse('a[div]\nc[/div]')).to.eql([
           ...text('a[div]'),
           ...text('c[/div]')
+        ]);
+      });
+
+      it('a[div]\\nc\\n[/div]', () => {
+        expect(MarkdownTokenizer.parse('a[div]\nc\n[/div]')).to.eql([
+          ...text('a[div]'),
+          ...text('c'),
+          ...text('[/div]')
         ]);
       });
 

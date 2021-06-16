@@ -10,9 +10,6 @@ export default function processInlineBlock(state, startSequence, exitSequence) {
   const tokens = tokenizer.parse();
 
   if (!tokens) { return; }
-  // const endSequence =
-  //   state.text.slice(tokenizer.index, tokenizer.index + exitSequence.length);
-  // if (endSequence !== exitSequence) { return false; }
 
   state.appendInlineContent(startSequence);
 
@@ -30,7 +27,7 @@ export default function processInlineBlock(state, startSequence, exitSequence) {
     });
     slicedTokens = tokens.slice(3);
     // close parahraph after prior content was joined
-    if (slicedTokens.length) {
+    if (slicedTokens.length && tokens[1].children.length) {
       state.finalizeParagraph();
     }
   } else {
@@ -51,6 +48,12 @@ export default function processInlineBlock(state, startSequence, exitSequence) {
   if (!isNewLineAtEnd && slicedTokens.length &&
     isMatchedToken(slicedTokens[slicedTokens.length - 1], 'paragraph', 'close')
   ) {
+    // finalizeParagraph could be skipped by condition above, so
+    // we have to make sure that all previous inline content is finalized
+    // before we replace inlineTokens
+    if (state.inlineTokens.length) {
+      state.finalizeParagraph();
+    }
     state.inlineTokens = slicedTokens[slicedTokens.length - 2].children;
     slicedTokens = slicedTokens.slice(0, slicedTokens.length - 3);
   }
