@@ -21,6 +21,7 @@ export default class Quote extends Node {
         comment_id: { default: undefined },
         message_id: { default: undefined },
         topic_id: { default: undefined },
+        review_id: { default: undefined },
         userId: { default: undefined },
         nickname: { default: undefined },
         nFormat: {

@@ -1420,6 +1420,25 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
 
+      it('[quote=r1;2;x]z[/quote]', () => {
+        expect(MarkdownTokenizer.parse('[quote=r1;2;x]z[/quote]')).to.eql([
+          {
+            type: 'quote',
+            direction: 'open',
+            attrs: [
+              ['review_id', 1],
+              ['userId', 2],
+              ['nickname', 'x'],
+              ['nFormat', n()]
+            ]
+          },
+          ...text('z'),
+          {
+            type: 'quote', direction: 'close'
+          }
+        ]);
+      });
+
       it('[quote=m1;2;x]z[/quote]', () => {
         expect(MarkdownTokenizer.parse('[quote=m1;2;x]z[/quote]')).to.eql([
           {
@@ -2022,6 +2041,7 @@ describe('MarkdownTokenizer', () => {
         'person',
         'comment',
         'topic',
+        'review',
         'entry',
         'message',
         'user'

@@ -311,6 +311,7 @@ export default class MarkdownTokenizer {
           case '[pers':
           case '[comm':
           case '[topi':
+          case '[revi':
           case '[entr':
           case '[mess':
           case '[user':
@@ -568,6 +569,7 @@ export default class MarkdownTokenizer {
         case '[pers':
         case '[comm':
         case '[topi':
+        case '[revi':
         case '[entr':
         case '[mess':
         case '[user':

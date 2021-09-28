@@ -83,6 +83,12 @@ describe('tokenizer_helpers', () => {
       nickname: 'qwe'
     });
 
+    expect(parseQuoteMeta('r1;1;qwe')).to.eql({
+      review_id: 1,
+      userId: 1,
+      nickname: 'qwe'
+    });
+
     expect(parseQuoteMeta('zxc;1;qwe')).to.eq(null);
   });
 

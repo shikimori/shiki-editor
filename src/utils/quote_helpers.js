@@ -8,6 +8,8 @@ export function serializeAttrs(attrs, isAddEquals = false) {
       attributes.push(`m${attrs.message_id}`);
     } else if (attrs.topic_id !== undefined) {
       attributes.push(`t${attrs.topic_id}`);
+    } else if (attrs.review_id !== undefined) {
+      attributes.push(`r${attrs.review_id}`);
     }
 
     if (attrs.userId !== undefined) {
@@ -25,15 +27,17 @@ export function serializeAttrs(attrs, isAddEquals = false) {
 export function toDOMInnerQuoteable(attrs, schemaNode) {
   if (!attrs.nickname) { return; }
 
-  if (attrs.comment_id || attrs.message_id || attrs.topic_id) {
+  if (attrs.comment_id || attrs.message_id || attrs.topic_id || attrs.review_id) {
     let href;
 
     if (attrs.comment_id) {
       href = `/comments/${attrs.comment_id}`;
     } else if (attrs.message_id) {
       href = `/messages/${attrs.message_id}`;
-    } else {
+    } else if (attrs.topic_id) {
       href = `/topics/${attrs.topic_id}`;
+    } else {
+      href = `/reviews/${attrs.review_id}`;
     }
 
     return [

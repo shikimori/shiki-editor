@@ -3,15 +3,15 @@ import { extractUntil } from '../helpers';
 import { CACHE, convertToShikiType } from '../../../extensions/shiki_loader';
 
 export const SHIKI_BBCODE_LINK_REGEXP =
-  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message|user)=(\d+)(?:;(\d+))?(?: [^\n\][]+)?\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|review|entry|message|user)=(\d+)(?:;(\d+))?(?: [^\n\][]+)?\]/;
 export const SHIKI_BBCODE_LINK_FULL_REGEXP =
-  /\[(anime|manga|ranobe|character|person|comment|topic|entry|message|user)=(\d+)(?:;(\d+))?(?: [^\n\][]+)?\]([^[]+)\[\/(?:\1)\]/;
+  /\[(anime|manga|ranobe|character|person|comment|topic|review|entry|message|user)=(\d+)(?:;(\d+))?(?: [^\n\][]+)?\]([^[]+)\[\/(?:\1)\]/;
 export const SHIKI_BBCODE_IMAGE_REGEXP = /\[(poster|image)=(\d+)(?: ([^\]]+))?\]/;
 
 export const URL_REGEXP = /\[url(?:=([^\]]+))?\]/;
 
 export const LABEL_TYPES = ['anime', 'manga', 'ranobe', 'character', 'person'];
-export const MENTION_TYPES = ['comment', 'topic', 'entry', 'message', 'user'];
+export const MENTION_TYPES = ['comment', 'topic', 'review', 'entry', 'message', 'user'];
 
 export function processShikiInline(state, openBbcode, closeBbcode, meta) {
   if (meta.type === 'image' || meta.type === 'poster') {

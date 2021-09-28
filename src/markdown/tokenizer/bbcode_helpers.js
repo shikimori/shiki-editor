@@ -110,6 +110,10 @@ export function parseQuoteMeta(meta) {
         attributes.topic_id = parseInt(id);
         break;
 
+      case 'r':
+        attributes.review_id = parseInt(id);
+        break;
+
       default:
         return null;
     }
