@@ -249,7 +249,7 @@ export default {
           MENU_ITEMS[group].map(item => ({
             type: item,
             title: window.I18n.t(`frontend.shiki_editor.${item}`),
-            isEditingEnabled: this.isEditingEnabledMappings[item] ?? true
+            isEditingEnabled: this.isEditingEnabledMappings[item] ?? !this.isPreview
           }))
         ]
       ));
