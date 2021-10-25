@@ -113,7 +113,6 @@ export default {
         const { disablePageScroll } = await import(
           /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
         );
-        console.log('disablePageScroll');
         disablePageScroll();
       } else {
         this.showPopup();
