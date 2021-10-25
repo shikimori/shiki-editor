@@ -113,6 +113,7 @@ export default {
         const { disablePageScroll } = await import(
           /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
         );
+        console.log('disablePageScroll');
         disablePageScroll();
       } else {
         this.showPopup();
@@ -153,19 +154,22 @@ export default {
         }
       );
     },
-    async close() {
+    close() {
+      this.enablePageScroll();
+      this.$emit('toggle');
+    },
+    select({ target }) {
+      if (target.classList.contains('smiley')) {
+        this.enablePageScroll();
+        this.$emit('toggle', target.getAttribute('alt'));
+      }
+    },
+    async enablePageScroll() {
       if (this.isMobile) {
         const { enablePageScroll } = await import(
           /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
         );
         enablePageScroll();
-      }
-
-      this.$emit('toggle');
-    },
-    select({ target }) {
-      if (target.classList.contains('smiley')) {
-        this.$emit('toggle', target.getAttribute('alt'));
       }
     }
   }
