@@ -2,6 +2,7 @@
 
 import { Mark } from '../base';
 import { rgbToHex, ensureOnlyStyle } from '../utils';
+import { createOrUpdateAttrs } from '../commands';
 
 export default class ColorInline extends Mark {
   SIMPLE_COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
@@ -20,7 +21,9 @@ export default class ColorInline extends Mark {
       parseDOM: [{
         tag: 'span',
         getAttrs: node => {
-          if (!ensureOnlyStyle(node, 'color')) { return false; }
+          if (!ensureOnlyStyle(node, 'color')) {
+            return false;
+          }
 
           const value = node.style.color;
 
@@ -42,6 +45,10 @@ export default class ColorInline extends Mark {
         0
       ]
     };
+  }
+
+  commands({ type }) {
+    return (attrs) => createOrUpdateAttrs(type, attrs);
   }
 
   get markdownParserToken() {

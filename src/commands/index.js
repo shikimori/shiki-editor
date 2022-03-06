@@ -25,3 +25,5 @@ export { default as toggleMarkWrap } from './toggle_mark_wrap';
 export { default as toggleNodeWrap } from './toggle_node_wrap';
 export { default as toggleWrap } from './toggle_wrap';
 export { default as updateMark } from './update_mark';
+export { default as updateAttrs } from './update_attrs';
+export { default as createOrUpdateAttrs } from './create_or_update_attrs';

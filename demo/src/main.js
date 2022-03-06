@@ -12,6 +12,7 @@ const TRANSLATIONS = {
   'frontend.lib.please_try_again_later': 'Ошибка. Попробуй еще раз позже',
   'frontend.shiki_editor.bold': ' Жирный',
   'frontend.shiki_editor.italic': ' Курсив',
+  'frontend.shiki_editor.color': ' Цвет',
   'frontend.shiki_editor.underline': ' Подчёркнутый',
   'frontend.shiki_editor.strike': ' Зачёркнутый',
   'frontend.shiki_editor.undo': ' Отменить последнее изменение',
@@ -48,7 +49,17 @@ const TRANSLATIONS = {
   'frontend.lib.file_uploader.uploading_file': 'загрузка файла %{filename} (%{filesize} KB)',
   'frontend.lib.file_uploader.uploading_files': 'загрузка файлов %{uploadedCount} из %{totalCount} (%{kbUploaded} / %{kbTotal} KB)', // eslint-disable-line
   'frontend.lib.file_uploader.drop_pictures_here': 'Перетаскивай сюда картинки',
-  'frontend.lib.file_uploader.file_type_not_allowed': 'Файл не является изображением'
+  'frontend.lib.file_uploader.file_type_not_allowed': 'Файл не является изображением',
+  'fontent.shiki_editor.colors.yellow': 'Жёлтый',
+  'fontent.shiki_editor.colors.orange': 'Оранжевый',
+  'fontent.shiki_editor.colors.red': 'Красный',
+  'fontent.shiki_editor.colors.pink': 'Розовый',
+  'fontent.shiki_editor.colors.violet': 'Фиолетовый',
+  'fontent.shiki_editor.colors.blue': 'Синий',
+  'fontent.shiki_editor.colors.green': 'Зелёный',
+  'fontent.shiki_editor.colors.brown': 'Коричневый',
+  'fontent.shiki_editor.colors.gray': 'Серый',
+  'fontent.shiki_editor.colors.black': 'Чёрный'
 };
 
 window.I18n = {

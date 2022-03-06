@@ -71,7 +71,7 @@ export default {
 .icon
   +icon
 
-  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809")
+  $icons: ("bold": "\e802", "italic": "\e804", "underline": "\e807", "strike": "\e805", "link": "\1f517", "spoiler_inline": "\f31a", "code_inline": "\ef53", "undo": "\ebb0", "redo": "\ebaf", "image": "\E808", "smiley": "\e800", "shiki_link": "\e80d", "upload": "\e80c", "bullet_list": "\ebab", "blockquote": "\e80b", "code_block": "\ebac", "spoiler_block": "\f31b", "preview": "\e806", "source": "\e809", "color": "\f020")
   @each $name, $glyph in $icons
     &-#{$name}:before
       content: $glyph
