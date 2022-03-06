@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/shikimori/shiki-editor.svg?branch=master)](https://travis-ci.com/shikimori/shiki-editor)
+[![CodeQL](https://github.com/shikimori/shiki-editor/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/shikimori/shiki-editor/actions/workflows/codeql-analysis.yml) [![Node.js CI](https://github.com/shikimori/shiki-editor/actions/workflows/tests.yml/badge.svg)](https://github.com/shikimori/shiki-editor/actions/workflows/tests.yml) 
 
 # shiki-editor
 `shiki-editor` is a wysiwyg editor based on [prosemirror](https://prosemirror.net/). To understand how it works internally please read [prosemirror guide](https://prosemirror.net/docs/guide/).
