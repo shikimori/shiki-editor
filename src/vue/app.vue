@@ -418,9 +418,13 @@ export default {
         }
       }
     },
-    colorsCommand(kind) {
-      if (kind) {
-        const params = { color: kind };
+    colorsCommand(params = {}) {
+      if (params.closed) {
+        this.isColors = false;
+        return;
+      }
+
+      if (params.color) {
         this.isColors = !this.isColors;
 
         if (this.isSource) {

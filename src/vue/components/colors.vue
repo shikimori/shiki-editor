@@ -11,17 +11,34 @@
           ref='scrollbar'
           :options='{ wheelPropagation: false }'
         >
-          <div
-            @click='select'
-          >
+          <div>
+            <div class="hex-wrapper">
+              <label for="inputHexMobile" class="hex-label">
+                {{ inputLabel }}:&nbsp;
+              </label>
+              <input
+                id="inputHexMobile"
+                v-model='inputHex'
+                class="hex-input"
+                placeholder="#000000"
+                @input='change($event)'
+                @change='change($event)'
+                @keydown='handleSourceKeypress'
+              >
+              <button :disabled='!isInputValid' class="hex-button" @click='handOk'>OK</button>
+            </div>
             <div
-              v-for='color in colorsHTML'
-              :key='color.value'
-              :style='{backgroundColor: color.value, borderColor: color.border}'
-              :title="color.title"
-              :data-value="color.value"
-              class="color"
-            />
+              @click='select'
+            >
+              <div
+                v-for='color in colorsHTML'
+                :key='color.value'
+                :style='{backgroundColor: color.value, borderColor: color.border}'
+                :title="color.title"
+                :data-value="color.value"
+                class="color"
+              />
+            </div>
           </div>
         </PerfectScrollbar>
       </div>
@@ -34,16 +51,32 @@
       <div data-popper-arrow />
       <div
         class='inner'
-        @click='select'
       >
-        <div
-          v-for='color in colorsHTML'
-          :key='color.value'
-          :style='{backgroundColor: color.value, borderColor: color.border}'
-          :title="color.title"
-          :data-value="color.value"
-          class="color"
-        />
+        <div class="hex-wrapper">
+          <label for="inputHex" class="hex-label">
+            {{ inputLabel }}:&nbsp;
+          </label>
+          <input
+            id="inputHex"
+            v-model='inputHex'
+            class="hex-input"
+            placeholder="#000000"
+            @input='change($event)'
+            @change='change($event)'
+            @keydown='handleSourceKeypress'
+          >
+          <button :disabled='!isInputValid' class="hex-button" @click='handOk'>OK</button>
+        </div>
+        <div @click='select'>
+          <div
+            v-for='color in colorsHTML'
+            :key='color.value'
+            :style='{backgroundColor: color.value, borderColor: color.border}'
+            :title="color.title"
+            :data-value="color.value"
+            class="color"
+          />
+        </div>
       </div>
     </div>
     <div v-if='!isMobile' class='shade' @click='close' />
@@ -59,20 +92,23 @@ import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import arrow from '@popperjs/core/lib/modifiers/arrow';
+import { shadeColor } from '../../utils';
 
 // @see https://graf1x.com/list-of-colors-with-color-names/
 const DEFAULT_COLORS = [
-  { title: 'fontent.shiki_editor.colors.yellow', value: '#fff200', border: '#f8de7e' },
-  { title: 'fontent.shiki_editor.colors.orange', value: '#fc6600', border: '#f9a602' },
-  { title: 'fontent.shiki_editor.colors.red', value: '#d30000', border: '#fa8072' },
-  { title: 'fontent.shiki_editor.colors.pink', value: '#fc0fc0', border: '#e0115f' },
-  { title: 'fontent.shiki_editor.colors.violet', value: '#b200de', border: '#b43757' },
-  { title: 'fontent.shiki_editor.colors.blue', value: '#0018f9', border: '#131e3a' },
-  { title: 'fontent.shiki_editor.colors.green', value: '#3bb143', border: '#0b6623' },
-  { title: 'fontent.shiki_editor.colors.brown', value: '#7c4700', border: '#4b3a26' },
-  { title: 'fontent.shiki_editor.colors.gray', value: '#828282', border: '#787276' },
-  { title: 'fontent.shiki_editor.colors.black', value: '#000000', border: '#000000' }
+  { title: 'fontent.shiki_editor.colors.yellow', value: '#fff200' },
+  { title: 'fontent.shiki_editor.colors.orange', value: '#fc6600' },
+  { title: 'fontent.shiki_editor.colors.red', value: '#d30000' },
+  { title: 'fontent.shiki_editor.colors.pink', value: '#fc0fc0' },
+  { title: 'fontent.shiki_editor.colors.violet', value: '#b200de' },
+  { title: 'fontent.shiki_editor.colors.blue', value: '#0018f9' },
+  { title: 'fontent.shiki_editor.colors.green', value: '#3bb143' },
+  { title: 'fontent.shiki_editor.colors.brown', value: '#7c4700' },
+  { title: 'fontent.shiki_editor.colors.gray', value: '#828282' },
+  { title: 'fontent.shiki_editor.colors.black', value: '#000000' }
 ];
+
+const INPUT_MASK = /^(#[\da-f]+|\w+)$/i;
 
 export default {
   name: 'Colors',
@@ -103,7 +139,14 @@ export default {
   },
   data: () => ({
     popup: null,
-    colorsHTML: DEFAULT_COLORS.map(obj => ({ ...obj, title: window.I18n.t(obj.title) }))
+    colorsHTML: DEFAULT_COLORS.map(obj => ({
+      ...obj,
+      title: window.I18n.t(obj.title),
+      border: shadeColor(obj.value, -40) // 40% darker color for border
+    })),
+    inputHex: '#000000',
+    inputLabel: window.I18n.t('frontend.shiki_editor.color'),
+    isInputValid: true
   }),
   computed: {
     isMobile() {
@@ -145,6 +188,8 @@ export default {
       if (this.popup) {
         this.popup.destroy();
         this.popup = null;
+        this.isInputValid = true;
+        this.inputHex = '#000000';
       }
     },
     showPopup() {
@@ -165,12 +210,22 @@ export default {
     },
     close() {
       this.enablePageScroll();
-      this.$emit('toggle');
+      this.$emit('toggle', { closed: true });
     },
     select({ target }) {
       if (target.classList.contains('color')) {
         this.enablePageScroll();
-        this.$emit('toggle', target.getAttribute('data-value'));
+        this.$emit('toggle', { color: target.getAttribute('data-value') });
+      }
+    },
+    handOk() {
+      this.enablePageScroll();
+      this.$emit('toggle', { color: `${this.inputHex}`.trim() });
+    },
+    handleSourceKeypress(e) {
+      if (e.keyCode === 13 && this.isInputValid) { // enter
+        preventEvent(e);
+        this.handOk();
       }
     },
     async enablePageScroll() {
@@ -180,14 +235,26 @@ export default {
         );
         enablePageScroll();
       }
+    },
+    change(event) {
+      const value = `${event.target.value}`.trim();
+      this.isInputValid = INPUT_MASK.test(value);
     }
   }
 };
+
+function preventEvent(e) {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+}
 </script>
 
 <style scoped lang='sass'>
-@import ../../stylesheets/mixins/responsive.sass
+@import ../../stylesheets/globals
+@import ../../stylesheets/mixins/responsive
 @import ../../stylesheets/mixins/icon
+@import ../../stylesheets/mixins/input
+@import ../../stylesheets/mixins/shiki_button
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
@@ -246,17 +313,17 @@ $padding-vertical: 8px
 
 ::v-deep(.color)
   cursor: pointer
-  margin-bottom: 10px
+  margin-bottom: 7px
   margin-right: 7px
   outline: 2px solid transparent
   position: relative
   transition: outline .15s
   z-index: 1
-  height: 32px
-  width: 32px
-  border-radius: 50%
+  height: 28px
+  width: 28px
+  border-radius: 5px
   display: inline-block
-  border: 4px solid
+  border: 2px solid
 
   +gte_laptop
     &:hover
@@ -264,6 +331,26 @@ $padding-vertical: 8px
 
   &:active
     outline: 2px solid var(--link-active-color, #ff0202)
+
+.hex-input
+  +input-colors
+
+  height: 23px
+
+.hex-label
+  font-weight: bold
+
+.hex-button
+  +shiki_button
+
+  margin-left: 5px
+
+.hex-wrapper
+  display: block
+  min-height: 28px
+  box-sizing: border-box
+  padding: 5px
+  margin-bottom: 10px
 
 .close
   +icon
