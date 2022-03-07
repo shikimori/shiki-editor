@@ -14,9 +14,11 @@ export default class ColorInline extends Mark {
 
   get schema() {
     return {
-      rank: 5, attrs: {
+      rank: 5,
+      attrs: {
         color: {}
-      }, parseDOM: [{
+      },
+      parseDOM: [{
         tag: 'span', getAttrs: node => {
           if (!ensureOnlyStyle(node, 'color')) {
             return false;
@@ -27,9 +29,11 @@ export default class ColorInline extends Mark {
           let match;
           let color;
 
-          if (match = value.match(this.SIMPLE_COLOR_REGEXP)) {
+          if (this.SIMPLE_COLOR_REGEXP.test(value)) {
+            match = value.match(this.SIMPLE_COLOR_REGEXP);
             color = match[1];
-          } else if (match = value.match(this.RGB_COLOR_REGEXP)) {
+          } else if (this.RGB_COLOR_REGEXP.test(value)) {
+            match = value.match(this.RGB_COLOR_REGEXP);
             color = rgbToHex(match[1], match[2], match[3]);
           }
 
