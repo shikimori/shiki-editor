@@ -2,7 +2,7 @@
 
 import { Mark } from '../base';
 import { rgbToHex, ensureOnlyStyle } from '../utils';
-import { createOrUpdateAttrs } from '../commands';
+import { createOrUpdateAttrs, toggleMarkWrap } from '../commands';
 
 export default class ColorInline extends Mark {
   SIMPLE_COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
@@ -14,13 +14,10 @@ export default class ColorInline extends Mark {
 
   get schema() {
     return {
-      rank: 5,
-      attrs: {
+      rank: 5, attrs: {
         color: {}
-      },
-      parseDOM: [{
-        tag: 'span',
-        getAttrs: node => {
+      }, parseDOM: [{
+        tag: 'span', getAttrs: node => {
           if (!ensureOnlyStyle(node, 'color')) {
             return false;
           }
@@ -38,23 +35,17 @@ export default class ColorInline extends Mark {
 
           return color ? { color } : false;
         }
-      }],
-      toDOM: node => [
-        'span',
-        { style: `color: ${node.attrs.color};` },
-        0
-      ]
+      }], toDOM: node => ['span', { style: `color: ${node.attrs.color};` }, 0]
     };
   }
 
   commands({ type }) {
-    return (attrs) => createOrUpdateAttrs(type, attrs);
+    return (attrs) => toggleMarkWrap(type, attrs);
   }
 
   get markdownParserToken() {
     return {
-      mark: this.name,
-      getAttrs: token => token.serializeAttributes()
+      mark: this.name, getAttrs: token => token.serializeAttributes()
     };
   }
 
@@ -62,10 +53,7 @@ export default class ColorInline extends Mark {
     return {
       open(_state, mark, _parent, _index) {
         return `[color=${mark.attrs.color}]`;
-      },
-      close: '[/color]',
-      mixable: true,
-      expelEnclosingWhitespace: true
+      }, close: '[/color]', mixable: true, expelEnclosingWhitespace: true
     };
   }
 }

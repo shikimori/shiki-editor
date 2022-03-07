@@ -137,11 +137,10 @@
     />
     <Colors
       v-show='isColors && !isPreview'
-      ref='colors'
       :is-enabled='isColors'
-      target-ref='color'
+      target-ref='colors'
       :is-sticky-menu-offset='isStickyMenuOffset'
-      @toggle='colorCommand'
+      @toggle='colorsCommand'
     />
     <Suggestions
       :is-available='isEditingEnabled'
@@ -183,7 +182,7 @@ const MENU_ITEMS = {
     'italic',
     'underline',
     'strike',
-    'color',
+    'colors',
     'spoiler_inline',
     'code_inline',
     'link'
@@ -419,17 +418,30 @@ export default {
         }
       }
     },
-    colorCommand(kind) {
-      this.isColors = !this.isColors;
-
+    colorsCommand(kind) {
       if (kind) {
+        const params = { color: kind };
+        this.isColors = !this.isColors;
+
         if (this.isSource) {
-          sourceCommand(this, this.isColorBlock ? 'color_block' : 'color_inline', { color: kind });
+          sourceCommand(this, this.isColorBlock ? 'color_block' : 'color_inline', params);
         } else {
           if (this.isColorBlock) {
-            this.editor.commands.color_block({ color: kind });
+            this.editor.commands.color_block(params);
           } else {
-            this.editor.commands.color_inline({ color: kind });
+            this.editor.commands.color_inline(params);
+          }
+        }
+      } else {
+        this.isColors = !this.nodesState.colors;
+
+        if (!this.isColors) {
+          this.isColors = false;
+
+          if (this.isColorBlock) {
+            this.editor.commands.color_block(null, true);
+          } else {
+            this.editor.commands.color_inline();
           }
         }
       }
@@ -539,7 +551,7 @@ export default {
       memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
 
       this.isColorBlock = this.editor.activeChecks.color_block(); // eslint-disable-line
-      memo.bold = this.isColorBlock || this.editor.activeChecks.color_inline();
+      memo.colors = this.isColorBlock || this.editor.activeChecks.color_inline();
 
       this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
       memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
@@ -548,7 +560,6 @@ export default {
       memo.link = this.isLinkBlock || this.editor.activeChecks.link_inline();
 
       memo.smiley = this.isSmiley;
-      memo.colors = this.isColors;
 
       this.nodesState = memo;
     },
