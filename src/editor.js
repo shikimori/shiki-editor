@@ -19,8 +19,7 @@ import {
   getNodeAttrs,
   minMax
 } from './utils';
-import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer }
-  from './markdown';
+import { MarkdownParser, MarkdownSerializer, MarkdownTokenizer } from './markdown';
 import {
   buildNodesAndMarks,
   preventTransformPastedInsideCodeMark,
