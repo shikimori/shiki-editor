@@ -260,7 +260,7 @@ export default class Editor {
   }
 
   getMarkAttrs(type = null) {
-    return this.ctiveMarkAttrs[type];
+    return this.activeMarkAttrs[type];
   }
 
   getNodeAttrs(type = null) {

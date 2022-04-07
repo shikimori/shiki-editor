@@ -33,11 +33,17 @@ export default function sourceCommand(app, type, payload) {
       insertAtCaret(app, '`', '`', true);
       break;
 
+    case 'color_inline':
+      insertAtCaret(app, `[color=${payload.color}]`, '[/color]', true);
+      break;
+
     case 'link':
       payload = prompt( // eslint-disable-line no-param-reassign
         window.I18n.t('frontend.shiki_editor.prompt.link_url')
       )?.trim();
-      if (payload == null) { return; }
+      if (payload == null) {
+        return;
+      }
 
       insertAtCaret(
         app,
@@ -57,7 +63,9 @@ export default function sourceCommand(app, type, payload) {
       payload = prompt( // eslint-disable-line no-param-reassign
         window.I18n.t('frontend.shiki_editor.prompt.image_url')
       )?.trim();
-      if (payload == null) { return; }
+      if (payload == null) {
+        return;
+      }
 
       insertAtCaret(app, '', `[img]${payload}[/img]`);
       break;
@@ -95,6 +103,10 @@ export default function sourceCommand(app, type, payload) {
 
     case 'spoiler_block':
       wrapLine(app, '[spoiler_block]', '[/spoiler_block]');
+      break;
+
+    case 'color_block':
+      wrapLine(app, `[color=${payload.color}]`, '[/color]');
       break;
 
     case 'code_block':

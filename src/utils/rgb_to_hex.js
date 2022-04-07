@@ -1,21 +1,27 @@
-/* eslint no-param-reassign: 0 */
-
+/**
+ * Convert RGB to Hex
+ * @param r
+ * @param {string|number} g
+ * @param {string|number} b
+ * @returns {string} Hex string
+ * @constructor
+ */
 export default function RGBToHex(r, g, b) {
-  r = r.toString(16);
-  g = g.toString(16);
-  b = b.toString(16);
+  let red = parseInt(`${r}`, 10).toString(16);
+  let green = parseInt(`${g}`, 10).toString(16);
+  let blue = parseInt(`${b}`, 10).toString(16);
 
-  if (r.length == 1) {
-    r = '0' + r;
+  if (red.length === 1) {
+    red = '0' + red;
   }
 
-  if (g.length == 1) {
-    g = '0' + g;
+  if (green.length === 1) {
+    green = '0' + green;
   }
 
-  if (b.length == 1) {
-    b = '0' + b;
+  if (blue.length === 1) {
+    blue = '0' + blue;
   }
 
-  return '#' + r + g + b;
+  return '#' + red + green + blue;
 }

@@ -135,6 +135,13 @@
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
     />
+    <Colors
+      v-show='isColors && !isPreview'
+      :is-enabled='isColors'
+      target-ref='colors'
+      :is-sticky-menu-offset='isStickyMenuOffset'
+      @toggle='colorsCommand'
+    />
     <Suggestions
       :is-available='isEditingEnabled'
       :editor='editor'
@@ -166,6 +173,7 @@ import { flash } from 'shiki-utils';
 
 import Icon from './components/icon';
 import Smileys from './components/smileys';
+import Colors from './components/colors';
 import Suggestions from './components/suggestions';
 
 const MENU_ITEMS = {
@@ -174,6 +182,7 @@ const MENU_ITEMS = {
     'italic',
     'underline',
     'strike',
+    'colors',
     'spoiler_inline',
     'code_inline',
     'link'
@@ -190,6 +199,8 @@ const DEFAULT_DATA = {
   isBoldBlock: false,
   isLinkBlock: false,
   isSmiley: false,
+  isColors: false,
+  isColorBlock: false,
   isPreview: false,
   isPreviewLoading: false,
   previewHTML: null,
@@ -206,6 +217,7 @@ export default {
     EditorContent,
     Icon,
     Smileys,
+    Colors,
     Suggestions
   },
   inheritAttrs: false,
@@ -274,8 +286,8 @@ export default {
     },
     isSourceEnabled() {
       return !this.isHugeContent &&
-        !this.isContentManipulationsPending;
-        // !this.isContentManipulationsPending && !this.isPreview;
+          !this.isContentManipulationsPending;
+      // !this.isContentManipulationsPending && !this.isPreview;
     },
     isSourceDisabled() {
       return this.isPreview || this.isContentManipulationsPending;
@@ -286,11 +298,6 @@ export default {
     redoIsEnabled() {
       return this.isEditingEnabled && redo(this.editor.state);
     },
-    // linkIsEnabled() {
-    //   return this.isEditingEnabled && (
-    //     this.nodesState.link || !this.editor.state.selection.empty
-    //   );
-    // },
     fileUploaderExtension() {
       return new FileUploader({
         editorApp: this,
@@ -298,7 +305,9 @@ export default {
       });
     },
     shikiSearchExtension() {
-      if (!this.globalSearch) { return null; }
+      if (!this.globalSearch) {
+        return null;
+      }
 
       return new ShikiSearch({
         editorApp: this,
@@ -307,7 +316,9 @@ export default {
     },
     isStickyMenuOffset() {
       const topMenuNode = document.querySelector('.l-top_menu-v2');
-      if (!topMenuNode) { return false; }
+      if (!topMenuNode) {
+        return false;
+      }
 
       return getComputedStyle(topMenuNode).position === 'sticky';
     }
@@ -404,6 +415,38 @@ export default {
           sourceCommand(this, 'smiley', kind);
         } else {
           this.editor.commands.smiley(kind);
+        }
+      }
+    },
+    colorsCommand(params = {}) {
+      if (params.closed) {
+        this.isColors = false;
+        return;
+      }
+
+      if (params.color) {
+        this.isColors = !this.isColors;
+
+        if (this.isSource) {
+          sourceCommand(this, this.isColorBlock ? 'color_block' : 'color_inline', params);
+        } else {
+          if (this.isColorBlock) {
+            this.editor.commands.color_block(params);
+          } else {
+            this.editor.commands.color_inline(params);
+          }
+        }
+      } else {
+        this.isColors = !this.nodesState.colors;
+
+        if (!this.isColors) {
+          this.isColors = false;
+
+          if (this.isColorBlock) {
+            this.editor.commands.color_block(null, true);
+          } else {
+            this.editor.commands.color_inline();
+          }
         }
       }
     },
@@ -511,6 +554,9 @@ export default {
       this.isBoldBlock = this.editor.activeChecks.bold_block(); // eslint-disable-line
       memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
 
+      this.isColorBlock = this.editor.activeChecks.color_block(); // eslint-disable-line
+      memo.colors = this.isColorBlock || this.editor.activeChecks.color_inline();
+
       this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
       memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
 
@@ -604,7 +650,9 @@ export default {
         preventEvent(e);
         this.toggleSource();
       }
-      if (!e.metaKey && !e.ctrlKey) { return; }
+      if (!e.metaKey && !e.ctrlKey) {
+        return;
+      }
 
       if ((e.keyCode === 10) || (e.keyCode === 13)) { // ctrl+enter
         preventEvent(e);
@@ -612,19 +660,24 @@ export default {
         await this.$nextTick();
 
         this.submit();
-      } if (e.keyCode === 66) { // b - [b] tag
+      }
+      if (e.keyCode === 66) { // b - [b] tag
         preventEvent(e);
         sourceCommand(this, 'bold');
-      } if (e.keyCode === 73) { // i - [i] tag
+      }
+      if (e.keyCode === 73) { // i - [i] tag
         preventEvent(e);
         sourceCommand(this, 'italic');
-      } if (e.keyCode === 85) { // u - [u] tag
+      }
+      if (e.keyCode === 85) { // u - [u] tag
         preventEvent(e);
         sourceCommand(this, 'underline');
-      } if (e.keyCode === 83) { //  - spoiler tag
+      }
+      if (e.keyCode === 83) { //  - spoiler tag
         preventEvent(e);
         sourceCommand(this, 'spoiler_inline');
-      } if (e.keyCode === 79) { // o - code tag
+      }
+      if (e.keyCode === 79) { // o - code tag
         preventEvent(e);
         sourceCommand(this, 'code_inline');
       }
@@ -659,6 +712,6 @@ function preventEvent(e) {
 }
 </script>
 
-<style lang='sass' src='../stylesheets/prosemirror.sass' />
-<style lang='sass' src='../stylesheets/prosemirror_shiki.sass' />
-<style scoped lang='sass' src='../stylesheets/app.sass' />
+<style lang='sass' src='../stylesheets/prosemirror.sass'/>
+<style lang='sass' src='../stylesheets/prosemirror_shiki.sass'/>
+<style scoped lang='sass' src='../stylesheets/app.sass'/>

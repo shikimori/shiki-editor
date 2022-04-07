@@ -19,3 +19,4 @@ export { default as preventEvent } from './prevent_event';
 export { default as resolveWord } from './resolve_word';
 export { default as rgbToHex } from './rgb_to_hex';
 export { default as scrollTop } from './scroll_top';
+export { default as shadeColor } from './shade_color';
