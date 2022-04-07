@@ -65,7 +65,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 
 let TEXT_2 = `
 [div]A[/div][div]
-B[/div]
+CCC [color=red]BBBB[/color]DDD[/div]
 `.trim();
 
 export default {

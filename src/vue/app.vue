@@ -136,11 +136,11 @@
       @toggle='smileyCommand'
     />
     <Colors
-      v-show='isColors && !isPreview'
-      :is-enabled='isColors'
-      target-ref='colors'
+      v-show='isColor && !isPreview'
+      :is-enabled='isColor'
+      target-ref='color'
       :is-sticky-menu-offset='isStickyMenuOffset'
-      @toggle='colorsCommand'
+      @toggle='colorCommand'
     />
     <Suggestions
       :is-available='isEditingEnabled'
@@ -182,7 +182,7 @@ const MENU_ITEMS = {
     'italic',
     'underline',
     'strike',
-    'colors',
+    'color',
     'spoiler_inline',
     'code_inline',
     'link'
@@ -199,7 +199,7 @@ const DEFAULT_DATA = {
   isBoldBlock: false,
   isLinkBlock: false,
   isSmiley: false,
-  isColors: false,
+  isColor: false,
   isColorBlock: false,
   isPreview: false,
   isPreviewLoading: false,
@@ -418,14 +418,14 @@ export default {
         }
       }
     },
-    colorsCommand(params = {}) {
+    colorCommand(params = {}) {
       if (params.closed) {
-        this.isColors = false;
+        this.isColor = false;
         return;
       }
 
       if (params.color) {
-        this.isColors = !this.isColors;
+        this.isColor = !this.isColor;
 
         if (this.isSource) {
           sourceCommand(this, this.isColorBlock ? 'color_block' : 'color_inline', params);
@@ -437,10 +437,10 @@ export default {
           }
         }
       } else {
-        this.isColors = !this.nodesState.colors;
+        this.isColor = !this.nodesState.color;
 
-        if (!this.isColors) {
-          this.isColors = false;
+        if (!this.isColor) {
+          this.isColor = false;
 
           if (this.isColorBlock) {
             this.editor.commands.color_block(null, true);
@@ -555,7 +555,7 @@ export default {
       memo.bold = this.isBoldBlock || this.editor.activeChecks.bold_inline();
 
       this.isColorBlock = this.editor.activeChecks.color_block(); // eslint-disable-line
-      memo.colors = this.isColorBlock || this.editor.activeChecks.color_inline();
+      memo.color = this.isColorBlock || this.editor.activeChecks.color_inline();
 
       this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
       memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();
