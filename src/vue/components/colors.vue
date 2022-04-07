@@ -96,16 +96,16 @@ import { shadeColor } from '../../utils';
 
 // @see https://graf1x.com/list-of-colors-with-color-names/
 const DEFAULT_COLORS = [
-  { title: 'fontent.shiki_editor.colors.yellow', value: '#fff200' },
-  { title: 'fontent.shiki_editor.colors.orange', value: '#fc6600' },
-  { title: 'fontent.shiki_editor.colors.red', value: '#d30000' },
-  { title: 'fontent.shiki_editor.colors.pink', value: '#fc0fc0' },
-  { title: 'fontent.shiki_editor.colors.violet', value: '#b200de' },
-  { title: 'fontent.shiki_editor.colors.blue', value: '#0018f9' },
-  { title: 'fontent.shiki_editor.colors.green', value: '#3bb143' },
-  { title: 'fontent.shiki_editor.colors.brown', value: '#7c4700' },
-  { title: 'fontent.shiki_editor.colors.gray', value: '#828282' },
-  { title: 'fontent.shiki_editor.colors.black', value: '#000000' }
+  { title: 'frontend.shiki_editor.colors.yellow', value: '#fff200' },
+  { title: 'frontend.shiki_editor.colors.orange', value: '#fc6600' },
+  { title: 'frontend.shiki_editor.colors.red', value: '#d30000' },
+  { title: 'frontend.shiki_editor.colors.pink', value: '#fc0fc0' },
+  { title: 'frontend.shiki_editor.colors.violet', value: '#b200de' },
+  { title: 'frontend.shiki_editor.colors.blue', value: '#0018f9' },
+  { title: 'frontend.shiki_editor.colors.green', value: '#3bb143' },
+  { title: 'frontend.shiki_editor.colors.brown', value: '#7c4700' },
+  { title: 'frontend.shiki_editor.colors.gray', value: '#828282' },
+  { title: 'frontend.shiki_editor.colors.black', value: '#000000' }
 ];
 
 const INPUT_MASK = /^(#[\da-f]+|\w+)$/i;
