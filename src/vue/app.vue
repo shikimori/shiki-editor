@@ -419,7 +419,7 @@ export default {
       }
     },
     colorCommand(params = {}) {
-      if (params.closed) {
+      if (params.isClosed) {
         this.isColor = false;
         return;
       }

@@ -210,7 +210,7 @@ export default {
     },
     close() {
       this.enablePageScroll();
-      this.$emit('toggle', { closed: true });
+      this.$emit('toggle', { isClosed: true });
     },
     select({ target }) {
       if (target.classList.contains('color')) {
