@@ -12,20 +12,19 @@
           :options='{ wheelPropagation: false }'
         >
           <div>
-            <div class="hex-wrapper">
-              <label for="inputHexMobile" class="hex-label">
+            <div class='hex-wrapper'>
+              <label class='hex-label'>
                 {{ inputLabel }}:&nbsp;
+                <input
+                  v-model='inputHex'
+                  class='hex-input'
+                  placeholder='#000000'
+                  @input='change($event)'
+                  @change='change($event)'
+                  @keydown='handleSourceKeypress'
+                >
               </label>
-              <input
-                id="inputHexMobile"
-                v-model='inputHex'
-                class="hex-input"
-                placeholder="#000000"
-                @input='change($event)'
-                @change='change($event)'
-                @keydown='handleSourceKeypress'
-              >
-              <button :disabled='!isInputValid' class="hex-button" @click='handOk'>OK</button>
+              <button :disabled='!isInputValid' class='hex-button' @click='handOk'>OK</button>
             </div>
             <div
               @click='select'
@@ -34,9 +33,9 @@
                 v-for='color in colorsHTML'
                 :key='color.value'
                 :style='{backgroundColor: color.value, borderColor: color.border}'
-                :title="color.title"
-                :data-value="color.value"
-                class="color"
+                :title='color.title'
+                :data-value='color.value'
+                class='color'
               />
             </div>
           </div>
@@ -52,29 +51,28 @@
       <div
         class='inner'
       >
-        <div class="hex-wrapper">
-          <label for="inputHex" class="hex-label">
+        <div class='hex-wrapper'>
+          <label class='hex-label'>
             {{ inputLabel }}:&nbsp;
+            <input
+              v-model='inputHex'
+              class='hex-input'
+              placeholder='#000000'
+              @input='change($event)'
+              @change='change($event)'
+              @keydown='handleSourceKeypress'
+            >
           </label>
-          <input
-            id="inputHex"
-            v-model='inputHex'
-            class="hex-input"
-            placeholder="#000000"
-            @input='change($event)'
-            @change='change($event)'
-            @keydown='handleSourceKeypress'
-          >
-          <button :disabled='!isInputValid' class="hex-button" @click='handOk'>OK</button>
+          <button :disabled='!isInputValid' class='hex-button' @click='handOk'>OK</button>
         </div>
         <div @click='select'>
           <div
             v-for='color in colorsHTML'
             :key='color.value'
-            :style='{backgroundColor: color.value, borderColor: color.border}'
-            :title="color.title"
-            :data-value="color.value"
-            class="color"
+            :style='{ backgroundColor: color.value, borderColor: color.border }'
+            :title='color.title'
+            :data-value='color.value'
+            class='color'
           />
         </div>
       </div>
