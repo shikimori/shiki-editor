@@ -2,7 +2,7 @@
 
 import { Mark } from '../base';
 import { rgbToHex, ensureOnlyStyle } from '../utils';
-import { createOrUpdateAttrs, toggleMarkWrap } from '../commands';
+import { toggleMarkWrap } from '../commands';
 
 export default class ColorInline extends Mark {
   SIMPLE_COLOR_REGEXP = /^(#[\da-f]+|\w+)$/
