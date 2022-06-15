@@ -59,7 +59,9 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.colors.green': 'Зелёный',
   'frontend.shiki_editor.colors.brown': 'Коричневый',
   'frontend.shiki_editor.colors.gray': 'Серый',
-  'frontend.shiki_editor.colors.black': 'Чёрный'
+  'frontend.shiki_editor.colors.black': 'Чёрный',
+  'frontend.shiki_editor.headlines.headline': 'Headline',
+  'frontend.shiki_editor.headlines.midheadline': 'MidHeadline'
 };
 
 window.I18n = {

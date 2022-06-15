@@ -117,6 +117,10 @@ export default function sourceCommand(app, type, payload) {
       insertAtLineStart(app, '- ');
       break;
 
+    case 'heading':
+      insertAtLineStart(app, '#'.repeat(payload.size) + ' ');
+      break;
+
     default:
       console.error(`undefined command "${type}"`); // eslint-disable-line no-console
   }

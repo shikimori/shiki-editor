@@ -5,7 +5,7 @@ import { NodeRange } from 'prosemirror-model';
 
 import { findParentSelectionNode } from '../utils';
 
-export default function(type) {
+export default function(type, attrs) {
   return (state, dispatch, view) => {
     const isActive = nodeIsActive(type, state);
 
@@ -31,11 +31,13 @@ export default function(type) {
       }
 
       const target = range && liftTarget(range);
-      if (target == null) { return false; }
+      if (target == null) {
+        return false;
+      }
       if (dispatch) dispatch(state.tr.lift(range, target).scrollIntoView());
       return true;
     }
 
-    return wrapIn(type)(state, dispatch, view);
+    return wrapIn(type, attrs)(state, dispatch, view);
   };
 }

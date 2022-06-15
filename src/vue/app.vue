@@ -142,6 +142,13 @@
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='colorCommand'
     />
+    <Headlines
+      v-show='isHeadline && !isPreview'
+      :is-enabled='isHeadline'
+      target-ref='headline'
+      :is-sticky-menu-offset='isStickyMenuOffset'
+      @toggle='headlineCommand'
+    />
     <Suggestions
       :is-available='isEditingEnabled'
       :editor='editor'
@@ -174,6 +181,7 @@ import { flash } from 'shiki-utils';
 import Icon from './components/icon';
 import Smileys from './components/smileys';
 import Colors from './components/colors';
+import Headlines from './components/headlines';
 import Suggestions from './components/suggestions';
 
 const MENU_ITEMS = {
@@ -189,7 +197,7 @@ const MENU_ITEMS = {
   ],
   history: ['undo', 'redo'],
   item: ['smiley', 'image', 'shiki_link', 'upload'],
-  block: ['blockquote', 'spoiler_block', 'code_block', 'bullet_list']
+  block: ['headline', 'blockquote', 'spoiler_block', 'code_block', 'bullet_list']
 };
 const MAXIMUM_CONTENT_SIZE = 100000;
 
@@ -201,6 +209,7 @@ const DEFAULT_DATA = {
   isSmiley: false,
   isColor: false,
   isColorBlock: false,
+  isHeadline: false,
   isPreview: false,
   isPreviewLoading: false,
   previewHTML: null,
@@ -218,6 +227,7 @@ export default {
     Icon,
     Smileys,
     Colors,
+    Headlines,
     Suggestions
   },
   inheritAttrs: false,
@@ -450,6 +460,31 @@ export default {
         }
       }
     },
+    headlineCommand(params = {}) {
+      if (params.isClosed) {
+        this.isHeadline = false;
+        return;
+      }
+
+      this.isHeadline = !this.isHeadline;
+
+      if (params.size) {
+        if (this.isSource) {
+          sourceCommand(this, 'heading', params);
+        } else {
+          this.editor.commands.heading({ ...params, exists: !!this.nodesState.isHeadline });
+
+        }
+      } else {
+        this.isHeadline = !this.nodesState.headline;
+
+        if (!this.isHeadline) {
+          this.isHeadline = false;
+
+          this.editor.commands.heading(null);
+        }
+      }
+    },
     shikiLinkCommand() {
       if (!this.shikiSearchExtension) {
         alert('globalSearch prop is missing');
@@ -556,6 +591,8 @@ export default {
 
       this.isColorBlock = this.editor.activeChecks.color_block(); // eslint-disable-line
       memo.color = this.isColorBlock || this.editor.activeChecks.color_inline();
+
+      memo.headline = this.editor.activeChecks.heading(); //eslint-disable-line
 
       this.isItalicBlock = this.editor.activeChecks.italic_block(); // eslint-disable-line
       memo.italic = this.isItalicBlock || this.editor.activeChecks.italic_inline();

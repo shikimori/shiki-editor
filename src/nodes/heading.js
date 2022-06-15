@@ -1,5 +1,7 @@
 import { wrappingInputRule } from 'prosemirror-inputrules';
 import { Node } from '../base';
+import { toggleNodeWrap, updateAttrs } from '../commands';
+import { nodeIsActive } from '../checks';
 
 export default class Heading extends Node {
   get name() {
@@ -60,5 +62,28 @@ export default class Heading extends Node {
     state.write(state.repeat('#', node.attrs.level) + ' ');
     state.renderInline(node);
     state.closeBlock(node);
+  }
+
+  commands({ type }) {
+    return (attrs) => {
+      if (attrs === null) {
+        return toggleNodeWrap(type);
+      } else {
+        const size = attrs?.size;
+        const exists = !!attrs?.exists;
+
+        const newAttrs = { level: parseInt(size, 10) };
+
+        if (!exists) {
+          return toggleNodeWrap(type, newAttrs);
+        }
+
+        return updateAttrs(type, newAttrs);
+      }
+    };
+  }
+
+  activeCheck(type, state) {
+    return nodeIsActive(type, state);
   }
 }
