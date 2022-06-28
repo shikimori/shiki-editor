@@ -213,11 +213,6 @@ export default {
     }
   }
 };
-
-function preventEvent(e) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-}
 </script>
 
 <style scoped lang='sass'>
@@ -290,10 +285,10 @@ $padding-vertical: 8px
   position: relative
   transition: outline .15s
   z-index: 1
-  height: 32px
-  width: 32px
+  /* height: 32px */
+  /* width: 32px */
   //border-radius: 5px
-  display: inline-block
+  /* display: inline-block */
   border: 1px solid
   padding: 2px
   vertical-align: middle
