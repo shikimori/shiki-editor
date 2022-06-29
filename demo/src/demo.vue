@@ -21,8 +21,8 @@
         <label><input v-model='isColumn2' type='checkbox'>Sample 2</label>
       </div>
 
-      <div class='fc-2'>
-        <div v-if='isColumn1' class='f-column'>
+      <div :class='{ "fc-2": isColumn1 && isColumn2 }'>
+        <div v-if='isColumn1' :class='{ "f-column": isColumn2 }'>
           <ShikiEditorApp
             ref='editor1'
             :content='text1'
@@ -32,7 +32,7 @@
             @update='(value) => text1 = value'
           />
         </div>
-        <div v-if='isColumn2' class='f-column'>
+        <div v-if='isColumn2' :class='{ "f-column": isColumn1 }'>
           <ShikiEditorApp
             ref='editor2'
             :content='text2'
