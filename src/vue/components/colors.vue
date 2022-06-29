@@ -2,7 +2,7 @@
   <PopupContent
     :is-sticky-menu-offset='isStickyMenuOffset'
     :target-ref='targetRef'
-    @close='emit("toggle")'
+    @close='cancel'
   >
     <div class='hex-wrapper'>
       <label class='hex-label'>
@@ -93,6 +93,10 @@ function select({ target }) {
 
 function submit(color = inputHex.value) {
   emit('toggle', { color: String(color).trim() });
+}
+
+function cancel() {
+  emit('toggle', { isClosed: true });
 }
 </script>
 
