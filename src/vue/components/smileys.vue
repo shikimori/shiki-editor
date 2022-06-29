@@ -4,6 +4,7 @@
     :is-loaded='!!smileysHTML'
     :is-sticky-menu-offset='isStickyMenuOffset'
     :target-ref='targetRef'
+    @close='emit("toggle")'
   >
     <div
       @click='select'
@@ -13,7 +14,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, defineEmits, ref } from 'vue';
 import PopupContent from './popup_content';
 
 defineProps({
@@ -22,6 +23,7 @@ defineProps({
   targetRef: { type: Object, required: false, default: undefined },
   isStickyMenuOffset: { type: Boolean, required: true }
 });
+const emit = defineEmits(['toggle']);
 const smileysHTML = ref(null);
 
 // import { isMobile } from 'shiki-utils';

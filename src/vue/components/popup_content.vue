@@ -19,7 +19,7 @@
     <div
       v-else
       ref='desktopContainerNode'
-      class='smileys b-tip b-tip--large b-tip--no_border'
+      class='popup-content b-tip b-tip--large b-tip--no_border'
     >
       <div data-popper-arrow />
       <div v-if='isLoaded' class='inner'><slot /></div>
@@ -144,6 +144,7 @@ async function enablePageScroll() {
 
 <style scoped lang='sass'>
 @import ../../stylesheets/mixins/responsive.sass
+@import ../../stylesheets/mixins/icon
 
 $padding-horizontal: 10px
 $padding-vertical: 8px
@@ -200,21 +201,37 @@ $padding-vertical: 8px
       overflow-y: auto
       max-height: 100%
 
-::v-deep(.smiley)
-  cursor: pointer
-  margin-bottom: 10px
-  margin-right: 7px
-  outline: 2px solid transparent
-  position: relative
-  transition: outline .15s
-  z-index: 1
+.close
+  +icon
+  align-items: center
+  background: #fff
+  border-radius: 30px
+  display: flex
+  height: 30px !important
+  justify-content: center
+  position: absolute
+  right: 5px
+  top: 5px
+  width: 30px !important
+  z-index: 2
 
-  +gte_laptop
-    &:hover
-      outline: 2px solid var(--link-hover-color, #dd5202)
+  &:before
+    content: '\e828'
+    font-size: 16px
 
-  &:active
-    outline: 2px solid var(--link-active-color, #ff0202)
+.b-ajax
+  height: calc(100% - #{$padding-horizontal * 2})
+  position: absolute
+  width: calc(100% - #{$padding-horizontal * 2})
+
+.shade
+  background: rgba(#061b42, 0.35)
+  height: 100%
+  left: 0
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 39
 </style>
 
 <style src='vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.min.css' />
