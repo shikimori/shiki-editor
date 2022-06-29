@@ -34,9 +34,10 @@ import {
   defineAsyncComponent,
   defineEmits,
   defineProps,
-  onMounted,
   onBeforeUnmount,
+  onMounted,
   ref,
+  toRefs,
   watch
 } from 'vue';
 // import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
@@ -49,6 +50,7 @@ const emit = defineEmits(['fetch', 'close']);
 const PerfectScrollbar = defineAsyncComponent(() => import(
   /* webpackChunkName: "vue3-perfect-scrollbar" */ 'vue3-perfect-scrollbar'
 ));
+let isKeypresBinded = ref(false);
 
 const props = defineProps({
   isEnabled: { type: Boolean, required: true },
@@ -57,29 +59,32 @@ const props = defineProps({
   targetRef: { type: Object, required: false, default: undefined }
 });
 const popup = ref(null);
+const { isEnabled, isLoaded } = toRefs(props);
 
-watch(() => props.isEnabled, () => {
-  if (props.isEnabled) {
+watch(isEnabled, () => {
+  if (isEnabled.value) {
     show();
   } else {
     cleanup();
   }
 });
 
-onMounted(() => props.isEnabled && show());
+watch(isLoaded, () => {
+  if (!popup.value) { return; }
+  popup.value.update();
+});
+
+onMounted(() => isEnabled.value && show());
 onBeforeUnmount(cleanup);
 
-async function show() {
+function show() {
   if (isMobile) {
-    const { disablePageScroll } = await import(
-      /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
-    );
     disablePageScroll();
   } else {
     showPopper();
   }
 
-  if (!props.isLoaded) {
+  if (!isLoaded.value) {
     emit('fetch');
   }
 }
@@ -103,7 +108,7 @@ async function showPopper() {
   );
   // import flip from '@popperjs/core/lib/modifiers/flip';
 
-  popup.value = createPopper(
+  popup.value ||= createPopper(
     props.targetRef[0].$el,
     desktopContainerNode.value,
     {
@@ -117,19 +122,46 @@ async function showPopper() {
       }]
     }
   );
+
+  if (!isKeypresBinded.value) {
+    bindKeypress();
+  }
 }
 
+async function bindKeypress() {
+  isKeypresBinded.value = true;
+
+  const { useKeypress } = await import(
+    /* webpackChunkName: "keypress" */
+    'vue3-keypress'
+  );
+  useKeypress({
+    keyEvent: 'keyup',
+    keyBinds: [{ keyCode: 27, success: close }],
+    isActive: isEnabled
+  });
+}
 
 function close() {
-  enablePageScroll();
   emit('close');
 }
 
 function cleanup() {
-  if (!popup.value) { return; }
+  if (isMobile) {
+    enablePageScroll();
+  }
 
-  popup.value.destroy();
-  popup.value = null;
+  if (popup.value) {
+    popup.value.destroy();
+    popup.value = null;
+  }
+}
+
+async function disablePageScroll() {
+  const { disablePageScroll } = await import(
+    /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
+  );
+  disablePageScroll();
 }
 
 async function enablePageScroll() {
