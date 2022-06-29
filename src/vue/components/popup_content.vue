@@ -40,6 +40,10 @@ import {
   toRefs,
   watch
 } from 'vue';
+import { createPopper } from '@popperjs/core/lib/popper-lite';
+import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
+import offset from '@popperjs/core/lib/modifiers/offset';
+import arrow from '@popperjs/core/lib/modifiers/arrow';
 
 import { isMobile as isMobileCheck } from 'shiki-utils';
 
@@ -88,23 +92,23 @@ function show() {
   }
 }
 
-async function showPopper() {
-  const { createPopper } = await import(
-    /* webpackChunkName: "popperjs" */
-    '@popperjs/core/lib/popper-lite'
-  );
-  const { default: preventOverflow } = await import(
-    /* webpackChunkName: "popperjs" */
-    '@popperjs/core/lib/modifiers/preventOverflow'
-  );
-  const { default: offset } = await import(
-    /* webpackChunkName: "popperjs" */
-    '@popperjs/core/lib/modifiers/offset'
-  );
-  const { default: arrow } = await import(
-    /* webpackChunkName: "popperjs" */
-    '@popperjs/core/lib/modifiers/arrow'
-  );
+function showPopper() {
+  // const { createPopper } = await import(
+  //   /* webpackChunkName: "popperjs" */
+  //   '@popperjs/core/lib/popper-lite'
+  // );
+  // const { default: preventOverflow } = await import(
+  //   /* webpackChunkName: "popperjs" */
+  //   '@popperjs/core/lib/modifiers/preventOverflow'
+  // );
+  // const { default: offset } = await import(
+  //   /* webpackChunkName: "popperjs" */
+  //   '@popperjs/core/lib/modifiers/offset'
+  // );
+  // const { default: arrow } = await import(
+  //   /* webpackChunkName: "popperjs" */
+  //   '@popperjs/core/lib/modifiers/arrow'
+  // );
   // import flip from '@popperjs/core/lib/modifiers/flip';
 
   popup.value ||= createPopper(
