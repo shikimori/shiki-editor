@@ -55,7 +55,8 @@ function select(size) {
 .item
   cursor: pointer
   outline: 2px solid transparent
-  transition: outline .15s
+  transition: outline .25s
+  user-select: none
 
   &:not(:last-child)
     margin: 0 0 10px 0
