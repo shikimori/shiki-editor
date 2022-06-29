@@ -252,7 +252,6 @@ export default {
           }]
         }
       );
-      window.popup = this.popup;
     },
     async fetch(query = this.query) {
       // NOTE: disabled this logic because it does not work when a user

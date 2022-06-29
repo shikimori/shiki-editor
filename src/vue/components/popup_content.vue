@@ -1,31 +1,32 @@
 <template>
-  <div
-    v-if='isMobile'
-    class='popup-content mobile-fixed'
-    :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
-  >
-    <div class='outer'>
-      <div class='close' @click='close' />
-      <PerfectScrollbar
-        v-if='isLoaded'
-        ref='scrollbar'
-        :options='{ wheelPropagation: false }'
-      >
-        <slot />
-      </PerfectScrollbar>
+  <div>
+    <div
+      v-if='isMobile'
+      class='popup-content mobile-fixed'
+      :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
+    >
+      <div class='outer'>
+        <div class='close' @click='close' />
+        <PerfectScrollbar
+          v-if='isLoaded'
+          :options='{ wheelPropagation: false }'
+        >
+          <slot />
+        </PerfectScrollbar>
+        <div v-else class='b-ajax' />
+      </div>
+    </div>
+    <div
+      v-else
+      ref='desktopContainerNode'
+      class='smileys b-tip b-tip--large b-tip--no_border'
+    >
+      <div data-popper-arrow />
+      <div v-if='isLoaded' class='inner'><slot /></div>
       <div v-else class='b-ajax' />
     </div>
+    <div v-if='!isMobile' class='shade' @click='close' />
   </div>
-  <div
-    v-else
-    ref='container'
-    class='smileys b-tip b-tip--large b-tip--no_border'
-  >
-    <div data-popper-arrow />
-    <div v-if='isLoaded' class='inner'><slot /></div>
-    <div v-else class='b-ajax' />
-  </div>
-  <div v-if='!isMobile' class='shade' @click='close' />
 </template>
 
 <script setup>
@@ -33,26 +34,102 @@ import {
   defineAsyncComponent,
   defineEmits,
   defineProps,
-  ref
+  onMounted,
+  onBeforeUnmount,
+  ref,
+  watch
 } from 'vue';
 // import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
 
-import { isMobile } from 'shiki-utils';
+import { isMobile as isMobileCheck } from 'shiki-utils';
 
-const scrollbar = ref(null);
-const emit = defineEmits(['close']);
+const isMobile = isMobileCheck();
+const desktopContainerNode = ref(null);
+const emit = defineEmits(['fetch', 'close']);
 const PerfectScrollbar = defineAsyncComponent(() => import(
-  /* webpackChunkName: "smileys-dependencies" */ 'vue3-perfect-scrollbar'
+  /* webpackChunkName: "vue3-perfect-scrollbar" */ 'vue3-perfect-scrollbar'
 ));
 
-defineProps({
+const props = defineProps({
+  isEnabled: { type: Boolean, required: true },
   isLoaded: { type: Boolean, required: true },
   isStickyMenuOffset: { type: Boolean, required: true }
 });
+const popup = ref(null);
+
+watch(() => props.isEnabled, () => {
+  if (props.isEnabled) {
+    show();
+  } else {
+    cleanup();
+  }
+});
+
+onMounted(() => props.isEnabled && show());
+onBeforeUnmount(cleanup);
+
+async function show() {
+  if (isMobile) {
+    const { disablePageScroll } = await import(
+      /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
+    );
+    disablePageScroll();
+  } else {
+    showPopper();
+  }
+
+  if (!props.isLoaded) {
+    emit('fetch');
+  }
+}
+
+async function showPopper() {
+  const { createPopper } = await import(
+    /* webpackChunkName: "popperjs" */
+    '@popperjs/core/lib/popper-lite'
+  );
+  const { default: preventOverflow } = await import(
+    /* webpackChunkName: "popperjs" */
+    '@popperjs/core/lib/modifiers/preventOverflow'
+  );
+  const { default: offset } = await import(
+    /* webpackChunkName: "popperjs" */
+    '@popperjs/core/lib/modifiers/offset'
+  );
+  const { default: arrow } = await import(
+    /* webpackChunkName: "popperjs" */
+    '@popperjs/core/lib/modifiers/arrow'
+  );
+  // import flip from '@popperjs/core/lib/modifiers/flip';
+
+  popup.value = createPopper(
+    null,
+    // this.$parent.$refs[this.targetRef].$el,
+    desktopContainerNode.value,
+    {
+      placement: 'bottom',
+      modifiers: [preventOverflow, offset, arrow, {
+        name: 'preventOverflow',
+        options: { padding: 10 }
+      }, {
+        name: 'offset',
+        options: { offset: [0, 8] }
+      }]
+    }
+  );
+}
+
 
 function close() {
   enablePageScroll();
   emit('close');
+}
+
+function cleanup() {
+  if (!popup.value) { return; }
+
+  popup.value.destroy();
+  popup.value = null;
 }
 
 async function enablePageScroll() {

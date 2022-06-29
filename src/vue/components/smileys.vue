@@ -1,6 +1,8 @@
 <template>
   <PopupContent
+    :is-enabled='isEnabled'
     :is-loaded='!!smileysHTML'
+    :is-sticky-menu-offset='isStickyMenuOffset'
   >
     <div
       @click='select'
@@ -65,47 +67,10 @@ const smileysHTML = ref(null);
 //     smileysHTML: null,
 //     isMobile: isMobile()
 //   }),
-//   watch: {
-//     isEnabled() {
-//       if (this.isEnabled) {
-//         this.show();
-//       } else {
-//         this.cleanup();
-//       }
-//     }
-//   },
 //   created() {
 //     window.addEventListener('keyup', this.handler);
 //   },
-//   mounted() {
-//     if (this.isEnabled) {
-//       this.show();
-//     }
-//   },
-//   beforeUnmount() {
-//     this.cleanup();
-//   },
 //   methods: {
-//     async show() {
-//       if (this.isMobile) {
-//         const { disablePageScroll } = await import(
-//           /* webpackChunkName: "scroll-lock" */ 'scroll-lock'
-//         );
-//         disablePageScroll();
-//       } else {
-//         this.showPopup();
-//       }
-//
-//       if (!this.smileysHTML) {
-//         this.fetch();
-//       }
-//     },
-//     cleanup() {
-//       if (this.popup) {
-//         this.popup.destroy();
-//         this.popup = null;
-//       }
-//     },
 //     async fetch() {
 //       const { data } = await this.shikiRequest.get('smileys');
 //       this.smileysHTML = data.replace(/src="\//g, `src="${this.shikiRequest.origin}/`);
@@ -114,22 +79,6 @@ const smileysHTML = ref(null);
 //         await this.$nextTick();
 //         this.popup.update();
 //       }
-//     },
-//     showPopup() {
-//       this.popup = createPopper(
-//         this.$parent.$refs[this.targetRef].$el,
-//         this.$refs.container,
-//         {
-//           placement: 'bottom',
-//           modifiers: [preventOverflow, offset, arrow, {
-//             name: 'preventOverflow',
-//             options: { padding: 10 }
-//           }, {
-//             name: 'offset',
-//             options: { offset: [0, 8] }
-//           }]
-//         }
-//       );
 //     },
 //     close() {
 //       this.enablePageScroll();

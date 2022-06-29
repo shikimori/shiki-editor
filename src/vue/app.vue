@@ -336,6 +336,9 @@ export default {
   created() {
     this.createEditor();
   },
+  mounted() {
+    this.smileyCommand();
+  },
   beforeUnmount() {
     this.editor.destroy();
   },
