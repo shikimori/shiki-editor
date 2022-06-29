@@ -42,6 +42,7 @@ import {
   toRefs,
   watch
 } from 'vue';
+import { useKeypress } from 'vue3-keypress';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import offset from '@popperjs/core/lib/modifiers/offset';
@@ -55,7 +56,6 @@ const emit = defineEmits(['fetch', 'close']);
 const PerfectScrollbar = defineAsyncComponent(() => import(
   /* webpackChunkName: "vue3-perfect-scrollbar" */ 'vue3-perfect-scrollbar'
 ));
-let isKeypresBinded = ref(false);
 
 const props = defineProps({
   isEnabled: { type: Boolean, required: false, default: true },
@@ -81,6 +81,12 @@ watch(isLoaded, () => {
 
 onMounted(() => isEnabled.value && show());
 onBeforeUnmount(cleanup);
+
+useKeypress({
+  keyEvent: 'keyup',
+  keyBinds: [{ keyCode: 27, success: close }],
+  isActive: isEnabled
+});
 
 function show() {
   if (isMobile) {
@@ -127,24 +133,6 @@ function showPopper() {
       }]
     }
   );
-
-  if (!isKeypresBinded.value) {
-    bindKeypress();
-  }
-}
-
-async function bindKeypress() {
-  isKeypresBinded.value = true;
-
-  const { useKeypress } = await import(
-    /* webpackChunkName: "vue3-keypress" */
-    'vue3-keypress'
-  );
-  useKeypress({
-    keyEvent: 'keyup',
-    keyBinds: [{ keyCode: 27, success: close }],
-    isActive: isEnabled
-  });
 }
 
 function close() {
