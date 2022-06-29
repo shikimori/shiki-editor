@@ -40,7 +40,6 @@ import {
   toRefs,
   watch
 } from 'vue';
-// import { defineAsyncComponent, getCurrentInstance, toRefs } from 'vue';
 
 import { isMobile as isMobileCheck } from 'shiki-utils';
 

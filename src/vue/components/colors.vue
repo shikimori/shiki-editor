@@ -20,7 +20,9 @@
         :disabled='!isInputValid'
         class='hex-button'
         @click='submit()'
-      >OK</button>
+      >
+        OK
+      </button>
     </div>
     <div @click='select'>
       <div
@@ -33,34 +35,6 @@
       />
     </div>
   </PopupContent>
-
-  <!-- <div>                                                                                    -->
-  <!--   <div                                                                                   -->
-  <!--     v-if='isMobile'                                                                      -->
-  <!--     class='colors mobile-fixed'                                                          -->
-  <!--     :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'                             -->
-  <!--   >                                                                                      -->
-  <!--     <div class='outer'>                                                                  -->
-  <!--       <div class='close' @click='close' />                                               -->
-  <!--       <PerfectScrollbar                                                                  -->
-  <!--         ref='scrollbar'                                                                  -->
-  <!--         :options='{ wheelPropagation: false }'                                           -->
-  <!--       >                                                                                  -->
-  <!--       </PerfectScrollbar>                                                                -->
-  <!--     </div>                                                                               -->
-  <!--   </div>                                                                                 -->
-  <!--   <div                                                                                   -->
-  <!--     v-else                                                                               -->
-  <!--     ref='container'                                                                      -->
-  <!--     class='colors b-tip b-tip--large b-tip--no_border'                                   -->
-  <!--   >                                                                                      -->
-  <!--     <div data-popper-arrow />                                                            -->
-  <!--     <div                                                                                 -->
-  <!--       class='inner'                                                                      -->
-  <!--     >                                                                                    -->
-  <!--   </div>                                                                                 -->
-  <!--   <div v-if='!isMobile' class='shade' @click='close' />                                  -->
-  <!-- </div>                                                                                   -->
 </template>
 
 <script setup>
@@ -120,14 +94,6 @@ function select({ target }) {
 function submit(color = inputHex.value) {
   emit('toggle', { color: String(color).trim() });
 }
-//     cleanup() {
-//       if (this.popup) {
-//         this.popup.destroy();
-//         this.popup = null;
-//         this.isInputValid = true;
-//         this.inputHex = '#000000';
-//       }
-//     },
 </script>
 
 <style scoped lang='sass'>
