@@ -106,7 +106,7 @@ function cancel() {
     min-height: 40px
     width: 371px
 
-::v-deep(.item)
+.item
   border-radius: 5px
   border: 2px solid
   cursor: pointer
