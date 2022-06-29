@@ -3,6 +3,7 @@
     :is-enabled='isEnabled'
     :is-loaded='!!smileysHTML'
     :is-sticky-menu-offset='isStickyMenuOffset'
+    :target-ref='targetRef'
   >
     <div
       @click='select'
@@ -15,10 +16,10 @@
 import { defineProps, ref } from 'vue';
 import PopupContent from './popup_content';
 
-const props = defineProps({
+defineProps({
   isEnabled: { type: Boolean, required: true },
   shikiRequest: { type: Object, required: true },
-  targetRef: { type: String, required: true },
+  targetRef: { type: Object, required: false, default: undefined },
   isStickyMenuOffset: { type: Boolean, required: true }
 });
 const smileysHTML = ref(null);

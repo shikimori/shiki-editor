@@ -53,7 +53,8 @@ const PerfectScrollbar = defineAsyncComponent(() => import(
 const props = defineProps({
   isEnabled: { type: Boolean, required: true },
   isLoaded: { type: Boolean, required: true },
-  isStickyMenuOffset: { type: Boolean, required: true }
+  isStickyMenuOffset: { type: Boolean, required: true },
+  targetRef: { type: Object, required: false, default: undefined }
 });
 const popup = ref(null);
 
@@ -103,8 +104,7 @@ async function showPopper() {
   // import flip from '@popperjs/core/lib/modifiers/flip';
 
   popup.value = createPopper(
-    null,
-    // this.$parent.$refs[this.targetRef].$el,
+    props.targetRef[0].$el,
     desktopContainerNode.value,
     {
       placement: 'bottom',

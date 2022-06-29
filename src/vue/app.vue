@@ -128,9 +128,8 @@
 
     <Smileys
       v-show='isSmiley && !isPreview'
-      ref='smileys'
       :is-enabled='isSmiley'
-      target-ref='smiley'
+      :target-ref='$refs.smiley'
       :shiki-request='shikiRequest'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
