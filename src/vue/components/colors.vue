@@ -24,14 +24,14 @@
         OK
       </button>
     </div>
-    <div @click='select'>
+    <div>
       <div
         v-for='color in colorsHTML'
         :key='color.value'
         :style='{ backgroundColor: color.value, borderColor: color.border }'
         :title='color.title'
-        :data-value='color.value'
-        class='color'
+        class='item'
+        @click='submit(color.value)'
       />
     </div>
   </PopupContent>
@@ -85,12 +85,6 @@ function inputChange(event) {
   isInputValid.value = INPUT_MASK.test(value);
 }
 
-function select({ target }) {
-  if (target.classList.contains('color')) {
-    submit(target.getAttribute('data-value'));
-  }
-}
-
 function submit(color = inputHex.value) {
   emit('toggle', { color: String(color).trim() });
 }
@@ -112,7 +106,7 @@ function cancel() {
     min-height: 40px
     width: 371px
 
-::v-deep(.color)
+::v-deep(.item)
   border-radius: 5px
   border: 2px solid
   cursor: pointer
