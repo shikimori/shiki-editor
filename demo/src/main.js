@@ -63,8 +63,8 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.headlines.header_1': '# Большой заголовок',
   'frontend.shiki_editor.headlines.header_2': '## Средний заголовок',
   'frontend.shiki_editor.headlines.header_3': '### Малый заголовок',
-  'frontend.shiki_editor.headlines.headline': '#### Большой шики-заголовок',
-  'frontend.shiki_editor.headlines.midheadline': '##### Средний шики-заголовок'
+  'frontend.shiki_editor.headlines.headline': '#### Заголовок',
+  'frontend.shiki_editor.headlines.midheadline': '##### Подзаголовок'
 };
 
 window.I18n = {
