@@ -141,9 +141,8 @@
       @toggle='colorCommand'
     />
     <Headlines
-      v-show='isHeadline && !isPreview'
-      :is-enabled='isHeadline'
-      target-ref='headline'
+      v-if='isHeadline && !isPreview'
+      :target-ref='$refs.headline'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='headlineCommand'
     />
