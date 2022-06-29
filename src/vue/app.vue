@@ -137,7 +137,7 @@
     <Colors
       v-show='isColor && !isPreview'
       :is-enabled='isColor'
-      target-ref='color'
+      :target-ref='$refs.color'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='colorCommand'
     />
@@ -170,7 +170,7 @@ import { undo, redo } from 'prosemirror-history';
 import VueEditor from './editor';
 import { EditorContent } from './editor_content';
 import sourceCommand from './utils/source_command';
-import { contentToNodes, scrollTop } from '../utils';
+import { contentToNodes, scrollTop, preventEvent } from '../utils';
 import { FileUploader, ShikiSearch } from '../extensions';
 import { insertReply, insertFragment, insertQuote } from '../commands';
 import { preventHugePaste } from '../plugins';
@@ -744,11 +744,6 @@ export default {
     }
   }
 };
-
-function preventEvent(e) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-}
 </script>
 
 <style lang='sass' src='../stylesheets/prosemirror.sass'/>
