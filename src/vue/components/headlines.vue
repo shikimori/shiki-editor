@@ -4,33 +4,15 @@
     :target-ref='targetRef'
     @close='cancel'
   >
-    <div @click='select'>
-      <div
-        v-for='headline in headersHTML'
-        :key='headline.value'
-        :title='headline.title'
-        :data-value='headline.value'
-        :style='{ fontSize: `${18-headline.value * 1.2}px` }'
-        class='header clickable-item'
-      >
-        {{ headline.title }}
-      </div>
-      <br>
-      <div
-        v-for='headline in headlinesHTML'
-        :key='headline.value'
-        :title='headline.title'
-        :data-value='headline.value'
-        :style='{ fontSize: `${18-headline.value}px` }'
-        class='clickable-item'
-        :class='{
-          headline: headline.value === 4,
-          midheadline: headline.value === 5
-        }'
-      >
-        {{ headline.title }}
-      </div>
-    </div>
+    <component
+      :is='headline.tag'
+      v-for='headline in headlinesHTML'
+      :key='headline.value'
+      class='item'
+      :class='headline.name'
+      @click='select(headline.value)'
+      v-html='headline.html'
+    />
   </PopupContent>
 </template>
 
@@ -44,51 +26,42 @@ defineProps({
 });
 const emit = defineEmits(['toggle']);
 
-const DEFAULT_HEADERS = [1, 2, 3]; // H2, H3, H4
 const DEFAULT_HEADLINES = [
-  { value: 4, title: 'frontend.shiki_editor.headlines.headline' },
-  { value: 5, title: 'frontend.shiki_editor.headlines.midheadline' }
+  { value: 1, name: 'header_1', tag: 'h2' },
+  { value: 2, name: 'header_2', tag: 'h3' },
+  { value: 3, name: 'header_3', tag: 'h4' },
+  { value: 4, name: 'headline', tag: 'div' },
+  { value: 5, name: 'midheadline', tag: 'div' }
 ];
-const headersHTML = DEFAULT_HEADERS.map(size => ({
-  title: `H${size + 1}`,
-  value: size
-}));
-const headlinesHTML = DEFAULT_HEADLINES.map(({ value, title }) => ({
-  title: window.I18n.t(title),
-  value
+const headlinesHTML = DEFAULT_HEADLINES.map(headline => ({
+  ...headline,
+  html: window.I18n.t(`frontend.shiki_editor.headlines.${headline.name}`)
+    .replace(/#+/, '<span>$&</span>')
 }));
 
 function cancel() {
   emit('toggle', { isClosed: true });
 }
 
-function select({ target }) {
-  if (target.classList.contains('clickable-item')) {
-    emit('toggle', { size: target.getAttribute('data-value') });
-  }
+function select(size) {
+  emit('toggle', { size });
 }
 </script>
 
 <style scoped lang='sass'>
+@import ../../stylesheets/globals
 @import ../../stylesheets/mixins/responsive
 
-::v-deep(.popup-content)
-  +gte_laptop
-    min-width: 215px
-
-::v-deep(.header)
-  border: 1px solid
+.item
   cursor: pointer
   outline: 2px solid transparent
-  padding: 2px
-  position: relative
-  text-align: center
   transition: outline .15s
-  vertical-align: middle
-  z-index: 1
 
   &:not(:last-child)
-    margin-bottom: 7px
+    margin: 0 0 10px 0
+
+  &:last-child
+    margin: 0
 
   +gte_laptop
     &:hover
@@ -97,23 +70,6 @@ function select({ target }) {
   &:active
     outline: 2px solid var(--link-active-color, #ff0202)
 
-  .h-text
-    vertical-align: baseline
-    display: inline-block
-    height: 100%
-
-::v-deep(.headline),
-::v-deep(.midheadline)
-  cursor: pointer
-  width: auto
-  max-width: 100%
-  z-index: 1
-  outline: 2px solid transparent
-
-  +gte_laptop
-    &:hover
-      outline: 2px solid var(--link-hover-color, #dd5202)
-
-  &:active
-    outline: 2px solid var(--link-active-color, #ff0202)
+  ::v-deep(span)
+    color: $gray-1
 </style>
