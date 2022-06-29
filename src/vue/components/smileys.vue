@@ -1,7 +1,7 @@
 <template>
   <PopupContent
-    :is-enabled='isEnabled'
     :is-loaded='!!smileysHTML'
+    :is-enabled='isEnabled'
     :is-sticky-menu-offset='isStickyMenuOffset'
     :target-ref='targetRef'
     @close='emit("toggle")'
@@ -42,7 +42,6 @@ function select({ target }) {
 
 <style scoped lang='sass'>
 @import ../../stylesheets/mixins/responsive.sass
-@import ../../stylesheets/mixins/icon
 
 ::v-deep(.smiley)
   cursor: pointer

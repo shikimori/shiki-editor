@@ -53,8 +53,8 @@ const PerfectScrollbar = defineAsyncComponent(() => import(
 let isKeypresBinded = ref(false);
 
 const props = defineProps({
-  isEnabled: { type: Boolean, required: true },
-  isLoaded: { type: Boolean, required: true },
+  isEnabled: { type: Boolean, required: false, default: true },
+  isLoaded: { type: Boolean, required: false, default: true },
   isStickyMenuOffset: { type: Boolean, required: true },
   targetRef: { type: Object, required: false, default: undefined }
 });

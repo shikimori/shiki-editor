@@ -135,8 +135,7 @@
       @toggle='smileyCommand'
     />
     <Colors
-      v-show='isColor && !isPreview'
-      :is-enabled='isColor'
+      v-if='isColor && !isPreview'
       :target-ref='$refs.color'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='colorCommand'
