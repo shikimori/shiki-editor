@@ -22,8 +22,10 @@
       class='popup-content b-tip b-tip--large b-tip--no_border'
     >
       <div data-popper-arrow />
-      <div v-if='isLoaded' class='inner'><slot /></div>
-      <div v-else class='b-ajax' />
+      <div class='inner'>
+        <slot v-if='isLoaded' />
+        <div v-else class='b-ajax' />
+      </div>
     </div>
     <div v-if='!isMobile' class='shade' @click='close' />
   </div>
@@ -192,20 +194,18 @@ $padding-vertical: 8px
     padding: 0
     position: relative
 
+  +lte_ipad
+    width: calc(100vw - #{$padding-horizontal * 2})
+
+  +gte_laptop
+    min-height: 100px
+    min-width: 320px
+
+  .inner
+    padding: $padding-vertical $padding-horizontal
+
     +lte_ipad
-      width: calc(100vw - #{$padding-horizontal * 2})
-      max-width: 492px
-      min-height: 238px
-
-    +gte_laptop
-      min-height: 472px
-      width: 492px
-
-    .inner
-      padding: $padding-vertical $padding-horizontal
-
-      +lte_ipad
-        max-height: calc(100vh - 98px)
+      max-height: calc(100vh - 98px)
 
   &.mobile-fixed
     height: 100%
@@ -256,8 +256,10 @@ $padding-vertical: 8px
 
 .b-ajax
   height: calc(100% - #{$padding-horizontal * 2})
-  position: absolute
   width: calc(100% - #{$padding-horizontal * 2})
+
+  +gte_laptop
+    position: absolute
 
 .shade
   background: rgba(#061b42, 0.35)

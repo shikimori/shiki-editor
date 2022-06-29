@@ -43,6 +43,11 @@ function select({ target }) {
 <style scoped lang='sass'>
 @import ../../stylesheets/mixins/responsive.sass
 
+::v-deep(.popup-content)
+  +gte_laptop
+    min-height: 472px
+    width: 492px
+
 ::v-deep(.smiley)
   cursor: pointer
   margin-bottom: 10px

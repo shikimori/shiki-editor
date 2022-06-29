@@ -103,19 +103,24 @@ function submit(color = inputHex.value) {
 @import ../../stylesheets/mixins/input
 @import ../../stylesheets/mixins/shiki_button
 
+::v-deep(.popup-content)
+  +gte_laptop
+    min-height: 40px
+    width: 371px
+
 ::v-deep(.color)
+  border-radius: 5px
+  border: 2px solid
   cursor: pointer
+  display: inline-block
+  height: 28px
   margin-bottom: 7px
   margin-right: 7px
   outline: 2px solid transparent
   position: relative
   transition: outline .15s
-  z-index: 1
-  height: 28px
   width: 28px
-  border-radius: 5px
-  display: inline-block
-  border: 2px solid
+  z-index: 1
 
   +gte_laptop
     &:hover
@@ -138,9 +143,9 @@ function submit(color = inputHex.value) {
   margin-left: 5px
 
 .hex-wrapper
-  display: block
-  min-height: 28px
   box-sizing: border-box
-  padding: 5px
+  display: block
   margin-bottom: 10px
+  min-height: 28px
+  padding: 5px
 </style>
