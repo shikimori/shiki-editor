@@ -39,6 +39,7 @@ export default function processCodeInline(state, startSequence, endSequence) {
     undefined,
     (text, index) => text[index-1] !== '\\'
   );
+
   if (code) {
     state.inlineTokens.push(
       new Token('code_inline', code.replace(/\\`/g, '`'))

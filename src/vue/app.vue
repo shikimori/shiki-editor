@@ -128,24 +128,21 @@
 
     <Smileys
       v-show='isSmiley && !isPreview'
-      ref='smileys'
       :is-enabled='isSmiley'
-      target-ref='smiley'
+      :target-ref='$refs.smiley'
       :shiki-request='shikiRequest'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='smileyCommand'
     />
     <Colors
-      v-show='isColor && !isPreview'
-      :is-enabled='isColor'
-      target-ref='color'
+      v-if='isColor && !isPreview'
+      :target-ref='$refs.color'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='colorCommand'
     />
     <Headlines
-      v-show='isHeadline && !isPreview'
-      :is-enabled='isHeadline'
-      target-ref='headline'
+      v-if='isHeadline && !isPreview'
+      :target-ref='$refs.headline'
       :is-sticky-menu-offset='isStickyMenuOffset'
       @toggle='headlineCommand'
     />
@@ -171,7 +168,7 @@ import { undo, redo } from 'prosemirror-history';
 import VueEditor from './editor';
 import { EditorContent } from './editor_content';
 import sourceCommand from './utils/source_command';
-import { contentToNodes, scrollTop } from '../utils';
+import { contentToNodes, scrollTop, preventEvent } from '../utils';
 import { FileUploader, ShikiSearch } from '../extensions';
 import { insertReply, insertFragment, insertQuote } from '../commands';
 import { preventHugePaste } from '../plugins';
@@ -336,6 +333,9 @@ export default {
   created() {
     this.createEditor();
   },
+  // mounted() {
+  //   this.smileyCommand();
+  // },
   beforeUnmount() {
     this.editor.destroy();
   },
@@ -742,11 +742,6 @@ export default {
     }
   }
 };
-
-function preventEvent(e) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-}
 </script>
 
 <style lang='sass' src='../stylesheets/prosemirror.sass'/>

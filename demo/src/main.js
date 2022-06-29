@@ -60,8 +60,11 @@ const TRANSLATIONS = {
   'frontend.shiki_editor.colors.brown': 'Коричневый',
   'frontend.shiki_editor.colors.gray': 'Серый',
   'frontend.shiki_editor.colors.black': 'Чёрный',
-  'frontend.shiki_editor.headlines.headline': 'Headline',
-  'frontend.shiki_editor.headlines.midheadline': 'MidHeadline'
+  'frontend.shiki_editor.headlines.header_1': '# Большой заголовок',
+  'frontend.shiki_editor.headlines.header_2': '## Средний заголовок',
+  'frontend.shiki_editor.headlines.header_3': '### Малый заголовок',
+  'frontend.shiki_editor.headlines.headline': '#### Большой шики-заголовок',
+  'frontend.shiki_editor.headlines.midheadline': '##### Средний шики-заголовок'
 };
 
 window.I18n = {
