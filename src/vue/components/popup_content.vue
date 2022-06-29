@@ -137,7 +137,7 @@ async function bindKeypress() {
   isKeypresBinded.value = true;
 
   const { useKeypress } = await import(
-    /* webpackChunkName: "keypress" */
+    /* webpackChunkName: "vue3-keypress" */
     'vue3-keypress'
   );
   useKeypress({
