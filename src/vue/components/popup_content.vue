@@ -6,7 +6,7 @@
       :class='{ "is-sticky-menu-offset": isStickyMenuOffset }'
     >
       <div class='outer'>
-        <div class='close' @click='close' />
+        <div class='mobile-close' @click='close' />
         <PerfectScrollbar
           v-if='isLoaded'
           :options='{ wheelPropagation: false }'
@@ -22,7 +22,7 @@
       class='popup-content b-tip b-tip--large b-tip--no_border'
     >
       <div data-popper-arrow />
-      <div class='inner'>
+      <div class='desktop-inner'>
         <slot v-if='isLoaded' />
         <div v-else class='b-ajax' />
       </div>
@@ -201,11 +201,11 @@ $padding-vertical: 8px
     min-height: 100px
     min-width: 320px
 
-  .inner
-    padding: $padding-vertical $padding-horizontal
-
-    +lte_ipad
-      max-height: calc(100vh - 98px)
+  .desktop-inner
+    +gte_laptop
+      padding: $padding-vertical $padding-horizontal
+      overflow-y: auto
+      max-height: 100%
 
   &.mobile-fixed
     height: 100%
@@ -231,12 +231,7 @@ $padding-vertical: 8px
         .ps
           padding-right: 16px
 
-  +gte_laptop
-    .inner
-      overflow-y: auto
-      max-height: 100%
-
-.close
+.mobile-close
   +icon
   align-items: center
   background: #fff
