@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-logical-assignment-operators": "^7.14.2",
-    "@vue/compiler-sfc": "^3.0.11",
+    "@vue/compiler-sfc": "^3.2.37",
     "add": "^2.0.6",
     "autosize": "^4.0.2",
     "axios": "^0.21.2",
