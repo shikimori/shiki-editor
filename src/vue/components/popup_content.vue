@@ -120,7 +120,7 @@ function showPopper() {
   // import flip from '@popperjs/core/lib/modifiers/flip';
 
   popup.value ||= createPopper(
-    props.targetRef[0].$el,
+    props.targetRef.$el || props.targetRef[0].$el,
     desktopContainerNode.value,
     {
       placement: 'bottom',
