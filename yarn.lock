@@ -1749,9 +1749,9 @@
     "@types/node" "*"
 
 "@types/hast@^2.0.0":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.1.tgz#b16872f2a6144c7025f296fb9636a667ebb79cd9"
-  integrity sha512-viwwrB+6xGzw+G1eWpF9geV3fnsDgXqHG+cqgiHrvQfDUW5hzhCyV7Sy3UJxhfRFBsgky2SSW33qi/YrIkjX5Q==
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.4.tgz#8aa5ef92c117d20d974a82bdfb6a648b08c0bafc"
+  integrity sha512-wLEm0QvaoawEDoTRwzTXp4b4jpwiJDvR5KMnFnVodm3scufTlBOWRD6N1OBf9TZMhjlNsSfcO5V+7AF4+Vy+9g==
   dependencies:
     "@types/unist" "*"
 
@@ -1800,9 +1800,9 @@
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
 "@types/unist@*":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
-  integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
+  integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
 
 "@types/yargs-parser@*":
   version "21.0.0"
@@ -3706,9 +3706,9 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
 fault@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/fault/-/fault-2.0.0.tgz#ad2198a6e28e344dcda76a7b32406b1039f0b707"
-  integrity sha512-JsDj9LFcoC+4ChII1QpXPA7YIaY8zmqPYw7h9j5n7St7a0BBKfNnwEBAUQRBx70o2q4rs+BeSNHk8Exm6xE7fQ==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/fault/-/fault-2.0.1.tgz#d47ca9f37ca26e4bd38374a7c500b5a384755b6c"
+  integrity sha512-WtySTkS4OKev5JtpHXnib4Gxiurzh5NCGvWrFaZ34m6JehfTUhKZvn9njTfw48t6JumVQOmrKqpmGcdwxnhqBQ==
   dependencies:
     format "^0.2.0"
 
@@ -3827,7 +3827,7 @@ form-data@^3.0.0:
 format@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/format/-/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
-  integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
+  integrity sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -4099,9 +4099,9 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     minimalistic-assert "^1.0.1"
 
 highlight.js@~11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.0.tgz#e22ac9ca45edc4f87a2187685d591a108ceb8449"
-  integrity sha512-ByaTMfsSuoqerTwemOgpIhfULEIaK52JJYhky/sK7/Yqc0+t7Uh5DHay9vIC94YXSupnQ1Vqfc9VXrYP4eXW3Q==
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-11.0.1.tgz#a78bafccd9aa297978799fe5eed9beb7ee1ef887"
+  integrity sha512-EqYpWyTF2s8nMfttfBA2yLKPNoZCO33pLS4MnbXQ4hECf1TKujCt1Kq7QAdrio7roL4+CqsfjqwYj4tYgq0pJQ==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
