@@ -6,9 +6,9 @@ const HEADLINE = {
   }]
 };
 
-const LIST = {
+const LIST_QUOTE = {
   className: 'bullet',
-  begin: '^[ \t]*([*+->]|(\\d+\\.))(?=\\s+)',
+  begin: '^([ \t]*([*+->]))+(?=\\s+)',
   end: '\\s+',
   excludeEnd: true
 };
@@ -45,10 +45,10 @@ const CODE = {
 };
 
 const INLINE_SPOILER = {
-  className: 'sselector-class',
+  className: 'selector-class',
   variants: [
     {
-      begin: '(\\|{2,})[^\\|](.|\\n)*?\\1\\|*[ ]*'
+      begin: '(\\|{2,})[^\\|].*?\\1\\|*[ ]*'
     }
   ]
 };
@@ -58,7 +58,7 @@ export default _hljs => ({
   case_insensitive: true,
   contains: [
     HEADLINE,
-    LIST,
+    LIST_QUOTE,
     CODE,
     INLINE_SPOILER,
     {
@@ -67,7 +67,7 @@ export default _hljs => ({
     },
     {
       className: 'number',
-      begin: /(?<==)[^\]\s][0-9,\w;А-я]+/
+      begin: /(?<==)[^\]\s][0-9,\w;А-я-]+/
     },
     {
       className: 'string',
@@ -76,14 +76,6 @@ export default _hljs => ({
     {
       className: 'string',
       begin: ']'
-    },
-    {
-      className: 'keyword',
-      begin: /(?<=div=)[^\]]*?(?=data-|])/
-    },
-    {
-      className: 'keyword',
-      begin: /(?<=spoiler=)[^\]]*?(?=is-|])/
     },
     {
       className: 'variable',
