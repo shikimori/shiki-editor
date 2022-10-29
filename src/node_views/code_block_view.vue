@@ -58,11 +58,52 @@ export default {
       this.extension.options.lowlightPromise = deferred.promise;
 
       Promise.all([
-        import(/* webpackChunkName: "lowlight" */ 'lowlight/lib/common'),
-        import(/* webpackChunkName: "lowlight" */ '../plugins/lowlight/build_plugin')
+        import(/* webpackChunkName: "lowlight" */ 'lowlight/lib/core'),
+        import(/* webpackChunkName: "lowlight" */ '../plugins/lowlight/build_plugin'),
+        import(/* webpackChunkName: "lowlight" */ '../utils/lowlight/shiki_markdown'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/javascript'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/css'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/json'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/less'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/php'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/python'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/ruby'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/scss'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/typescript'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/xml'),
+        import(/* webpackChunkName: "lowlight" */ 'highlight.js/lib/languages/yaml')
       ])
-        .then(([{ lowlight }, { default: buildLowlightPlugin }]) => {
+        .then(([
+          { lowlight },
+          { default: buildLowlightPlugin },
+          { default: shikiMarkdown },
+          { default: javascript },
+          { default: css },
+          { default: json },
+          { default: less },
+          { default: php },
+          { default: python },
+          { default: ruby },
+          { default: scss },
+          { default: typescript },
+          { default: xml },
+          { default: yaml }
+        ]) => {
           this.extension.options.lowlight = lowlight;
+
+          lowlight.registerLanguage('shiki', shikiMarkdown);
+
+          lowlight.registerLanguage('javascript', javascript);
+          lowlight.registerLanguage('css', css);
+          lowlight.registerLanguage('json', json);
+          lowlight.registerLanguage('less', less);
+          lowlight.registerLanguage('php', php);
+          lowlight.registerLanguage('python', python);
+          lowlight.registerLanguage('ruby', ruby);
+          lowlight.registerLanguage('scss', scss);
+          lowlight.registerLanguage('typescript', typescript);
+          lowlight.registerLanguage('xml', xml);
+          lowlight.registerLanguage('yaml', yaml);
 
           this.editor.registerPlugin(
             buildLowlightPlugin(this.extension.name, lowlight)

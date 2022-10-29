@@ -62,8 +62,231 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-[div]A[/div][div]
-CCC [color=red]BBBB[/color]DDD[/div]
+\`\`\`shiki
+[b]Bold text[/b]
+[img=left]https://i.imgur.com/SCCi8IE.png[/img]
+[animes ids=9457,9456 wall]
+
+[color=#FF0000]Hello![/color]
+[size=200][color=red][b]LOOK AT ME![/b][/color][/size]
+
+[list]
+[*]Red
+[*]Blue
+[*]Yellow
+[/list]
+
+[url=https://www.phpbb.com/]Visit phpBB![/url]
+
+[div data-attribute][/div]
+[div data-attribute=num_val][/div]
+[div=class][/div]
+[div=class data-id=num_val][/div]
+[div=class1 class2 data-id=num_val][/div]
+
+[div=cc-2a data-custom_data_attribute]
+[div=c-column]column 1[/div]
+[div=c-column]column 2[/div]
+[/div]
+
+[animes ids=5114,1575 cover_notice=studio columns=6]
+[animes ids=6702 cover_notice=year_kind columns=5]
+
+[mangas ids=33327,23390,13,3031,2,598,11,11734,12,5255,564 columns=8]
+
+[spoiler]текст спойлера[/spoiler], [spoiler=спойлер с названием]текст спойлера[/spoiler]
+
+[img w=132 h=132]http://shikimori.one/images/static/embed/hFT-H0phBKs.jpg[/img]
+[img 132x132]http://shikimori.one/images/static/embed/QGin9ZjfGWg.jpg[/img]
+
+[quote]цитата[/quote]
+[quote=morr]цитата с ником[/quote]
+[quote=775324;1;morr]цитата комментария[/quote]
+
+https://test.com
+test.com
+/zxc
+# Заголовки
+[hr]
+# Заголовок уровень 1
+
+## Заголовок уровень 2
+
+### Заголовок уровень 3
+
+#### Спец заголовок 1
+
+##### Спец заголовок 2
+
+
+# Черта после заголовка
+[hr]
+# Заголовок уровень 1
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+
+## Заголовок уровень 2
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+
+### Заголовок уровень 3
+[hr]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam elit lorem, eleifend auctor posuere eget, placerat quis augue. Nunc vitae dui nec lectus eleifend elementum. Duis iaculis quam quis mi ullamcorper, eget consequat felis finibus. Phasellus scelerisque lacus egestas, fermentum purus sit amet, mattis neque. Fusce non lorem malesuada, feugiat urna id, molestie diam. Vestibulum a turpis quis nulla pharetra posuere eu ac elit. Sed vitae felis venenatis, tempor magna at, efficitur ipsum.
+
+
+# Shiki BbCodes
+[hr]
+[div fc-2][div f-column]
+[anime=1] text after [anime=1]Anime name[/anime]
+[manga=1]
+[anime=3456789]missing anime[/anime]
+[ranobe=9115]
+
+[image=1124146]
+[/div][div f-column]
+[entry=314310]
+[topic=314310]
+[comment=6104628]
+[message=1278854609]
+
+[topic=99999999999]
+[topic=99999999999]missing topic[/topic]
+[comment=99999999999]
+[message=99999999999]
+[/div][/div]
+
+
+# Basic styles
+[hr]
+B[b]old tex[/b]t
+I[i]talic tex[/i]t
+U[u]nderlined tex[/u]t
+S[s]triked tex[/s]t
+Inline c\`ode tex\`t
+Inline s||poiler tex||t    \`||spoiler content||\`
+C[color=red]olored tex[/color]t   \`[color=red]...[/color]\`
+s[size=18]ized tex[/size]t   \`[size=18]...[/size]\`
+L[url=https://github.com/shikimori/shiki-editor]ink tex[/url]t
+
+# Spoilers
+[hr]
+### Block spoiler
+[spoiler=spoiler block with label]
+spoiler \`content\`
+[/spoiler]
+[spoiler]
+spoiler content
+[/spoiler]
+
+### Inline spoiler
+||Inline spoiler text||    \`||spoiler content||\`
+
+# Code
+[hr]
+### Block code
+
+### Inline code
+\`inlinde code\` made by text wrapped in \`\` \`quotes\` \`\`
+
+# Smileys
+[hr]
+:) :shock:
+
+# Images
+[hr]
+Image
+[img no-zoom 225x317]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]     [img no-zoom width=200]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img]     [img]https://kawai.shikimori.one/system/animes/original/38481.jpg?1592053805[/img] [img]https://kawai.shikimori.one/system/users/x160/1.png?1591612283[/img]
+Poster
+[poster]https://www.ljmu.ac.uk/~/media/ljmu/news/starsedit.jpg[/poster]
+
+# Divs and Spans
+[hr]
+[div=b-link_button]
+\`[div=b-link_button]...[/div]\`
+[/div]
+
+\`[div=fc-2][div=f-column][/div][div=f-column][/div][/div]\`
+
+[div=fc-2]
+[div=f-column]
+\`[div=f-column]\`
+[/div]
+[div=f-column]
+\`[div=f-column]\`
+[/div]
+[/div]
+
+[hr]
+
+[right]\`[right]...[/right]\`[/right]
+[center]\`[center]...[/center]\`[/center]
+
+div [div=b-link_button]inline divs are not parsed by editor[/div] div
+Instead use \`[span]\` bbcode [span=b-anime_status_tag anons]as inline element[/span]
+
+# Quotes and Lists
+[hr]
+### Bullet list
+- Bullet List
+- def
+
+### Quote
+> Quote
+> > nope
+> yes
+
+### Bullet and Quote combined
+> - \`quoted\` list
+- > list \`quoted\`
+
+### Old Quote
+[quote]Old style quote support[/quote]
+[quote=zxc]Old style quote with nickname[/quote]
+[quote=c1246;1945;Silentium°]Old style quote with user[/quote]
+
+# Videos
+[hr]
+[video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video] [video]https://www.youtube.com/watch?v=00000000000[/video] [video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video] [video]http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi[/video] [video]https://video.sibnet.ru/video305613-SouL_Eater__AMW/[/video] [video]http://vimeo.com/426453510[/video] [video]https://vk.com/video-186803452_456239969[/video] [video]http://vk.com/video98023184_165811692[/video] [video]https://coub.com/view/1itox4[/video] [video]https://ok.ru/video/2444260543117[/video]
+[b]Bold text[/b]
+[img=left]https://i.imgur.com/SCCi8IE.png[/img]
+[animes ids=9457,9456 wall]
+
+[color=#FF0000]Hello![/color]
+[size=200][color=red][b]LOOK AT ME![/b][/color][/size]
+
+[list]
+[*]Red
+[*]Blue
+[*]Yellow
+[/list]
+
+[url=https://www.phpbb.com/]Visit phpBB![/url]
+
+[div data-attribute][/div]
+[div data-attribute=num_val][/div]
+[div=class][/div]
+[div=class data-id=num_val][/div]
+[div=class1 class2 data-id=num_val][/div]
+
+[div=cc-2a data-custom_data_attribute]
+[div=c-column]column 1[/div]
+[div=c-column]column 2[/div]
+[/div]
+
+[animes ids=5114,1575 cover_notice=studio columns=6]
+[animes ids=6702 cover_notice=year_kind columns=5]
+
+[mangas ids=33327,23390,13,3031,2,598,11,11734,12,5255,564 columns=8]
+
+[spoiler]текст спойлера[/spoiler], [spoiler=спойлер с названием]текст спойлера[/spoiler]
+
+[img w=132 h=132]http://shikimori.one/images/static/embed/hFT-H0phBKs.jpg[/img]
+[img 132x132]http://shikimori.one/images/static/embed/QGin9ZjfGWg.jpg[/img]
+
+[quote]цитата[/quote]
+[quote=morr]цитата с ником[/quote]
+[quote=775324;1;morr]цитата комментария[/quote]
+\`\`\`
 `.trim();
 
 export default {
