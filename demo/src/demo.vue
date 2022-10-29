@@ -63,6 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 
 let TEXT_2 = `
 \`\`\`shiki
+qwe ||zxc|| cvx
 [b]Bold text[/b]
 [img=left]https://i.imgur.com/SCCi8IE.png[/img]
 [animes ids=9457,9456 wall]
@@ -75,6 +76,16 @@ let TEXT_2 = `
 [*]Blue
 [*]Yellow
 [/list]
+
+> Quote
+> > nope
+> yes
+
+- List
+
+### Bullet and Quote combined
+> - \`quoted\` list
+- > list \`quoted\`
 
 [url=https://www.phpbb.com/]Visit phpBB![/url]
 
