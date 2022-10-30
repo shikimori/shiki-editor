@@ -62,6 +62,13 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
+\`\`\`javascript
+function foo(a, b, c) {
+  const a = 5;
+  return a / 5;
+}
+\`\`\`
+
 \`\`\`shiki
 qwe ||zxc|| cvx
 [b]Bold text[/b]

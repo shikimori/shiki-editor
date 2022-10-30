@@ -10,8 +10,7 @@ export default _hljs => {
 
   const LIST_QUOTE = {
     className: 'bullet',
-    begin: '^([ \t]*([*+->]))+(?=\\s+)',
-    end: '\\s+',
+    begin: '^( *[*+>-])+|\\[\\*\\]',
     excludeEnd: true
   };
 
@@ -63,30 +62,165 @@ export default _hljs => {
       LIST_QUOTE,
       CODE,
       INLINE_SPOILER,
+      // { className: 'keyword', begin: '\\[', end: '/', excludeEnd: true },
+      // {
+      //   // className: 'string',
+      //   scope: 'string',
+      //   // begin: /\[[^=\s\]]*/,
+      //   // excludeBegin: true,
+      //   // excludeEnd: true,
+      //   begin: /\[/,
+      //   end: /\]/,
+      //   illegal: '\\n',
+      //   contains: [
+      //     { className: 'keyword', begin: '=' },
+      //     { className: 'keyword', begin: /\*(?=\])/ },
+      //     {
+      //       className: 'tag',
+      //       begin: /#[A-Za-z0-9_-]+/
+      //     }
+      //     // { className: 'keyword', begin: /\[\/?/ },
+      //     // { className: 'keyword', begin: ']' },
+      //   //   // {
+      //   //   //   className: 'number',
+      //   //   //   begin: /(?<==)[^\]\s][0-9,\w;А-я-]+/
+      //   //   // },
+      //   //   {
+      //   //     className: 'keyword',
+      //   //     begin: /\w+/,
+      //   //     end: /\s|\]|=/,
+      //   //     excludeEnd: true
+      //   //   },
+      //   //   // 'self'
+      //   ]
+      // },
+
+      // {
+      //   begin: /\[/,
+      //   end: /\]/,
+      //   illegal: '\\n',
+      //   contains: [
+      //     {
+      //       className: 'tag',
+      //       begin: /#[A-Za-z0-9_-]+/
+      //     },
+      //     {
+      //       className: 'number',
+      //       begin: /=/,
+      //       end: /[^\]\s][0-9,\w;А-я-]+/,
+      //       excludeBegin: true
+      //     },
+      //     {
+      //       className: 'string',
+      //       begin: /\[[^=\s\]]*/
+      //     },
+      //     {
+      //       className: 'string',
+      //       begin: ']'
+      //     },
+      //     {
+      //       className: 'variable',
+      //       begin: /=/,
+      //       end: /[^\]\s]*/,
+      //       excludeBegin: true
+      //     },
+      //     {
+      //       className: 'tag',
+      //       begin: /\[[^\]]*/,
+      //       end: /[^\s=\]]*/,
+      //       excludeBegin: true
+      //     }
+      //   ]
+      // }
+
+      // {
+      //   className: 'tag',
+      //   begin: /#[A-Za-z0-9_-]+/
+      // },
+      // {
+      //   className: 'number',
+      //   begin: /=/,
+      //   end: /[^\]\s][0-9,\w;А-я-]+/,
+      //   excludeBegin: true
+      // },
       {
-        className: 'tag',
-        begin: /#[A-Za-z0-9_-]+/
+        scope: 'string',
+        begin: '\\[[^=\\s\\]]*',
+        end: ']',
+        contains: [
+          // { className: 'keyword', begin: '\\[', end: '.', excludeEnd: true },
+          // { className: 'keyword', begin: ']' },
+          // {
+          //   className: 'tag',
+          //   begin: /#[A-Za-z0-9_-]+/
+          // },
+          // { className: 'keyword', begin: '\\[' },
+          { className: 'keyword', begin: '=' },
+          // { className: 'keyword', begin: '\\*' },
+          // {
+          //   className: 'variable',
+          //   begin: /=/,
+          //   end: /[^\]\s]*/,
+          //   excludeBegin: true
+          // },
+          // {
+          //   scope: 'number',
+          //   endsWithParent: true,
+          //   begin: /=/,
+          //   end: /[0-9,]+(?=\]| )/,
+          //   excludeBegin: true,
+          //   // illegal: '\\n',
+          //   // contains: [
+          //   //   { className: 'keyword', begin: ',' },
+          //   // ]
+          // }
+        ]
       },
-      {
-        className: 'number',
-        begin: /(?<==)[^\]\s][0-9,\w;А-я-]+/
-      },
-      {
-        className: 'string',
-        begin: /\[[^=\s\]]*/
-      },
-      {
-        className: 'string',
-        begin: ']'
-      },
-      {
-        className: 'variable',
-        begin: /(?<==)[^\]\s]*/
-      },
-      {
-        className: 'tag',
-        begin: /(?<=\[[^\]]* )[^\s=\]]*/
-      }
+      // {
+      //   className: 'string',
+      //   begin: /\[[^=\s\]]*/
+      // },
+      // {
+      //   className: 'string',
+      //   begin: ']'
+      // },
+      // {
+      //   className: 'variable',
+      //   begin: /=/,
+      //   end: /[^\]\s]*/,
+      //   excludeBegin: true
+      // },
+      // {
+      //   className: 'tag',
+      //   begin: /\[[^\]]*/,
+      //   end: /[^\s=\]]*/,
+      //   excludeBegin: true
+      // }
+
+      // {
+      //   className: 'tag',
+      //   begin: /#[A-Za-z0-9_-]+/
+      // },
+      // {
+      //   className: 'number',
+      //   begin: /(?<==)[^\]\s][0-9,\w;А-я-]+/
+      // },
+      // {
+      //   className: 'string',
+      //   begin: /\[[^=\s\]]*/
+      // },
+      // {
+      //   className: 'string',
+      //   begin: ']'
+      // },
+      // {
+      //   className: 'variable',
+      //   begin: /(?<==)[^\]\s]*/
+      // },
+      // {
+      //   className: 'tag',
+      //   begin: /(?<=\[[^\]]* )[^\s=\]]*/
+      // }
     ]
   };
 };
