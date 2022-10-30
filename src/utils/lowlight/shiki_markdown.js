@@ -144,10 +144,78 @@ export default _hljs => {
       //   excludeBegin: true
       // },
       {
-        scope: 'string',
+        scope: 'variable',
         begin: '\\[[^=\\s\\]]*',
         end: ']',
         contains: [
+          // {
+          //   scope: 'selector-class',
+          //   begin: '=',
+          //   end: '[^ \\]]+',
+          //   // excludeBegin: true,
+          //   // endsWithParent: true,
+          //   contains: [
+          //     { scope: 'keyword', begin: '=', relevance: 0 }
+          //   ]
+          // },
+          // {
+          //   scope: 'keyword',
+          //   begin: '[^ \\]]+',
+          //   end: '=',
+          //   excludeEnd: true,
+          //   // endsWithParent: true,
+          //   contains: [
+          //     { className: 'keyword', begin: '=' }
+          //   ]
+          // },
+          {
+            scope: 'string',
+            begin: '[^=\\]]+'
+            // returnBegin: true,
+            // endsWithParent: true,
+            // contains: [
+            //   {
+            //     className: 'variable',
+            //     begin: '=',
+            //     end: '[^ \\]]+',
+            //     // begin: '[\\w,А-я-]+(?==)',
+            //     returnBegin: true,
+            //     // endsWithParent: true
+            //   }
+            // ]
+          },
+          { className: 'keyword', begin: '=' }
+          // {
+          //   className: 'selector-id',
+          //   begin: '#[\\w-]+'
+          // },
+          // {
+          //   className: 'selector-class',
+          //   begin: '\\.[\\w-]+'
+          // },
+          // {
+          //   begin: /\{\s*/,
+          //   end: /\s*\}/,
+          //   contains: [
+          //     {
+          //       begin: ':\\w+\\s*=>',
+          //       end: ',\\s+',
+          //       returnBegin: true,
+          //       endsWithParent: true,
+          //       contains: [
+          //         {
+          //           className: 'attr',
+          //           begin: ':\\w+'
+          //         },
+          //         {
+          //           begin: '\\w+',
+          //           relevance: 0
+          //         }
+          //       ]
+          //     }
+          //   ]
+          // }
+
           // { className: 'keyword', begin: '\\[', end: '.', excludeEnd: true },
           // { className: 'keyword', begin: ']' },
           // {
@@ -155,7 +223,7 @@ export default _hljs => {
           //   begin: /#[A-Za-z0-9_-]+/
           // },
           // { className: 'keyword', begin: '\\[' },
-          { className: 'keyword', begin: '=' },
+          // { className: 'keyword', begin: '=' },
           // { className: 'keyword', begin: '\\*' },
           // {
           //   className: 'variable',
