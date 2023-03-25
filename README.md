@@ -16,8 +16,7 @@ yarn start
 ```
 
 
-
 #### Package release command
 ```sh
-GITHUB_TOKEN=... npm run release
+GITHUB_TOKEN=... npx release-it
 ```
