@@ -108,6 +108,8 @@ export default {
           allowedSpaces: 2
         },
         showed: ({ query, range, isCursorAtEnd, command, virtualNode }) => {
+          if (!virtualNode) { return; } // can be nil when switching from code mode to normal mode
+
           this.query = query;
           this.range = range;
           this.isCursorAtEnd = isCursorAtEnd;
