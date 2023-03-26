@@ -533,6 +533,25 @@ describe('MarkdownTokenizer', () => {
         ]);
       });
     });
+
+    describe('broken bbcodes order', () => {
+      it('[b][i]zxc[/b][/i]', () => {
+        expect(MarkdownTokenizer.parse('[b][i]zxc[/b][/i]')).to.eql([
+          { type: 'paragraph', direction: 'open' },
+          {
+            type: 'inline',
+            children: [
+              { type: 'bold_inline', direction: 'open', bbcode: '[b]' },
+              { type: 'italic_inline', direction: 'open', bbcode: '[i]' },
+              { type: 'text', content: 'zxc' },
+              { type: 'bold_inline', direction: 'close', bbcode: '[/b]' },
+              { type: 'italic_inline', direction: 'close', bbcode: '[/i]' }
+            ]
+          },
+          { type: 'paragraph', direction: 'close' }
+        ]);
+      });
+    });
   });
 
   describe('nodes', () => {
