@@ -1,6 +1,6 @@
 import { hasInlineSequence } from '../helpers';
 
-export default function processMarkClose(
+export default function processMarkOpen(
   state,
   type,
   openBbcode,

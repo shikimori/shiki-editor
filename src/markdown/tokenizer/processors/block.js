@@ -23,13 +23,14 @@ export default function(
     exitSequence
   );
   const tokens = tokenizer.parse();
+  // console.log(tokens)
 
   if (!tokens) { return; }
 
   if (isOnlySpacingsBefore) {
     state.inlineTokens = [];
   } else if (!isStart) {
-    state.finalizeParagraph();
+    state.finalizeParagraph(false);
   }
 
   const finalIndex = tokenizer.index - state.index + exitSequence.length;

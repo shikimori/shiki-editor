@@ -16,7 +16,9 @@ export default class ColorBlock extends Node {
         color: {},
         nFormat: {
           default: {
-            nBeforeOpen: true, nAfterOpen: true, nBeforeClose: true
+            nBeforeOpen: true,
+            nAfterOpen: true,
+            nBeforeClose: true
           }
         }
       },

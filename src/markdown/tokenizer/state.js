@@ -57,6 +57,7 @@ export default class MarkdownTokenizer {
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
+    console.log(`new MarkdownTokenizer(text, ${index}, "${nestedSequence}", "${exitSequence}")`)
     this.text = text;
     this.index = index;
 
@@ -123,10 +124,12 @@ export default class MarkdownTokenizer {
       return null;
     }
 
+    // console.log(this.tokens)
     return this.tokens;
   }
 
   parseLine(skippableSequence = '') {
+    // console.log('parseLine', this.index)
     if (this.isSkippableSequence(skippableSequence || this.nestedSequence)) {
       this.next((skippableSequence || this.nestedSequence).length);
     }
@@ -136,6 +139,7 @@ export default class MarkdownTokenizer {
 
     outer: while (this.index <= this.text.length) { // eslint-disable-line no-restricted-syntax
       const { char1, seq2, seq3, seq4, seq5, bbcode } = this;
+      // console.log(this.index, char1, bbcode);
 
       const isStart = startIndex === this.index;
       const isEnd = char1 === '\n' || char1 === undefined;
@@ -662,6 +666,7 @@ export default class MarkdownTokenizer {
   }
 
   finalizeParagraph(isHardBreak) {
+    // console.log('finalizeParagraph', isHardBreak);
     if (this.inlineTokens.length || !this.nestedSequence || (
       this.nestedSequence && this.isSequenceContinued(1)
     )) {

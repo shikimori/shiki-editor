@@ -59,6 +59,7 @@ export default class MarkdownParser {
   // and create a ProseMirror document as prescribed by this parser's
   // rules.
   parse(text) {
+    // console.log(text);
     const state = new MarkdownParseState(this.schema, this.tokenHandlers);
     let doc;
 
