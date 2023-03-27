@@ -57,7 +57,7 @@ export default class MarkdownTokenizer {
   }
 
   constructor(text, index, nestedSequence = '', exitSequence = undefined) {
-    console.log(`new MarkdownTokenizer(text, ${index}, "${nestedSequence}", "${exitSequence}")`)
+    // console.log(`new MarkdownTokenizer(text, ${index}, "${nestedSequence}", "${exitSequence}")`)
     this.text = text;
     this.index = index;
 
