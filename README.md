@@ -16,6 +16,12 @@ yarn start
 ```
 
 
+#### Run tests
+```sh
+yarn test --watchAll
+```
+
+
 #### Package release command
 ```sh
 GITHUB_TOKEN=... npx release-it

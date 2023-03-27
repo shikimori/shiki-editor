@@ -1,4 +1,6 @@
 export default function processMarkClose(state, type, openBbcode, closeBbcode) {
+  // if (state.lastMark !== openBbcode) { return; }
+  // state.marksStack.pop();
   const markIndex = state.marksStack.indexOf(openBbcode);
   if (markIndex == -1) { return; }
 
