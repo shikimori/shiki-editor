@@ -59,7 +59,7 @@
     "prosemirror-keymap": "^1.2.0",
     "prosemirror-model": "^1.19.0",
     "prosemirror-schema-list": "^1.2.2",
-    "prosemirror-state": "^1.4.1",
+    "prosemirror-state": "^1.4.2",
     "prosemirror-utils": "atlassian/prosemirror-utils#remove-prosemirror-tables",
     "prosemirror-view": "^1.29.0",
     "scroll-lock": "^2.1.4",
