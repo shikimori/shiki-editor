@@ -61,7 +61,7 @@
     "prosemirror-schema-list": "^1.2.2",
     "prosemirror-state": "^1.4.2",
     "prosemirror-utils": "atlassian/prosemirror-utils#remove-prosemirror-tables",
-    "prosemirror-view": "^1.29.0",
+    "prosemirror-view": "^1.30.2",
     "scroll-lock": "^2.1.4",
     "text-field-edit": "^3.1.0",
     "vue-dragscroll": "^3.0.0",
