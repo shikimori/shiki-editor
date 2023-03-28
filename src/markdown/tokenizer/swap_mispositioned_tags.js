@@ -9,14 +9,14 @@ export default class SwapMispositionedTags {
   }
 
   parse() {
-    const tags = this.parseTags();
+    const tags = this.parseUnbalancedTags();
 
     console.log(tags);
 
     return this.text;
   }
 
-  parseTags() {
+  parseUnbalancedTags() {
     const stack = [];
     let tagStartIndex = null;
 
@@ -25,29 +25,40 @@ export default class SwapMispositionedTags {
 
       if (char1 === '[') {
         tagStartIndex = index;
-        continue;
       }
+
       if (char1 === ']') {
-        stack.push(this.buildTag(tagStartIndex, index));
+        const tag = buildTag(this.text, tagStartIndex, index);
         tagStartIndex = null;
-        continue;
+
+        if (isClosing(tag, stack[stack.length - 1])) {
+          stack.pop();
+        } else {
+          stack.push(tag);
+        }
       }
     }
 
     return stack;
   }
+}
 
-  buildTag(tagStartIndex, tagEndIndex) {
-    const isTagClose = this.text[tagStartIndex + 1] == '/';
-    const text = this.text.slice(tagStartIndex, tagEndIndex + 1);
-    const tag = text.slice(1 + (isTagClose ? 1 : 0), text.length - 1);
+function buildTag(allText, tagStartIndex, tagEndIndex) {
+  const isClose = allText[tagStartIndex + 1] == '/';
+  const text = allText.slice(tagStartIndex, tagEndIndex + 1);
+  const tag = text.slice(1 + (isClose ? 1 : 0), text.length - 1);
 
-    return {
-      tag,
-      text,
-      index: tagStartIndex,
-      size: text.length,
-      isTagClose
-    };
-  }
+  return {
+    tag,
+    text,
+    index: tagStartIndex,
+    size: allText.length,
+    isClose
+  };
+}
+
+function isClosing(tag, prevTag) {
+  return prevTag &&
+    tag.tag === prevTag.tag &&
+    tag.isClose && !prevTag.isClose;
 }
