@@ -15,10 +15,16 @@ describe('SwapMispositionedTags', () => {
   //   });
   // });
 
-  it('z[b][i]x[/b][/i]c', () => {
-    expect(SwapMispositionedTags.parse('z[b][i]x[/b][/i]c')).to.eql(
-      'z[b][i]x[/i][/b]c'
-    );
+  describe('replacement required', () => {
+    [
+      ['[b][i]a[/b][/i]', '[b][i]a[/i][/b]']
+      // ['z[b][i]x[/b][/i]c', 'z[b][i]x[/i][/b]c'],
+    ].forEach(([text, replacement]) => {
+      it(text, () => {
+
+        expect(SwapMispositionedTags.parse(text)).to.eql(replacement);
+      });
+    });
   });
 
   // describe('code block', () => {
