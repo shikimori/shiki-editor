@@ -1,40 +1,32 @@
 import sortBy from 'lodash/sortBy';
 
-export default class SwapMispositionedTags {
-  static parse(text) {
-    // console.log(new MarkdownTokenizer(text, 0).parse());
-    return new SwapMispositionedTags(text).parse();
-  }
+export default function swapMispositionedTags(text) {
+  let fixedText = text;
+  const tags = parseUnbalancedTags(text);
+  let openTagNames = [];
+  // console.log(tags);
 
-  constructor(text) {
-    this.text = text;
-  }
+  for (let index = 0; index < tags.length; index++) {
+    const tag = tags[index];
+    // console.log(tag);
 
-  parse() {
-    const tags = parseUnbalancedTags(this.text);
-    let openTagNames = [];
-    // console.log(tags);
+    if (!tag.isClose) {
+      openTagNames.push(tag.name);
+      continue;
+    }
+    const closeTagsSequqnce = getCloseTagsSequence(tags, index, openTagNames);
+    // console.log({ closeTagsSequqnce });
 
-    for (let index = 0; index < tags.length; index++) {
-      const tag = tags[index];
-      // console.log(tag);
-
-      if (!tag.isClose) {
-        openTagNames.push(tag.name);
-        continue;
-      }
-      const closeTagsSequqnce = getCloseTagsSequence(tags, index, openTagNames);
-
-      if (closeTagsSequqnce.length > 1) {
-        this.text = swapTags(this.text, closeTagsSequqnce, openTagNames.reverse());
-        index += closeTagsSequqnce.length - 1;
-      }
-
-      openTagNames = [];
+    if (closeTagsSequqnce.length > 1) {
+      fixedText = swapTags(fixedText, closeTagsSequqnce, openTagNames.reverse());
+      index += closeTagsSequqnce.length - 1;
     }
 
-    return this.text;
+    openTagNames = [];
   }
+
+  // console.log({ fixedText });
+  return fixedText;
 }
 
 function parseUnbalancedTags(text) {
@@ -66,7 +58,7 @@ function parseUnbalancedTags(text) {
 function buildTag(allText, tagStartIndex, tagEndIndex) {
   const isClose = allText[tagStartIndex + 1] == '/';
   const text = allText.slice(tagStartIndex, tagEndIndex + 1);
-  const name = text.slice(1 + (isClose ? 1 : 0), text.length - 1);
+  const name = text.slice(1 + (isClose ? 1 : 0), text.length - 1).split('=')[0];
 
   return {
     name,
@@ -89,9 +81,15 @@ function getCloseTagsSequence(tags, startIndex, openTagNames) {
 
   for (let index = startIndex; index < endIndex; index++) {
     const tag = tags[index];
+    const prevCloseTag = closeTagsSequence[closeTagsSequence.length - 1];
+
     if (!tag.isClose) { break; }
-    // || !openTagNames.includes(tag.name)
-    // || current tag is not close to prev tag
+    if (!openTagNames.includes(tag.name)) { break; }
+    // tag must be close to prev tag
+    if (prevCloseTag && tag.index != prevCloseTag.index + prevCloseTag.text.length) {
+      break;
+    }
+
     closeTagsSequence.push(tag);
   }
 
