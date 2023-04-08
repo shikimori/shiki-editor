@@ -1,14 +1,26 @@
 import sortBy from 'lodash/sortBy';
 
+const PROCESSABLE_TAGS = [
+  'i',
+  'b',
+  'u',
+  'size',
+  'color',
+  'span',
+  'div',
+  'quote',
+  'spoiler'
+];
+
 export default function swapMispositionedTags(text) {
   let fixedText = text;
   const tags = parseUnbalancedTags(text);
   let openTagNames = [];
-  // console.log(tags);
+  // console.log({ tags });
 
   for (let index = 0; index < tags.length; index++) {
     const tag = tags[index];
-    // console.log(tag);
+    // console.log({ tag });
 
     if (!tag.isClose) {
       openTagNames.push(tag.name);
@@ -42,6 +54,8 @@ function parseUnbalancedTags(text) {
 
     if (char1 === ']') {
       const tag = buildTag(text, tagStartIndex, index);
+      if (!tag) { continue; }
+
       tagStartIndex = null;
 
       if (isClosing(tag, stack[stack.length - 1])) {
@@ -59,6 +73,8 @@ function buildTag(allText, tagStartIndex, tagEndIndex) {
   const isClose = allText[tagStartIndex + 1] == '/';
   const text = allText.slice(tagStartIndex, tagEndIndex + 1);
   const name = text.slice(1 + (isClose ? 1 : 0), text.length - 1).split('=')[0];
+
+  if (!PROCESSABLE_TAGS.includes(name)) { return null; }
 
   return {
     name,

@@ -26,7 +26,12 @@ describe('swapMispositionedTags', () => {
       [
         'z[quote][b][u][i]x[/quote][/b][/i][/u]c',
         'z[quote][b][u][i]x[/i][/u][/b][/quote]c'
-      ]
+      ],
+      [
+        '[b][i]a[/b][/i] [b][i]a[/b][/i]',
+        '[b][i]a[/i][/b] [b][i]a[/i][/b]'
+      ],
+      ['[b][i][anime=123][/b][/i]', '[b][i][anime=123][/i][/b]']
     ].forEach(([text, replacement]) => {
       it(text, () => {
 
