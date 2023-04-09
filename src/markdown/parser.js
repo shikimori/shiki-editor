@@ -1,6 +1,7 @@
 // https://github.com/ProseMirror/prosemirror-markdown/blob/v1/src/from_markdown.js
 import MarkdownParseState from './parse_state';
 import tokenHandlers from './parser_token_handlers';
+import swapMispositionedTags from './tokenizer/swap_mispositioned_tags';
 
 // ::- A configuration of a Markdown parser. Such a parser uses
 // [markdown-it](https://github.com/markdown-it/markdown-it) to
@@ -63,7 +64,11 @@ export default class MarkdownParser {
     const state = new MarkdownParseState(this.schema, this.tokenHandlers);
     let doc;
 
-    const tokens = this.tokenizer.parse(text);
+    const tokens = this.tokenizer.parse(
+      swapMispositionedTags(
+        text
+      )
+    );
     state.parseTokens(tokens);
 
     do { doc = state.closeNode(); } while (state.stack.length);
