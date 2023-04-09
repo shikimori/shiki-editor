@@ -1,15 +1,20 @@
 import sortBy from 'lodash/sortBy';
 
 const PROCESSABLE_TAGS = [
-  'i',
   'b',
+  'i',
   'u',
+  's',
   'size',
   'color',
+  'url',
   'span',
   'div',
   'quote',
-  'spoiler'
+  'spoiler',
+  'center',
+  'left',
+  'right'
 ];
 
 export default function swapMispositionedTags(text) {
