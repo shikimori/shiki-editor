@@ -39,24 +39,26 @@ describe('swapMispositionedTags', () => {
     });
   });
 
-  describe('code inline and clode blocks', () => {
+  describe('code inline/block/tag', () => {
     [
       '`z[b][i]x[/b][/i]c`',
-      // '[code]z[b][i]x[/b][/i]c[/code]',
-      // '```\nz[b][i]x[/b][/i]c\n```'
+      '```\nz[b][i]x[/b][/i]c\n```',
+      '```js\nz[b][i]x[/b][/i]c\n```',
+      '[code]z[b][i]x[/b][/i]c[/code]',
+      '[code=zxc]z[b][i]x[/b][/i]c[/code]'
     ].forEach(text => {
       it(text, () => {
         expect(swapMispositionedTags(text)).to.eql(text);
       });
     });
 
-    describe('parser rolls back when code block is unclosed', () => {
+    describe('parser does process content of invalid code block', () => {
       [
         ['`a[b][i]b[/b][/i]c', '`a[b][i]b[/i][/b]c'],
         ['`a[b][i]b[/b][/i]c\n`', '`a[b][i]b[/i][/b]c\n`'],
-        // ['[code]a[b][i]b[/b][/i]c', '[code]a[b][i]b[/i][/b]c'],
-        // ['```\na[b][i]b[/b][/i]c```', '```\na[b][i]b[/i][/b]c```'],
-        // ['```\na[b][i]b[/b][/i]c', '```\na[b][i]b[/i][/b]c']
+        ['[code]a[b][i]b[/b][/i]c', '[code]a[b][i]b[/i][/b]c'],
+        ['```\na[b][i]b[/b][/i]c```', '```\na[b][i]b[/i][/b]c```'],
+        ['```\na[b][i]b[/b][/i]c', '```\na[b][i]b[/i][/b]c']
       ].forEach(([text, replacement]) => {
         it(text, () => {
           expect(swapMispositionedTags(text)).to.eql(replacement);
