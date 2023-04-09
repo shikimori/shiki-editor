@@ -14,13 +14,14 @@ const PROCESSABLE_TAGS = [
   'left',
   'right'
 ];
-const CODE_INLINE = '`';
+const CODE_INLINE_SEQ = '`';
+const TAG_START_SEQ = '[';
+const TAG_END_SEQ = ']';
 
 export default function parseUnbalancedTags(text) {
   const stack = [];
 
   let tagStartIndex = null;
-  // let isNewLine = true;
   let isCode = false;
   let codeStartTag = null;
   let codeStartIndex = null;
@@ -30,20 +31,20 @@ export default function parseUnbalancedTags(text) {
     const isEndIndex = index == text.length - 1;
     const isNewLineNext = text[index + 1] === '\n';
 
-    if (char1 === CODE_INLINE) {
+    if (char1 === CODE_INLINE_SEQ) {
       if (isCode) {
         isCode = false;
         codeStartTag = null;
         codeStartIndex = null;
       } else {
         isCode = true;
-        codeStartTag = CODE_INLINE;
+        codeStartTag = CODE_INLINE_SEQ;
         codeStartIndex = index;
       }
     }
 
     if (isCode) {
-      if (isEndIndex || (isNewLineNext && codeStartTag === CODE_INLINE)) {
+      if (isEndIndex || (isNewLineNext && codeStartTag === CODE_INLINE_SEQ)) {
         index = codeStartIndex + codeStartTag.length - 1;
         isCode = false;
         continue;
@@ -52,11 +53,11 @@ export default function parseUnbalancedTags(text) {
       continue;
     }
 
-    if (char1 === '[') {
+    if (char1 === TAG_START_SEQ) {
       tagStartIndex = index;
     }
 
-    if (char1 === ']') {
+    if (char1 === TAG_END_SEQ) {
       const tag = buildTag(text, tagStartIndex, index);
       if (!tag) { continue; }
 
