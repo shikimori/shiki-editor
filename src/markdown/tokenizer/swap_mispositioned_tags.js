@@ -48,10 +48,23 @@ export default function swapMispositionedTags(text) {
 
 function parseUnbalancedTags(text) {
   const stack = [];
+
   let tagStartIndex = null;
+  // let isNewLine = true;
+  let isCode = false;
 
   for (let index = 0; index < text.length; index++) {
     const char1 = text[index];
+
+    if (char1 === '`') {
+      if (isCode) {
+        isCode = false;
+      } else {
+        isCode = true;
+      }
+    }
+
+    if (isCode) { continue; }
 
     if (char1 === '[') {
       tagStartIndex = index;
