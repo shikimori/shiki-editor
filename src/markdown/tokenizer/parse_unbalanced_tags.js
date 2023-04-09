@@ -14,6 +14,7 @@ const PROCESSABLE_TAGS = [
   'left',
   'right'
 ];
+const CODE_INLINE = '`';
 
 export default function parseUnbalancedTags(text) {
   const stack = [];
@@ -27,25 +28,29 @@ export default function parseUnbalancedTags(text) {
   for (let index = 0; index < text.length; index++) {
     const char1 = text[index];
     const isEndIndex = index == text.length - 1;
+    const isNewLineNext = text[index + 1] === '\n';
 
-    if (char1 === '`') {
+    if (char1 === CODE_INLINE) {
       if (isCode) {
         isCode = false;
         codeStartTag = null;
         codeStartIndex = null;
       } else {
         isCode = true;
-        codeStartTag = '`';
+        codeStartTag = CODE_INLINE;
         codeStartIndex = index;
       }
     }
 
-    if (isEndIndex && isCode) {
-      index = codeStartIndex + codeStartTag.length - 1;
-      isCode = false;
+    if (isCode) {
+      if (isEndIndex || (isNewLineNext && codeStartTag === CODE_INLINE)) {
+        index = codeStartIndex + codeStartTag.length - 1;
+        isCode = false;
+        continue;
+      }
+
       continue;
     }
-    if (isCode) { continue; }
 
     if (char1 === '[') {
       tagStartIndex = index;

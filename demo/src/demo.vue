@@ -63,6 +63,7 @@ import { flash, ShikiRequest } from 'shiki-utils';
 
 let TEXT_2 = `
 \`a[b][i]b[/i][/b]c
+\`
 `.trim();
 // [size=26][quote]zxc[/size][/quote]
 // [quote][size=26]zxc[/quote][/size]
