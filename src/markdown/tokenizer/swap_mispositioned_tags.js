@@ -1,21 +1,5 @@
 import sortBy from 'lodash/sortBy';
-
-const PROCESSABLE_TAGS = [
-  'b',
-  'i',
-  'u',
-  's',
-  'size',
-  'color',
-  'url',
-  'span',
-  'div',
-  'quote',
-  'spoiler',
-  'center',
-  'left',
-  'right'
-];
+import parseUnbalancedTags from './parse_unbalanced_tags';
 
 export default function swapMispositionedTags(text) {
   let fixedText = text;
@@ -46,68 +30,6 @@ export default function swapMispositionedTags(text) {
   return fixedText;
 }
 
-function parseUnbalancedTags(text) {
-  const stack = [];
-
-  let tagStartIndex = null;
-  // let isNewLine = true;
-  let isCode = false;
-
-  for (let index = 0; index < text.length; index++) {
-    const char1 = text[index];
-
-    if (char1 === '`') {
-      if (isCode) {
-        isCode = false;
-      } else {
-        isCode = true;
-      }
-    }
-
-    if (isCode) { continue; }
-
-    if (char1 === '[') {
-      tagStartIndex = index;
-    }
-
-    if (char1 === ']') {
-      const tag = buildTag(text, tagStartIndex, index);
-      if (!tag) { continue; }
-
-      tagStartIndex = null;
-
-      if (isClosing(tag, stack[stack.length - 1])) {
-        stack.pop();
-      } else {
-        stack.push(tag);
-      }
-    }
-  }
-
-  return stack;
-}
-
-function buildTag(allText, tagStartIndex, tagEndIndex) {
-  const isClose = allText[tagStartIndex + 1] == '/';
-  const text = allText.slice(tagStartIndex, tagEndIndex + 1);
-  const name = text.slice(1 + (isClose ? 1 : 0), text.length - 1).split('=')[0];
-
-  if (!PROCESSABLE_TAGS.includes(name)) { return null; }
-
-  return {
-    name,
-    text,
-    index: tagStartIndex,
-    size: allText.length,
-    isClose
-  };
-}
-
-function isClosing(tag, prevTag) {
-  return prevTag &&
-    tag.name === prevTag.name &&
-    tag.isClose && !prevTag.isClose;
-}
 
 function getCloseTagsSequence(tags, startIndex, openTagNames) {
   const endIndex = startIndex + openTagNames.length;
