@@ -6,7 +6,7 @@ import { isContainsCodeMark } from '../utils';
 const BEFORE_URL_ALLOWED_SYMBOL_REGEXP = /\s|>|\(/;
 
 const URL_REGEXP = /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z]{2,}\b(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)(?:[-a-zA-Z0-9@:%._+~#=?!&/]*)/gi; // eslint-disable-line
-const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|local)\/(animes|mangas|ranobe|characters|people)\/(\w+)[^/]*$/;
+const SHIKI_URL_REGEXP = /^https?:\/\/shikimori\.(?:org|one|me|local)\/(animes|mangas|ranobe|characters|people)\/(\w+)[^/]*$/;
 
 const VIDEO_REGEXPES = [
   // http://vimeo.com/426453510
