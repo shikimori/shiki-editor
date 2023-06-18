@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import imagePromise from 'image-promise';
+import imagePromise from '@morr/image-promise';
 import { NodeSelection } from 'prosemirror-state';
 
 import { NodeViewWrapper, nodeViewProps } from '../vue';

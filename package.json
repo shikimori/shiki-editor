@@ -26,6 +26,7 @@
     "@babel/plugin-proposal-pipeline-operator": "7.15.0",
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "@babel/preset-env": "^7.7.4",
+    "@morr/image-promise": "^7.0.2",
     "autosize": "^4.0.2",
     "babel-eslint": "11.0.0-beta.2",
     "babel-jest": "^27.5.1",
@@ -37,7 +38,6 @@
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "7.16.0",
-    "image-promise": "^7.0.1",
     "jest": "^27.5.1",
     "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.1",
@@ -69,8 +69,8 @@
     "vue3-perfect-scrollbar": "morr/vue3-perfect-scrollbar#master"
   },
   "peerDependencies": {
+    "@morr/image-promise": "^7.0.2",
     "autosize": "^4.0.2",
-    "image-promise": "^7.0.1",
     "lodash": "^4.17.21",
     "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.0",

@@ -1,4 +1,4 @@
-import imagePromise from 'image-promise';
+import imagePromise from '@morr/image-promise';
 import { bind } from 'shiki-decorators';
 
 import NodeView from '../node_view';

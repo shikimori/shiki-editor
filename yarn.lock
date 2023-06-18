@@ -1657,6 +1657,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@morr/image-promise@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@morr/image-promise/-/image-promise-7.0.2.tgz#e8b5579484e2a6ad17c732b6543dfbb2352132c3"
+  integrity sha512-OzY2Q5JLtGHdXNN84izuQHyWZIFMm0VGR6UCSZui57PtoGO9bzwbYI+otTcJo2SFzj4lCuTORk/Arcbp0jN5Qg==
+
 "@morr/withinviewport@2.1.3-1":
   version "2.1.3-1"
   resolved "https://registry.yarnpkg.com/@morr/withinviewport/-/withinviewport-2.1.3-1.tgz#d684b86805d2d4884109820960d6e14c269bec64"
@@ -4177,11 +4182,6 @@ ignore@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
-
-image-promise@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/image-promise/-/image-promise-7.0.1.tgz#97134ff205de927af01c57b7daba2f6f7f6b2501"
-  integrity sha512-399HJHce1d3aEz4EYXLU4MUgUjX0gO0Bewu8mY4iLYItpNpBWLSQkevbYRPDViyISsL6K2bJiLadhxGCctRIOg==
 
 import-fresh@^3.0.0, import-fresh@^3.2.1:
   version "3.3.0"
