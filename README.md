@@ -23,6 +23,7 @@ yarn test --watchAll
 
 
 #### Package release command
+Obtain release token here https://github.com/settings/tokens/new?scopes=repo&description=release-it
 ```sh
 GITHUB_TOKEN=... npx release-it
 ```
