@@ -12,7 +12,7 @@
     "@babel/plugin-proposal-logical-assignment-operators": "^7.14.2",
     "@vue/compiler-sfc": "^3.2.37",
     "add": "^2.0.6",
-    "autosize": "^4.0.2",
+    "autosize": "^6.0.1",
     "axios": "^0.21.2",
     "core-js": "^3.6.5",
     "imagesloaded": "^4.1.4",

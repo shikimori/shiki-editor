@@ -28,7 +28,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "@babel/preset-env": "^7.7.4",
     "@morr/image-promise": "^7.0.2",
-    "autosize": "^4.0.2",
+    "autosize": "^6.0.1",
     "babel-eslint": "11.0.0-beta.2",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.1.0",
@@ -70,7 +70,7 @@
   },
   "peerDependencies": {
     "@morr/image-promise": "^7.0.2",
-    "autosize": "^4.0.2",
+    "autosize": "^6.0.1",
     "lodash": "^4.17.21",
     "p-defer": "^4.0.0",
     "shiki-decorators": "^1.0.0",
