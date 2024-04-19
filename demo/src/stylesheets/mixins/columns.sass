@@ -2,7 +2,7 @@
   +block
   +clear_left
 
-=column($columns, $column_size: 1/$columns, $gutter: 4%)
+=column($columns, $column_size: math.div(1, $columns), $gutter: 4%)
   @if $columns == 1
     $gutter: 0%
 
@@ -10,7 +10,7 @@
   float: left
   margin-right: $gutter
   position: relative
-  width: 100% * $column_size - $gutter * ($columns - 1) / $columns
+  width: 100% * $column_size - math.div($gutter * ($columns - 1), $columns)
   // do not add max-width
   // max-width: 100% * $column_size - $gutter * ($columns - 1) / $columns
   &:nth-child(#{$columns}n)
@@ -30,11 +30,11 @@
     margin-bottom: 0
 
 // колонка, состоящая из блока+колонки
-=column_b($columns, $column_size: 1/$columns, $gutter: 4%)
+=column_b($columns, $column_size: math.div(1, $columns), $gutter: 4%)
   +block
   +column($columns, $column_size, $gutter)
 
 // колонка, состоящая из блока с обязательным отступом+колонки
-=column_bm($columns, $column_size: 1/$columns, $gutter: 4%)
+=column_bm($columns, $column_size: math.div(1, $columns), $gutter: 4%)
   +block_m
   +column($columns, $column_size, $gutter)

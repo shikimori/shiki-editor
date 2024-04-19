@@ -1,5 +1,5 @@
 =arrow_position($size)
-  $px: -$size / 2
+  $px: math.div(-$size, 2)
 
   &[data-popper-placement^='top'] > [data-popper-arrow]
     bottom: $px
