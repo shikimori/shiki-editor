@@ -66,10 +66,8 @@ function getDecorations(doc, nodeName, lowlight) {
       let from = block.pos + 1;
 
       const { language } = block.node.attrs;
-      const languages = lowlight.listLanguages();
-      if (!language && languages.includes(language)) { return; }
 
-      const nodes = language && languages.includes(language) ?
+      const nodes = lowlight.registered(language) ? 
         lowlight.highlight(language, block.node.textContent).children :
         [];
 

@@ -48,7 +48,7 @@ export default {
     },
     selectedLanguage: {
       get() {
-        return LANGUAGE_ALIASES[this.node.attrs.language] || this.node.attrs.languag;
+        return LANGUAGE_ALIASES[this.node.attrs.language] || this.node.attrs.language;
       },
       set(language) {
         this.updateAttributes({ language });
