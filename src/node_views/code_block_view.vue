@@ -23,6 +23,11 @@
 import pDefer from 'p-defer';
 import { NodeViewWrapper, NodeViewContent, nodeViewProps } from '../vue';
 
+const LANGUAGE_ALIASES = {
+  'js': 'javascript',
+  'sass': 'scss'
+};
+
 export default {
   components: { NodeViewWrapper, NodeViewContent },
   props: nodeViewProps,
@@ -43,7 +48,7 @@ export default {
     },
     selectedLanguage: {
       get() {
-        return this.node.attrs.language;
+        return LANGUAGE_ALIASES[this.node.attrs.language] || this.node.attrs.languag;
       },
       set(language) {
         this.updateAttributes({ language });
@@ -104,6 +109,10 @@ export default {
           lowlight.registerLanguage('typescript', typescript);
           lowlight.registerLanguage('xml', xml);
           lowlight.registerLanguage('yaml', yaml);
+
+          Object.keys(LANGUAGE_ALIASES).forEach(alias => {
+            lowlight.registerAlias(LANGUAGE_ALIASES[alias], alias);
+          });
 
           this.editor.registerPlugin(
             buildLowlightPlugin(this.extension.name, lowlight)
