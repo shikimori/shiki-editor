@@ -62,8 +62,22 @@ import { flash, ShikiRequest } from 'shiki-utils';
 // import ShikiUploader from '../../../shiki-uploader';
 
 let TEXT_2 = `
-\`a[b][i]b[/i][/b]c
-\`
+\`\`\`js
+let a = 5;
+\`\`\`
+
+
+\`\`\`javascript
+let a = 5;
+\`\`\`
+
+
+\`\`\`shiki
+[b]test[/b]
+> a
+xc
+\`\`\`
+
 `.trim();
 // [size=26][quote]zxc[/size][/quote]
 // [quote][size=26]zxc[/quote][/size]
