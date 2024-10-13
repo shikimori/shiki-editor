@@ -15,7 +15,8 @@ const VIDEO_REGEXPES = [
   /(?:https?:)?\/\/(?:www\.)?youtube\.com\/.*?(?:&(?:amp;)?|\?)v=[\w_-]+[^ $#<[\]\r\n]*(?:#(?:t|at)=\d+)?/,
   /(?:https?:)?\/\/(?:www\.)?youtu.be\/[\w_-]+(?:\?(?:t|at)=\w+)?/,
   /(?:https?:)?\/\/(?:www\.)?youtube\.com\/(?:embed|v)\/[\w_-]+(?:\?start=\w+)?/,
-  // https://vk.com/video-186803452_456239969
+  // https://www.youtube.com/shorts/yFg1-tIfvjc
+  /(?:https?:)?\/\/(?:www\.)?youtube.com\/shorts\/[\w_-]+(?:\?(?:t|at)=\w+)?/,
   // http://vk.com/video98023184_165811692
   /(?:https?:)\/\/vk.com\/video-?\d+_\d+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // https://coub.com/view/1itox4
@@ -30,6 +31,43 @@ const VIDEO_REGEXPES = [
   // https://ok.ru/video/2444260543117
   /(?:https?:)\/\/(?:www\.)?ok.ru\/(?:videoembed|live|video)\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
 ];
+
+    // (?:https?:)? // (?:www\.)?
+    // (?:
+    //   youtube\.com/
+    //   \S*? (?: &(?:amp;)? | \? )
+    //   v=(?<key>[\w_-]+)
+    //   [^\ $#<\[\]\r\n]*
+    //   (?:\#(?:t|at)=(?<time>\d+))?
+    //
+    //   |
+    //
+    //   youtu.be/
+    //   (?<key>[\w_-]+)
+    //   (?:
+    //     [?&]
+    //     (?:
+    //       (?:t|at)=(?<time>\w+) |
+    //       [\w_-]+(?:=[\w_-]+)?
+    //     )
+    //   )*
+    //
+    //   |
+    //
+    //   youtube\.com/(?:embed|v)/
+    //   (?<key>[\w_-]+)
+    //   (?:\?start=(?<time>\w+))?
+    //
+    //   |
+    //
+    //   youtube.com/(?<shorts>shorts)/
+    //   (?<key>[\w_-]+)
+    //   (?:
+    //     [?&]
+    //     [\w_-]+(?:=[\w_-]+)?
+    //   )*
+    // )
+
 
 const SHIKI_TYPES = {
   animes: 'anime',
