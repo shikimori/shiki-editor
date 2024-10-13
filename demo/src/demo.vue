@@ -260,7 +260,7 @@ Instead use \`[span]\` bbcode [span=b-anime_status_tag anons]as inline element[/
 
 # Videos
 [hr]
-[video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video] [video]https://www.youtube.com/watch?v=00000000000[/video] [video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video] [video]http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi[/video] [video]https://video.sibnet.ru/video305613-SouL_Eater__AMW/[/video] [video]http://vimeo.com/426453510[/video] [video]https://vk.com/video-186803452_456239969[/video] [video]http://vk.com/video98023184_165811692[/video] [video]https://coub.com/view/1itox4[/video] [video]https://ok.ru/video/2444260543117[/video]
+[video]https://www.youtube.com/watch?v=0d4rPwIpzNw[/video] [video]https://www.youtube.com/watch?v=00000000000[/video] [video]https://www.youtube.com/watch?v=JyTvVtUr_2g&t=762s[/video] [video]http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi[/video] [video]https://video.sibnet.ru/video305613-SouL_Eater__AMW/[/video] [video]http://vimeo.com/426453510[/video] [video]https://vk.com/video-186803452_456239969[/video] [video]http://vk.com/video98023184_165811692[/video] [video]https://coub.com/view/1itox4[/video] [video]https://ok.ru/video/2444260543117[/video] [video]https://youtube.com/shorts/yFg1-tIfvjc?si=6VLqJBX6zoeXrja2[/video] [video]https://www.youtube.com/shorts/K0Dy2qww7HY[/video]
 `.trim(),
     text2: TEXT_2,
     test: new Test()
