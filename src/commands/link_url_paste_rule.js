@@ -21,8 +21,6 @@ const VIDEO_REGEXPES = [
   /(?:https?:)\/\/vk.com\/video-?\d+_\d+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // https://coub.com/view/1itox4
   /(?:https?:)\/\/(?:www\.)?coub.com\/view\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
-  // https://www.myvi.tv/idkixy?v=fega66n5kbdr7yhomjx9jp5oue#watch
-  /(?:https?:)\/\/(?:www\.)?myvi.(?:top|tv)\/id\w+\?v=[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
   // http://video.sibnet.ru/video1234982-03__Poverivshiy_v_grezyi
   // https://video.sibnet.ru/video305613-SouL_Eater__AMW/
   /(?:https?:)\/\/(?:www\.)?video.sibnet.ru\/(?:video[\wА-я_-]+|shell.php\?videoid=[\wА-я_-]+)(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/,
@@ -31,43 +29,6 @@ const VIDEO_REGEXPES = [
   // https://ok.ru/video/2444260543117
   /(?:https?:)\/\/(?:www\.)?ok.ru\/(?:videoembed|live|video)\/[\wА-я_-]+(?:(?:\?|#|&amp;|&)[\w=+%-]+)*/
 ];
-
-    // (?:https?:)? // (?:www\.)?
-    // (?:
-    //   youtube\.com/
-    //   \S*? (?: &(?:amp;)? | \? )
-    //   v=(?<key>[\w_-]+)
-    //   [^\ $#<\[\]\r\n]*
-    //   (?:\#(?:t|at)=(?<time>\d+))?
-    //
-    //   |
-    //
-    //   youtu.be/
-    //   (?<key>[\w_-]+)
-    //   (?:
-    //     [?&]
-    //     (?:
-    //       (?:t|at)=(?<time>\w+) |
-    //       [\w_-]+(?:=[\w_-]+)?
-    //     )
-    //   )*
-    //
-    //   |
-    //
-    //   youtube\.com/(?:embed|v)/
-    //   (?<key>[\w_-]+)
-    //   (?:\?start=(?<time>\w+))?
-    //
-    //   |
-    //
-    //   youtube.com/(?<shorts>shorts)/
-    //   (?<key>[\w_-]+)
-    //   (?:
-    //     [?&]
-    //     [\w_-]+(?:=[\w_-]+)?
-    //   )*
-    // )
-
 
 const SHIKI_TYPES = {
   animes: 'anime',
