@@ -64,7 +64,7 @@ export default class VideoView extends NodeView {
 
       const marker = document.createElement('span');
       marker.classList.add('marker');
-      marker.innerText = attrs.hosting?.replace('youtube_shorts', 'shorts');
+      marker.innerText = attrs.hosting?.replace(/(?:you|ru)tube_shorts/, 'shorts');
 
       const controls = document.createElement('div');
       controls.classList.add('controls');
